@@ -1,15 +1,18 @@
 package ehcontrol.net;
 
 import frameWork.MyAdapter;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.MotionEvent;
+import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import ehcontrol.net.R;
 
 public class PlacesMenu extends FragmentActivity
 {
@@ -17,6 +20,7 @@ public class PlacesMenu extends FragmentActivity
 		//Salón
 	private LinearLayout _livingRoom;
 	private ScrollView _svlr;
+	private Button _lrTV;
 		//Cocina
 	private LinearLayout _kitchen;
 	private ScrollView _svk;
@@ -26,6 +30,7 @@ public class PlacesMenu extends FragmentActivity
 	//-------------------------------
 	private MyAdapter _mAdapter;
     private ViewPager _mPager;
+    private LinearLayout _mainPlacesView;
 	//--------------------------------
 	
     @Override
@@ -40,38 +45,38 @@ public class PlacesMenu extends FragmentActivity
          *-------------------------------------
          */
     	//Componentes view Salón
-    	_livingRoom = ( LinearLayout ) findViewById( R.id.viewLivingRoomMenu );
-    	_svlr = ( ScrollView ) findViewById( R.id.svLivingRoomMenu );	
+    	//_livingRoom = ( LinearLayout ) findViewById( R.id.livingRoomMenu );
+    	//_svlr = ( ScrollView ) findViewById( R.id.svLivingRoomMenu );
+        
     	//Componentes view Cocina
-    	_kitchen = ( LinearLayout ) findViewById( R.id.viewKitchenMenu );
-    	_svk = ( ScrollView ) findViewById( R.id.svKitchenMenu );
+    	//_kitchen = ( LinearLayout ) findViewById( R.id.kitchenMenu );
+    	//_svk = ( ScrollView ) findViewById( R.id.svKitchenMenu );
     	//Componentes view Baño
-    	_bathRoom = ( LinearLayout ) findViewById( R.id.viewBathRoomMenu );
-    	_svb = ( ScrollView ) findViewById( R.id.svBathRoomMenu );
+    	//_bathRoom = ( LinearLayout ) findViewById( R.id.bathroomMenu );
+    	//_svb = ( ScrollView ) findViewById( R.id.svBathRoomMenu );
+    	//Contenedor de las vistas 
+    	//_mainPlacesView = ( LinearLayout ) findViewById( R.id.mainPlacesMenu );
     
         
-    	// Crea un adaptador con los fragmentos que vamos a mostrar
-    	// en el ViewPager
+    	// Crea un adaptador con los fragmentos que vamos a mostrar en el ViewPager
         _mAdapter = new MyAdapter(getSupportFragmentManager());
         
         _mPager = (ViewPager) findViewById(R.id.pager);
         _mPager.setAdapter(_mAdapter);
         
-        /*
-        _mPager.setOnTouchListener( new View.OnTouchListener() 
+        /*_mainPlacesView.setOnTouchListener( new View.OnTouchListener() 
         {
 
             @Override
             public boolean onTouch( View v, MotionEvent event ) 
             {	
-            	//ChangesViews( event );
+            	log("touch");
             	centerViews( event );
                 return false;
             }
         });*/
  
     }
-    
     /**
      * Se encarga del desplazamiento entre las vistas.
      * @param event

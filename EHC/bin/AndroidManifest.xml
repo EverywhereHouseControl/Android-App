@@ -66,6 +66,97 @@
             </intent-filter>           
         </activity>
         
+         <!-- Places -->
+        <activity
+            android:name="places.BathRoomMenu"
+            android:label="BathRoom Menu" 
+            android:screenOrientation="portrait"
+            android:configChanges="keyboard|keyboardHidden|orientation">
+            <intent-filter>
+                <action android:name="places.BathRoomMenu" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>         
+        </activity>
+        
+        <activity
+            android:name="places.GarageMenu"
+            android:label="Garage Menu" 
+            android:screenOrientation="portrait"
+            android:configChanges="keyboard|keyboardHidden|orientation">
+            <intent-filter>
+                <action android:name="places.GarageMenu" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>         
+        </activity>
+        
+        <activity
+            android:name="places.GardenMenu"
+            android:label="Garden Menu" 
+            android:screenOrientation="portrait"
+            android:configChanges="keyboard|keyboardHidden|orientation">
+            <intent-filter>
+                <action android:name="places.GardenMenu" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>         
+        </activity>
+        
+        <activity
+            android:name="places.KitchenMenu"
+            android:label="Kitchen Menu" 
+            android:screenOrientation="portrait"
+            android:configChanges="keyboard|keyboardHidden|orientation">
+            <intent-filter>
+                <action android:name="places.KitchenMenu" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>         
+        </activity>
+        
+        <activity
+            android:name="places.LivingRoomMenu"
+            android:label="LivingRoom Menu" 
+            android:screenOrientation="portrait"
+            android:configChanges="keyboard|keyboardHidden|orientation">
+            <intent-filter>
+                <action android:name="places.LivingRoomMenu" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>         
+        </activity>
+        
+        <activity
+            android:name="places.RoomMenu"
+            android:label="Room Menu" 
+            android:screenOrientation="portrait"
+            android:configChanges="keyboard|keyboardHidden|orientation">
+            <intent-filter>
+                <action android:name="places.RoomMenu" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>         
+        </activity>
+        
+        <activity
+            android:name="places.TerraceMenu"
+            android:label="Terrace Menu" 
+            android:screenOrientation="portrait"
+            android:configChanges="keyboard|keyboardHidden|orientation">
+            <intent-filter>
+                <action android:name="places.TerraceMenu" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>         
+        </activity>
+        
+        
+        <!-- Items -->
+        <activity
+            android:name="items.Tv"
+            android:label="TV" 
+            android:screenOrientation="portrait"
+            android:configChanges="keyboard|keyboardHidden|orientation">
+            <intent-filter>
+                <action android:name="places.TV" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>         
+        </activity>
+        
     </application>
     
     <!-- Permiso de acceso a todas las APIs de internet -->

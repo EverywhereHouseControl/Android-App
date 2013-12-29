@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center|center"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".PlacesMenu" >
     
 		<ScrollView 
                 android:id="@+id/svLivingRoomMenu"
