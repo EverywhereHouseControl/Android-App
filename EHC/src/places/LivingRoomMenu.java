@@ -40,10 +40,8 @@ public class LivingRoomMenu extends Fragment
         
     	rootView.findViewById( R.id.buttonTvLR ).setOnClickListener( new View.OnClickListener() 
     	{
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
+			public void onClick( View v ) 
+			{
 			    	try 
 					{
 						Class<?> _clazz = Class.forName( "items.Tv" );

@@ -26,7 +26,8 @@ public class MyAdapter extends FragmentPagerAdapter
     @Override
     public Fragment getItem( int _position ) 
     {
-        switch ( _position ) 
+        //Crear una lista de vistas para quitar el switch
+    	switch ( _position ) 
         {
         	case 0:
         		_position = 0;
