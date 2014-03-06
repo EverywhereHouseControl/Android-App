@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:gravity="top|bottom|left|right|center"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".MainMenu" >
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <ImageView
+                android:id="@+id/world"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:layout_marginTop="30dp"
+                android:src="@drawable/world_ehc" />
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:layout_marginTop="30dp"
+                android:src="@drawable/word_ehc" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <Button
+                android:id="@+id/buttonConfig"
+                android:layout_width="120dp"
+                android:layout_height="100dp"
+                android:layout_alignLeft="@+id/buttonManagement"
+                android:layout_below="@+id/buttonManagement"
+                android:layout_marginTop="18dp"
+                android:background="@drawable/button"
+                android:text="Config."
+                android:textColor="@color/DarkGreen"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/buttonProfile"
+                android:layout_width="120dp"
+                android:layout_height="100dp"
+                android:layout_alignBaseline="@+id/buttonConfig"
+                android:layout_alignBottom="@+id/buttonConfig"
+                android:layout_alignLeft="@+id/buttonWorks"
+                android:background="@drawable/button"
+                android:text="Perfil"
+                android:textColor="@color/DarkGreen"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/buttonManagement"
+                android:layout_width="120dp"
+                android:layout_height="100dp"
+                android:layout_alignParentTop="true"
+                android:layout_marginRight="34dp"
+                android:layout_marginTop="68dp"
+                android:layout_toLeftOf="@+id/buttonWorks"
+                android:background="@drawable/button"
+                android:text="Gestión"
+                android:textColor="@color/DarkGreen"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/buttonWorks"
+                android:layout_width="120dp"
+                android:layout_height="100dp"
+                android:layout_above="@+id/buttonConfig"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="43dp"
+                android:background="@drawable/button"
+                android:text="Tareas"
+                android:textColor="@color/DarkGreen"
+                android:textSize="20sp" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

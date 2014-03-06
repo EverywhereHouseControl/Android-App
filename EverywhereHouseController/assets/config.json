@@ -1,0 +1,44 @@
+{
+    "Rooms": {
+        "R1": {
+            "name": "Livingroom",
+            "items": [
+                "TV",
+                "DVD",
+                "Stereo",
+                "AirConditioning",
+                "Ligths",
+                "Heating"
+            ]
+        },
+        "R2": {
+            "name": "Kitchen",
+            "items": [
+                "TV",
+                "Microhondas",
+                "Stereo",
+                "AirConditioning",
+                "Heating",
+                "Ligths",
+                "Heating"
+            ]
+        },
+        "R3": {
+            "name": "Garage",
+            "items": [
+                "Stereo",
+                "Door",
+                "Ligths",
+                "Heating"
+            ]
+        },
+        "R4": {
+            "name": "Garden",
+            "items": [
+                "Ligths",
+                "Video"
+            ]
+        }
+    },
+    "User": "Colin Tirado"
+}
