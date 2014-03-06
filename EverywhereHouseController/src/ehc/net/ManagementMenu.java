@@ -2,6 +2,8 @@ package ehc.net;
 
 import java.util.ArrayList;
 
+import org.json.JSONException;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,7 +27,7 @@ public class ManagementMenu extends Activity
 	//-------------------------------
 	
 	/**
-	 * Método que se ejcuta cuando la vista ha sido cargada.
+	 * Mï¿½todo que se ejcuta cuando la vista ha sido cargada.
 	 */
 	@Override
 	public void onWindowFocusChanged(boolean hasFocus) 
@@ -34,17 +36,17 @@ public class ManagementMenu extends Activity
 	    super.onWindowFocusChanged(hasFocus);
 	    if (hasFocus) 
 	    {
-	    	//Ligadura del botón 'genericButton' a una varible para obtener sus dimensiones
+	    	//Ligadura del botï¿½n 'genericButton' a una varible para obtener sus dimensiones
 	    	 final Button _genericButton = (Button) findViewById(R.id.genericButton);
-	    	 log("Tamaño botón :" + Integer.toString(_genericButton.getHeight()) +" "+ Integer.toString(_genericButton.getWidth()));
+	    	 log("Tamaï¿½o botï¿½n :" + Integer.toString(_genericButton.getHeight()) +" "+ Integer.toString(_genericButton.getWidth()));
 	     
-	    	 //Se aplican las dimensiones del botón 'generciButton' a los demás botones
+	    	 //Se aplican las dimensiones del botï¿½n 'generciButton' a los demï¿½s botones
 	    	 for(int i=0; i<_buttonList.size(); i++)
 	         {
 	    		 _buttonList.get(i).setHeight(_genericButton.getHeight());
 	    		 _buttonList.get(i).setWidth(_genericButton.getWidth());
 	         }
-	    	 //Se elimina el botón 'genericButton'
+	    	 //Se elimina el botï¿½n 'genericButton'
 	    	 _table1.removeViewAt(0);
 	    }
 	}
@@ -64,14 +66,23 @@ public class ManagementMenu extends Activity
         Animation anim = AnimationUtils.loadAnimation(this.getBaseContext(), R.anim.rotate_indefinitely);
         //Start animating the image
          _logo.startAnimation(anim); 
-		
+
          //-----------------Lectura del archivo config.json-----------------
-         JSON parserJSON = new JSON();
-         parserJSON.loadJSON(this.getBaseContext());
+         JSON parserJSON = new JSON(this.getBaseContext());
+         //parserJSON.loadJSON(this.getBaseContext());
+         
+		try {
+			ArrayList<String> rooms = parserJSON.getRooms();
+	         for (int i=0; i < rooms.size(); i++)
+	        	 log("Habitacion" + rooms.get(i));
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
          //--------------------------------------------------
          
 		//-----------------------------------------------------------------------------
-		//Ejemplo de configuración.
+		//Ejemplo de configuraciï¿½n.
         int num_bathrooms 	= 2;
 		int num_rooms		= 2;
 		int num_livingrooms	= 1;
@@ -82,7 +93,7 @@ public class ManagementMenu extends Activity
 		int num_places		= num_bathrooms + num_rooms	+ num_livingrooms + num_kitchens + 	num_terraces + num_gardens + num_garages;
 		//-----------------------------------------------------------------------------
 		
-		log("Número de lugares: " + Integer.toString(num_places));
+		log("Nï¿½mero de lugares: " + Integer.toString(num_places));
 		
 		//Se inserta los botones a la lista '_buttonList'
 		for(int i=0; i<num_places; i++)
@@ -92,7 +103,7 @@ public class ManagementMenu extends Activity
 		
 			if(num_livingrooms!=0)
 			{
-				B.setText("Salón" + Integer.toString(num_livingrooms - (num_livingrooms-1)));
+				B.setText("Salï¿½n" + Integer.toString(num_livingrooms - (num_livingrooms-1)));
 				num_livingrooms--;
 			}
 			else if(num_kitchens!=0)
@@ -102,12 +113,12 @@ public class ManagementMenu extends Activity
 			}
 			else if(num_rooms!=0)
 			{
-				B.setText("Habitación" + Integer.toString(num_rooms - (num_rooms-1)));
+				B.setText("Habitaciï¿½n" + Integer.toString(num_rooms - (num_rooms-1)));
 				num_rooms--;
 			}
 			else if(num_bathrooms!=0)
 			{
-				B.setText("Baño" + Integer.toString(num_bathrooms - (num_bathrooms-1)));
+				B.setText("Baï¿½o" + Integer.toString(num_bathrooms - (num_bathrooms-1)));
 				num_bathrooms--;
 			}
 			else if(num_terraces!=0)
@@ -117,7 +128,7 @@ public class ManagementMenu extends Activity
 			}
 			else if(num_gardens!=0)
 			{
-				B.setText("Jardín" + Integer.toString(num_gardens - (num_gardens-1)));
+				B.setText("Jardï¿½n" + Integer.toString(num_gardens - (num_gardens-1)));
 				num_gardens--;
 			}
 			else if(num_garages!=0)
@@ -126,7 +137,7 @@ public class ManagementMenu extends Activity
 				num_garages--;
 			}
 			
-			//Oyente asignado a cada botón
+			//Oyente asignado a cada botï¿½n
 			B.setOnClickListener(new OnClickListener()
 			{
 				@Override
@@ -134,7 +145,7 @@ public class ManagementMenu extends Activity
 				{
 					// TODO Auto-generated method stub
 					String buttonName = (String) B.getText();
-					//Se pasa el nombre del botón que ha sido pulsado
+					//Se pasa el nombre del botï¿½n que ha sido pulsado
 					log("Se ha pulsado: "+buttonName);			
 					//createdManagementIntent(buttonName);
 				}
@@ -143,7 +154,7 @@ public class ManagementMenu extends Activity
 			_buttonList.add(i, B);
 		}
 		
-		//Se añaden los botones a las tablas de la vista
+		//Se aï¿½aden los botones a las tablas de la vista
 		for(int i=0; i<_buttonList.size()/2; i++)
         {
 			TableRow tr = new TableRow(this.getBaseContext());
@@ -174,7 +185,7 @@ public class ManagementMenu extends Activity
 			@Override
 			public void onClick( View v ) 
 			{
-				log( "Botón gestión pulsado" );
+				log( "Botï¿½n gestiï¿½n pulsado" );
 				createdManagementIntent();
 			}
 		});
@@ -182,7 +193,7 @@ public class ManagementMenu extends Activity
     }
 	
 	/**
-	 * Método que ejecuta la activity lugares
+	 * Mï¿½todo que ejecuta la activity lugares
 	 */
 	private void createdManagementIntent(String buttonName)
 	{/*
@@ -190,7 +201,7 @@ public class ManagementMenu extends Activity
 		{
 			Class<?> _clazz = Class.forName( "ehc.net.PlacesMenu" );
 			Intent _intent = new Intent( this,_clazz );
-			//Paso el nombre del botón que sido pulsado para redirigirla la siguiente
+			//Paso el nombre del botï¿½n que sido pulsado para redirigirla la siguiente
 			//Activity a la vista correcta.
 			_intent.putExtra("buttonName", buttonName);
 			startActivity( _intent );
@@ -202,12 +213,12 @@ public class ManagementMenu extends Activity
 	}
 	
 	/**
-     * Método para debugear
+     * Mï¿½todo para debugear
      * @param _text
      */
     private void log( String _text )
     {
-    	Log.d("Acción :", _text);
+    	Log.d("Acciï¿½n :", _text);
     }
     
     
