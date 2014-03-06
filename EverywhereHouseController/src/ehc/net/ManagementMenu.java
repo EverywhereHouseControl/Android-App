@@ -73,88 +73,27 @@ public class ManagementMenu extends Activity
          
 		try {
 			ArrayList<String> rooms = parserJSON.getRooms();
-	         for (int i=0; i < rooms.size(); i++)
-	        	 log("Habitacion" + rooms.get(i));
+	         for (int i=0; i < rooms.size(); i++){
+	        	final Button button = new Button(this);
+	        	button.setClickable(true);
+	        	button.setText(rooms.get(i));
+	        	button.setOnClickListener(new OnClickListener()
+				{
+					@Override
+					public void onClick(View v) 
+					{
+						String buttonName = (String) button.getText();
+						log("Se ha pulsado: "+buttonName);			
+					}
+				});
+	        	_buttonList.add(button);
+	         } 
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-         //--------------------------------------------------
-         
-		//-----------------------------------------------------------------------------
-		//Ejemplo de configuraciï¿½n.
-        int num_bathrooms 	= 2;
-		int num_rooms		= 2;
-		int num_livingrooms	= 1;
-		int num_kitchens	= 1;
-		int num_terraces	= 2;
-		int num_gardens		= 1;
-		int num_garages		= 1;
-		int num_places		= num_bathrooms + num_rooms	+ num_livingrooms + num_kitchens + 	num_terraces + num_gardens + num_garages;
-		//-----------------------------------------------------------------------------
+     
 		
-		log("Nï¿½mero de lugares: " + Integer.toString(num_places));
-		
-		//Se inserta los botones a la lista '_buttonList'
-		for(int i=0; i<num_places; i++)
-		{
-			final Button B = new Button(this);
-			B.setClickable(true);
-		
-			if(num_livingrooms!=0)
-			{
-				B.setText("Salï¿½n" + Integer.toString(num_livingrooms - (num_livingrooms-1)));
-				num_livingrooms--;
-			}
-			else if(num_kitchens!=0)
-			{
-				B.setText("Cocina" + Integer.toString(num_kitchens - (num_kitchens-1)));
-				num_kitchens--;
-			}
-			else if(num_rooms!=0)
-			{
-				B.setText("Habitaciï¿½n" + Integer.toString(num_rooms - (num_rooms-1)));
-				num_rooms--;
-			}
-			else if(num_bathrooms!=0)
-			{
-				B.setText("Baï¿½o" + Integer.toString(num_bathrooms - (num_bathrooms-1)));
-				num_bathrooms--;
-			}
-			else if(num_terraces!=0)
-			{
-				B.setText("Terraza" + Integer.toString(num_terraces - (num_terraces-1)));
-				num_terraces--;
-			}
-			else if(num_gardens!=0)
-			{
-				B.setText("Jardï¿½n" + Integer.toString(num_gardens - (num_gardens-1)));
-				num_gardens--;
-			}
-			else if(num_garages!=0)
-			{
-				B.setText("Garaje" + Integer.toString(num_garages - (num_garages-1)));
-				num_garages--;
-			}
-			
-			//Oyente asignado a cada botï¿½n
-			B.setOnClickListener(new OnClickListener()
-			{
-				@Override
-				public void onClick(View v) 
-				{
-					// TODO Auto-generated method stub
-					String buttonName = (String) B.getText();
-					//Se pasa el nombre del botï¿½n que ha sido pulsado
-					log("Se ha pulsado: "+buttonName);			
-					//createdManagementIntent(buttonName);
-				}
-			});
-			
-			_buttonList.add(i, B);
-		}
-		
-		//Se aï¿½aden los botones a las tablas de la vista
+		//Se añaden los botones a las tablas de la vista
 		for(int i=0; i<_buttonList.size()/2; i++)
         {
 			TableRow tr = new TableRow(this.getBaseContext());
