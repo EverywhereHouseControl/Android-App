@@ -43,7 +43,7 @@
                 android:layout_height="552dp" >
 
                 <TableLayout
-                    android:id="@+id/table2"
+                    android:id="@+id/genericTable2"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_alignParentBottom="true"
