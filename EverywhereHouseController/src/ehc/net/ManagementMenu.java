@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import org.json.JSONException;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -37,7 +36,7 @@ public class ManagementMenu extends Activity
 	    super.onWindowFocusChanged(hasFocus);
 	    if (hasFocus) 
 	    {
-	    	//Ligadura del botón 'genericButton' a una varible para obtener sus dimensiones
+	    	//Ligadura del botï¿½n 'genericButton' a una varible para obtener sus dimensiones
 	    	 final Button _genericButton = (Button) findViewById(R.id.genericButton);
 	    	 log("Tamaï¿½o botï¿½n :" + Integer.toString(_genericButton.getHeight()) +" "+ Integer.toString(_genericButton.getWidth()));
 	     
@@ -58,9 +57,9 @@ public class ManagementMenu extends Activity
 		super.onCreate( savedInstanceState );
         setContentView( R.layout.management_menu_view );
         
-        _table1 = (TableLayout) findViewById(R.id.genericTable1);
+        _table1 = (TableLayout) findViewById(R.id.table1);
                 
-        _table2 = (TableLayout) findViewById(R.id.genericTable2);
+        _table2 = (TableLayout) findViewById(R.id.table2);
         
         ImageView _logo = (ImageView) findViewById(R.id.imageWorldManagementMenu);
         
@@ -69,83 +68,32 @@ public class ManagementMenu extends Activity
          _logo.startAnimation(anim); 
 
          //-----------------Lectura del archivo config.json-----------------
-
-         //------------------end Lectura--------------------------------
+         JSON parserJSON = new JSON(this.getBaseContext());
+         //parserJSON.loadJSON(this.getBaseContext());
          
-		//-----------------------------------------------------------------------------
-		//Ejemplo de configuración.
-        int num_bathrooms 	= 2;
-		int num_rooms		= 2;
-		int num_livingrooms	= 1;
-		int num_kitchens	= 1;
-		int num_terraces	= 2;
-		int num_gardens		= 1;
-		int num_garages		= 1;
-		int num_places		= num_bathrooms + num_rooms	+ num_livingrooms + num_kitchens + 	num_terraces + num_gardens + num_garages;
-		//-----------------------------------------------------------------------------
-		
-		log("Número de lugares: " + Integer.toString(num_places));
-		
-		//Se inserta los botones a la lista '_buttonList'
-		for(int i=0; i<num_places; i++)
-		{
-			final Button B = new Button(this);
-			B.setClickable(true);
-		
-			if(num_livingrooms!=0)
-			{
-				B.setText("Salón" + Integer.toString(num_livingrooms));
-				num_livingrooms--;
-			}
-			else if(num_kitchens!=0)
-			{
-				B.setText("Cocina" + Integer.toString(num_kitchens ));
-				num_kitchens--;
-			}
-			else if(num_rooms!=0)
-			{
-				B.setText("Habitación" + Integer.toString(num_rooms ));
-				num_rooms--;
-			}
-			else if(num_bathrooms!=0)
-			{
-				B.setText("Baño" + Integer.toString(num_bathrooms));
-				num_bathrooms--;
-			}
-			else if(num_terraces!=0)
-			{
-				B.setText("Terraza" + Integer.toString(num_terraces));
-				num_terraces--;
-			}
-			else if(num_gardens!=0)
-			{
-				B.setText("Jardín" + Integer.toString(num_gardens));
-				num_gardens--;
-			}
-			else if(num_garages!=0)
-			{
-				B.setText("Garaje" + Integer.toString(num_garages));
-				num_garages--;
-			}
-			
-			//Oyente asignado a cada botón
-			B.setOnClickListener(new OnClickListener()
-			{
-				@Override
-				public void onClick(View v) 
+		try {
+			ArrayList<String> rooms = parserJSON.getRooms();
+	         for (int i=0; i < rooms.size(); i++){
+	        	final Button button = new Button(this);
+	        	button.setClickable(true);
+	        	button.setText(rooms.get(i));
+	        	button.setOnClickListener(new OnClickListener()
 				{
-					// TODO Auto-generated method stub
-					String buttonName = (String) B.getText();
-					//Se pasa el nombre del botón que ha sido pulsado
-					log("Se ha pulsado: "+buttonName);			
-					createdManagementIntent(buttonName);
-				}
-			});	
-			_buttonList.add(i, B);
+					@Override
+					public void onClick(View v) 
+					{
+						String buttonName = (String) button.getText();
+						log("Se ha pulsado: "+ buttonName);			
+					}
+				});
+	        	_buttonList.add(button);
+	         } 
+		} catch (JSONException e) {
+			e.printStackTrace();
 		}
      
 		
-		//Se añaden los botones a las tablas de la vista
+		//Se aï¿½aden los botones a las tablas de la vista
 		for(int i=0; i<_buttonList.size()/2; i++)
         {
 			TableRow tr = new TableRow(this.getBaseContext());
@@ -160,14 +108,34 @@ public class ManagementMenu extends Activity
         	_table2.addView(_buttonList.get(i));
         }
 		
-        //-------------------end-View---------------------------------------------- 
+        //-------------------end-View----------------------------------------------
+        
+        /**
+         * ------------------------------------
+         * Ligadura:  variable <- componente XML
+         *-------------------------------------
+         */
+        /*
+        _livingRoom = ( Button ) findViewById( R.id.buttonLivingRoom );
+        
+        _livingRoom.setOnClickListener( new View.OnClickListener() 
+        {
+			
+			@Override
+			public void onClick( View v ) 
+			{
+				log( "Botï¿½n gestiï¿½n pulsado" );
+				createdManagementIntent();
+			}
+		});
+		*/    
     }
 	
 	/**
 	 * Mï¿½todo que ejecuta la activity lugares
 	 */
 	private void createdManagementIntent(String buttonName)
-	{
+	{/*
 		try 
 		{
 			Class<?> _clazz = Class.forName( "ehc.net.PlacesMenu" );
@@ -180,7 +148,7 @@ public class ManagementMenu extends Activity
 		catch ( ClassNotFoundException e ) 
 		{
 			e.printStackTrace();
-		}
+		}*/
 	}
 	
 	/**
