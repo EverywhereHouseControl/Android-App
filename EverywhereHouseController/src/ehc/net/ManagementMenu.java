@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.json.JSONException;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -24,6 +25,7 @@ public class ManagementMenu extends Activity
 	private TableLayout _table1;
 	private TableLayout _table2;
 	private ArrayList<Button> _buttonList = new ArrayList<Button>();
+	private JSON JSONFile;
 	//-------------------------------
 	
 	/**
@@ -68,29 +70,33 @@ public class ManagementMenu extends Activity
          _logo.startAnimation(anim); 
 
          //-----------------Lectura del archivo config.json-----------------
-         JSON parserJSON = new JSON(this.getBaseContext());
-         //parserJSON.loadJSON(this.getBaseContext());
-         
+
+        JSONFile = JSON.getInstance(getApplicationContext());
+		ArrayList<String> rooms;
 		try {
-			ArrayList<String> rooms = parserJSON.getRooms();
-	         for (int i=0; i < rooms.size(); i++){
-	        	final Button button = new Button(this);
-	        	button.setClickable(true);
-	        	button.setText(rooms.get(i));
-	        	button.setOnClickListener(new OnClickListener()
+			rooms = JSONFile.getRooms();
+			for (int i=0; i < rooms.size(); i++){
+				final String selectedRoom = rooms.get(i);
+				final Button button = new Button(getApplicationContext());
+				button.setClickable(true);
+				button.setText(selectedRoom);
+				button.setOnClickListener(new OnClickListener()
 				{
 					@Override
 					public void onClick(View v) 
 					{
 						String buttonName = (String) button.getText();
-						log("Se ha pulsado: "+ buttonName);			
+						log("Se ha pulsado: "+ buttonName);
+						createdManagementIntent(selectedRoom);
 					}
-				});
-	        	_buttonList.add(button);
-	         } 
+			});
+			_buttonList.add(button);
+			 }
 		} catch (JSONException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
      
 		
 		//Se a�aden los botones a las tablas de la vista
@@ -107,48 +113,23 @@ public class ManagementMenu extends Activity
         	_table2.addView(tr);
         	_table2.addView(_buttonList.get(i));
         }
-		
-        //-------------------end-View----------------------------------------------
-        
-        /**
-         * ------------------------------------
-         * Ligadura:  variable <- componente XML
-         *-------------------------------------
-         */
-        /*
-        _livingRoom = ( Button ) findViewById( R.id.buttonLivingRoom );
-        
-        _livingRoom.setOnClickListener( new View.OnClickListener() 
-        {
-			
-			@Override
-			public void onClick( View v ) 
-			{
-				log( "Bot�n gesti�n pulsado" );
-				createdManagementIntent();
-			}
-		});
-		*/    
+          
     }
 	
 	/**
 	 * M�todo que ejecuta la activity lugares
+	 * @param room 
 	 */
-	private void createdManagementIntent(String buttonName)
-	{/*
-		try 
-		{
-			Class<?> _clazz = Class.forName( "ehc.net.PlacesMenu" );
-			Intent _intent = new Intent( this,_clazz );
-			//Paso el nombre del bot�n que sido pulsado para redirigirla la siguiente
-			//Activity a la vista correcta.
-			_intent.putExtra("buttonName", buttonName);
-			startActivity( _intent );
-		} 
-		catch ( ClassNotFoundException e ) 
-		{
+	private void createdManagementIntent(String room) {
+		try {
+			Class<?> _class = Class.forName("ehc.net.ItemsActivity");
+			Intent intent = new Intent( getApplicationContext(),_class );
+			intent.putExtra("Room",room);
+			startActivity( intent );
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}*/
+		}
 	}
 	
 	/**

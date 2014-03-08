@@ -7,7 +7,7 @@
                 "DVD",
                 "Stereo",
                 "AirConditioning",
-                "Ligths",
+                "Lights",
                 "Heating"
             ]
         },
@@ -19,7 +19,7 @@
                 "Stereo",
                 "AirConditioning",
                 "Heating",
-                "Ligths",
+                "Lights",
                 "Heating"
             ]
         },
@@ -28,14 +28,14 @@
             "items": [
                 "Stereo",
                 "Door",
-                "Ligths",
+                "Lights",
                 "Heating"
             ]
         },
         "R4": {
             "name": "Garden",
             "items": [
-                "Ligths",
+                "Lights",
                 "Video"
             ]
         }

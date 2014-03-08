@@ -83,6 +83,18 @@
             </intent-filter>
         </activity>
         
+        <activity 
+            android:name="ehc.net.ItemsActivity" 
+            android:theme="@style/AppTheme" 
+            android:label="@style/AppTheme"
+            android:screenOrientation="portrait"
+            android:configChanges="keyboard|keyboardHidden|orientation"> 
+          	<intent-filter>
+          	    <action android:name="ehc.net.ItemsActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
         
     </application>
 
