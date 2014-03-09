@@ -29,7 +29,7 @@ public class ManagementMenu extends Activity
 	//-------------------------------
 	
 	/**
-	 * M�todo que se ejcuta cuando la vista ha sido cargada.
+	 * Method called when the view has been loaded.
 	 */
 	@Override
 	public void onWindowFocusChanged(boolean hasFocus) 
@@ -38,17 +38,17 @@ public class ManagementMenu extends Activity
 	    super.onWindowFocusChanged(hasFocus);
 	    if (hasFocus) 
 	    {
-	    	//Ligadura del bot�n 'genericButton' a una varible para obtener sus dimensiones
+	    	//It Links the 'genericButton' button for obtain his dimensions.
 	    	 final Button _genericButton = (Button) findViewById(R.id.genericButton);
-	    	 log("Tama�o bot�n :" + Integer.toString(_genericButton.getHeight()) +" "+ Integer.toString(_genericButton.getWidth()));
+	    	 log("Tamaño botón :" + Integer.toString(_genericButton.getHeight()) +" "+ Integer.toString(_genericButton.getWidth()));
 	     
-	    	 //Se aplican las dimensiones del bot�n 'generciButton' a los dem�s botones
+	    	 //It applies the previous dimension for the other buttons
 	    	 for(int i=0; i<_buttonList.size(); i++)
 	         {
 	    		 _buttonList.get(i).setHeight(_genericButton.getHeight());
 	    		 _buttonList.get(i).setWidth(_genericButton.getWidth());
 	         }
-	    	 //Se elimina el bot�n 'genericButton'
+	    	 //The 'genericButton' button it is deleted
 	    	 _table1.removeViewAt(0);
 	    }
 	}
@@ -69,7 +69,7 @@ public class ManagementMenu extends Activity
         //Start animating the image
          _logo.startAnimation(anim); 
 
-         //-----------------Lectura del archivo config.json-----------------
+         //-----------------It Reads config.json-----------------
 
         JSONFile = JSON.getInstance(getApplicationContext());
 		ArrayList<String> rooms;
@@ -96,10 +96,8 @@ public class ManagementMenu extends Activity
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-     
-		
-		//Se a�aden los botones a las tablas de la vista
+		//---------------------------------------------------------------------
+		//The buttons are added to tables
 		for(int i=0; i<_buttonList.size()/2; i++)
         {
 			TableRow tr = new TableRow(this.getBaseContext());
@@ -138,7 +136,7 @@ public class ManagementMenu extends Activity
      */
     private void log( String _text )
     {
-    	Log.d("Acci�n :", _text);
+    	Log.d("Action :", _text);
     }
     
     

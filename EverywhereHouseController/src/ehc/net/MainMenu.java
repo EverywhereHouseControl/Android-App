@@ -52,42 +52,15 @@ public class MainMenu extends Activity
 			@Override
 			public void onClick( View v ) 
 			{
-				log( "Botón gestión pulsado" );
+				log( "Button 'Management'pressed" );
 				createdManagementIntent();
 			}
 		});
                  
-    }
+    }	
 	
 	/**
-	   * 
-	   * @param is
-	   * @return
-	   * @throws IOException
-	   */
-	 public String convertStreamToString(InputStream is) throws IOException {
-	           if (is != null) {
-	                    StringBuilder sb = new StringBuilder();
-	                    String line;
-	                    try {
-	                            BufferedReader reader = new BufferedReader(
-	                                            new InputStreamReader(is, "UTF-8"));
-	                            while ((line = reader.readLine()) != null) {
-	                                    sb.append(line).append("\n");
-	                            }
-	                    }
-	                    finally {
-	                            is.close();
-	                    }
-	                    return sb.toString();
-	            } else {
-	                    return "";
-	            }
-	 }
-	
-	
-	/**
-	 * Método que ejecuta la activity gestión
+	 * Method that executes Management's activity
 	 */
 	 
 	private void createdManagementIntent()
@@ -105,12 +78,12 @@ public class MainMenu extends Activity
 	
 	
 	 /**
-     * Método para debugear
+     * Method for debug
      * @param _text
      */
     private void log( String _text )
     {
-    	Log.d( "Acción :", _text );
+    	Log.d( "Action :", _text );
     }
     
     

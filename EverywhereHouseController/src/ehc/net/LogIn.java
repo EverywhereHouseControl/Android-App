@@ -40,7 +40,6 @@ public class LogIn extends Activity
 		private String _houseEstructure = "";
 		//***********************************
 		
-		
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
 	{
@@ -49,7 +48,7 @@ public class LogIn extends Activity
 		
 		/**
          * ------------------------------------
-         * Ligadura:  variable <- componente XML
+         * Link:  variable <- component XML
          *-------------------------------------
          **/
         
@@ -62,24 +61,24 @@ public class LogIn extends Activity
         //Start animating the image
          _logo.startAnimation(anim);
       
-        final logInConnection connection = new logInConnection();
+        //final logInConnection connection = new logInConnection();
         
         _buttonLog.setOnClickListener( new View.OnClickListener() 
         {	
 			@Override
 			public void onClick( View _v ) 
 			{
-				log("Botón pulsado");
+				log("Button pressed");
 				
-				//Comprueba que hay conexión a internet
+				//It checks if exists connection
 				ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 			    NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 			      
 			    if (networkInfo != null && networkInfo.isConnected()) 			        
 			    {			            			        	
-			    	log("Hay conecxión");			            
+			    	log("Connection");			            
 			    	_post = new Post();						
-			    	//logInConnection connection = new logInConnection();
+			    	logInConnection connection = new logInConnection();
 			    	connection.execute();	    		
 			    } 
 			    else 			        
@@ -93,7 +92,7 @@ public class LogIn extends Activity
 	
 	/**
      * -----------------------------------------
-     * Ejecuta la activity Menu Principal
+     * Executes the MainMenu's Activity
      * -----------------------------------------
      */
     
@@ -103,6 +102,7 @@ public class LogIn extends Activity
 			Class<?> _clazz = Class.forName( "ehc.net.MainMenu" );
 			Intent _intent = new Intent( this,_clazz );
 			startActivity( _intent );
+			onDestroy();
 		} 
 		catch ( ClassNotFoundException e ) 
 		{
@@ -117,12 +117,12 @@ public class LogIn extends Activity
 		return true;
 	}
 	
-	// Proceso que se ejecuta en segundo plano
+	// Background process
     private class logInConnection extends AsyncTask<String, String, String>
     {
     	
     	/**
-    	 * Mensaje "cargando"
+    	 * Message "Loading"
     	 */
     	protected void onPreExecute() 
     	{
@@ -135,7 +135,7 @@ public class LogIn extends Activity
         }
     	
     	/**
-    	 * Método que encripta la contraseña 
+    	 * Method that encrypts the password
     	 * @param s
     	 * @return
     	 */
@@ -169,7 +169,7 @@ public class LogIn extends Activity
 			
 			try 
 			{	
-				//Creación de la consulta
+				//Query
 				ArrayList<String> parametros = new ArrayList<String>();
 				parametros.add("command");
 				parametros.add("login");
@@ -180,22 +180,22 @@ public class LogIn extends Activity
 				//parametros.add(md5(_password.getText().toString()));
 				parametros.add(md5("luis"));
 			 			
-				//En la variable datos se guarda la respuesta a la consulta enviada
-				JSONArray datos = _post.getServerData(parametros,"http://5.231.69.226/EHControlConnect/index.php"/*"http://ehcontrol.net/EHControlConnect/index.php"*/);
-				log(datos.toString());
+				//Variable 'Data' saves the query response
+				JSONArray data = _post.getServerData(parametros,"http://5.231.69.226/EHControlConnect/index.php"/*"http://ehcontrol.net/EHControlConnect/index.php"*/);
+				log(data.toString());
 				
-				if (datos != null && datos.length() > 0) 
+				if (data != null && data.length() > 0) 
 				{				
-					JSONObject json_data = datos.getJSONObject(0);
+					JSONObject json_data = data.getJSONObject(0);
 					log(json_data.toString());
 					
 					if (json_data.getInt("IdUser")==0) 
 					{ 
-						log("Usuario incorrecto. ");
+						log("Correct user. ");
 					}
 					else
 					{ 	
-						log("Usuario correcto. ");
+						log("Correct user. ");
 						log(json_data.getString( "json" ));
 						_houseEstructure = json_data.getString( "json" );
 						log( _houseEstructure );
@@ -207,7 +207,7 @@ public class LogIn extends Activity
 				}else 
 				{
 					log("JSON, ERROR ");
-					log(datos.toString());
+					log(data.toString());
 				}			 
 			 }catch (Exception e) 
 			 {
@@ -226,12 +226,12 @@ public class LogIn extends Activity
           
     
     /**
-     * Método para debugear
+     * Mï¿½todo para debugear
      * @param _text
      */
     private void log( String _text )
     {
-    	Log.d( "Acción :", _text );
+    	Log.d( "Action :", _text );
     }
     
     

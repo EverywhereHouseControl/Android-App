@@ -22,26 +22,26 @@ import android.util.Log;
 public class Post 
 {	                        
 	private InputStream is = null;		                         
-	private String respuesta = "";
+	private String response = "";
 
 	public Post(){}
 	
 	/**
-	 * Devuelve un JSONArray con la respuesta a una consulta
-	 * @param parametros = consulta
-	 * @param URL
-	 * @return la respuesta a la consulta
+	 * Returns a JSONArray with the response to a query
+	 * @param _parametros
+	 * @param _URL
+	 * @return
 	 */
-	public JSONArray getServerData(ArrayList<String> _parametros, String _URL) 
+	public JSONArray getServerData(ArrayList<String> _parameters, String _URL) 
 	{				 					 
-		conectaPost( _parametros, _URL );
+		connectionPost( _parameters, _URL );
 		
 		if (is != null) 
 		{				                                                
-			getRespuestaPost();
+			getResponsePost();
 		}
 		
-		if (respuesta != null /*&& respuesta.trim() != ""*/) 
+		if (response != null /*&& response.trim() != ""*/) 
 		{		
 			return getJsonArray();				                                                                        
 		} 
@@ -53,10 +53,10 @@ public class Post
 	
 	/**
 	 * 
-	 * @param parametros = consulta
-	 * @param URL
+	 * @param _parametros
+	 * @param _URL
 	 */
-	private void conectaPost(ArrayList<String> _parametros, String _URL) 
+	private void connectionPost(ArrayList<String> _parametros, String _URL) 
 	{				                         
 		ArrayList<BasicNameValuePair> nameValuePairs;	                         
 		try 
@@ -93,7 +93,7 @@ public class Post
 	/**
 	 * Parsea la respuesta a la consulta y la mete en el string "respuesta"		 
 	 */
-	private void getRespuestaPost() 
+	private void getResponsePost() 
 	{				 
 		try 
 		{				 
@@ -107,8 +107,8 @@ public class Post
 				Log.e("line",line.toString());
 			}				 
 			is.close();				 
-			respuesta = sb.toString();				 
-			Log.e("log_tag", "Cadena JSon " + respuesta.toString());
+			response = sb.toString();				 
+			Log.e("log_tag", "String JSon " + response.toString());
 			
 		} catch (Exception e) 
 		{				                         
@@ -126,7 +126,7 @@ public class Post
 		JSONArray jArray = null;
 		try 
 		{	
-			JSONObject json = new JSONObject( respuesta );
+			JSONObject json = new JSONObject( response );
 			jArray = json.getJSONArray( "result" );
 			
 		} catch ( Exception e ) 
