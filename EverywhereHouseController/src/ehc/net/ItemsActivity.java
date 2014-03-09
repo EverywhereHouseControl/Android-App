@@ -88,7 +88,7 @@ import framework.JSON;
 	     */
 	    private void log( String _text )
 	    {
-	    	Log.d( "Acción :", _text );
+	    	Log.d( "Action :", _text );
 	    }
 	    
 	    
@@ -106,6 +106,7 @@ import framework.JSON;
 	    protected void onStop()
 	    {
 	    	super.onStop();
+	    	//onDestroy();
 	    	log( "Stoped" );
 	    }
 	}

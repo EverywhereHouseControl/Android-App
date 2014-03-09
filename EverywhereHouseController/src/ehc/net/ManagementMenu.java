@@ -35,22 +35,23 @@ public class ManagementMenu extends Activity
 	public void onWindowFocusChanged(boolean hasFocus) 
 	{
 	    // TODO Auto-generated method stub
-	    super.onWindowFocusChanged(hasFocus);
 	    if (hasFocus) 
 	    {
 	    	//It Links the 'genericButton' button for obtain his dimensions.
-	    	 final Button _genericButton = (Button) findViewById(R.id.genericButton);
+	    	 Button _genericButton = (Button) findViewById(R.id.genericButton);
 	    	 log("Tamaño botón :" + Integer.toString(_genericButton.getHeight()) +" "+ Integer.toString(_genericButton.getWidth()));
-	     
+	    	 
 	    	 //It applies the previous dimension for the other buttons
 	    	 for(int i=0; i<_buttonList.size(); i++)
 	         {
 	    		 _buttonList.get(i).setHeight(_genericButton.getHeight());
 	    		 _buttonList.get(i).setWidth(_genericButton.getWidth());
 	         }
-	    	 //The 'genericButton' button it is deleted
-	    	 _table1.removeViewAt(0);
+	    	 //It is deleted the button 'genericButton'
+	    	 _table1.getChildAt(0).setVisibility(8);
+	    	 
 	    }
+	    super.onWindowFocusChanged(hasFocus);
 	}
 	
 	@Override
@@ -110,12 +111,11 @@ public class ManagementMenu extends Activity
         	TableRow tr = new TableRow(this.getBaseContext());
         	_table2.addView(tr);
         	_table2.addView(_buttonList.get(i));
-        }
-          
+        }       
     }
 	
 	/**
-	 * M�todo que ejecuta la activity lugares
+	 * Method which executes the next activity
 	 * @param room 
 	 */
 	private void createdManagementIntent(String room) {
@@ -131,7 +131,7 @@ public class ManagementMenu extends Activity
 	}
 	
 	/**
-     * M�todo para debugear
+     * Method for debug.
      * @param _text
      */
     private void log( String _text )
