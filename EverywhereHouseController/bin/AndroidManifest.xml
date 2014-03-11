@@ -95,6 +95,18 @@
             </intent-filter>
         </activity>
         
+        <activity
+            android:name="framework.ContainerFragments"
+			android:theme="@style/AppTheme" 
+            android:label="@style/AppTheme"
+            android:screenOrientation="portrait"
+            android:configChanges="keyboard|keyboardHidden|orientation">
+            <intent-filter>
+                <action android:name="framework.ContainerFragments" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
         
     </application>
 

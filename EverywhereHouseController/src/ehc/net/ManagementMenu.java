@@ -98,6 +98,7 @@ public class ManagementMenu extends Activity
 			e.printStackTrace();
 		}
 		//---------------------------------------------------------------------
+		
 		//The buttons are added to tables
 		for(int i=0; i<_buttonList.size()/2; i++)
         {
@@ -119,12 +120,29 @@ public class ManagementMenu extends Activity
 	 * @param room 
 	 */
 	private void createdManagementIntent(String room) {
-		try {
-			Class<?> _class = Class.forName("ehc.net.ItemsActivity");
+		try 
+		{
+			
+			Class<?> _class = Class.forName("framework.ContainerFragments");
 			Intent intent = new Intent( getApplicationContext(),_class );
+			
+			//Room name being clicked
 			intent.putExtra("Room",room);
+			//Room's number
+			intent.putExtra("NumRooms", _buttonList.size());
+				
+			for(int i=0; i<_buttonList.size(); i++)
+			{		
+				// Key: position, Value button Name.
+				intent.putExtra(Integer.toString(i) , _buttonList.get(i).getText().toString());	
+				// Key: button name, Value: position.
+				//Necessary to move the 'viewPager' to the desired view.
+				intent.putExtra(_buttonList.get(i).getText().toString(),Integer.toString(i));	
+			}	
 			startActivity( intent );
-		} catch (ClassNotFoundException e) {
+		} 
+		catch (ClassNotFoundException e) 
+		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
