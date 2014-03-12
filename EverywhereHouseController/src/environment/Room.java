@@ -1,12 +1,5 @@
 package environment;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import android.content.Context;
-import android.view.View;
-import android.widget.LinearLayout;
-
 /**
  * Class which behaviour will be implemented in child classes of child classes. 
  * Defines the contents of a room

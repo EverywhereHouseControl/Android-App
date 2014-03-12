@@ -85,7 +85,7 @@ import framework.JSON;
 		 */
 		public void setItemViews(LinearLayout ll, ArrayList<String> itemList)
 		{
-			for (int i=0; i <= itemList.size()-1; i++)
+			for (int i=0; i < itemList.size(); i++)
 			{			
 				if (itemList.get(i).equals("DVD"))
 				{
@@ -130,7 +130,7 @@ import framework.JSON;
 	    	try 
 	    	{
 	    		ArrayList<String> items= JSONFile.getItems( button);
-	    		Log.d("Item del botón: " + button,items.toString());
+	    		Log.d("Items del botón " + button,items.toString());
 	    		setItemViews(ll, items);
 	    	} 
 	    	catch (JSONException e) 

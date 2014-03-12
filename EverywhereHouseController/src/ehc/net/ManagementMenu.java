@@ -76,6 +76,7 @@ public class ManagementMenu extends Activity
 		ArrayList<String> rooms;
 		try {
 			rooms = JSONFile.getRooms();
+			log("Número de habitaciones: "+ rooms);
 			for (int i=0; i < rooms.size(); i++){
 				final String selectedRoom = rooms.get(i);
 				final Button button = new Button(getApplicationContext());

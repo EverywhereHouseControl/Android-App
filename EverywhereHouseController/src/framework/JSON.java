@@ -62,7 +62,7 @@ public class JSON
 		try 
 		{
 			JSONObject habitaciones = obj.getJSONObject(TAG_ROOMS);
-			for (int i = 0; i < habitaciones.length(); i++)
+			for (int i = 0; i <= habitaciones.length(); i++)
 			{
 				JSONObject habitacion = habitaciones.getJSONObject("R"+i);
 				
@@ -71,7 +71,7 @@ public class JSON
 				Log.e("COLIN_TAG", habitacion.getString(TAG_NAME));
 				JSONArray items = habitacion.getJSONArray(TAG_ITEMS);
 				
-				for (int j = 0; j < items.length(); j++)
+				for (int j = 0; j <= items.length(); j++)
 				{
 					Log.e("COLIN_TAG",items.getString(j));
 					System.out.println(items.getString(j));
@@ -92,7 +92,7 @@ public class JSON
 		try 
 		{
 			JSONObject habitaciones = obj.getJSONObject(TAG_ROOMS);
-			for (int i = 1; i < habitaciones.length(); i++)
+			for (int i = 1; i <= habitaciones.length(); i++)
 			{
 				JSONObject habitacion = habitaciones.getJSONObject("R"+i);
 				rooms.add(habitacion.getString(TAG_NAME));
@@ -114,7 +114,7 @@ public class JSON
 		try 
 		{
 			JSONObject habitaciones = obj.getJSONObject(TAG_ROOMS);
-			for (int i = 1; i < habitaciones.length(); i++)
+			for (int i = 1; i <= habitaciones.length(); i++)
 			{
 				JSONObject habitacion = habitaciones.getJSONObject("R"+i);
 				
@@ -147,7 +147,7 @@ public class JSON
 		try 
 		{
 			JSONObject habitaciones = obj.getJSONObject(TAG_ROOMS);
-			for (int i = 1; i < habitaciones.length(); i++)
+			for (int i = 1; i <= habitaciones.length(); i++)
 			{
 				JSONObject habitacion = habitaciones.getJSONObject("R"+i);
 				
@@ -155,6 +155,7 @@ public class JSON
 				
 				Log.e("COLIN_TAG", habitacion.getString(TAG_NAME));
 				JSONArray items = habitacion.getJSONArray(TAG_ITEMS);
+				Log.e("COLIN_TAG", "items " + items);
 				if (roomName.equals(habitacion.getString(TAG_NAME))){
 					for (int j = 0; j < items.length(); j++)
 						{
