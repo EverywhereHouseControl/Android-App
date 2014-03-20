@@ -189,15 +189,15 @@ public class LogIn extends Activity
 					JSONObject json_data = data.getJSONObject(0);
 					log(json_data.toString());
 					
-					if (json_data.getInt("IdUser")==0) 
+					if (json_data.getInt("IDUSER")==0) 
 					{ 
-						log("Correct user. ");
+						log("Incorrect user. ");
 					}
 					else
 					{ 	
 						log("Correct user. ");
-						log(json_data.getString( "json" ));
-						_houseEstructure = json_data.getString( "json" );
+						log(json_data.getString( "JSON" ));
+						_houseEstructure = json_data.getString( "JSON" );
 						log( _houseEstructure );
 						//String currentDirectory = System.getProperty("user.dir");
 						//log(currentDirectory);

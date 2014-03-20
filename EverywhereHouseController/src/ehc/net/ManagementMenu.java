@@ -4,6 +4,10 @@ import java.util.ArrayList;
 
 import org.json.JSONException;
 
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.MenuItem;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,16 +20,17 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
+import android.widget.Toast;
 import ehc.net.R;
 import framework.JSON;
 
-public class ManagementMenu extends Activity
-{
+public class ManagementMenu extends SherlockActivity {//Activity{
 	//-----------Variables-----------
 	private TableLayout _table1;
 	private TableLayout _table2;
 	private ArrayList<Button> _buttonList = new ArrayList<Button>();
 	private JSON JSONFile;
+	private ActionBar ab;
 	//-------------------------------
 	
 	/**
@@ -69,6 +74,13 @@ public class ManagementMenu extends Activity
         Animation anim = AnimationUtils.loadAnimation(this.getBaseContext(), R.anim.rotate_indefinitely);
         //Start animating the image
          _logo.startAnimation(anim); 
+         
+         //----------------ActionBar-----
+         ab = getSupportActionBar();
+         ab.setDisplayShowHomeEnabled(false);
+         ab.setDisplayUseLogoEnabled(false);
+         ab.setDisplayShowTitleEnabled(false);
+         //-------------------------------
 
          //-----------------It Reads config.json-----------------
 
@@ -114,6 +126,30 @@ public class ManagementMenu extends Activity
         	_table2.addView(tr);
         	_table2.addView(_buttonList.get(i));
         }       
+    }
+	
+	
+	@Override
+    public boolean onCreateOptionsMenu(com.actionbarsherlock.view.Menu menu) {
+        getSupportMenuInflater().inflate(R.menu.action_bar, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+ 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) 
+    {
+        super.onOptionsItemSelected(item);
+ 
+        switch(item.getItemId())
+        {
+            case R.id.Profile:
+                Toast.makeText(getBaseContext(), "You selected Phone", Toast.LENGTH_SHORT).show();
+                break; 
+            case R.id.Exit:
+                Toast.makeText(getBaseContext(), "You selected Computer", Toast.LENGTH_SHORT).show();
+                break;
+        }
+        return true;
     }
 	
 	/**
