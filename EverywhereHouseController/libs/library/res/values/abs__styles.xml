@@ -249,9 +249,6 @@
     <style name="Widget.Sherlock.Light.PopupWindow.ActionMode" parent="Widget">
         <item name="android:popupBackground">@android:color/white</item>
     </style>
-
-
-
     <style name="Widget.Sherlock.ProgressBar" parent="android:Widget.ProgressBar">
         <item name="android:indeterminateDrawable">@drawable/abs__progress_medium_holo</item>
         <item name="android:animationResolution">33</item>

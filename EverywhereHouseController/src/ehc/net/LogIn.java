@@ -55,7 +55,7 @@ public class LogIn extends Activity
         _buttonLog = ( Button ) findViewById( R.id.buttonLogin );
         _user = ( EditText ) findViewById( R.id.idText );
         _password = ( EditText ) findViewById( R.id.passwordText );
-        _logo = (ImageView) findViewById(R.id.imageWorldManagementMenu);
+        _logo = (ImageView) findViewById(R.id.HouseIconManagementMenu);
         
         Animation anim = AnimationUtils.loadAnimation(this.getBaseContext(), R.anim.rotate_indefinitely);
         //Start animating the image
@@ -171,6 +171,7 @@ public class LogIn extends Activity
 			{	
 				//Query
 				ArrayList<String> parametros = new ArrayList<String>();
+				
 				parametros.add("command");
 				parametros.add("login");
 				parametros.add("username");
@@ -183,6 +184,33 @@ public class LogIn extends Activity
 				//Variable 'Data' saves the query response
 				JSONArray data = _post.getServerData(parametros,"http://5.231.69.226/EHControlConnect/index.php"/*"http://ehcontrol.net/EHControlConnect/index.php"*/);
 				log(data.toString());
+				
+				///////////////////////////////////////////////////////
+				ArrayList<String> parametros2 = new ArrayList<String>();
+				parametros2.add("command");
+				parametros2.add("doaction");
+				parametros2.add("username");
+				//parametros.add(_user.getText().toString());
+				parametros2.add("luis");
+				
+				parametros2.add("servicename");
+				//parametros.add(_user.getText().toString());
+				parametros2.add("saloon");
+				
+				parametros2.add("actionname");
+				//parametros.add(_user.getText().toString());
+				parametros2.add("encender");
+				
+				parametros2.add("data");
+				//parametros.add(_user.getText().toString());
+				parametros2.add("cara mierda");
+			 			
+				//Variable 'Data' saves the query response
+				JSONArray data2 = _post.getServerData(parametros2,"http://5.231.69.226/EHControlConnect/index.php"/*"http://ehcontrol.net/EHControlConnect/index.php"*/);
+				log(data2.toString());
+				
+				/////////////////////////////////////////////////////
+
 				
 				if (data != null && data.length() > 0) 
 				{				

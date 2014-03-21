@@ -21,7 +21,7 @@
                 android:layout_height="wrap_content" >
 
                 <ImageView
-                    android:id="@+id/imageWorldManagementMenu"
+                    android:id="@+id/HouseIconManagementMenu"
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
                     android:src="@drawable/world_ehc" />
@@ -30,7 +30,7 @@
                     android:id="@+id/imageWordManagementMenu"
                     android:layout_width="wrap_content"
                     android:layout_height="170dp"
-                    android:layout_alignLeft="@+id/imageWorldManagementMenu"
+                    android:layout_alignLeft="@+id/HouseIconManagementMenu"
                     android:layout_alignParentRight="true"
                     android:layout_weight="0.12"
                     android:src="@drawable/word_ehc" />

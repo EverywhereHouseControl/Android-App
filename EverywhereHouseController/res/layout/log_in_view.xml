@@ -19,11 +19,11 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="49dp"
-        android:background="@drawable/button_login"
+        android:textColor="@drawable/button_text_color"
+        android:background="@drawable/button_config"
         android:hint="60sp"
         android:onClick="onClickButton"
         android:text="Login"
-        android:textColor="@color/White"
         android:textSize="20sp" />
 
     <EditText
@@ -32,7 +32,7 @@
         android:layout_height="30dp"
         android:layout_above="@+id/buttonLogin"
         android:layout_alignLeft="@+id/buttonLogin"
-        android:layout_alignRight="@+id/imageWorldManagementMenu"
+        android:layout_alignRight="@+id/HouseIconManagementMenu"
         android:layout_marginBottom="31dp"
         android:ems="10"
         android:inputType="textPassword"
@@ -63,14 +63,14 @@
         android:id="@+id/idText"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
-        android:layout_alignRight="@+id/imageWorldManagementMenu"
+        android:layout_alignRight="@+id/HouseIconManagementMenu"
         android:layout_alignTop="@+id/id"
         android:layout_toRightOf="@+id/password"
         android:ems="10"
         android:lines="1" />
 
     <ImageView
-        android:id="@+id/imageWorldManagementMenu"
+        android:id="@+id/HouseIconManagementMenu"
         android:layout_width="200dp"
         android:layout_height="120dp"
         android:layout_alignParentTop="true"
@@ -82,7 +82,7 @@
         android:id="@+id/imageWordEHC"
         android:layout_width="200dp"
         android:layout_height="120dp"
-        android:layout_alignTop="@+id/imageWorldManagementMenu"
+        android:layout_alignTop="@+id/HouseIconManagementMenu"
         android:layout_centerHorizontal="true"
         android:src="@drawable/word_ehc" />
 

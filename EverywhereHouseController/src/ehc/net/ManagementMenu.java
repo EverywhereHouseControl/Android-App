@@ -69,11 +69,11 @@ public class ManagementMenu extends SherlockActivity {//Activity{
                 
         _table2 = (TableLayout) findViewById(R.id.table2);
         
-        ImageView _logo = (ImageView) findViewById(R.id.imageWorldManagementMenu);
+        //ImageView _logo = (ImageView) findViewById(R.id.HouseIconManagementMenu);
         
-        Animation anim = AnimationUtils.loadAnimation(this.getBaseContext(), R.anim.rotate_indefinitely);
+        //Animation anim = AnimationUtils.loadAnimation(this.getBaseContext(), R.anim.rotate_indefinitely);
         //Start animating the image
-         _logo.startAnimation(anim); 
+        // _logo.startAnimation(anim); 
          
          //----------------ActionBar-----
          ab = getSupportActionBar();
@@ -143,10 +143,18 @@ public class ManagementMenu extends SherlockActivity {//Activity{
         switch(item.getItemId())
         {
             case R.id.Profile:
-                Toast.makeText(getBaseContext(), "You selected Phone", Toast.LENGTH_SHORT).show();
-                break; 
+                Toast.makeText(getBaseContext(), "You selected Profile", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.ChangeProfile:
+            	Intent exitIntent = new Intent(this,LogIn.class);
+            	exitIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP|Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            	startActivity(exitIntent);  	
+                break;
             case R.id.Exit:
-                Toast.makeText(getBaseContext(), "You selected Computer", Toast.LENGTH_SHORT).show();
+            	Intent intent = new Intent(Intent.ACTION_MAIN);
+            	intent.addCategory(Intent.CATEGORY_HOME);
+            	intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            	startActivity(intent);  	
                 break;
         }
         return true;
@@ -158,8 +166,7 @@ public class ManagementMenu extends SherlockActivity {//Activity{
 	 */
 	private void createdManagementIntent(String room) {
 		try 
-		{
-			
+		{			
 			Class<?> _class = Class.forName("framework.ContainerFragments");
 			Intent intent = new Intent( getApplicationContext(),_class );
 			
@@ -210,5 +217,10 @@ public class ManagementMenu extends SherlockActivity {//Activity{
     {
     	super.onStop();
     	log( "Stoped" );
+    }
+    protected void onDestroy()
+    {
+    	super.onDestroy();
+    	log( "Destroy" );
     }
 }

@@ -52,6 +52,8 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="30dp"
+        android:textColor="@drawable/button_text_color"
+        android:background="@drawable/button_config"
         android:hint="60sp"
         android:onClick="onClickButton"
         android:text="Login"
@@ -68,7 +70,7 @@
         android:lines="1" />
 
     <ImageView
-        android:id="@+id/imageWorldManagementMenu"
+        android:id="@+id/HouseIconManagementMenu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -80,9 +82,9 @@
         android:id="@+id/imageWordEHC"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/imageWorldManagementMenu"
+        android:layout_alignBottom="@+id/HouseIconManagementMenu"
         android:layout_alignRight="@+id/idText"
-        android:layout_alignTop="@+id/imageWorldManagementMenu"
+        android:layout_alignTop="@+id/HouseIconManagementMenu"
         android:src="@drawable/word_ehc" />
 
 </RelativeLayout>

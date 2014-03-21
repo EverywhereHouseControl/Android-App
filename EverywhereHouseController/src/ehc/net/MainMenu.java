@@ -36,7 +36,7 @@ public class MainMenu extends Activity
          *-------------------------------------
          */
        // _buttonProfile = ( Button ) findViewById( R.id.buttonProfile );
-        _buttonManagement = ( Button ) findViewById( R.id.buttonManagement );
+        _buttonManagement = ( Button ) findViewById( R.id.buttonManagement);
        // _buttonEvent = ( Button ) findViewById( R.id.buttonEvent );
        // _buttonConfig = ( Button ) findViewById( R.id.buttonConfig );
         _logo = (ImageView) findViewById(R.id.world);

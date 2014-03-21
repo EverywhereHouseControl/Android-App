@@ -63,7 +63,7 @@
         </activity>
         <activity 
             android:name="ehc.net.ManagementMenu" 
-            android:theme="@style/Theme.Sherlock.Light.ForceOverflow"
+            android:theme="@style/Theme.MyTheme"
             android:uiOptions="splitActionBarWhenNarrow"
             android:screenOrientation="portrait"
             android:configChanges="keyboard|keyboardHidden|orientation"> 

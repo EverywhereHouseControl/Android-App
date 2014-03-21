@@ -24,7 +24,7 @@
             android:layout_height="wrap_content" >
 
             <ImageView
-                android:id="@+id/world"
+                android:id="@+id/House_icon_main_menu"
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
                 android:layout_marginTop="30dp"
@@ -43,18 +43,6 @@
             android:layout_height="match_parent" >
 
             <Button
-                android:id="@+id/buttonConfig"
-                android:layout_width="120dp"
-                android:layout_height="100dp"
-                android:layout_alignLeft="@+id/buttonManagement"
-                android:layout_below="@+id/buttonManagement"
-                android:layout_marginTop="18dp"
-                android:background="@drawable/button"
-                android:text="Config."
-                android:textColor="@color/DarkGreen"
-                android:textSize="20sp" />
-
-            <Button
                 android:id="@+id/buttonProfile"
                 android:layout_width="120dp"
                 android:layout_height="100dp"
@@ -67,13 +55,25 @@
                 android:textSize="20sp" />
 
             <Button
+                android:id="@+id/buttonConfig"
+                android:layout_width="120dp"
+                android:layout_height="100dp"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/buttonManagement"
+                android:layout_marginLeft="42dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/button"
+                android:text="Config."
+                android:textColor="@color/DarkGreen"
+                android:textSize="20sp" />
+
+            <Button
                 android:id="@+id/buttonManagement"
                 android:layout_width="120dp"
                 android:layout_height="100dp"
+                android:layout_alignLeft="@+id/buttonConfig"
                 android:layout_alignParentTop="true"
-                android:layout_marginRight="34dp"
-                android:layout_marginTop="68dp"
-                android:layout_toLeftOf="@+id/buttonWorks"
+                android:layout_marginTop="75dp"
                 android:background="@drawable/button"
                 android:text="Gestión"
                 android:textColor="@color/DarkGreen"
@@ -85,7 +85,7 @@
                 android:layout_height="100dp"
                 android:layout_above="@+id/buttonConfig"
                 android:layout_alignParentRight="true"
-                android:layout_marginRight="43dp"
+                android:layout_marginRight="32dp"
                 android:background="@drawable/button"
                 android:text="Tareas"
                 android:textColor="@color/DarkGreen"

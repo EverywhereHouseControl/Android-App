@@ -14,7 +14,7 @@
     tools:context=".LogIn" >
 
      <ImageView
-         android:id="@+id/imageWorldManagementMenu"
+         android:id="@+id/HouseIconManagementMenu"
          android:layout_width="fill_parent"
          android:layout_height="400dp"
          android:layout_alignParentTop="true"
@@ -29,7 +29,9 @@
          android:layout_alignParentBottom="true"
          android:layout_centerHorizontal="true"
          android:layout_marginBottom="77dp"
-         android:onClick="onClickButton"
+         android:onClick="onClickButton" 
+         android:textColor="@drawable/button_text_color"
+         android:background="@drawable/button_config"
          android:text="Login"
          android:textSize="50sp" />
 
@@ -47,8 +49,8 @@
          android:id="@+id/imageWordEHC"
          android:layout_width="400dp"
          android:layout_height="500dp"
-         android:layout_alignBottom="@+id/imageWorldManagementMenu"
-         android:layout_alignTop="@+id/imageWorldManagementMenu"
+         android:layout_alignBottom="@+id/HouseIconManagementMenu"
+         android:layout_alignTop="@+id/HouseIconManagementMenu"
          android:layout_centerHorizontal="true"
          android:src="@drawable/word_ehc" />
 
@@ -57,7 +59,7 @@
          android:layout_width="400dp"
          android:layout_height="wrap_content"
          android:layout_alignLeft="@+id/passwordText"
-         android:layout_below="@+id/imageWorldManagementMenu"
+         android:layout_below="@+id/HouseIconManagementMenu"
          android:layout_marginTop="144dp"
          android:ems="10"
          android:lines="1" />
@@ -67,7 +69,7 @@
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
          android:layout_alignBottom="@+id/idText"
-         android:layout_alignLeft="@+id/imageWorldManagementMenu"
+         android:layout_alignLeft="@+id/HouseIconManagementMenu"
          android:layout_marginLeft="28dp"
          android:text="User"
          android:textSize="50sp" />

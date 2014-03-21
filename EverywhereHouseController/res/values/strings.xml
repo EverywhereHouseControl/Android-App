@@ -3,6 +3,8 @@
 
     <string name="app_name">EHC</string>
     <string name="action_settings">Settings</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="profile">Perfil</string>
+    <string name="change_user">Cambiar Usuario</string>
+    <string name="exit">Salir</string>
 
 </resources>
