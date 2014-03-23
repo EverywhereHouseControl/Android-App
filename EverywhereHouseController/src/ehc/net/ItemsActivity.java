@@ -1,7 +1,11 @@
 	package ehc.net;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 import org.json.JSONException;
+
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,21 +13,22 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
 import environment.DVD;
 import environment.Light;
+import framework.ExpandableListAdapter;
 import framework.JSON;
 
 	@SuppressLint("ValidFragment")
 	public class ItemsActivity extends Fragment//Activity
 	{
-		//---------Variables----------------
 
-		//private ImageView _logo;
-		//private ViewGroup layout;
-		//private ScrollView scrollView;
 		private JSON JSONFile;
 		private String button;
+		ExpandableListView expListView;
+		List<String> groupList;
+		HashMap<String, List<String>> listDataChild;
 		
 		
 //		@Override
@@ -67,11 +72,7 @@ import framework.JSON;
 //		/**
 //		 * Method which executes the next activity
 //		 */
-//		 
-//		private void createdManagementIntent()
-//		{
-//
-//		}
+
 		
 		public ItemsActivity(String button)
 		{
@@ -116,6 +117,24 @@ import framework.JSON;
 	        super.onActivityCreated( savedInstanceState );
 	    }
 	 
+	    private HashMap<String, List<String>> createHashMapItems(List<String> items){
+	    	for (int i=0; i<=items.size()-1; i++){
+	    		if (items.get(i).equals("DVD")){
+	    			List<String> dvd = new ArrayList<String>();
+	    			dvd.add("float");
+	    			listDataChild.put("DVD",dvd);
+	    		} else if (items.get(i).equals("Lights")){
+	    			List<String> lights = new ArrayList<String>();
+	    			lights.add("float");
+	    			lights.add("boolean");
+	    			listDataChild.put("Lights",lights);
+	    		} 
+	    			
+	    	}
+	    	
+	    	return listDataChild;
+	    }
+	    
 	    /**Crea la vista ligando el archivo .XML al rootView
 	     *@return la vista de la habitación
 		**/
@@ -123,15 +142,21 @@ import framework.JSON;
 	    public View onCreateView( LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState )
 	    {
 	    	ViewGroup rootView = ( ViewGroup ) inflater.inflate( R.layout.items_view, container, false );
-	    	LinearLayout ll = (LinearLayout)rootView.findViewById(R.id.llid);
+	    	expListView = (ExpandableListView) rootView.findViewById(R.id.itemlist);
 
 	    	JSONFile = JSON.getInstance(getActivity().getApplicationContext());
+	    	
+
+
+	    	groupList = new ArrayList<String>();
+			listDataChild = new HashMap<String, List<String>>();
 
 	    	try 
 	    	{
-	    		ArrayList<String> items= JSONFile.getItems( button);
-	    		Log.d("Items del botón " + button,items.toString());
-	    		setItemViews(ll, items);
+	    		groupList = JSONFile.getItems(button);
+		        final ExpandableListAdapter expListAdapter = new ExpandableListAdapter(rootView.getContext().getApplicationContext(), groupList, createHashMapItems(groupList));
+		        expListView.setAdapter(expListAdapter);
+
 	    	} 
 	    	catch (JSONException e) 
 	    	{
