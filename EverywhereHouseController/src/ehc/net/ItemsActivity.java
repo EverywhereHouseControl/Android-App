@@ -119,17 +119,26 @@ import framework.JSON;
 	 
 	    private HashMap<String, List<String>> createHashMapItems(List<String> items){
 	    	for (int i=0; i<=items.size()-1; i++){
-	    		if (items.get(i).equals("DVD")){
-	    			List<String> dvd = new ArrayList<String>();
-	    			dvd.add("float");
-	    			listDataChild.put("DVD",dvd);
+	    		if (items.get(i).equals("Door")){
+	    			List<String> door = new ArrayList<String>();
+	    			door.add("boolean");
+	    			listDataChild.put(items.get(i),door);
 	    		} else if (items.get(i).equals("Lights")){
 	    			List<String> lights = new ArrayList<String>();
 	    			lights.add("float");
 	    			lights.add("boolean");
-	    			listDataChild.put("Lights",lights);
-	    		} 
-	    			
+	    			listDataChild.put(items.get(i),lights);
+    			} else if (items.get(i).equals("AirConditioning")){
+	    			List<String> air = new ArrayList<String>();
+	    			air.add("float");
+	    			air.add("boolean");
+	    			listDataChild.put(items.get(i),air);
+    			} else if (items.get(i).equals("Stereo")){
+	    			List<String> stereo = new ArrayList<String>();
+	    			stereo.add("float");
+	    			stereo.add("boolean");
+	    			listDataChild.put(items.get(i),stereo);
+    			} 	    			
 	    	}
 	    	
 	    	return listDataChild;
@@ -154,7 +163,10 @@ import framework.JSON;
 	    	try 
 	    	{
 	    		groupList = JSONFile.getItems(button);
-		        final ExpandableListAdapter expListAdapter = new ExpandableListAdapter(rootView.getContext().getApplicationContext(), groupList, createHashMapItems(groupList));
+		        final ExpandableListAdapter expListAdapter = new 
+		        		ExpandableListAdapter(
+		        				rootView.getContext().getApplicationContext(), 
+		        				groupList, createHashMapItems(groupList));
 		        expListView.setAdapter(expListAdapter);
 
 	    	} 

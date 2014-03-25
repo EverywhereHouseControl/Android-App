@@ -7,18 +7,15 @@
                 "DVD",
                 "Stereo",
                 "AirConditioning",
-                "Lights",
-                "Heating"
+                "Lights"
             ]
         },
         "R2": {
             "name": "Kitchen",
             "items": [
                 "TV",
-                "Microhondas",
                 "Stereo",
                 "AirConditioning",
-                "Heating",
                 "Lights",
                 "Heating"
             ]
@@ -28,8 +25,7 @@
             "items": [
                 "Stereo",
                 "Door",
-                "Lights",
-                "Heating"
+                "Lights"
             ]
         },
         "R4": {
