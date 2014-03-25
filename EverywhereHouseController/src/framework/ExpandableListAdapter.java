@@ -46,18 +46,18 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
  
         TextView item = (TextView) convertView.findViewById(R.id.childname);
         
-        String itemName = laptops.get(groupPosition);
-        item.setText(itemName);
+        String itemName = (String) getChild(groupPosition,childPosition);
+        
         
         if (itemName.equals("float")){
+        	item.setText("Set value: ");
         	SeekBar sb = (SeekBar) convertView.findViewById(R.id.float_value);
         	sb.setVisibility(convertView.VISIBLE);
-        } else {
-        	SeekBar sb = (SeekBar) convertView.findViewById(R.id.float_value);
-        	sb.setVisibility(convertView.VISIBLE);
+        } else if (itemName.equals("boolean")){
+        	item.setText("Turn on/off");
         	ToggleButton tg = (ToggleButton) convertView.findViewById(R.id.boolean_value);
-        	tg.setVisibility(convertView.VISIBLE); 
-        }        
+        	tg.setVisibility(convertView.VISIBLE);
+        }         
         return convertView;
     }
  

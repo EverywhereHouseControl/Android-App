@@ -13,36 +13,25 @@
     </style>
     
     <!--////////////////////////////Custom Bar///////////////////////////////////////////-->
-    <style name="Theme.MyTheme" parent="Theme.Sherlock.ForceOverflow">
+    <style name="Theme.MyTheme" parent="Theme.Sherlock.MyForceOverflow">
     	<item name="actionBarStyle">@style/Widget.MyTheme.ActionBar</item>
-    	<item name="android:actionDropDownStyle">@style/MyDropDownItem</item>
-    	<item name="actionDropDownStyle">@style/MyDropDownItem</item>
-    	<item name="listPopupWindowStyle">@style/MyListPopupWindow</item>
-    	<item name="dropDownListViewStyle">@style/MyListView.DropDown</item>
+    	<item name="android:actionBarStyle">@style/Widget.MyTheme.ActionBar</item>
     	<item name="actionOverflowButtonStyle">@style/customOverflowButtonStyle</item>
         <item name="android:actionOverflowButtonStyle">@style/customOverflowButtonStyle</item>
+        <item name="android:popupBackground">#ffffff</item>
 	</style>
 	<style name="Widget.MyTheme.ActionBar" parent="Widget.Sherlock.ActionBar">
     	<item name="android:background">#ffffff</item>
     	<item name="background">#ffffff</item>
 	</style>
-	<style name="MyDropDownItem" parent="Widget.Sherlock.Spinner.DropDown.ActionBar">
-    	<item name="android:background">#ffffff</item>
-    	<item name="android:popupBackground">#ffffff</item>
-    	<item name="android:dropDownSelector">#ffffff</item>
-	</style>
-	<style name="MyListPopupWindow" parent="Widget">
-	    <item name="android:background">#ffffff</item>
-    	<item name="background">#ffffff</item>
-    	<item name="android:textColor">#ffffff</item>
-	</style>	
-	<style name="MyListView.DropDown" parent="Sherlock.__Widget.Holo.ListView">
-		<item name="android:background">#000000</item>
-    	<item name="background">#000000</item>
-	</style>
+	<style name="Theme.Sherlock.MyForceOverflow">
+        <item name="absForceOverflow">true</item>
+        <item name="background">#ffffff</item>
+    </style>
 	<style name="customOverflowButtonStyle" parent="Widget.Sherlock.ActionButton.Overflow">
  		<item name="android:src">@drawable/world_ehc</item>
-    </style>
+ 		<item name="background">#ffffff</item>
+    </style>	
     <!--////////////////////////////////////////////////////////////////////////////////////-->
     
     <style name="Theme.Sherlock" parent="Sherlock.__Theme">

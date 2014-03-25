@@ -14,17 +14,20 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 public class LogIn extends Activity 
 {
@@ -38,6 +41,7 @@ public class LogIn extends Activity
 		private Post _post;
 		private ProgressDialog pDialog;
 		private String _houseEstructure = "";
+		private TextView _createUser;
 		//***********************************
 		
 	@Override
@@ -56,6 +60,7 @@ public class LogIn extends Activity
         _user = ( EditText ) findViewById( R.id.idText );
         _password = ( EditText ) findViewById( R.id.passwordText );
         _logo = (ImageView) findViewById(R.id.HouseIconManagementMenu);
+        
         
         Animation anim = AnimationUtils.loadAnimation(this.getBaseContext(), R.anim.rotate_indefinitely);
         //Start animating the image
@@ -87,7 +92,20 @@ public class LogIn extends Activity
 			    }				
 
 			}													
-		});           	
+		});
+        
+        _createUser = (TextView) findViewById(R.id.createUser);
+    	_createUser.setOnClickListener(new View.OnClickListener() 
+        {	
+			@Override
+			public void onClick(View v) 
+			{
+				// TODO Auto-generated method stub
+				log("Crear usuario");
+				createUser();
+			}
+		});        
+        
 	}
 	
 	/**
@@ -134,34 +152,7 @@ public class LogIn extends Activity
             pDialog.show();
         }
     	
-    	/**
-    	 * Method that encrypts the password
-    	 * @param s
-    	 * @return
-    	 */
-    	public String md5(String s) 
-    	{
-    	    try 
-    	    {
-    	        // Create MD5 Hash
-    	        MessageDigest digest = java.security.MessageDigest.getInstance("MD5");
-    	        digest.update(s.getBytes());
-    	        byte messageDigest[] = digest.digest();
-
-    	        // Create Hex String
-    	        StringBuffer hexString = new StringBuffer();
-    	        for (int i=0; i<messageDigest.length; i++)
-    	            hexString.append(Integer.toHexString(0xFF & messageDigest[i]));
-    	        return hexString.toString();
-
-    	    } catch (NoSuchAlgorithmException e) 
-    	    {
-    	        e.printStackTrace();
-    	    }
-    	    return "";
-    	}
-    	
-		@Override
+    	@Override
 		protected String doInBackground(String... arg0) 
 		{
 			// TODO Auto-generated method stub
@@ -183,31 +174,72 @@ public class LogIn extends Activity
 			 			
 				//Variable 'Data' saves the query response
 				JSONArray data = _post.getServerData(parametros,"http://5.231.69.226/EHControlConnect/index.php"/*"http://ehcontrol.net/EHControlConnect/index.php"*/);
-				log(data.toString());
+				//log(data.toString());
+				
+				
+				//ArrayList<String> parametros = new ArrayList<String>();
+				
+//				parametros.add("command");
+//				parametros.add("deleteuser");
+//				parametros.add("username");
+//				//parametros.add(_user.getText().toString());
+//				parametros.add("alex");
+//				parametros.add("password");
+//				//parametros.add(md5(_password.getText().toString()));
+//				parametros.add(md5("luis"));
+//				
+//				JSONArray data2 = _post.getServerData(parametros,"http://5.231.69.226/EHControlConnect/index.php"/*"http://ehcontrol.net/EHControlConnect/index.php"*/);
+//				log(data2.toString());
+				
+				
+//				parametros.add("command");
+//				parametros.add("modifyuser");
+//				parametros.add("username");
+//				//parametros.add(_user.getText().toString());
+//				parametros.add("alex");
+//				parametros.add("password");
+//				//parametros.add(md5(_password.getText().toString()));
+//				parametros.add(md5("luis"));
+//				parametros.add("n_username");
+//				//parametros.add(_user.getText().toString());
+//				parametros.add("luis_caca_caca");
+//				parametros.add("password");
+//				//parametros.add(md5(_password.getText().toString()));
+//				parametros.add("email");
+//				//parametros.add(md5(_password.getText().toString()));
+//				parametros.add(md5("luis"));
+//				parametros.add("hint");
+//				//parametros.add(md5(_password.getText().toString()));
+//				parametros.add(md5("luis"));
+//				
+//				
+//				JSONArray data2 = _post.getServerData(parametros,"http://5.231.69.226/EHControlConnect/index.php"/*"http://ehcontrol.net/EHControlConnect/index.php"*/);
+//				log(data2.toString());
+				
 				
 				///////////////////////////////////////////////////////
-				ArrayList<String> parametros2 = new ArrayList<String>();
-				parametros2.add("command");
-				parametros2.add("doaction");
-				parametros2.add("username");
-				//parametros.add(_user.getText().toString());
-				parametros2.add("luis");
-				
-				parametros2.add("servicename");
-				//parametros.add(_user.getText().toString());
-				parametros2.add("saloon");
-				
-				parametros2.add("actionname");
-				//parametros.add(_user.getText().toString());
-				parametros2.add("encender");
-				
-				parametros2.add("data");
-				//parametros.add(_user.getText().toString());
-				parametros2.add("cara mierda");
-			 			
-				//Variable 'Data' saves the query response
-				JSONArray data2 = _post.getServerData(parametros2,"http://5.231.69.226/EHControlConnect/index.php"/*"http://ehcontrol.net/EHControlConnect/index.php"*/);
-				log(data2.toString());
+//				ArrayList<String> parametros2 = new ArrayList<String>();
+//				parametros2.add("command");
+//				parametros2.add("doaction");
+//				parametros2.add("username");
+//				//parametros.add(_user.getText().toString());
+//				parametros2.add("luis");
+//				
+//				parametros2.add("servicename");
+//				//parametros.add(_user.getText().toString());
+//				parametros2.add("saloon");
+//				
+//				parametros2.add("actionname");
+//				//parametros.add(_user.getText().toString());
+//				parametros2.add("encender");
+//				
+//				parametros2.add("data");
+//				//parametros.add(_user.getText().toString());
+//				parametros2.add("cara mierda");
+//			 			
+//				//Variable 'Data' saves the query response
+//				JSONArray data2 = _post.getServerData(parametros2,"http://5.231.69.226/EHControlConnect/index.php"/*"http://ehcontrol.net/EHControlConnect/index.php"*/);
+//				log(data2.toString());
 				
 				/////////////////////////////////////////////////////
 
@@ -215,7 +247,7 @@ public class LogIn extends Activity
 				if (data != null && data.length() > 0) 
 				{				
 					JSONObject json_data = data.getJSONObject(0);
-					log(json_data.toString());
+					//log(json_data.toString());
 					
 					if (json_data.getInt("IDUSER")==0) 
 					{ 
@@ -223,10 +255,10 @@ public class LogIn extends Activity
 					}
 					else
 					{ 	
-						log("Correct user. ");
-						log(json_data.getString( "JSON" ));
-						_houseEstructure = json_data.getString( "JSON" );
-						log( _houseEstructure );
+						//log("Correct user. ");
+						//log(json_data.getString( "JSON" ));
+						//_houseEstructure = json_data.getString( "JSON" );
+						//log( _houseEstructure );
 						//String currentDirectory = System.getProperty("user.dir");
 						//log(currentDirectory);
 						//Activa la siguiente Activity("MainMenu")
@@ -251,10 +283,123 @@ public class LogIn extends Activity
             pDialog.dismiss();
 		}
     }
-          
     
     /**
-     * M�todo para debugear
+	 * Method that encrypts the password
+	 * @param s
+	 * @return
+	 */
+	public String md5(String s) 
+	{
+	    try 
+	    {
+	        // Create MD5 Hash
+	        MessageDigest digest = java.security.MessageDigest.getInstance("MD5");
+	        digest.update(s.getBytes());
+	        byte messageDigest[] = digest.digest();
+
+	        // Create Hex String
+	        StringBuffer hexString = new StringBuffer();
+	        for (int i=0; i<messageDigest.length; i++)
+	            hexString.append(Integer.toHexString(0xFF & messageDigest[i]));
+	        return hexString.toString();
+
+	    } catch (NoSuchAlgorithmException e) 
+	    {
+	        e.printStackTrace();
+	    }
+	    return "";
+	}
+	
+    /**
+     * Method that created a new user.
+     */
+    private void createUser()
+    {
+//    	// custom dialog
+//    	final Dialog dialog = new Dialog(this);
+//    	dialog.setContentView(R.layout.create_user);
+//    	Button dialogButtonCancel = (Button) dialog.findViewById(R.id.newUserCancel);
+//    	Button dialogButtonConfirm = (Button) dialog.findViewById(R.id.newUserConfirm);
+//    	 
+//    	dialog.setTitle("NEW USER");
+//    	
+//    	WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+//        lp.copyFrom(dialog.getWindow().getAttributes());
+//        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+//        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+//        
+//		dialog.show();
+//		dialog.getWindow().setAttributes(lp);
+//        
+//       
+//		// if button is clicked, close the custom dialog
+//		dialogButtonCancel.setOnClickListener(new View.OnClickListener() 
+//		{	
+//			@Override
+//			public void onClick(View v) 
+//			{
+//				// TODO Auto-generated method stub
+//				dialog.dismiss();
+//			}
+//		});
+//		
+//		 
+//			// if button is clicked, close the custom dialog
+//			dialogButtonConfirm.setOnClickListener(new View.OnClickListener() 
+//			{	
+//				@Override
+//				public void onClick(View v) 
+//				{
+//					
+//					log("Button pressed");
+//					
+//					//It checks if exists connection
+//					ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+//				    NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+//				      
+//				    if (networkInfo != null && networkInfo.isConnected()) 			        
+//				    {			            			        	
+//				    	log("Connection");			            
+//				    	_post = new Post();						
+//				    	logInConnection connection = new logInConnection();
+//				    	connection.execute();	    		
+//				    } 
+//				    else 			        
+//				    {
+//				        log("No network connection available.");			        
+//				    }		
+//					
+//					// TODO Auto-generated method stub
+//					EditText user = (EditText) findViewById(R.id.newUser);
+//					EditText email = (EditText) findViewById(R.id.newEmail);
+//					EditText password = (EditText) findViewById(R.id.newPassword);
+//					EditText repeatPassword = (EditText) findViewById(R.id.newRepeatPassword);
+//					
+//					ArrayList<String> parametros = new ArrayList<String>();
+//					
+//					parametros.add("command");
+//					parametros.add("createuser");
+//					parametros.add("username");
+//					parametros.add(user.getText().toString());
+//					parametros.add("password");
+//					parametros.add(md5(password.getText().toString()));
+//					parametros.add("email");
+//					parametros.add(email.getText().toString());
+//					parametros.add("hint");
+//					parametros.add("caca");
+//				 			
+//					//Variable 'Data' saves the query response
+//					JSONArray data = _post.getServerData(parametros,"http://5.231.69.226/EHControlConnect/index.php"/*"http://ehcontrol.net/EHControlConnect/index.php"*/);
+//					log(data.toString());
+//					
+//					dialog.dismiss();
+//				}
+//			});
+    }
+    
+    /**
+     * Method for debug
      * @param _text
      */
     private void log( String _text )

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <EditText
+        android:id="@+id/newPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textView3"
+        android:layout_alignLeft="@+id/newUser"
+        android:ems="10"
+        android:inputType="textPassword" />
+
+    <EditText
+        android:id="@+id/newRepeatPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textView4"
+        android:layout_alignLeft="@+id/newPassword"
+        android:ems="10"
+        android:inputType="textPassword" />
+
+    <EditText
+        android:id="@+id/newEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textView3"
+        android:layout_alignLeft="@+id/newUser"
+        android:ems="10" />
+
+    <EditText
+        android:id="@+id/newUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textView1"
+        android:layout_marginLeft="36dp"
+        android:layout_toRightOf="@+id/textView1"
+        android:ems="10" >
+
+        <requestFocus />
+    </EditText>
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView2"
+        android:layout_marginTop="66dp"
+        android:layout_toLeftOf="@+id/newUser"
+        android:text="Password"
+        android:textSize="25sp" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView3"
+        android:layout_marginTop="36dp"
+        android:layout_toLeftOf="@+id/newUser"
+        android:text="Repeat \nPassword"
+        android:textSize="25sp" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="131dp"
+        android:layout_marginTop="138dp"
+        android:text="User"
+        android:textSize="25sp" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView1"
+        android:layout_marginTop="67dp"
+        android:layout_toLeftOf="@+id/newUser"
+        android:text="E-mail"
+        android:textSize="25sp" />
+
+    <Button
+        android:id="@+id/newUserConfirm"
+        android:layout_alignLeft="@+id/textView1"
+        android:layout_below="@+id/textView4"
+        android:layout_marginTop="118dp"
+        android:text="Confirm"
+         android:layout_width="100dp"
+         android:layout_height="60dp"
+         android:textColor="@drawable/button_text_color"
+         android:background="@drawable/button_config"
+         android:textSize="25sp" />
+
+    <Button
+        android:id="@+id/newUserCancel"
+        android:layout_width="100dp"
+         android:layout_height="60dp"
+         android:textColor="@drawable/button_text_color"
+         android:background="@drawable/button_config"
+        android:layout_alignBottom="@+id/newUserConfirm"
+        android:layout_alignRight="@+id/newRepeatPassword"
+        android:layout_marginRight="68dp"
+        android:text="Cancel"
+        android:textSize="30sp" />
+
+</RelativeLayout>

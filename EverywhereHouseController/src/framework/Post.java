@@ -81,8 +81,8 @@ public class Post
 			HttpEntity entity = response.getEntity();
 			is = entity.getContent();  
 			
-			Log.e("","is");
-			Log.e("", is.toString() );
+			//Log.e("","is");
+			//Log.e("", is.toString() );
 			
 		} catch (Exception e) 
 		{				                                                
@@ -108,7 +108,7 @@ public class Post
 			}				 
 			is.close();				 
 			response = sb.toString();				 
-			Log.e("log_tag", "String JSon " + response.toString());
+			//Log.e("log_tag", "String JSon " + response.toString());
 			
 		} catch (Exception e) 
 		{				                         
