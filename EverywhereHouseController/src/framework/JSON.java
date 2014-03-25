@@ -35,25 +35,45 @@ public class JSON
 
 	public JSON(Context c) 
 	{
-        try 
-        {
-            InputStream is = c.getAssets().open("config.json");
-            int size = is.available();
-            byte[] buffer = new byte[size];
-            is.read(buffer);
-            is.close();
-            this.file = new String(buffer, "UTF-8");
-            try {
+//        try 
+//        {
+//            InputStream is = c.getAssets().open("config.json");
+//            int size = is.available();
+//            byte[] buffer = new byte[size];
+//            is.read(buffer);
+//            is.close();
+//            this.file = new String(buffer, "UTF-8");
+//            try {
+//				loadJSON();
+//			} catch (JSONException e) {
+//				e.printStackTrace();
+//			}
+//
+//        } 
+//        catch (IOException ex) 
+//        {
+//            ex.printStackTrace();
+//        }
+		try 
+		{
+			InputStream is = c.openFileInput("configuration.json");
+			int size = is.available();
+	        byte[] buffer = new byte[size];
+	        is.read(buffer);
+	        is.close();
+	        this.file = new String(buffer, "UTF-8");
+            try 
+            {
 				loadJSON();
-			} catch (JSONException e) {
+			} catch (JSONException e) 
+			{
 				e.printStackTrace();
 			}
-
-        } 
-        catch (IOException ex) 
-        {
-            ex.printStackTrace();
-        }
+		} 
+    	catch (IOException ex) 
+    	{
+    		ex.printStackTrace();
+    	}
     }
 
 	private void loadJSON() throws JSONException 

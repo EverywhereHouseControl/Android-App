@@ -1,5 +1,10 @@
 package ehc.net;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -110,37 +115,18 @@ public class LogIn extends Activity
         
 	}
 	
-	/**
-     * -----------------------------------------
-     * Executes the MainMenu's Activity
-     * -----------------------------------------
-     */
-    
-    private void createdIntent()
-    {
-    	try {
-			Class<?> _clazz = Class.forName( "ehc.net.MainMenu" );
-			Intent _intent = new Intent( this,_clazz );
-			startActivity( _intent );
-			onDestroy();
-		} 
-		catch ( ClassNotFoundException e ) 
-		{
-			e.printStackTrace();
-		}
-    }
-
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
+	public boolean onCreateOptionsMenu(Menu menu) 
+	{
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.log_in, menu);
 		return true;
 	}
 	
+	
 	// Background process
     private class logInConnection extends AsyncTask<String, String, String>
-    {
-    	
+    {    	
     	/**
     	 * Message "Loading"
     	 */
@@ -157,9 +143,6 @@ public class LogIn extends Activity
     	@Override
 		protected String doInBackground(String... arg0) 
 		{
-			// TODO Auto-generated method stub
-			//ProgressDialog pDialog = new ProgressDialog(LogIn.this);
-			
 			try 
 			{	
 				//Query
@@ -169,10 +152,10 @@ public class LogIn extends Activity
 				parametros.add("login");
 				parametros.add("username");
 				//parametros.add(_user.getText().toString());
-				parametros.add("luis");
+				parametros.add("alex");
 				parametros.add("password");
 				//parametros.add(md5(_password.getText().toString()));
-				parametros.add(md5("luis"));
+				parametros.add(md5("alex"));
 			 			
 				//Variable 'Data' saves the query response
 				JSONArray data = _post.getServerData(parametros,"http://5.231.69.226/EHControlConnect/index.php"/*"http://ehcontrol.net/EHControlConnect/index.php"*/);
@@ -255,6 +238,8 @@ public class LogIn extends Activity
 					}
 					else
 					{ 	
+						//Save the house's configuration
+						saveConfig(json_data.get("JSON"));
 						//Activate the next Activity("MainMenu")
 						createdIntent();
 					}				
@@ -304,6 +289,46 @@ public class LogIn extends Activity
 	    }
 	    return "";
 	}
+	
+	/**
+	 * Saves  from the server query the house configuration in the file 'configuration.json'.
+	 */
+	private void saveConfig(Object JSON)
+	{
+		File file = new File(getFilesDir(), "configuration.json");
+		
+		try 
+		{
+			FileOutputStream outputStream = openFileOutput("configuration.json", MODE_APPEND);
+			outputStream.write(JSON.toString().getBytes());
+			outputStream.close();
+		} catch (IOException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+	}
+	
+	/**
+     * -----------------------------------------
+     * Executes the MainMenu's Activity
+     * -----------------------------------------
+     */
+    
+    private void createdIntent()
+    {
+    	try {
+			Class<?> _clazz = Class.forName( "ehc.net.MainMenu" );
+			Intent _intent = new Intent( this,_clazz );
+			startActivity( _intent );
+			onDestroy();
+		} 
+		catch ( ClassNotFoundException e ) 
+		{
+			e.printStackTrace();
+		}
+    }
+	
 	
 	/**
 	 * Method that created a new user.
