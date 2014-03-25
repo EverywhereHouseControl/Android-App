@@ -7,15 +7,13 @@
     <TextView 
         android:id="@+id/childname"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingLeft="25dp"/>
+        android:layout_height="wrap_content"/>
 
     <SeekBar 
         android:id="@+id/float_value" 
         android:layout_width="match_parent" 
         android:layout_height="wrap_content" 
-        android:layout_alignParentLeft="true" 
-        android:layout_marginTop="26dp"
+        android:layout_gravity="center_horizontal"
         android:visibility="invisible">
     </SeekBar>
     
@@ -23,6 +21,7 @@
 	    android:id="@+id/boolean_value"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
+	    android:layout_gravity="center_horizontal"
 	    android:textOn="On!"
 	    android:textOff="Off!"
 	    android:onClick="onToggleClicked"
