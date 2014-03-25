@@ -5,6 +5,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import ehc.net.R.color;
@@ -28,6 +29,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class LogIn extends Activity 
 {
@@ -52,7 +54,7 @@ public class LogIn extends Activity
 		
 		/**
          * ------------------------------------
-         * Link:  variable <- component XML
+         * Linked:  variable <- component XML
          *-------------------------------------
          **/
         
@@ -174,10 +176,8 @@ public class LogIn extends Activity
 			 			
 				//Variable 'Data' saves the query response
 				JSONArray data = _post.getServerData(parametros,"http://5.231.69.226/EHControlConnect/index.php"/*"http://ehcontrol.net/EHControlConnect/index.php"*/);
-				//log(data.toString());
+				log(data.toString());
 				
-				
-				//ArrayList<String> parametros = new ArrayList<String>();
 				
 //				parametros.add("command");
 //				parametros.add("deleteuser");
@@ -255,13 +255,7 @@ public class LogIn extends Activity
 					}
 					else
 					{ 	
-						//log("Correct user. ");
-						//log(json_data.getString( "JSON" ));
-						//_houseEstructure = json_data.getString( "JSON" );
-						//log( _houseEstructure );
-						//String currentDirectory = System.getProperty("user.dir");
-						//log(currentDirectory);
-						//Activa la siguiente Activity("MainMenu")
+						//Activate the next Activity("MainMenu")
 						createdIntent();
 					}				
 				}else 
@@ -273,7 +267,7 @@ public class LogIn extends Activity
 			 {
 			 	e.printStackTrace();
 			 }
-			 // FIN Llamada a Servidor Web PHP
+			 // End call to PHP server
 			return null;
 		}
     	
@@ -311,93 +305,224 @@ public class LogIn extends Activity
 	    return "";
 	}
 	
-    /**
-     * Method that created a new user.
-     */
-    private void createUser()
-    {
-//    	// custom dialog
-//    	final Dialog dialog = new Dialog(this);
-//    	dialog.setContentView(R.layout.create_user);
-//    	Button dialogButtonCancel = (Button) dialog.findViewById(R.id.newUserCancel);
-//    	Button dialogButtonConfirm = (Button) dialog.findViewById(R.id.newUserConfirm);
-//    	 
-//    	dialog.setTitle("NEW USER");
-//    	
-//    	WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-//        lp.copyFrom(dialog.getWindow().getAttributes());
-//        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-//        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-//        
-//		dialog.show();
-//		dialog.getWindow().setAttributes(lp);
-//        
-//       
-//		// if button is clicked, close the custom dialog
-//		dialogButtonCancel.setOnClickListener(new View.OnClickListener() 
-//		{	
-//			@Override
-//			public void onClick(View v) 
-//			{
-//				// TODO Auto-generated method stub
-//				dialog.dismiss();
-//			}
-//		});
-//		
-//		 
-//			// if button is clicked, close the custom dialog
-//			dialogButtonConfirm.setOnClickListener(new View.OnClickListener() 
-//			{	
-//				@Override
-//				public void onClick(View v) 
-//				{
-//					
-//					log("Button pressed");
-//					
-//					//It checks if exists connection
-//					ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-//				    NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-//				      
-//				    if (networkInfo != null && networkInfo.isConnected()) 			        
-//				    {			            			        	
-//				    	log("Connection");			            
-//				    	_post = new Post();						
-//				    	logInConnection connection = new logInConnection();
-//				    	connection.execute();	    		
-//				    } 
-//				    else 			        
-//				    {
-//				        log("No network connection available.");			        
-//				    }		
-//					
-//					// TODO Auto-generated method stub
-//					EditText user = (EditText) findViewById(R.id.newUser);
-//					EditText email = (EditText) findViewById(R.id.newEmail);
-//					EditText password = (EditText) findViewById(R.id.newPassword);
-//					EditText repeatPassword = (EditText) findViewById(R.id.newRepeatPassword);
-//					
-//					ArrayList<String> parametros = new ArrayList<String>();
-//					
-//					parametros.add("command");
-//					parametros.add("createuser");
-//					parametros.add("username");
-//					parametros.add(user.getText().toString());
-//					parametros.add("password");
-//					parametros.add(md5(password.getText().toString()));
-//					parametros.add("email");
-//					parametros.add(email.getText().toString());
-//					parametros.add("hint");
-//					parametros.add("caca");
-//				 			
-//					//Variable 'Data' saves the query response
-//					JSONArray data = _post.getServerData(parametros,"http://5.231.69.226/EHControlConnect/index.php"/*"http://ehcontrol.net/EHControlConnect/index.php"*/);
-//					log(data.toString());
-//					
-//					dialog.dismiss();
-//				}
-//			});
-    }
+	/**
+	 * Method that created a new user.
+	 */
+	private void createUser()
+	{
+		// custom dialog
+		final Dialog dialog = new Dialog(LogIn.this);
+		dialog.setContentView(R.layout.create_user);
+		Button dialogButtonCancel = (Button) dialog.findViewById(R.id.newUserCancel);
+		Button dialogButtonConfirm = (Button) dialog.findViewById(R.id.newUserConfirm);
+	 
+		dialog.setTitle("NEW USER");    	
+	
+		WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+		lp.copyFrom(dialog.getWindow().getAttributes());
+		lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+		lp.height = WindowManager.LayoutParams.MATCH_PARENT;
     
+		dialog.show();
+		dialog.getWindow().setAttributes(lp);        
+   
+		// if button is clicked, close the custom dialog
+		dialogButtonCancel.setOnClickListener(new View.OnClickListener() 
+		{	
+			@Override
+			public void onClick(View v) 
+			{
+				// TODO Auto-generated method stub
+				dialog.dismiss();
+			}
+		});		
+	 
+		// if button is clicked, send the query and close the custom dialog
+		dialogButtonConfirm.setOnClickListener(new View.OnClickListener() 
+		{	
+			@Override
+			public void onClick(View v) 
+			{
+				
+				int _internalError = 0;
+				
+				//It checks if exists connection
+				ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+				NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+			      
+				if (networkInfo != null && networkInfo.isConnected()) 			        
+				{			            			        			            
+					_post = new Post();    		
+				} 
+				else 			        
+				{
+					_internalError=-1;
+				}		
+			
+				/**
+				 * ------------------------------------
+				 * Linked:  variable <- component XML
+				 *-------------------------------------
+				 **/
+				EditText user = (EditText) dialog.findViewById(R.id.newUser);
+				EditText email = (EditText) dialog.findViewById(R.id.newEmail);
+				EditText password = (EditText) dialog.findViewById(R.id.newPassword);
+				EditText repeatPassword = (EditText) dialog.findViewById(R.id.newRepeatPassword);
+				
+				//Creation the query.
+				ArrayList<String> parametros = new ArrayList<String>();
+				
+				parametros.add("command");
+				parametros.add("createuser");
+				parametros.add("username");
+				parametros.add(user.getText().toString());
+				parametros.add("password");
+				parametros.add(md5(password.getText().toString()));
+				parametros.add("email");
+				parametros.add(email.getText().toString());
+				parametros.add("hint");
+				parametros.add("caca");
+			
+				//Identify errors.
+				if( user.getText().toString().isEmpty())_internalError=-2;
+				else if(email.getText().toString().isEmpty() )_internalError=-3;
+				else if(!email.getText().toString().contains("@"))_internalError=-4;				
+				else if (password.getText().toString().isEmpty())_internalError=-5;
+				else if (repeatPassword.getText().toString().isEmpty())_internalError=-6;
+				else if (!password.getText().toString().equals(repeatPassword.getText().toString()))_internalError=-7;
+				
+				errorControl(dialog,parametros,_internalError);				
+			}
+		});
+	}
+
+	/**
+	 * Error control for creating user.
+	 * @param dialog
+	 * @param parametros
+	 * @param _internalError
+	 */
+	private void errorControl(Dialog dialog,ArrayList<String> parametros,int _internalError)
+	{
+		String _message = "";
+		switch(_internalError)
+		{
+			case 0:
+			{
+				_post = new Post();						
+		    	createUserConnection createUser = new createUserConnection(parametros);
+		    	createUser.execute();	    	
+				break;
+			}
+			case -1:
+			{
+				_message = "Not network connection available";
+				break;
+			}
+			case -2:
+			{
+				_message = "Box user is empty";				
+				break;
+			}
+			case -3:
+			{
+				_message = "Box e-mail is empty";
+				break;
+			}
+			case -4:
+			{
+				_message = "Erroneous format in e-mail box";
+				break;
+			}
+			case -5:
+			{
+				_message = "Box password is empty";				
+				break;
+			}
+			case -6:
+			{
+				_message = "Box repeat password is empty";
+				break;
+			}
+			case -7:
+			{
+				_message = "Passwords do not match";
+				break;
+			}				
+		}
+		if(_internalError!=0)Toast.makeText(getBaseContext(), _message, Toast.LENGTH_SHORT).show();
+			else dialog.dismiss();
+	}
+	
+	private class createUserConnection extends AsyncTask<String, String, String>
+	{
+		private ArrayList<String> parametros;
+		private String _message = "";
+		
+		public createUserConnection(ArrayList<String> parametros) 
+		{
+			// TODO Auto-generated constructor stub
+			this.parametros = parametros;
+		}
+		
+		/**
+    	 * Message "Loading"
+    	 */
+    	protected void onPreExecute() 
+    	{
+            super.onPreExecute();
+            pDialog = new ProgressDialog(LogIn.this);
+            pDialog.setMessage("Loading. Please wait...");
+            pDialog.setIndeterminate(false);
+            pDialog.setCancelable(false);
+            pDialog.show();
+        }    	
+    	    	
+		@Override
+		protected String doInBackground(String... params) 
+		{
+			// TODO Auto-generated method stub
+			//Variable 'Data' saves the query response
+			log("query");
+			log(parametros.toString());
+			JSONArray data = _post.getServerData(parametros,"http://5.231.69.226/EHControlConnect/index.php");
+			log(data.toString());
+			try 
+			{
+				JSONObject json_data = data.getJSONObject(0);
+				switch(json_data.getInt("error"))
+				{
+					case 0:
+					{
+						_message = json_data.getString("ENGLISH");					
+						break;
+					}
+					default:
+					{
+						_message = json_data.getString("ENGLISH");
+						break;
+					}
+				}
+			
+			} catch (JSONException e) 
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}		
+			return null;
+		}
+		
+		/**
+		 * 
+		 */
+		protected void onPostExecute(String file_url) 
+		{
+            // dismiss the dialog after getting all products
+            pDialog.dismiss();
+            Toast.makeText(getBaseContext(), _message, Toast.LENGTH_SHORT).show();
+		}
+	}
+	
     /**
      * Method for debug
      * @param _text
@@ -424,5 +549,5 @@ public class LogIn extends Activity
     	super.onStop();
     	log( "Stoped" );
     }
-
 }
+	

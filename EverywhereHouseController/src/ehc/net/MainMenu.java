@@ -32,10 +32,10 @@ public class MainMenu extends Activity
         setContentView( R.layout.main_menu_view );
         /**
          * ------------------------------------
-         * Ligadura:  variable <- componente XML
+         * Liked:  variable <- XML component 
          *-------------------------------------
          */
-       // _buttonProfile = ( Button ) findViewById( R.id.buttonProfile );
+        _buttonProfile = ( Button ) findViewById( R.id.buttonProfile );
         _buttonManagement = ( Button ) findViewById( R.id.buttonManagement);
        // _buttonEvent = ( Button ) findViewById( R.id.buttonEvent );
        // _buttonConfig = ( Button ) findViewById( R.id.buttonConfig );
@@ -56,6 +56,18 @@ public class MainMenu extends Activity
 				createdManagementIntent();
 			}
 		});
+        
+        _buttonProfile.setOnClickListener( new View.OnClickListener() 
+        {
+			
+			@Override
+			public void onClick(View v) 
+			{
+				// TODO Auto-generated method stub
+				log( "Button 'Profile'pressed" );
+				createdProfileIntent();
+			}
+		});
                  
     }	
 	
@@ -67,6 +79,23 @@ public class MainMenu extends Activity
 	{
 		try {
 			Class<?> _clazz = Class.forName( "ehc.net.ManagementMenu");
+			Intent _intent = new Intent( this,_clazz );
+			startActivity( _intent );
+		} 
+		catch ( ClassNotFoundException e ) 
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Method that executes Profile's activity
+	 */
+	 
+	private void createdProfileIntent()
+	{
+		try {
+			Class<?> _clazz = Class.forName( "ehc.net.Profile");
 			Intent _intent = new Intent( this,_clazz );
 			startActivity( _intent );
 		} 
