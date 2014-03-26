@@ -1,11 +1,7 @@
 package ehc.net;
 
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
 import org.json.JSONArray;
@@ -18,7 +14,6 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -46,7 +41,6 @@ public class LogIn extends Activity
 		private Activity _activity;
 		private Post _post;
 		//private ProgressDialog pDialog;
-		private String _houseEstructure = "";
 		private TextView _createUser;
 		//***********************************
 		
@@ -65,8 +59,7 @@ public class LogIn extends Activity
         _buttonLog = ( Button ) findViewById( R.id.buttonLogin );
         _user = ( EditText ) findViewById( R.id.idText );
         _password = ( EditText ) findViewById( R.id.passwordText );
-        _logo = (ImageView) findViewById(R.id.HouseIconManagementMenu);
-        
+        _logo = (ImageView) findViewById(R.id.HouseIconManagementMenu);     
         
         Animation anim = AnimationUtils.loadAnimation(this.getBaseContext(), R.anim.rotate_indefinitely);
         //Start animating the image
@@ -90,7 +83,7 @@ public class LogIn extends Activity
 			    	log("Connection");			            
 			    	_post = new Post();						
 			    	logInConnection connection = new logInConnection();
-			    	connection.execute();	    		
+			    	connection.execute();			    	
 			    } 
 			    else 			        
 			    {
@@ -127,7 +120,8 @@ public class LogIn extends Activity
     private class logInConnection extends AsyncTask<String, String, String>
     {    	
     	private ProgressDialog pDialog;
-
+    	private String _message = "";
+    	private int _internalError = 0;
     	/**
     	 * Message "Loading"
     	 */
@@ -162,16 +156,39 @@ public class LogIn extends Activity
 				parametros.add("command");
 				parametros.add("login");
 				parametros.add("username");
-				//parametros.add(_user.getText().toString());
-				parametros.add("luis");
+				parametros.add(_user.getText().toString());
+				//parametros.add("luis");
 				parametros.add("password");
-				//parametros.add(_post.md5(_password.getText().toString()));
-				parametros.add(_post.md5("luis"));
+				parametros.add(_post.md5(_password.getText().toString()));
+				//parametros.add(_post.md5("luis"));
 			 			
 				//Variable 'Data' saves the query response
 				JSONArray data = _post.getServerData(parametros,"http://5.231.69.226/EHControlConnect/index.php"/*"http://ehcontrol.net/EHControlConnect/index.php"*/);
 				log(data.toString());
 				
+				try 
+				{
+					JSONObject json_data = data.getJSONObject(0);
+					switch(json_data.getInt("ERROR"))
+					{
+						case 0:
+						{
+							_message = json_data.getString("ENGLISH");					
+							break;
+						}
+						default:
+						{
+							_internalError = json_data.getInt("ERROR");
+							_message = json_data.getString("ENGLISH");
+							break;
+						}
+					}
+				
+				} 
+				catch (JSONException e) 
+				{
+					e.printStackTrace();
+				}	
 				
 //				parametros.add("command");
 //				parametros.add("deleteuser");
@@ -273,6 +290,7 @@ public class LogIn extends Activity
 		{
             // dismiss the dialog after getting all products
             pDialog.dismiss();
+            if(_internalError!=0)Toast.makeText(getBaseContext(), _message, Toast.LENGTH_SHORT).show();
 		}
     }
     	
@@ -566,6 +584,9 @@ public class LogIn extends Activity
     {
     	super.onResume();
     	log( "Resumed" );
+    	//Reset the boxes
+        _user.setText("");
+        _password.setText("");
     }
     
     protected void onPause()
