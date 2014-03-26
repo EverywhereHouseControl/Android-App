@@ -37,6 +37,7 @@
         android:background="@color/LightGrey"
         android:ems="10"
         android:inputType="textPassword"
+        android:textColor="@color/Black"
         android:lines="1"
         android:password="true"
         android:singleLine="true" />
@@ -70,6 +71,7 @@
         android:layout_alignTop="@+id/id"
         android:layout_toRightOf="@+id/password"
         android:background="@color/LightGrey"
+        android:textColor="@color/Black"
         android:ems="10"
         android:lines="1"
         android:singleLine="true" />

@@ -29,7 +29,7 @@ import framework.JSON;
 		ExpandableListView expListView;
 		List<String> groupList;
 		HashMap<String, List<String>> listDataChild;
-		
+
 		
 //		@Override
 //	    protected void onCreate( Bundle savedInstanceState ) 
@@ -119,21 +119,21 @@ import framework.JSON;
 	 
 	    private HashMap<String, List<String>> createHashMapItems(List<String> items){
 	    	for (int i=0; i<=items.size()-1; i++){
-	    		if (items.get(i).equals("Door")){
+	    		if (items.get(i).equals("DOOR")){
 	    			List<String> door = new ArrayList<String>();
 	    			door.add("boolean");
 	    			listDataChild.put(items.get(i),door);
-	    		} else if (items.get(i).equals("Lights")){
+	    		} else if (items.get(i).equals("LIGTHS")){
 	    			List<String> lights = new ArrayList<String>();
 	    			lights.add("float");
 	    			lights.add("boolean");
 	    			listDataChild.put(items.get(i),lights);
-    			} else if (items.get(i).equals("AirConditioning")){
+    			} else if (items.get(i).equals("AIRCONDITIONING")){
 	    			List<String> air = new ArrayList<String>();
 	    			air.add("float");
 	    			air.add("boolean");
 	    			listDataChild.put(items.get(i),air);
-    			} else if (items.get(i).equals("Stereo")){
+    			} else if (items.get(i).equals("STEREO")){
 	    			List<String> stereo = new ArrayList<String>();
 	    			stereo.add("float");
 	    			stereo.add("boolean");

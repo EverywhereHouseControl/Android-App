@@ -10,7 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.SeekBar;
+import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 import ehc.net.R;
  
@@ -43,17 +45,50 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             LayoutInflater inflater =  (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             
             itemName = (String) getChild(groupPosition,childPosition);
-            convertView = inflater.inflate(getChildXML(itemName), null);
+            int itemType = getChildXML(itemName);
+            convertView = inflater.inflate(itemType, null);
+            
         }
        
         return convertView;
     }
     
+    private void setListeners(final View convertView, int itemType){
+    	final TextView tv = (TextView) convertView.findViewById(R.id.childname);
+    	if (itemType == R.layout.float_item){
+    		
+    		SeekBar sb = (SeekBar) convertView.findViewById(R.id.float_value);
+        	sb.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+				
+				@Override
+				public void onStopTrackingTouch(SeekBar seekBar) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void onStartTrackingTouch(SeekBar seekBar) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void onProgressChanged(SeekBar seekBar, int progress,
+						boolean fromUser) {
+					// TODO Auto-generated method stub
+					tv.setText(progress);
+				}
+			});
+    	} 
+    		
+    }
+    
     private int getChildXML(String itemType){
-    	 if (itemType.equals("float"))
+    	 if (itemType.equals("float")){
     		 return R.layout.float_item;
-         else if (itemType.equals("boolean"))
+    	 } else if (itemType.equals("boolean")){
         	 return R.layout.boolean_item;
+    	 }
     	return 0;
     }
  
