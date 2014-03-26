@@ -39,7 +39,7 @@ public class MainMenu extends Activity
         _buttonManagement = ( Button ) findViewById( R.id.buttonManagement);
        // _buttonEvent = ( Button ) findViewById( R.id.buttonEvent );
        // _buttonConfig = ( Button ) findViewById( R.id.buttonConfig );
-        _logo = (ImageView) findViewById(R.id.world);
+        _logo = (ImageView) findViewById(R.id.world_loading_view);
         
         Animation anim = AnimationUtils.loadAnimation(this.getBaseContext(), R.anim.rotate_indefinitely);
         //Start animating the image

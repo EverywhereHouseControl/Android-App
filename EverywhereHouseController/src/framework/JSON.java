@@ -26,9 +26,9 @@ public class JSON
 	
 	private JSON(){}
 	
-	public static synchronized JSON getInstance(Context c){
-		if (instance==null)
-			instance=new JSON(c);
+	public static synchronized JSON getInstance(Context c)
+	{
+		instance=new JSON(c);
 		return instance;			
 	}
 	
@@ -78,6 +78,9 @@ public class JSON
 
 	private void loadJSON() throws JSONException 
 	{
+		
+		Log.d("JSON ",file.toString());
+		
 		JSONObject obj = new JSONObject(file);
 		try 
 		{

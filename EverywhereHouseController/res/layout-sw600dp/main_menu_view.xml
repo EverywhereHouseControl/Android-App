@@ -24,14 +24,14 @@
             android:layout_height="wrap_content" >
 
             <ImageView
-                android:id="@+id/world"
+                android:id="@+id/world_loading_view"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
                 android:layout_marginTop="60dp"
                 android:src="@drawable/world_ehc" />
 
             <ImageView
-                android:id="@+id/imageView2"
+                android:id="@+id/word_ehc"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
                 android:layout_marginTop="60dp"

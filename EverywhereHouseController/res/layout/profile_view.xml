@@ -7,7 +7,7 @@
     android:background="@color/White" >
 
     <ImageView
-        android:id="@+id/imageView1"
+        android:id="@+id/on_off_remote"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_alignParentTop="true"
@@ -54,7 +54,7 @@
         android:layout_height="40dp"
         android:layout_alignBaseline="@+id/profileSave"
         android:layout_alignBottom="@+id/profileSave"
-        android:layout_toRightOf="@+id/imageView1"
+        android:layout_toRightOf="@+id/on_off_remote"
         android:background="@drawable/button_config"
         android:text="Exit"
         android:textColor="@drawable/button_text_color"
@@ -64,7 +64,7 @@
         android:id="@+id/textMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/imageView1"
+        android:layout_below="@+id/on_off_remote"
         android:layout_marginRight="32dp"
         android:layout_marginTop="63dp"
         android:layout_toLeftOf="@+id/profileUser"
@@ -98,7 +98,7 @@
         android:layout_width="180dp"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/textMessage"
-        android:layout_alignLeft="@+id/imageView1"
+        android:layout_alignLeft="@+id/on_off_remote"
         android:ems="10"
         android:textColor="@color/DarkGray"
         android:textSize="20sp" />

@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URI;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
 import org.apache.http.HttpEntity;
@@ -137,6 +139,31 @@ public class Post
 		return jArray;		                         		 
 	}
 			 
-	
+	/**
+	 * Method that encrypts the password
+	 * @param s
+	 * @return
+	 */
+	public String md5(String s) 
+	{
+	    try 
+	    {
+	        // Create MD5 Hash
+	        MessageDigest digest = java.security.MessageDigest.getInstance("MD5");
+	        digest.update(s.getBytes());
+	        byte messageDigest[] = digest.digest();
+
+	        // Create Hex String
+	        StringBuffer hexString = new StringBuffer();
+	        for (int i=0; i<messageDigest.length; i++)
+	            hexString.append(Integer.toHexString(0xFF & messageDigest[i]));
+	        return hexString.toString();
+
+	    } catch (NoSuchAlgorithmException e) 
+	    {
+	        e.printStackTrace();
+	    }
+	    return "";
+	}
 	
 }

@@ -18,6 +18,7 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -44,7 +45,7 @@ public class LogIn extends Activity
 		//******************************
 		private Activity _activity;
 		private Post _post;
-		private ProgressDialog pDialog;
+		//private ProgressDialog pDialog;
 		private String _houseEstructure = "";
 		private TextView _createUser;
 		//***********************************
@@ -125,24 +126,36 @@ public class LogIn extends Activity
 	// Background process
     private class logInConnection extends AsyncTask<String, String, String>
     {    	
+    	private ProgressDialog pDialog;
+
     	/**
     	 * Message "Loading"
     	 */
     	protected void onPreExecute() 
-    	{
-            super.onPreExecute();
+    	{  
+    		super.onPreExecute();
             pDialog = new ProgressDialog(LogIn.this);
+            //pDialog.setView(getLayoutInflater().inflate(R.layout.loading_icon_view,null));
             pDialog.setMessage("Loading. Please wait...");
             pDialog.setIndeterminate(false);
             pDialog.setCancelable(false);
             pDialog.show();
+            
+//            AlertDialog.Builder keyBuilder = new AlertDialog.Builder(LogIn.this);
+//            keyBuilder.setView(getLayoutInflater().inflate(R.layout.loading_icon_view, null));
+//            pDialog = keyBuilder.create();
+//            ImageView _logo = (ImageView) findViewById(R.id.world_loading_view);
+//            Animation anim = AnimationUtils.loadAnimation(LogIn.this, R.anim.rotate_indefinitely);
+//            //Start animating the image
+//             _logo.startAnimation(anim);     
+//            pDialog.show();            
         }
     	
     	@Override
 		protected String doInBackground(String... arg0) 
 		{
 			try 
-			{	
+			{		             
 				//Query
 				ArrayList<String> parametros = new ArrayList<String>();
 				
@@ -150,10 +163,10 @@ public class LogIn extends Activity
 				parametros.add("login");
 				parametros.add("username");
 				//parametros.add(_user.getText().toString());
-				parametros.add("alex");
+				parametros.add("luis");
 				parametros.add("password");
-				//parametros.add(md5(_password.getText().toString()));
-				parametros.add(md5("alex"));
+				//parametros.add(_post.md5(_password.getText().toString()));
+				parametros.add(_post.md5("luis"));
 			 			
 				//Variable 'Data' saves the query response
 				JSONArray data = _post.getServerData(parametros,"http://5.231.69.226/EHControlConnect/index.php"/*"http://ehcontrol.net/EHControlConnect/index.php"*/);
@@ -262,34 +275,7 @@ public class LogIn extends Activity
             pDialog.dismiss();
 		}
     }
-    
-    /**
-	 * Method that encrypts the password
-	 * @param s
-	 * @return
-	 */
-	public String md5(String s) 
-	{
-	    try 
-	    {
-	        // Create MD5 Hash
-	        MessageDigest digest = java.security.MessageDigest.getInstance("MD5");
-	        digest.update(s.getBytes());
-	        byte messageDigest[] = digest.digest();
-
-	        // Create Hex String
-	        StringBuffer hexString = new StringBuffer();
-	        for (int i=0; i<messageDigest.length; i++)
-	            hexString.append(Integer.toHexString(0xFF & messageDigest[i]));
-	        return hexString.toString();
-
-	    } catch (NoSuchAlgorithmException e) 
-	    {
-	        e.printStackTrace();
-	    }
-	    return "";
-	}
-	
+    	
 	/**
 	 * Saves from the server query the profile information in the file 'profile.json'.
 	 */
@@ -313,9 +299,7 @@ public class LogIn extends Activity
 	 * Saves from the server query the house configuration in the file 'configuration.json'.
 	 */
 	private void saveConfig(Object JSON)
-	{
-		@SuppressWarnings("unused")
-		File file = new File(getFilesDir(), "configuration.json");	
+	{	
 		try 
 		{
 			FileOutputStream outputStream = openFileOutput("configuration.json", MODE_PRIVATE);
@@ -421,7 +405,7 @@ public class LogIn extends Activity
 				parametros.add("username");
 				parametros.add(user.getText().toString());
 				parametros.add("password");
-				parametros.add(md5(password.getText().toString()));
+				parametros.add(_post.md5(password.getText().toString()));
 				parametros.add("email");
 				parametros.add(email.getText().toString());
 				parametros.add("hint");
@@ -502,6 +486,7 @@ public class LogIn extends Activity
 	{
 		private ArrayList<String> parametros;
 		private String _message = "";
+		private ProgressDialog pDialog;
 		
 		public createUserConnection(ArrayList<String> parametros) 
 		{
@@ -534,7 +519,7 @@ public class LogIn extends Activity
 			try 
 			{
 				JSONObject json_data = data.getJSONObject(0);
-				switch(json_data.getInt("error"))
+				switch(json_data.getInt("ERROR"))
 				{
 					case 0:
 					{

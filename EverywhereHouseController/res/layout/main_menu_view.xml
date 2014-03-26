@@ -24,14 +24,14 @@
             android:layout_height="199dp" >
 
             <ImageView
-                android:id="@+id/world"
+                android:id="@+id/world_loading_view"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:layout_marginTop="30dp"
                 android:src="@drawable/world_ehc" />
 
             <ImageView
-                android:id="@+id/imageView2"
+                android:id="@+id/word_ehc"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:layout_marginTop="30dp"
@@ -43,19 +43,8 @@
             android:layout_height="match_parent" >
 
             <Button
-                android:id="@+id/buttonProfile"
-                android:layout_width="150dp"
-                android:layout_height="80dp"
-                android:layout_alignLeft="@+id/buttonWorks"
-                android:layout_alignTop="@+id/buttonConfig"
-                android:background="@drawable/button_config"
-                android:text="Profile"
-                android:textColor="@drawable/button_text_color"
-                android:textSize="20sp" />
-
-            <Button
                 android:id="@+id/buttonConfig"
-                android:layout_width="150dp"
+                android:layout_width="130dp"
                 android:layout_height="80dp"
                 android:layout_alignParentLeft="true"
                 android:layout_below="@+id/buttonManagement"
@@ -68,7 +57,7 @@
 
             <Button
                 android:id="@+id/buttonManagement"
-                android:layout_width="150dp"
+                android:layout_width="130dp"
                 android:layout_height="80dp"
                 android:layout_alignLeft="@+id/buttonConfig"
                 android:layout_alignParentTop="true"
@@ -80,13 +69,24 @@
 
             <Button
                 android:id="@+id/buttonWorks"
-                android:layout_width="150dp"
+                android:layout_width="130dp"
                 android:layout_height="80dp"
                 android:layout_above="@+id/buttonConfig"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="19dp"
                 android:background="@drawable/button_config"
                 android:text="Tasks"
+                android:textColor="@drawable/button_text_color"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/buttonProfile"
+                android:layout_width="130dp"
+                android:layout_height="80dp"
+                android:layout_alignLeft="@+id/buttonWorks"
+                android:layout_alignTop="@+id/buttonConfig"
+                android:background="@drawable/button_config"
+                android:text="Profile"
                 android:textColor="@drawable/button_text_color"
                 android:textSize="20sp" />
 

@@ -2,8 +2,6 @@ package ehc.net;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
 import org.json.JSONArray;
@@ -26,13 +24,14 @@ public class Profile extends Activity
 {
 	//---------Variables----------------
 	private Button _buttonSave;
+	private Button _buttonExit;
 	private EditText _user;
 	private EditText _email;
 	private EditText _password;
 	private String file;
-	private int _modify;
 	private ProgressDialog pDialog;
 	private Post _post;
+	private String _message = "";
 	//-------------------------------
 		
 	@Override
@@ -50,10 +49,8 @@ public class Profile extends Activity
 		_password = ( EditText ) findViewById( R.id.profilePassword );
 		
 		_buttonSave = ( Button ) findViewById( R.id.profileSave );
-		
-		parser();
-		
-		
+		_buttonExit = (Button) findViewById(R.id.profileExit);
+						
 		_buttonSave.setOnClickListener( new View.OnClickListener() 
 		{	
 			@Override
@@ -65,6 +62,18 @@ public class Profile extends Activity
 			}
 		});
 		
+		_buttonExit.setOnClickListener( new View.OnClickListener() 
+		{
+			
+			@Override
+			public void onClick(View v) 
+			{
+				// TODO Auto-generated method stub
+				finish();
+			}
+		});
+		
+		parser();
 	}
 	
 	
@@ -102,39 +111,13 @@ public class Profile extends Activity
 		JSONObject obj = new JSONObject(file);
 		_user.setText(obj.getString("USERNAME"));
 		_email.setText(obj.getString("EMAIL"));
+		_password.setText("luis_caca");
 	}
 	
-	/**
-	 * Method that encrypts the password
-	 * @param s
-	 * @return
-	 */
-	private String md5(String s) 
-	{
-	    try 
-	    {
-	        // Create MD5 Hash
-	        MessageDigest digest = java.security.MessageDigest.getInstance("MD5");
-	        digest.update(s.getBytes());
-	        byte messageDigest[] = digest.digest();
-
-	        // Create Hex String
-	        StringBuffer hexString = new StringBuffer();
-	        for (int i=0; i<messageDigest.length; i++)
-	            hexString.append(Integer.toHexString(0xFF & messageDigest[i]));
-	        return hexString.toString();
-
-	    } catch (NoSuchAlgorithmException e) 
-	    {
-	        e.printStackTrace();
-	    }
-	    return "";
-	}
 	
 	private class modifyConnection extends AsyncTask<String, String, String>
 	{
 		private ArrayList<String> parametros = new ArrayList<String>();
-		private String _message = "";
 		
 		/**
     	 * Message "Loading"
@@ -153,28 +136,47 @@ public class Profile extends Activity
 		protected String doInBackground(String... params) 
 		{
 			// TODO Auto-generated method stub
-			//Variable 'Data' saves the query response
+			int _internalError = 0;
+			
 			log("query");
 
 			try 
 			{
 			
-			JSONObject obj = new JSONObject(file);
+				JSONObject obj = new JSONObject(file);
+				log("Antes: " + obj.toString());
 			
-			parametros.add("command");
-			parametros.add("modifyuser");
-			parametros.add("username");
-			parametros.add(obj.getString("USERNAME"));
-			parametros.add("password");
-			parametros.add(obj.getString("PASSWORD"));
-			parametros.add("n_username");
-			parametros.add(_user.getText().toString());
-			parametros.add("n_password");
-			parametros.add(md5(_password.getText().toString()));
-			parametros.add("n_email");
-			parametros.add(_email.getText().toString());
-			parametros.add("n_hint");
-			parametros.add("hint");
+				parametros.add("command");
+				parametros.add("modifyuser");
+				parametros.add("username");
+				parametros.add(obj.getString("USERNAME"));
+				parametros.add("password");
+				parametros.add(obj.getString("PASSWORD"));
+				parametros.add("n_username");
+				parametros.add(_user.getText().toString());
+				parametros.add("n_password");
+				if(!_password.getText().toString().equals("luis_caca"))
+					parametros.add(_post.md5(_password.getText().toString()));
+				else 
+				{
+					parametros.add(obj.getString("PASSWORD"));
+					_internalError = -5;
+				}
+				parametros.add("n_email");
+				parametros.add(_email.getText().toString());
+				parametros.add("n_hint");
+				parametros.add("caca");
+				
+				if(_user.getText().toString().isEmpty())_internalError=-1;
+				else if(_password.getText().toString().isEmpty())_internalError=-2;
+				else if(_email.getText().toString().isEmpty())_internalError=-3;
+				else if(_user.getText().toString().equals(obj.getString("USERNAME"))&&
+						_email.getText().toString().equals(obj.getString("EMAIL")) &&
+						_internalError==-5)_internalError=-4;
+				
+				log("Después: " + obj.toString());
+				log("Parámetros: "+parametros.toString());
+				errorControl(parametros,_internalError);	
 			
 			} 
 			catch (Exception e1) 
@@ -183,32 +185,7 @@ public class Profile extends Activity
 				e1.printStackTrace();
 			}
 			
-			log(parametros.toString());
-			JSONArray data = _post.getServerData(parametros,"http://5.231.69.226/EHControlConnect/index.php");
-			log(data.toString());
 			
-			try 
-			{
-				JSONObject json_data = data.getJSONObject(0);
-				switch(json_data.getInt("error"))
-				{
-					case 0:
-					{
-						_message = json_data.getString("ENGLISH");					
-						break;
-					}
-					default:
-					{
-						_message = json_data.getString("ENGLISH");
-						break;
-					}
-				}
-			
-			} catch (JSONException e) 
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}		
 			return null;
 		}
 		
@@ -224,7 +201,69 @@ public class Profile extends Activity
 	}
 	
 	
-	
+	/**
+	 * Error control for modify user.
+	 */
+	private void errorControl(ArrayList<String> parametros, int _internalError)
+	{
+		
+		switch(_internalError)
+		{
+			case 0:
+			{
+				JSONArray data = _post.getServerData(parametros,"http://5.231.69.226/EHControlConnect/index.php");
+				log(data.toString());
+				try 
+				{
+					JSONObject json_data = data.getJSONObject(0);
+					switch(json_data.getInt("ERROR"))
+					{
+						case 0:
+						{
+							_message = json_data.getString("ENGLISH");					
+							break;
+						}
+						default:
+						{
+							_message = json_data.getString("ENGLISH");
+							break;
+						}
+					}
+				
+				} 
+				catch (JSONException e) 
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}	
+				break;
+			}
+			case -1:
+			{
+				_message = "Box username is empty.";
+				break;
+			}
+			case -2:
+			{
+				_message = "Box passwaord is empty.";
+				break;
+			}
+			case -3:
+			{
+				_message = "Box e-mail is empty.";
+				break;
+			}
+			case -4:
+			{
+				_message = "No change.";
+				break;
+			}
+			default:
+			{
+				
+			}
+		}		
+	}
 	
 	
 	

@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_remote" >
+
+    <ImageView
+        android:id="@+id/on_off_remote"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="32dp"
+        android:layout_marginTop="42dp"
+        android:src="@drawable/on_off_remote" />
+
+    <ImageView
+        android:id="@+id/word_ehc"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignTop="@+id/on_off_remote"
+        android:layout_marginLeft="37dp"
+        android:src="@drawable/mute_remote" />
+
+    <ImageView
+        android:id="@+id/five_remote"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignLeft="@+id/two_remote"
+        android:layout_alignTop="@+id/four_remote"
+        android:src="@drawable/five_remote" />
+
+    <ImageView
+        android:id="@+id/six_remote"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignLeft="@+id/three_remote"
+        android:layout_alignTop="@+id/five_remote"
+        android:src="@drawable/six_remote" />
+
+    <ImageView
+        android:id="@+id/three_remote"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_above="@+id/six_remote"
+        android:layout_toRightOf="@+id/five_remote"
+        android:src="@drawable/three_remote" />
+
+    <ImageView
+        android:id="@+id/eight_remote"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignTop="@+id/seven_remote"
+        android:layout_toLeftOf="@+id/six_remote"
+        android:src="@drawable/eight_remote" />
+
+    <ImageView
+        android:id="@+id/nine_remote"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignLeft="@+id/six_remote"
+        android:layout_alignTop="@+id/eight_remote"
+        android:src="@drawable/nine_remote" />
+
+    <ImageView
+        android:id="@+id/two_remote"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_above="@+id/five_remote"
+        android:layout_alignLeft="@+id/zero_remote"
+        android:src="@drawable/two_remote" />
+
+    <ImageView
+        android:id="@+id/zero_remote"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/eight_remote"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/zero_remote" />
+
+    <ImageView
+        android:id="@+id/four_remote"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/one_remote"
+        android:layout_toLeftOf="@+id/five_remote"
+        android:src="@drawable/four_remote" />
+
+    <ImageView
+        android:id="@+id/seven_remote"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/five_remote"
+        android:layout_toRightOf="@+id/word_ehc"
+        android:src="@drawable/seven_remote" />
+
+    <ImageView
+        android:id="@+id/one_remote"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignLeft="@+id/seven_remote"
+        android:layout_below="@+id/dowm_arrow_remote"
+        android:src="@drawable/one_remote" />
+
+    <ImageView
+        android:id="@+id/play_remote"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignTop="@+id/left_arrow_remote"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="14dp"
+        android:src="@drawable/play_remote" />
+
+    <ImageView
+        android:id="@+id/config_remote"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/seven_remote"
+        android:layout_toLeftOf="@+id/seven_remote"
+        android:src="@drawable/config_remote" />
+
+    <ImageView
+        android:id="@+id/star_remote"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignLeft="@+id/on_off_remote"
+        android:layout_alignTop="@+id/zero_remote"
+        android:src="@drawable/star_remote" />
+
+    <ImageView
+        android:id="@+id/dowm_arrow_remote"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_alignLeft="@+id/up_arrow_remote"
+        android:layout_alignTop="@+id/play_remote"
+        android:layout_marginTop="24dp"
+        android:src="@drawable/down_arrow_remote" />
+
+    <ImageView
+        android:id="@+id/up_arrow_remote"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_alignTop="@+id/word_ehc"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="28dp"
+        android:src="@drawable/up_arrow_remote" />
+
+    <ImageView
+        android:id="@+id/left_arrow_remote"
+        android:layout_width="wrap_content"
+        android:layout_height="70dp"
+        android:layout_alignTop="@+id/rigth_arrow_remote"
+        android:layout_toLeftOf="@+id/rigth_arrow_remote"
+        android:src="@drawable/left_arrow_remote" />
+
+    <ImageView
+        android:id="@+id/rigth_arrow_remote"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_alignRight="@+id/three_remote"
+        android:layout_below="@+id/on_off_remote"
+        android:layout_marginTop="19dp"
+        android:src="@drawable/right_arrow_remote" />
+
+</RelativeLayout>
