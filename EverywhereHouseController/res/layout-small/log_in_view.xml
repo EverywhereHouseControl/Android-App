@@ -32,7 +32,9 @@
         android:layout_marginTop="34dp"
         android:ems="10"
         android:inputType="textPassword"
-        android:lines="1" >
+        android:lines="1"
+        android:password="true"
+        android:singleLine="true" >
 
         <requestFocus />
     </EditText>
@@ -67,7 +69,8 @@
         android:layout_alignLeft="@+id/buttonLogin"
         android:layout_marginBottom="64dp"
         android:ems="10"
-        android:lines="1" />
+        android:lines="1"
+        android:singleLine="true" />
 
     <ImageView
         android:id="@+id/HouseIconManagementMenu"

@@ -9,7 +9,8 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/textView3"
         android:layout_alignLeft="@+id/newUser"
-        android:ems="10" />
+        android:ems="10"
+        android:singleLine="true" />
 
     <EditText
         android:id="@+id/newUser"
@@ -18,7 +19,8 @@
         android:layout_alignBottom="@+id/textMessage"
         android:layout_marginLeft="36dp"
         android:layout_toRightOf="@+id/textMessage"
-        android:ems="10" >
+        android:ems="10"
+        android:singleLine="true" >
 
         <requestFocus />
     </EditText>
@@ -45,18 +47,6 @@
         android:textSize="25sp" />
 
     <Button
-        android:id="@+id/newUserConfirm"
-        android:layout_width="100dp"
-        android:layout_height="60dp"
-        android:layout_alignLeft="@+id/textMessage"
-        android:layout_below="@+id/textView4"
-        android:layout_marginTop="88dp"
-        android:background="@drawable/button_config"
-        android:text="Confirm"
-        android:textColor="@drawable/button_text_color"
-        android:textSize="25sp" />
-
-    <Button
         android:id="@+id/newUserCancel"
         android:layout_width="100dp"
         android:layout_height="60dp"
@@ -75,7 +65,9 @@
         android:layout_alignBottom="@+id/textView3"
         android:layout_alignLeft="@+id/newEmail"
         android:ems="10"
-        android:inputType="textPassword" />
+        android:inputType="textPassword"
+        android:password="true"
+        android:singleLine="true" />
 
     <TextView
         android:id="@+id/textView3"
@@ -87,16 +79,6 @@
         android:text="Password"
         android:textSize="25sp" />
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView3"
-        android:layout_marginTop="27dp"
-        android:layout_toLeftOf="@+id/newUser"
-        android:text="Repeat \nPassword"
-        android:textSize="25sp" />
-
     <EditText
         android:id="@+id/newRepeatPassword"
         android:layout_width="wrap_content"
@@ -104,6 +86,30 @@
         android:layout_alignBottom="@+id/textView4"
         android:layout_alignLeft="@+id/newPassword"
         android:ems="10"
-        android:inputType="textPassword" />
+        android:inputType="textPassword"
+        android:password="true"
+        android:singleLine="true" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView3"
+        android:layout_marginTop="25dp"
+        android:layout_toLeftOf="@+id/newUser"
+        android:text="Repeat \nPassword"
+        android:textSize="25sp" />
+
+    <Button
+        android:id="@+id/newUserConfirm"
+        android:layout_width="100dp"
+        android:layout_height="60dp"
+        android:layout_alignLeft="@+id/textMessage"
+        android:layout_below="@+id/newRepeatPassword"
+        android:layout_marginTop="96dp"
+        android:background="@drawable/button_config"
+        android:text="Confirm"
+        android:textColor="@drawable/button_text_color"
+        android:textSize="25sp" />
 
 </RelativeLayout>

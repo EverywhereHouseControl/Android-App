@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/RelativeLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/White" >
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="43dp"
+        android:src="@drawable/user_icon" />
+
+    <EditText
+        android:id="@+id/profileEmail"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textView3"
+        android:layout_alignLeft="@+id/profileUser"
+        android:ems="10"
+        android:textColor="@color/DarkGray"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/profilePassword"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textView3"
+        android:layout_alignLeft="@+id/profileEmail"
+        android:ems="10"
+        android:inputType="textPassword"
+        android:textColor="@color/DarkGray"
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/profileSave"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_alignLeft="@+id/textView2"
+        android:layout_below="@+id/textView3"
+        android:layout_marginTop="80dp"
+        android:background="@drawable/button_config"
+        android:text="Save"
+        android:textColor="@drawable/button_text_color"
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/profileExit"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_alignBaseline="@+id/profileSave"
+        android:layout_alignBottom="@+id/profileSave"
+        android:layout_toRightOf="@+id/imageView1"
+        android:background="@drawable/button_config"
+        android:text="Exit"
+        android:textColor="@drawable/button_text_color"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/textMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageView1"
+        android:layout_marginRight="32dp"
+        android:layout_marginTop="63dp"
+        android:layout_toLeftOf="@+id/profileUser"
+        android:text="User"
+        android:textColor="@color/Black"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/textMessage"
+        android:layout_centerVertical="true"
+        android:text="E-mail"
+        android:textColor="@color/Black"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/textView2"
+        android:layout_below="@+id/textView2"
+        android:layout_marginTop="54dp"
+        android:text="Password"
+        android:textColor="@color/Black"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/profileUser"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textMessage"
+        android:layout_alignLeft="@+id/imageView1"
+        android:ems="10"
+        android:textColor="@color/DarkGray"
+        android:textSize="20sp" />
+
+</RelativeLayout>

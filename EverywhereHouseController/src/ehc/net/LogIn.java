@@ -1,7 +1,6 @@
 package ehc.net;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,7 +12,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import ehc.net.R.color;
 import framework.Post;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -238,6 +236,8 @@ public class LogIn extends Activity
 					}
 					else
 					{ 	
+						//Save the profile's information.
+						saveProfileInfo(json_data);
 						//Save the house's configuration
 						saveConfig(json_data.get("JSON"));
 						//Activate the next Activity("MainMenu")
@@ -291,15 +291,34 @@ public class LogIn extends Activity
 	}
 	
 	/**
-	 * Saves  from the server query the house configuration in the file 'configuration.json'.
+	 * Saves from the server query the profile information in the file 'profile.json'.
+	 */
+	private void saveProfileInfo(JSONObject JSON)
+	{
+		try 
+		{
+			FileOutputStream outputStream = openFileOutput("profileInformation.json", MODE_PRIVATE);
+			outputStream.write(JSON.toString().getBytes());
+			outputStream.close();	
+		} 
+		catch (IOException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	
+	/**
+	 * Saves from the server query the house configuration in the file 'configuration.json'.
 	 */
 	private void saveConfig(Object JSON)
 	{
-		File file = new File(getFilesDir(), "configuration.json");
-		
+		@SuppressWarnings("unused")
+		File file = new File(getFilesDir(), "configuration.json");	
 		try 
 		{
-			FileOutputStream outputStream = openFileOutput("configuration.json", MODE_APPEND);
+			FileOutputStream outputStream = openFileOutput("configuration.json", MODE_PRIVATE);
 			outputStream.write(JSON.toString().getBytes());
 			outputStream.close();
 		} catch (IOException e) 
