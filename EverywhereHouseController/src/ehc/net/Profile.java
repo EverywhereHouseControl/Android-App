@@ -111,7 +111,7 @@ public class Profile extends Activity
 		JSONObject obj = new JSONObject(file);
 		_user.setText(obj.getString("USERNAME"));
 		_email.setText(obj.getString("EMAIL"));
-		_password.setText("luis_caca");
+		_password.setText("*/*^^*/*^^*/*^^*/*");
 	}
 	
 	
@@ -155,13 +155,13 @@ public class Profile extends Activity
 				parametros.add("n_username");
 				parametros.add(_user.getText().toString());
 				parametros.add("n_password");
-				if(!_password.getText().toString().equals("luis_caca"))
-					parametros.add(_post.md5(_password.getText().toString()));
-				else 
+				if(_password.getText().toString().equals("*/*^^*/*^^*/*^^*/*") || _post.md5(_password.getText().toString()).equals(obj.getString("PASSWORD")))
 				{
 					parametros.add(obj.getString("PASSWORD"));
 					_internalError = -5;
 				}
+				else parametros.add(_post.md5(_password.getText().toString()));
+				
 				parametros.add("n_email");
 				parametros.add(_email.getText().toString());
 				parametros.add("n_hint");
@@ -169,10 +169,13 @@ public class Profile extends Activity
 				
 				if(_user.getText().toString().isEmpty())_internalError=-1;
 				else if(_password.getText().toString().isEmpty())_internalError=-2;
-				else if(_email.getText().toString().isEmpty())_internalError=-3;
+				else if(_password.getText().toString().length()<2)_internalError=-3;
+				else if(_email.getText().toString().isEmpty())_internalError=-4;
+				else if(!_email.getText().toString().contains("@"))_internalError=-5;
 				else if(_user.getText().toString().equals(obj.getString("USERNAME"))&&
 						_email.getText().toString().equals(obj.getString("EMAIL")) &&
-						_internalError==-5)_internalError=-4;
+						_internalError==-5)_internalError=-6;
+				
 				
 				log("Después: " + obj.toString());
 				log("Parámetros: "+parametros.toString());
@@ -245,17 +248,27 @@ public class Profile extends Activity
 			}
 			case -2:
 			{
-				_message = "Box passwaord is empty.";
+				_message = "Box password is empty.";
 				break;
 			}
 			case -3:
 			{
-				_message = "Box e-mail is empty.";
+				_message = "Password is too short.";
 				break;
 			}
 			case -4:
 			{
-				_message = "No change.";
+				_message = "Box e-mail is empty.";
+				break;
+			}
+			case -5:
+			{
+				_message = "Erroneous format in e-mail box";
+				break;
+			}
+			case -6:
+			{
+				_message = "No change";
 				break;
 			}
 			default:

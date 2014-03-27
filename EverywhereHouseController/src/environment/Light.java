@@ -3,7 +3,10 @@ package environment;
 import java.util.List;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
+import android.view.View.OnAttachStateChangeListener;
+import android.view.View.OnClickListener;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
@@ -13,10 +16,16 @@ public class Light extends RoomDecorator{
 	
 	String _item="Light";
 	String _name;
+	String _roomName;
 	private Room _room; 
 	List<View> _elementList = null;
 	
 	public Light(){}
+	
+	public Light(String _roomName)
+	{
+		this._roomName = _roomName;
+	}
 	
 	public Light(Room room, String name){
 		_room=room;
@@ -49,7 +58,7 @@ public class Light extends RoomDecorator{
 		CheckBox checkbox = new CheckBox(c);
 		checkbox.setClickable(true);
 		checkbox.setText("On/Off");
-		ll.addView(checkbox);		
+		ll.addView(checkbox);
 	}
 
 	/**

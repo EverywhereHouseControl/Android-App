@@ -12,9 +12,15 @@ import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.ExpandableListView.OnChildClickListener;
 import environment.DVD;
 import environment.Light;
 import framework.ExpandableListAdapter;
@@ -26,6 +32,8 @@ import framework.JSON;
 
 		private JSON JSONFile;
 		private String button;
+		com.actionbarsherlock.view.Menu menu;
+		TextView _textRoom;
 		ExpandableListView expListView;
 		List<String> groupList;
 		HashMap<String, List<String>> listDataChild;
@@ -72,7 +80,6 @@ import framework.JSON;
 //		/**
 //		 * Method which executes the next activity
 //		 */
-
 		
 		public ItemsActivity(String button)
 		{
@@ -91,13 +98,13 @@ import framework.JSON;
 				if (itemList.get(i).equals("DVD"))
 				{
 					DVD dvd = new DVD();
-					Log.d("Activity: ",getActivity().getApplicationContext().toString());
+					Log.e("Activity: ",getActivity().getApplicationContext().toString());
 					
 					dvd.setView(getActivity().getApplicationContext(), ll);
 				}
 				if (itemList.get(i).equals("Lights"))
 				{
-					Light light = new Light();
+					Light light = new Light(button);
 					light.setView(getActivity().getApplicationContext(), ll);
 				}
 					
@@ -152,11 +159,12 @@ import framework.JSON;
 	    {
 	    	ViewGroup rootView = ( ViewGroup ) inflater.inflate( R.layout.items_view, container, false );
 	    	expListView = (ExpandableListView) rootView.findViewById(R.id.itemlist);
-
-	    	JSONFile = JSON.getInstance(getActivity().getApplicationContext());
+	    	    	
+	    	_textRoom = (TextView)rootView.findViewById(R.id.textRoom);
+	    	_textRoom.setText(button);
 	    	
-
-
+	    	JSONFile = JSON.getInstance(getActivity().getApplicationContext());
+	    		
 	    	groupList = new ArrayList<String>();
 			listDataChild = new HashMap<String, List<String>>();
 
@@ -164,11 +172,10 @@ import framework.JSON;
 	    	{
 	    		groupList = JSONFile.getItems(button);
 		        final ExpandableListAdapter expListAdapter = new 
-		        		ExpandableListAdapter(
+		        		ExpandableListAdapter(button,
 		        				rootView.getContext().getApplicationContext(), 
 		        				groupList, createHashMapItems(groupList));
-		        expListView.setAdapter(expListAdapter);
-
+		        expListView.setAdapter(expListAdapter);       
 	    	} 
 	    	catch (JSONException e) 
 	    	{

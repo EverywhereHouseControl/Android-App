@@ -233,20 +233,17 @@ public class LogIn extends Activity
 //				parametros2.add("command");
 //				parametros2.add("doaction");
 //				parametros2.add("username");
-//				//parametros.add(_user.getText().toString());
-//				parametros2.add("luis");
-//				
+//				parametros2.add("bertoldo");
+//				parametros2.add("housename");
+//				parametros2.add("casaBertoldo");
+//				parametros2.add("roomname");
+//				parametros2.add("cocina");
 //				parametros2.add("servicename");
-//				//parametros.add(_user.getText().toString());
-//				parametros2.add("saloon");
-//				
+//				parametros2.add("TV");
 //				parametros2.add("actionname");
-//				//parametros.add(_user.getText().toString());
-//				parametros2.add("encender");
-//				
+//				parametros2.add("ENCENDER");
 //				parametros2.add("data");
-//				//parametros.add(_user.getText().toString());
-//				parametros2.add("cara mierda");
+//				parametros2.add("CACA");
 //			 			
 //				//Variable 'Data' saves the query response
 //				JSONArray data2 = _post.getServerData(parametros2,"http://5.231.69.226/EHControlConnect/index.php"/*"http://ehcontrol.net/EHControlConnect/index.php"*/);
@@ -434,8 +431,9 @@ public class LogIn extends Activity
 				else if(email.getText().toString().isEmpty() )_internalError=-3;
 				else if(!email.getText().toString().contains("@"))_internalError=-4;				
 				else if (password.getText().toString().isEmpty())_internalError=-5;
-				else if (repeatPassword.getText().toString().isEmpty())_internalError=-6;
-				else if (!password.getText().toString().equals(repeatPassword.getText().toString()))_internalError=-7;
+				else if (password.getText().toString().length()<2)_internalError=-6;
+				else if (repeatPassword.getText().toString().isEmpty())_internalError=-7;
+				else if (!password.getText().toString().equals(repeatPassword.getText().toString()))_internalError=-8;
 				
 				errorControl(dialog,parametros,_internalError);				
 			}
@@ -487,10 +485,15 @@ public class LogIn extends Activity
 			}
 			case -6:
 			{
-				_message = "Box repeat password is empty";
+				_message = "Password is too sort";
 				break;
 			}
 			case -7:
+			{
+				_message = "Box repeat password is empty";
+				break;
+			}
+			case -8:
 			{
 				_message = "Passwords do not match";
 				break;

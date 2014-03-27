@@ -132,6 +132,7 @@ public class AdapterView extends FragmentPagerAdapter
 	//------Variables----------
 	private int _position;
 	private int _num;
+	private String _room;
 	HashMap<String, String> tableButtons;
 	//-------------------------
 	

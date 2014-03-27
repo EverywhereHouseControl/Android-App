@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.View;
+import android.widget.CheckBox;
+import android.widget.ExpandableListView;
 
 public class ContainerFragments extends FragmentActivity
 {
@@ -13,6 +16,45 @@ public class ContainerFragments extends FragmentActivity
 	private AdapterView _mAdapter;
 	private ViewPager _mPager;
 	//--------------------------------
+	/**
+	 * Method called when the view has been loaded.
+	 */
+	@Override
+	public void onWindowFocusChanged(boolean hasFocus) 
+	{
+		if(hasFocus)
+		{
+			CheckBox checkbox = (CheckBox)_mPager.findViewById(0);
+			if(checkbox!=null)
+				checkbox.setOnClickListener(new View.OnClickListener() 
+				{
+				
+					@Override
+					public void onClick(View v) 
+					{
+						// TODO Auto-generated method stub
+						Log.d("CHECKBOX TOCADO ","OK");
+					}
+				});
+			
+//			ExpandableListView expListView = (ExpandableListView)findViewById(R.id.itemlist);
+//	        expListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() 
+//	    	{
+//				
+//				@Override
+//				public boolean onChildClick(ExpandableListView parent, View v,
+//						int groupPosition, int childPosition, long id) 
+//				{
+//					// TODO Auto-generated method stub
+//						Log.d("HIJO TOCADO ","OK");
+//
+//					return true;
+//				}
+//			
+//	    	});
+		}
+	}
+	
 	
 	 @Override
 	    protected void onCreate( Bundle savedInstanceState )
@@ -22,6 +64,7 @@ public class ContainerFragments extends FragmentActivity
 	        
 	        // Create a HashMap with < Key: position, Value button name >.
 	        HashMap<String,String> tableButtons = new HashMap<String,String>();
+	        
 	        
 	        for(int i=0; i<getIntent().getExtras().getInt("NumRooms"); i++)
 	        {
@@ -40,7 +83,7 @@ public class ContainerFragments extends FragmentActivity
 	    	String buttonPosition = getIntent().getExtras().getString(buttonClicked);
 	    		    	
 	        //Move the ViewPager to the desired view.
-	        _mPager.setCurrentItem(Integer.parseInt(buttonPosition));
+	        _mPager.setCurrentItem(Integer.parseInt(buttonPosition));   
 	    }
 	 
 	 	/**
