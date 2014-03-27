@@ -71,8 +71,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             convertView = inflater.inflate(itemType, null);
             //-------------------------------------
             setListeners(convertView,itemType);
-            TextView tv = (TextView) convertView.findViewById(R.id.childname);
-            servicename = tv.getText().toString();
+            servicename = (String) getGroup(groupPosition);
         	servicename = servicename.toUpperCase();
         	Log.d("servicename", servicename.toString());
             //--------------------------------------
@@ -251,7 +250,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 				parametros.add("actionname");
 				parametros.add(action);
 				parametros.add("data");
-				parametros.add("CACA");
+				parametros.add("UNO");
 			 			
 				errorControl(parametros,_internalError);	
 			
