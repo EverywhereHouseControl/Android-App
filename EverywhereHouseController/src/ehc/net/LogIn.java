@@ -166,6 +166,28 @@ public class LogIn extends Activity
 				JSONArray data = _post.getServerData(parametros,"http://5.231.69.226/EHControlConnect/index.php"/*"http://ehcontrol.net/EHControlConnect/index.php"*/);
 				log(data.toString());
 				
+				
+				//////////////////////////////////////////////////
+				
+//				parametros.add("command");
+//				parametros.add("doaction");
+//				parametros.add("username");
+//				parametros.add(_user.getText().toString());
+//				parametros.add("housename");
+//				parametros.add("basicHouse1");
+//				parametros.add("roomname");
+//				parametros.add("LAB");
+//				parametros.add("servicename");
+//				parametros.add("TV");
+//				parametros.add("actionname");
+//				parametros.add("ENVIAR");
+//				parametros.add("data");
+//				parametros.add("POWER");
+//				JSONArray data2 = _post.getServerData(parametros,"http://5.231.69.226/EHControlConnect/index.php"/*"http://ehcontrol.net/EHControlConnect/index.php"*/);
+//				log(data2.toString());
+				//////////////////////////////////////////////////
+				
+				
 				try 
 				{
 					JSONObject json_data = data.getJSONObject(0);
@@ -424,7 +446,7 @@ public class LogIn extends Activity
 				parametros.add("email");
 				parametros.add(email.getText().toString());
 				parametros.add("hint");
-				parametros.add("caca");
+				parametros.add("");
 			
 				//Identify errors.
 				if( user.getText().toString().isEmpty())_internalError=-2;

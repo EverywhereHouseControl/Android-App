@@ -41,6 +41,8 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     private String action;
 	private Post _post;
 	private String _message;
+	private String _data;
+	private String _house;
 
  
     public ExpandableListAdapter(String room,Context context, List<String> laptops,
@@ -119,11 +121,13 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 					// TODO Auto-generated method stub
 					if(isChecked)
 					{
-						action = "ENCENDER";
+						action = "ENVIAR";
+						_data = "1";
 					}
 					else
 					{
-						action = "APAGAR";
+						action = "ENVIAR";
+						_data="0";
 					}
 					parser();
 					_post = new Post();						
@@ -189,6 +193,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 	 */
 	private void parser()
 	{
+		String file2;
 		try 
 		{
 			InputStream is = context.openFileInput("profileInformation.json");
@@ -197,6 +202,16 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 	        is.read(buffer);
 	        is.close();
 	        this.file = new String(buffer, "UTF-8");
+	        
+	        
+	        is = context.openFileInput("configuration.json");
+			size = is.available();
+	        buffer = new byte[size];
+	        is.read(buffer);
+	        is.close();
+	        file2 = new String(buffer, "UTF-8");
+	        JSONObject obj = new JSONObject(file2);
+	        _house = obj.getString("House");
 		} 
     	catch (IOException ex) 
     	{
@@ -241,17 +256,17 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 				parametros.add("username");
 				parametros.add(obj.getString("USERNAME"));
 				parametros.add("housename");
-				parametros.add("casaBertoldo");
+				parametros.add(_house);
 				parametros.add("roomname");
 				parametros.add(currentRoom);
 				parametros.add("servicename");
-				//parametros.add(servicename);
-				parametros.add("LIGTHS");
+				parametros.add(servicename);
 				parametros.add("actionname");
 				parametros.add(action);
 				parametros.add("data");
-				parametros.add("UNO");
-			 			
+				parametros.add(_data);
+			 		
+				Log.d("PARAMETROS",parametros.toString());
 				errorControl(parametros,_internalError);	
 			
 			} 

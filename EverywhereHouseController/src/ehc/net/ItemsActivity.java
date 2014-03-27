@@ -130,7 +130,7 @@ import framework.JSON;
 	    			List<String> door = new ArrayList<String>();
 	    			door.add("boolean");
 	    			listDataChild.put(items.get(i),door);
-	    		} else if (items.get(i).equals("LIGTHS")){
+	    		} else if (items.get(i).equals("LIGHTS")){
 	    			List<String> lights = new ArrayList<String>();
 	    			lights.add("float");
 	    			lights.add("boolean");
