@@ -8,28 +8,30 @@
         android:minSdkVersion="10"
         android:targetSdkVersion="19" />
 
-	<supports-screens
-        android:smallScreens="true"
-        android:normalScreens="true"
+    <supports-screens
+        android:anyDensity="true"
         android:largeScreens="true"
-        android:xlargeScreens="true"
-        android:anyDensity="true" 
-        android:resizeable="true"/>
-	
+        android:normalScreens="true"
+        android:resizeable="true"
+        android:smallScreens="true"
+        android:xlargeScreens="true" />
+
     <!-- Permiso de acceso a todas las APIs de internet -->
-	<uses-permission android:name = "android.permission.INTERNET" />
-	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.SET_DEBUG_APP" />
 
-	<uses-permission android:name="android.permission.SET_DEBUG_APP"/>
+    <!-- Permiso de almacenamiento externo -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-	<!-- Permiso de almacenamiento externo -->
-	<uses-permission android:name = "android.permission.WRITE_EXTERNAL_STORAGE"/>
-	
-	<!-- Permiso anti-bloqueo -->
-	<uses-permission android:name = "android.permission.WAKE_LOCK"/>
+    <!-- Permiso anti-bloqueo -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
-	<!-- Requerimiento Hardware. Pantalla multitouch -->
-	<uses-feature android:name="android.hardware.touchscreen.multitouch" android:required="true"/>"
+    <!-- Requerimiento Hardware. Pantalla multitouch -->
+    <uses-feature
+        android:name="android.hardware.touchscreen.multitouch"
+        android:required="true" />
+"
 
     <!-- application : Componentes de la app. -->
     <application
@@ -37,85 +39,96 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-        
-        
         <activity
             android:name="ehc.net.LogIn"
+            android:configChanges="keyboard|keyboardHidden|orientation"
             android:label="@string/app_name"
-             android:theme="@style/Theme.Sherlock.NoActionBar"
             android:screenOrientation="portrait"
-            android:configChanges="keyboard|keyboardHidden|orientation">
+            android:theme="@style/Theme.Sherlock.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        
         </activity>
-        <activity 
-            android:name="ehc.net.MainMenu" 
-            android:theme="@style/Theme.Sherlock.NoActionBar"
+        <activity
+            android:name="ehc.net.MainMenu"
+            android:configChanges="keyboard|keyboardHidden|orientation"
             android:label="@style/AppTheme"
             android:screenOrientation="portrait"
-            android:configChanges="keyboard|keyboardHidden|orientation"> 
-          	<intent-filter>
-          	    <action android:name="ehc.net.MainMenu" />
+            android:theme="@style/Theme.Sherlock.NoActionBar" >
+            <intent-filter>
+                <action android:name="ehc.net.MainMenu" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity 
-            android:name="ehc.net.ManagementMenu" 
-            android:theme="@style/Theme.MyTheme"
+        <activity
+            android:name="ehc.net.ManagementMenu"
+            android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:configChanges="keyboard|keyboardHidden|orientation"> 
-          	<intent-filter>
-          	    <action android:name="ehc.net.ManagementMenu" />
+            android:theme="@style/Theme.MyTheme" >
+            <intent-filter>
+                <action android:name="ehc.net.ManagementMenu" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity 
-            android:name="ehc.net.PlacesMenu" 
-            android:theme="@style/Theme.Sherlock.NoActionBar"
+        <activity
+            android:name="ehc.net.PlacesMenu"
+            android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:configChanges="keyboard|keyboardHidden|orientation"> 
-          	<intent-filter>
-          	    <action android:name="ehc.net.PlacesMenu" />
+            android:theme="@style/Theme.Sherlock.NoActionBar" >
+            <intent-filter>
+                <action android:name="ehc.net.PlacesMenu" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        
-        <activity 
-            android:name="ehc.net.ItemsActivity" 
-            android:theme="@style/Theme.Sherlock.NoActionBar"
+        <activity
+            android:name="ehc.net.ItemsActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:configChanges="keyboard|keyboardHidden|orientation"> 
-          	<intent-filter>
-          	    <action android:name="ehc.net.ItemsActivity" />
+            android:theme="@style/Theme.Sherlock.NoActionBar" >
+            <intent-filter>
+                <action android:name="ehc.net.ItemsActivity" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        
         <activity
             android:name="framework.ContainerFragments"
-			android:theme="@style/Theme.Sherlock.NoActionBar"
+            android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:configChanges="keyboard|keyboardHidden|orientation">
+            android:theme="@style/Theme.Sherlock.NoActionBar" >
             <intent-filter>
                 <action android:name="framework.ContainerFragments" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
             android:name="ehc.net.Profile"
-			android:theme="@style/Theme.Sherlock.NoActionBar"
+            android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:configChanges="keyboard|keyboardHidden|orientation">
+            android:theme="@style/Theme.Sherlock.NoActionBar" >
             <intent-filter>
                 <action android:name="ehc.net.Profile" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        
-        
+        <activity
+            android:name="environment.RemoteController"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Sherlock.NoActionBar" >
+            <intent-filter>
+                <action android:name="environment.RemoteController" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

@@ -130,7 +130,7 @@ import framework.JSON;
 	    			List<String> door = new ArrayList<String>();
 	    			door.add("boolean");
 	    			listDataChild.put(items.get(i),door);
-	    		} else if (items.get(i).equals("LIGHTS")){
+	    		} else if (items.get(i).equals("LIGTHS")){
 	    			List<String> lights = new ArrayList<String>();
 	    			lights.add("float");
 	    			lights.add("boolean");
@@ -145,6 +145,10 @@ import framework.JSON;
 	    			stereo.add("float");
 	    			stereo.add("boolean");
 	    			listDataChild.put(items.get(i),stereo);
+    			} else if (items.get(i).equals("DVD") || items.get(i).equals("TV")){
+	    			List<String> controller = new ArrayList<String>();
+	    			controller.add("controller");
+	    			listDataChild.put(items.get(i),controller);
     			} 	    			
 	    	}
 	    	
