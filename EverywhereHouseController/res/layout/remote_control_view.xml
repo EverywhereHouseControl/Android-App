@@ -15,7 +15,7 @@
         android:src="@drawable/on_off_remote" />
 
     <ImageView
-        android:id="@+id/word_ehc"
+        android:id="@+id/mute_remote"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_alignParentLeft="true"
@@ -88,22 +88,6 @@
         android:src="@drawable/four_remote" />
 
     <ImageView
-        android:id="@+id/seven_remote"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_below="@+id/five_remote"
-        android:layout_toRightOf="@+id/word_ehc"
-        android:src="@drawable/seven_remote" />
-
-    <ImageView
-        android:id="@+id/one_remote"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_alignLeft="@+id/seven_remote"
-        android:layout_below="@+id/dowm_arrow_remote"
-        android:src="@drawable/one_remote" />
-
-    <ImageView
         android:id="@+id/play_remote"
         android:layout_width="40dp"
         android:layout_height="40dp"
@@ -162,5 +146,21 @@
         android:layout_below="@+id/on_off_remote"
         android:layout_marginTop="19dp"
         android:src="@drawable/right_arrow_remote" />
+
+    <ImageView
+        android:id="@+id/one_remote"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignLeft="@+id/four_remote"
+        android:layout_below="@+id/dowm_arrow_remote"
+        android:src="@drawable/one_remote" />
+
+    <ImageView
+        android:id="@+id/seven_remote"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignLeft="@+id/four_remote"
+        android:layout_below="@+id/four_remote"
+        android:src="@drawable/seven_remote" />
 
 </RelativeLayout>
