@@ -29,7 +29,7 @@ public class RemoteController extends Activity {
 	private String servicename;
 	private String action;
 	private Post _post;
-	private String _message;
+	private String _message = "";
 	private String _data;
 	private String _house;
 	private Context context;
@@ -38,7 +38,7 @@ public class RemoteController extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.remote_control_view);
-
+		context = this.getBaseContext();
 		setListeners();
 	}
 	
@@ -48,7 +48,7 @@ public class RemoteController extends Activity {
 			
 			@Override
 			public void onClick(View v) {	
-				startConnection("UNO","16748655");				
+				startConnection("ENVIAR","UNO");				
 			}
 		});
 		
@@ -57,7 +57,7 @@ public class RemoteController extends Activity {
 			
 			@Override
 			public void onClick(View v) {	
-				startConnection("DOS","16758855");				
+				startConnection("ENVIAR","DOS");				
 			}
 		});
 		
@@ -66,7 +66,7 @@ public class RemoteController extends Activity {
 			
 			@Override
 			public void onClick(View v) {	
-				startConnection("TRES","16775175");				
+				startConnection("ENVIAR","TRES");				
 			}
 		});
 		
@@ -75,7 +75,7 @@ public class RemoteController extends Activity {
 			
 			@Override
 			public void onClick(View v) {	
-				startConnection("CUATRO","16756815");				
+				startConnection("ENVIAR","CUATRO");				
 			}
 		});
 		
@@ -84,7 +84,7 @@ public class RemoteController extends Activity {
 			
 			@Override
 			public void onClick(View v) {	
-				startConnection("CINCO","16750695");				
+				startConnection("ENVIAR","CINCO");				
 			}
 		});
 		
@@ -93,7 +93,7 @@ public class RemoteController extends Activity {
 			
 			@Override
 			public void onClick(View v) {	
-				startConnection("SEIS","16767015");				
+				startConnection("ENVIAR","SEIS");				
 			}
 		});
 		
@@ -102,7 +102,7 @@ public class RemoteController extends Activity {
 			
 			@Override
 			public void onClick(View v) {	
-				startConnection("SIETE","16746615");				
+				startConnection("ENVIAR","SIETE");				
 			}
 		});
 		
@@ -111,7 +111,7 @@ public class RemoteController extends Activity {
 			
 			@Override
 			public void onClick(View v) {	
-				startConnection("OCHO","16754775");				
+				startConnection("ENVIAR","OCHO");				
 			}
 		});
 		
@@ -120,7 +120,7 @@ public class RemoteController extends Activity {
 			
 			@Override
 			public void onClick(View v) {	
-				startConnection("NUEVE","16771095");				
+				startConnection("ENVIAR","NUEVE");				
 			}
 		});
 		
@@ -129,7 +129,7 @@ public class RemoteController extends Activity {
 			
 			@Override
 			public void onClick(View v) {	
-				startConnection("CERO","16730295");				
+				startConnection("ENVIAR","CERO");				
 			}
 		});
 		
@@ -138,7 +138,7 @@ public class RemoteController extends Activity {
 			
 			@Override
 			public void onClick(View v) {	
-				startConnection("FAV","16732845");				
+				startConnection("ENVIAR","FAV");				
 			}
 		});
 		
@@ -147,7 +147,7 @@ public class RemoteController extends Activity {
 			
 			@Override
 			public void onClick(View v) {	
-				startConnection("UP","16769055");				
+				startConnection("ENVIAR","UP");				
 			}
 		});
 		
@@ -156,7 +156,7 @@ public class RemoteController extends Activity {
 			
 			@Override
 			public void onClick(View v) {	
-				startConnection("LEFT","16718055");				
+				startConnection("ENVIAR","LEFT");				
 			}
 		});
 		
@@ -165,7 +165,7 @@ public class RemoteController extends Activity {
 			
 			@Override
 			public void onClick(View v) {	
-				startConnection("PLAY","16720605");				
+				startConnection("ENVIAR","PLAY");				
 			}
 		});
 		
@@ -174,7 +174,7 @@ public class RemoteController extends Activity {
 			
 			@Override
 			public void onClick(View v) {	
-				startConnection("RIGHT","16773135");				
+				startConnection("ENVIAR","RIGHT");				
 			}
 		});
 				
@@ -183,7 +183,7 @@ public class RemoteController extends Activity {
 			
 			@Override
 			public void onClick(View v) {	
-				startConnection("MUTE","16745085");				
+				startConnection("ENVIAR","MUTE");				
 			}
 		});
 		
@@ -192,7 +192,7 @@ public class RemoteController extends Activity {
 			
 			@Override
 			public void onClick(View v) {	
-				startConnection("SETUP","16774605");				
+				startConnection("ENVIAR","SETUP");				
 			}
 		});
 		
@@ -201,7 +201,7 @@ public class RemoteController extends Activity {
 			
 			@Override
 			public void onClick(View v) {	
-				startConnection("POWER","16722135");				
+				startConnection("ENVIAR","POWER");				
 			}
 		});
 		
@@ -212,13 +212,13 @@ public class RemoteController extends Activity {
 	
 
 	private void startConnection(String act, String data){
-		Toast.makeText(this, "Has pulsado " + act, Toast.LENGTH_SHORT).show();
-//		action=act;
-//		_data=data;
-//		parser();
-//		_post = new Post();
-//		doActionConnection connection = new doActionConnection();
-//		connection.execute();
+		//Toast.makeText(this, "Has pulsado " + act, Toast.LENGTH_SHORT).show();
+		action=act;
+		_data=data;
+		parser();
+		_post = new Post();
+		doActionConnection connection = new doActionConnection();
+		connection.execute();
 	}
 	
 	private void parser() {
@@ -285,7 +285,7 @@ public class RemoteController extends Activity {
 				parametros.add("actionname");
 				parametros.add(action);
 				parametros.add("data");
-				parametros.add("_data");
+				parametros.add(_data);
 
 				Log.d("PARAMETROS",parametros.toString());
 				errorControl(parametros, _internalError);
