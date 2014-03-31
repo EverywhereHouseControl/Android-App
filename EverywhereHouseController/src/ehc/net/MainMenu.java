@@ -1,15 +1,11 @@
 package ehc.net;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -30,6 +26,7 @@ public class MainMenu extends Activity
     {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.main_menu_view );
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         /**
          * ------------------------------------
          * Liked:  variable <- XML component 

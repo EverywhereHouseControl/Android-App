@@ -49,6 +49,7 @@ public class LogIn extends Activity
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.log_in_view);
+		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		
 		/**
          * ------------------------------------
@@ -156,14 +157,14 @@ public class LogIn extends Activity
 				parametros.add("command");
 				parametros.add("login");
 				parametros.add("username");
-				parametros.add(_user.getText().toString());
-				//parametros.add("luis");
+				//parametros.add(_user.getText().toString());
+				parametros.add("luis");
 				parametros.add("password");
-				parametros.add(_post.md5(_password.getText().toString()));
-				//parametros.add(_post.md5("luis"));
+				//parametros.add(_post.md5(_password.getText().toString()));
+				parametros.add(_post.md5("luis"));
 			 			
 				//Variable 'Data' saves the query response
-				JSONArray data = _post.getServerData(parametros,"http://5.231.69.226/EHControlConnect/index.php"/*"http://ehcontrol.net/EHControlConnect/index.php"*/);
+				JSONArray data = _post.getServerData(parametros,"http://5.231.69.226/EHControlConnect/index.php");//"http://192.168.2.147/EHControlConnect/index.php");
 				log(data.toString());
 				
 				
@@ -381,7 +382,10 @@ public class LogIn extends Activity
 		Button dialogButtonCancel = (Button) dialog.findViewById(R.id.newUserCancel);
 		Button dialogButtonConfirm = (Button) dialog.findViewById(R.id.newUserConfirm);
 	 
-		dialog.setTitle("NEW USER");    	
+		dialog.setTitle("NEW USER");
+		//Dialog goes up when keyboard is shown
+		//dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+		//dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 	
 		WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
 		lp.copyFrom(dialog.getWindow().getAttributes());
@@ -557,7 +561,7 @@ public class LogIn extends Activity
 			//Variable 'Data' saves the query response
 			log("query");
 			log(parametros.toString());
-			JSONArray data = _post.getServerData(parametros,"http://5.231.69.226/EHControlConnect/index.php");
+			JSONArray data = _post.getServerData(parametros,"http://5.231.69.226/EHControlConnect/index.php");//"http://192.168.2.147/EHControlConnect/index.php");
 			log(data.toString());
 			try 
 			{

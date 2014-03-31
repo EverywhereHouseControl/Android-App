@@ -15,50 +15,11 @@ public class ContainerFragments extends FragmentActivity
 	//----------Variables------------
 	private AdapterView _mAdapter;
 	private ViewPager _mPager;
-	//--------------------------------
-	/**
-	 * Method called when the view has been loaded.
-	 */
-	@Override
-	public void onWindowFocusChanged(boolean hasFocus) 
-	{
-		if(hasFocus)
-		{
-			CheckBox checkbox = (CheckBox)_mPager.findViewById(0);
-			if(checkbox!=null)
-				checkbox.setOnClickListener(new View.OnClickListener() 
-				{
-				
-					@Override
-					public void onClick(View v) 
-					{
-						// TODO Auto-generated method stub
-						Log.d("CHECKBOX TOCADO ","OK");
-					}
-				});
-			
-//			ExpandableListView expListView = (ExpandableListView)findViewById(R.id.itemlist);
-//	        expListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() 
-//	    	{
-//				
-//				@Override
-//				public boolean onChildClick(ExpandableListView parent, View v,
-//						int groupPosition, int childPosition, long id) 
-//				{
-//					// TODO Auto-generated method stub
-//						Log.d("HIJO TOCADO ","OK");
-//
-//					return true;
-//				}
-//			
-//	    	});
-		}
-	}
-	
+	//--------------------------------	
 	
 	 @Override
-	    protected void onCreate( Bundle savedInstanceState )
-	    {
+	 protected void onCreate( Bundle savedInstanceState )
+	 {
 	    	super.onCreate( savedInstanceState );
 	        setContentView( R.layout.pager_view);
 	        

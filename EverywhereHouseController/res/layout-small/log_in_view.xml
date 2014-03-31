@@ -1,93 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@android:color/white"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/White"
     android:gravity="top"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:screenSize="small"
+    android:screenSize="normal"
     tools:context=".LogIn" >
-
-    <TextView
-        android:id="@+id/id"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/idText"
-        android:layout_alignBottom="@+id/idText"
-        android:layout_alignLeft="@+id/password"
-        android:text="User"
-        android:textSize="20sp" />
-
-    <EditText
-        android:id="@+id/passwordText"
-        android:layout_width="100dp"
-        android:layout_height="20dp"
-        android:layout_alignLeft="@+id/idText"
-        android:layout_alignRight="@+id/idText"
-        android:layout_below="@+id/id"
-        android:layout_marginTop="34dp"
-        android:ems="10"
-        android:inputType="textPassword"
-        android:lines="1"
-        android:password="true"
-        android:singleLine="true" >
-
-        <requestFocus />
-    </EditText>
 
     <TextView
         android:id="@+id/password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/passwordText"
+        android:layout_toLeftOf="@+id/passwordText"
         android:text="Password "
+        android:textColor="@color/Black"
         android:textSize="20sp" />
 
-    <Button
-        android:id="@+id/buttonLogin"
-        android:layout_width="80dp"
-        android:layout_height="40dp"
+    <TextView
+        android:id="@+id/createUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="30dp"
-        android:textColor="@drawable/button_text_color"
-        android:background="@drawable/button_config"
-        android:hint="60sp"
-        android:onClick="onClickButton"
-        android:text="Login"
-        android:textSize="15sp" />
-
-    <EditText
-        android:id="@+id/idText"
-        android:layout_width="wrap_content"
-        android:layout_height="20dp"
-        android:layout_above="@+id/buttonLogin"
-        android:layout_alignLeft="@+id/buttonLogin"
-        android:layout_marginBottom="64dp"
-        android:ems="10"
-        android:lines="1"
-        android:singleLine="true" />
+        android:text="Create user"
+        android:textColor="@color/Blue"
+        android:textColorHint="@color/Blue" />
 
     <ImageView
         android:id="@+id/HouseIconManagementMenu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
+        android:layout_alignLeft="@+id/imageWordEHC"
         android:layout_alignParentTop="true"
-        android:layout_alignRight="@+id/imageWordEHC"
+        android:layout_marginTop="25dp"
         android:src="@drawable/world_ehc" />
 
     <ImageView
         android:id="@+id/imageWordEHC"
-        android:layout_width="300dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/HouseIconManagementMenu"
-        android:layout_alignRight="@+id/idText"
         android:layout_alignTop="@+id/HouseIconManagementMenu"
+        android:layout_centerHorizontal="true"
         android:src="@drawable/word_ehc" />
+
+    <TextView
+        android:id="@+id/id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/password"
+        android:layout_centerVertical="true"
+        android:text="User"
+        android:textColor="@color/Black"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/idText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/id"
+        android:layout_alignLeft="@+id/passwordText"
+        android:layout_alignRight="@+id/passwordText"
+        android:background="@color/LightGrey"
+        android:ems="10"
+        android:lines="1"
+        android:singleLine="true"
+        android:textColor="@color/Black" />
+
+    <EditText
+        android:id="@+id/passwordText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/buttonLogin"
+        android:layout_alignRight="@+id/HouseIconManagementMenu"
+        android:layout_below="@+id/idText"
+        android:layout_marginTop="44dp"
+        android:background="@color/LightGrey"
+        android:ems="10"
+        android:inputType="textPassword"
+        android:lines="1"
+        android:password="true"
+        android:singleLine="true"
+        android:textColor="@color/Black" >
+
+        <requestFocus />
+    </EditText>
+
+    <Button
+        android:id="@+id/buttonLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/createUser"
+        android:layout_below="@+id/passwordText"
+        android:layout_marginTop="42dp"
+        android:background="@drawable/button_config"
+        android:onClick="onClickButton"
+        android:text="Login"
+        android:textColor="@drawable/button_text_color"
+        android:textSize="25sp" />
 
 </RelativeLayout>

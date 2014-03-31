@@ -4,10 +4,6 @@ import java.util.ArrayList;
 
 import org.json.JSONException;
 
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.SherlockActivity;
-import com.actionbarsherlock.view.MenuItem;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,7 +13,11 @@ import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.Toast;
-import ehc.net.R;
+
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.MenuItem;
+
 import framework.JSON;
 
 public class ManagementMenu extends SherlockActivity {//Activity{
@@ -46,7 +46,7 @@ public class ManagementMenu extends SherlockActivity {//Activity{
 	    	 for(int i=0; i<_buttonList.size(); i++)
 	         {
 	    		 _buttonList.get(i).setHeight(_genericButton.getHeight());
-	    		 _buttonList.get(i).setWidth(_genericButton.getWidth());
+	    		 _buttonList.get(i).setWidth(_genericButton.getWidth());		 
 	         }
 	    	 //It is deleted the button 'genericButton'
 	    	 _table1.getChildAt(0).setVisibility(8);
@@ -60,7 +60,7 @@ public class ManagementMenu extends SherlockActivity {//Activity{
     {   
 		super.onCreate( savedInstanceState );
         setContentView( R.layout.management_menu_view );
-        
+     
         _table1 = (TableLayout) findViewById(R.id.table1);
                 
         _table2 = (TableLayout) findViewById(R.id.table2);
@@ -89,7 +89,12 @@ public class ManagementMenu extends SherlockActivity {//Activity{
 				final String selectedRoom = rooms.get(i);
 				final Button button = new Button(getApplicationContext());
 				button.setClickable(true);
+				
+				button.setTextColor(R.drawable.button_text_color);
+				button.setTextSize(25);
 				button.setText(selectedRoom);
+				button.setBackgroundResource(R.drawable.button_config);
+				
 				button.setOnClickListener(new OnClickListener()
 				{
 					@Override
@@ -109,19 +114,27 @@ public class ManagementMenu extends SherlockActivity {//Activity{
 		//---------------------------------------------------------------------
 		
 		//The buttons are added to tables
-		for(int i=0; i<_buttonList.size()/2; i++)
+		for(int i=0; i<_buttonList.size(); i++)//i<_buttonList.size()/2; i++)
         {
 			TableRow tr = new TableRow(this.getBaseContext());
-			_table1.addView(tr);
-			_table1.addView(_buttonList.get(i));
-        	
+			if((i % 2) == 0)
+			{
+				_table1.addView(tr);
+				_table1.addView(_buttonList.get(i));
+			}
+			else
+			{
+				_table2.addView(tr);
+	        	_table2.addView(_buttonList.get(i));
+			}        	
         }
+		/*
         for(int i=(_buttonList.size()/2); i<_buttonList.size(); i++)
         {
         	TableRow tr = new TableRow(this.getBaseContext());
         	_table2.addView(tr);
         	_table2.addView(_buttonList.get(i));
-        }       
+        }  */     
     }
 	
 	

@@ -132,7 +132,6 @@ import framework.JSON;
 	    			listDataChild.put(items.get(i),door);
 	    		} else if (items.get(i).equals("LIGHTS")){
 	    			List<String> lights = new ArrayList<String>();
-	    			lights.add("float");
 	    			lights.add("boolean");
 	    			listDataChild.put(items.get(i),lights);
     			} else if (items.get(i).equals("AIRCONDITIONING")){

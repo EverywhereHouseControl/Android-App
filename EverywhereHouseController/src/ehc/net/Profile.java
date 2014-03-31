@@ -214,7 +214,7 @@ public class Profile extends Activity
 		{
 			case 0:
 			{
-				JSONArray data = _post.getServerData(parametros,"http://5.231.69.226/EHControlConnect/index.php");
+				JSONArray data = _post.getServerData(parametros,"http://5.231.69.226/EHControlConnect/index.php");//"http://192.168.2.147/EHControlConnect/index.php");
 				log(data.toString());
 				try 
 				{

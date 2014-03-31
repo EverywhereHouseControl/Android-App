@@ -29,7 +29,7 @@
         <item name="background">#ffffff</item>
     </style>
 	<style name="customOverflowButtonStyle" parent="Widget.Sherlock.ActionButton.Overflow">
- 		<item name="android:src">@drawable/world_ehc</item>
+ 		<item name="android:src">@drawable/abs__ic_menu_moreoverflow_normal_holo_light</item>
  		<item name="background">#ffffff</item>
     </style>	
     <!--////////////////////////////////////////////////////////////////////////////////////-->

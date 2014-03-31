@@ -5,115 +5,119 @@
     android:fillViewport="true" >
 
     <RelativeLayout
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
-
-    <Button
-        android:id="@+id/newUserCancel"
-        android:layout_width="100dp"
-        android:layout_height="40dp"
-        android:layout_alignRight="@+id/newRepeatPassword"
-        android:layout_alignTop="@+id/newUserConfirm"
-        android:layout_marginRight="50dp"
-        android:background="@drawable/button_config"
-        android:text="Exit"
-        android:textColor="@drawable/button_text_color"
-        android:textSize="20sp" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
 
     <EditText
         android:id="@+id/newPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/textView3"
-        android:layout_alignLeft="@+id/newEmail"
+        android:layout_alignRight="@+id/newUserCancel"
+        android:layout_toRightOf="@+id/newUserConfirm"
         android:ems="10"
         android:inputType="textPassword"
         android:password="true"
         android:singleLine="true" />
-
-    <EditText
-        android:id="@+id/newRepeatPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/textView4"
-        android:layout_alignLeft="@+id/newPassword"
-        android:ems="10"
-        android:inputType="textPassword"
-        android:password="true"
-        android:singleLine="true" />
-
-    <Button
-        android:id="@+id/newUserConfirm"
-        android:layout_width="100dp"
-        android:layout_height="40dp"
-        android:layout_alignLeft="@+id/textView2"
-        android:layout_below="@+id/textView4"
-        android:layout_marginTop="92dp"
-        android:background="@drawable/button_config"
-        android:text="Confirm"
-        android:textColor="@drawable/button_text_color"
-        android:textSize="20sp" />
-
-    <EditText
-        android:id="@+id/newUser"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/textMessage"
-        android:layout_marginRight="25dp"
-        android:ems="10"
-        android:singleLine="true" >
-
-        <requestFocus />
-    </EditText>
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/textView4"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/textView2"
-        android:layout_marginLeft="27dp"
-        android:layout_marginTop="54dp"
+        android:layout_marginBottom="30dp"
+        android:layout_marginLeft="30dp"
         android:text="Password"
         android:textSize="20sp" />
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView3"
-        android:layout_centerVertical="true"
-        android:text="Repeat \nPassword"
-        android:textSize="20sp" />
-
-    <TextView
-        android:id="@+id/textMessage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignRight="@+id/textView2"
-        android:layout_marginTop="43dp"
-        android:text="User"
-        android:textSize="20sp" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/textView3"
-        android:layout_below="@+id/newUser"
-        android:layout_marginTop="41dp"
-        android:text="E-mail"
+    <Button
+        android:id="@+id/newUserCancel"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_alignBaseline="@+id/newUserConfirm"
+        android:layout_alignBottom="@+id/newUserConfirm"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="34dp"
+        android:background="@drawable/button_config"
+        android:text="Exit"
+        android:textColor="@drawable/button_text_color"
         android:textSize="20sp" />
 
     <EditText
         android:id="@+id/newEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/textView3"
-        android:layout_alignLeft="@+id/newUser"
+        android:layout_alignBottom="@+id/textView2"
+        android:layout_alignRight="@+id/newPassword"
+        android:layout_toRightOf="@+id/newUserConfirm"
         android:ems="10"
+        android:singleLine="true" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/newPassword"
+        android:layout_alignLeft="@+id/textView3"
+        android:layout_marginBottom="31dp"
+        android:text="E-mail"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/textMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/newEmail"
+        android:layout_alignLeft="@+id/textView2"
+        android:layout_marginBottom="35dp"
+        android:text="User"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/newUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textMessage"
+        android:layout_alignBottom="@+id/textMessage"
+        android:layout_alignRight="@+id/newEmail"
+        android:layout_toRightOf="@+id/newUserConfirm"
+        android:ems="10"
+        android:singleLine="true" />
+
+    <Button
+        android:id="@+id/newUserConfirm"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_alignLeft="@+id/textView4"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="70dp"
+        android:layout_marginLeft="17dp"
+        android:background="@drawable/button_config"
+        android:text="Confirm"
+        android:textColor="@drawable/button_text_color"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/newUserConfirm"
+        android:layout_alignLeft="@+id/textView3"
+        android:layout_marginBottom="46dp"
+        android:text="Repeat \nPassword"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/newRepeatPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/newPassword"
+        android:layout_alignRight="@+id/newUserCancel"
+        android:layout_alignTop="@+id/textView4"
+        android:ems="10"
+        android:inputType="textPassword"
+        android:password="true"
         android:singleLine="true" />
 
 </RelativeLayout>
