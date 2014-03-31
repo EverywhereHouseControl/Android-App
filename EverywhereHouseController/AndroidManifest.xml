@@ -51,6 +51,17 @@
             </intent-filter>
         </activity>
         <activity
+            android:name="ehc.net.CreateUser"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Sherlock.NoActionBar" >
+            <intent-filter>
+                <action android:name="ehc.net.CreateUser" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name="ehc.net.MainMenu"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"

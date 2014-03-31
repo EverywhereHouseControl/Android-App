@@ -16,8 +16,8 @@ public class MainMenu extends Activity
 	//---------Variables----------------
 	private Button _buttonProfile;
 	private Button _buttonManagement;
-	private Button _buttonEvent;
-	private Button _buttonConfig;
+//	private Button _buttonEvent;
+//	private Button _buttonConfig;
 	private ImageView _logo;
 	//-------------------------------
 	
@@ -41,11 +41,9 @@ public class MainMenu extends Activity
         Animation anim = AnimationUtils.loadAnimation(this.getBaseContext(), R.anim.rotate_indefinitely);
         //Start animating the image
          _logo.startAnimation(anim);        
-        
-        
+         
         _buttonManagement.setOnClickListener( new View.OnClickListener() 
         {
-			
 			@Override
 			public void onClick( View v ) 
 			{
@@ -56,7 +54,6 @@ public class MainMenu extends Activity
         
         _buttonProfile.setOnClickListener( new View.OnClickListener() 
         {
-			
 			@Override
 			public void onClick(View v) 
 			{
@@ -74,7 +71,8 @@ public class MainMenu extends Activity
 	 
 	private void createdManagementIntent()
 	{
-		try {
+		try 
+		{
 			Class<?> _clazz = Class.forName( "ehc.net.ManagementMenu");
 			Intent _intent = new Intent( this,_clazz );
 			startActivity( _intent );
@@ -91,7 +89,8 @@ public class MainMenu extends Activity
 	 
 	private void createdProfileIntent()
 	{
-		try {
+		try
+		{
 			Class<?> _clazz = Class.forName( "ehc.net.Profile");
 			Intent _intent = new Intent( this,_clazz );
 			startActivity( _intent );

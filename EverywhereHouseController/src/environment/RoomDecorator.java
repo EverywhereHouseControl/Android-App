@@ -1,12 +1,6 @@
 package environment;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.Context;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.CheckBox;
 import android.widget.LinearLayout;
 
 /**
@@ -14,13 +8,15 @@ import android.widget.LinearLayout;
  * @author Colin
  *
  */
-public abstract class RoomDecorator extends Room {
+public abstract class RoomDecorator extends Room 
+{
 	String _type;
 	protected Room _room;
 	
 	RoomDecorator(){}
 	
-	RoomDecorator(String type){
+	RoomDecorator(String type)
+	{
 		_type=type;
 		_description=type;
 	}

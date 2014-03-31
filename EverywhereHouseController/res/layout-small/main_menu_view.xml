@@ -20,22 +20,26 @@
         android:orientation="vertical" >
 
         <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp" >
 
             <ImageView
                 android:id="@+id/world_loading_view"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_marginTop="40dp"
+                android:layout_width="100dp"
+                android:layout_height="90dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
                 android:src="@drawable/world_ehc" />
 
             <ImageView
                 android:id="@+id/word_ehc"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_marginTop="40dp"
+                android:layout_width="100dp"
+                android:layout_height="90dp"
+                android:layout_alignLeft="@+id/world_loading_view"
+                android:layout_alignTop="@+id/world_loading_view"
                 android:src="@drawable/word_ehc" />
+
         </RelativeLayout>
 
         <RelativeLayout
@@ -43,51 +47,48 @@
             android:layout_height="188dp" >
 
             <Button
-                android:id="@+id/buttonManagement"
-                android:layout_width="90dp"
-                android:layout_height="60dp"
-                android:layout_above="@+id/buttonConfig"
-                android:layout_alignParentLeft="true"
-                android:layout_marginBottom="20dp"
-                android:layout_marginLeft="40dp"
-                android:background="@drawable/button"
-                android:text="Gestión"
-                android:textColor="@color/DarkGreen"
+                android:id="@+id/buttonWorks"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/buttonManagement"
+                android:layout_alignBottom="@+id/buttonManagement"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/button_config"
+                android:text="Tasks"
+                android:textColor="@drawable/button_text_color"
                 android:textSize="20sp" />
 
             <Button
                 android:id="@+id/buttonProfile"
-                android:layout_width="90dp"
-                android:layout_height="60dp"
-                android:layout_below="@+id/buttonManagement"
-                android:layout_marginLeft="20dp"
-                android:layout_toRightOf="@+id/buttonConfig"
-                android:background="@drawable/button"
-                android:text="Perfil"
-                android:textColor="@color/DarkGreen"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/button_config"
+                android:text="Profile"
+                android:textColor="@drawable/button_text_color"
                 android:textSize="20sp" />
 
             <Button
-                android:id="@+id/buttonWorks"
-                android:layout_width="90dp"
-                android:layout_height="60dp"
-                android:layout_alignBaseline="@+id/buttonManagement"
-                android:layout_alignBottom="@+id/buttonManagement"
-                android:layout_alignLeft="@+id/buttonProfile"
-                android:background="@drawable/button"
-                android:text="Tareas"
-                android:textColor="@color/DarkGreen"
+                android:id="@+id/buttonManagement"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/button_config"
+                android:text="Management"
+                android:textColor="@drawable/button_text_color"
                 android:textSize="20sp" />
 
             <Button
                 android:id="@+id/buttonConfig"
-                android:layout_width="90dp"
-                android:layout_height="60dp"
-                android:layout_alignLeft="@+id/buttonManagement"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:background="@drawable/button"
-                android:text="Config."
-                android:textColor="@color/DarkGreen"
+                android:layout_alignParentLeft="true"
+                android:background="@drawable/button_config"
+                android:text="Configuration"
+                android:textColor="@drawable/button_text_color"
                 android:textSize="20sp" />
 
         </RelativeLayout>

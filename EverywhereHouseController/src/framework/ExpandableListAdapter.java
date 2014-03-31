@@ -3,6 +3,7 @@ package framework;
 import java.util.List;
 import java.util.Map;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -19,6 +20,7 @@ import android.widget.ToggleButton;
 import ehc.net.R;
 import environment.RemoteController;
 
+
 public class ExpandableListAdapter extends BaseExpandableListAdapter 
 {
 
@@ -30,6 +32,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter
 	private String _action;
 	private String _data;
 	
+	@SuppressLint("DefaultLocale")
 	public ExpandableListAdapter(String room, Context context,
 			List<String> laptops, Map<String, List<String>> laptopCollections) 
 	{
@@ -49,27 +52,28 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter
 		return childPosition;
 	}
 
+	@SuppressLint("DefaultLocale")
 	public View getChildView(final int groupPosition, final int childPosition,
 			boolean isLastChild, View convertView, ViewGroup parent) 
 	{
-		LayoutInflater inflater = (LayoutInflater) _context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		String itemName = (String) getChild(groupPosition, childPosition);
-		if (itemName.equals("controller")) 
+		LayoutInflater _inflater = (LayoutInflater) _context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		String _itemName = (String) getChild(groupPosition, childPosition);
+		if (_itemName.equals("controller")) 
 		{
 			Intent intent = new Intent(_context, RemoteController.class);
 			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			intent.putExtra("Room",_currentRoom);
 			intent.putExtra("Service",(String) getGroup(groupPosition));
 			_context.startActivity(intent);
-			convertView = inflater.inflate(R.layout.empty_item, parent, false);
+			convertView = _inflater.inflate(R.layout.empty_item, parent, false);
 			return convertView;
 		} 
 		else 
 		{
-			int itemType = getChildXML(itemName);
-			convertView = inflater.inflate(itemType, parent, false);
+			int _itemType = getChildXML(_itemName);
+			convertView = _inflater.inflate(_itemType, parent, false);
 			// -------------------------------------
-			setListeners(convertView, itemType);
+			setListeners(convertView, _itemType);
 			_servicename = (String) getGroup(groupPosition);
 			_servicename = _servicename.toUpperCase();
 		}
@@ -78,12 +82,12 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter
 
 	private void setListeners(final View convertView, int itemType) 
 	{
-		final TextView tv = (TextView) convertView.findViewById(R.id.childname);
+		final TextView _tv = (TextView) convertView.findViewById(R.id.childname);
 		if (itemType == R.layout.float_item) 
 		{
 
-			SeekBar sb = (SeekBar) convertView.findViewById(R.id.float_value);
-			sb.setOnSeekBarChangeListener(new OnSeekBarChangeListener() 
+			SeekBar _sb = (SeekBar) convertView.findViewById(R.id.float_value);
+			_sb.setOnSeekBarChangeListener(new OnSeekBarChangeListener() 
 			{
 
 				@Override
@@ -104,7 +108,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter
 				public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) 
 				{
 					// TODO Auto-generated method stub
-					tv.setText(progress);
+					_tv.setText(progress);
 				}
 			});
 		}
@@ -172,15 +176,15 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter
 
 	public View getGroupView(int groupPosition, boolean isExpanded,View convertView, ViewGroup parent) 
 	{
-		String laptopName = (String) getGroup(groupPosition);
+		String _laptopName = (String) getGroup(groupPosition);
 		if (convertView == null) 
 		{
-			LayoutInflater infalInflater = (LayoutInflater) _context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			convertView = infalInflater.inflate(R.layout.group_item, null);
+			LayoutInflater _infalInflater = (LayoutInflater) _context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			convertView = _infalInflater.inflate(R.layout.group_item, null);
 		}
 		TextView item = (TextView) convertView.findViewById(R.id.groupname);
 		item.setTypeface(null, Typeface.BOLD);
-		item.setText(laptopName);
+		item.setText(_laptopName);
 		return convertView;
 	}
 

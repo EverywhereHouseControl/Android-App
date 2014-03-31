@@ -64,8 +64,8 @@
                 android:layout_alignLeft="@+id/buttonManagement"
                 android:layout_below="@+id/buttonManagement"
                 android:layout_marginTop="35dp"
-                android:background="@drawable/button_config"
                 android:text="Configuration"
+                android:background="@drawable/button_config"
                 android:textColor="@drawable/button_text_color"
                 android:textSize="30sp" />
 

@@ -12,8 +12,6 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
-import android.widget.Toast;
-
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.MenuItem;
@@ -25,8 +23,8 @@ public class ManagementMenu extends SherlockActivity {//Activity{
 	private TableLayout _table1;
 	private TableLayout _table2;
 	private ArrayList<Button> _buttonList = new ArrayList<Button>();
-	private JSON JSONFile;
-	private ActionBar ab;
+	private JSON _JSONFile;
+	private ActionBar _ab;
 	//-------------------------------
 	
 	/**
@@ -64,50 +62,48 @@ public class ManagementMenu extends SherlockActivity {//Activity{
         _table1 = (TableLayout) findViewById(R.id.table1);
                 
         _table2 = (TableLayout) findViewById(R.id.table2);
-        
-        //ImageView _logo = (ImageView) findViewById(R.id.HouseIconManagementMenu);
-        
-        //Animation anim = AnimationUtils.loadAnimation(this.getBaseContext(), R.anim.rotate_indefinitely);
-        //Start animating the image
-        // _logo.startAnimation(anim); 
-         
+          
          //----------------ActionBar-----
-         ab = getSupportActionBar();
-         ab.setDisplayShowHomeEnabled(false);
-         ab.setDisplayUseLogoEnabled(false);
-         ab.setDisplayShowTitleEnabled(false);
+         _ab = getSupportActionBar();
+         _ab.setDisplayShowHomeEnabled(false);
+         _ab.setDisplayUseLogoEnabled(false);
+         _ab.setDisplayShowTitleEnabled(false);
          //-------------------------------
 
          //-----------------It Reads config.json-----------------
 
-        JSONFile = JSON.getInstance(getApplicationContext());
-		ArrayList<String> rooms;
-		try {
-			rooms = JSONFile.getRooms();
-			log("Número de habitaciones: "+ rooms);
-			for (int i=0; i < rooms.size(); i++){
-				final String selectedRoom = rooms.get(i);
-				final Button button = new Button(getApplicationContext());
-				button.setClickable(true);
+        _JSONFile = JSON.getInstance(getApplicationContext());
+		ArrayList<String> _rooms;
+		try 
+		{
+			_rooms = _JSONFile.getRooms();
+			log("Número de habitaciones: "+ _rooms);
+			for (int i=0; i < _rooms.size(); i++)
+			{
+				final String selectedRoom = _rooms.get(i);
+				final Button _button = new Button(getApplicationContext());
+				_button.setClickable(true);
 				
-				button.setTextColor(R.drawable.button_text_color);
-				button.setTextSize(25);
-				button.setText(selectedRoom);
-				button.setBackgroundResource(R.drawable.button_config);
+				_button.setTextColor(R.drawable.button_text_color);
+				_button.setTextSize(25);
+				_button.setText(selectedRoom);
+				_button.setBackgroundResource(R.drawable.button_config);
 				
-				button.setOnClickListener(new OnClickListener()
+				_button.setOnClickListener(new OnClickListener()
 				{
 					@Override
 					public void onClick(View v) 
 					{
-						String buttonName = (String) button.getText();
+						String buttonName = (String) _button.getText();
 						log("Se ha pulsado: "+ buttonName);
 						createdManagementIntent(selectedRoom);
 					}
 			});
-			_buttonList.add(button);
+			_buttonList.add(_button);
 			 }
-		} catch (JSONException e) {
+		} 
+		catch (JSONException e) 
+		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -152,7 +148,18 @@ public class ManagementMenu extends SherlockActivity {//Activity{
         switch(item.getItemId())
         {
             case R.id.Profile:
-                Toast.makeText(getBaseContext(), "You selected Profile", Toast.LENGTH_SHORT).show();
+			try 
+			{
+				Class<?> _clazz;
+				_clazz = Class.forName( "ehc.net.Profile");
+				Intent _intent = new Intent( this,_clazz );
+    			startActivity( _intent );
+			} 
+			catch (ClassNotFoundException e) 
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
                 break;
             case R.id.ChangeProfile:
             	Intent exitIntent = new Intent(this,LogIn.class);
@@ -173,26 +180,27 @@ public class ManagementMenu extends SherlockActivity {//Activity{
 	 * Method which executes the next activity
 	 * @param room 
 	 */
-	private void createdManagementIntent(String room) {
+	private void createdManagementIntent(String room) 
+	{
 		try 
 		{			
 			Class<?> _class = Class.forName("framework.ContainerFragments");
-			Intent intent = new Intent( getApplicationContext(),_class );
+			Intent _intent = new Intent( getApplicationContext(),_class );
 			
 			//Room name being clicked
-			intent.putExtra("Room",room);
+			_intent.putExtra("Room",room);
 			//Room's number
-			intent.putExtra("NumRooms", _buttonList.size());
+			_intent.putExtra("NumRooms", _buttonList.size());
 				
 			for(int i=0; i<_buttonList.size(); i++)
 			{		
 				// Key: position, Value button Name.
-				intent.putExtra(Integer.toString(i) , _buttonList.get(i).getText().toString());	
+				_intent.putExtra(Integer.toString(i) , _buttonList.get(i).getText().toString());	
 				// Key: button name, Value: position.
 				//Necessary to move the 'viewPager' to the desired view.
-				intent.putExtra(_buttonList.get(i).getText().toString(),Integer.toString(i));	
+				_intent.putExtra(_buttonList.get(i).getText().toString(),Integer.toString(i));	
 			}	
-			startActivity( intent );
+			startActivity( _intent );
 		} 
 		catch (ClassNotFoundException e) 
 		{

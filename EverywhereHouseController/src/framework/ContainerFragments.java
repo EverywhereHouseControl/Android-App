@@ -6,9 +6,6 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
-import android.view.View;
-import android.widget.CheckBox;
-import android.widget.ExpandableListView;
 
 public class ContainerFragments extends FragmentActivity
 {
@@ -24,18 +21,18 @@ public class ContainerFragments extends FragmentActivity
 	        setContentView( R.layout.pager_view);
 	        
 	        // Create a HashMap with < Key: position, Value button name >.
-	        HashMap<String,String> tableButtons = new HashMap<String,String>();
+	        HashMap<String,String> _tableButtons = new HashMap<String,String>();
 	        
 	        
 	        for(int i=0; i<getIntent().getExtras().getInt("NumRooms"); i++)
 	        {
-	        	tableButtons.put(Integer.toString(i), getIntent().getExtras().getString(Integer.toString(i)));
+	        	_tableButtons.put(Integer.toString(i), getIntent().getExtras().getString(Integer.toString(i)));
 	        }
 	       
 	    	// Link the XML which contains the pager.
 	        _mPager = (ViewPager) findViewById(R.id.pager);
 	        // Create an adapter with the fragments that will show on the ViewPager.
-	        _mAdapter = new AdapterView(getSupportFragmentManager(),tableButtons); 
+	        _mAdapter = new AdapterView(getSupportFragmentManager(),_tableButtons); 
 	    	// Set the adapter.
 	    	_mPager.setAdapter(_mAdapter);
 	        

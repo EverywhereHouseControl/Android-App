@@ -14,7 +14,6 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -37,12 +36,9 @@ public class LogIn extends Activity
 		private EditText _user;
 		private EditText _password;
 		private ImageView _logo;
-		//******************************
-		private Activity _activity;
 		private Post _post;
-		//private ProgressDialog pDialog;
 		private TextView _createUser;
-		//***********************************
+	//***********************************
 		
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
@@ -62,9 +58,9 @@ public class LogIn extends Activity
         _password = ( EditText ) findViewById( R.id.passwordText );
         _logo = (ImageView) findViewById(R.id.HouseIconManagementMenu);     
         
-        Animation anim = AnimationUtils.loadAnimation(this.getBaseContext(), R.anim.rotate_indefinitely);
+        Animation _anim = AnimationUtils.loadAnimation(this.getBaseContext(), R.anim.rotate_indefinitely);
         //Start animating the image
-         _logo.startAnimation(anim);
+         _logo.startAnimation(_anim);
       
         //final logInConnection connection = new logInConnection();
         
@@ -76,15 +72,15 @@ public class LogIn extends Activity
 				log("Button pressed");
 				
 				//It checks if exists connection
-				ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-			    NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+				ConnectivityManager _connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+			    NetworkInfo _networkInfo = _connMgr.getActiveNetworkInfo();
 			      
-			    if (networkInfo != null && networkInfo.isConnected()) 			        
+			    if (_networkInfo != null && _networkInfo.isConnected()) 			        
 			    {			            			        	
 			    	log("Connection");			            
 			    	_post = new Post();						
-			    	logInConnection connection = new logInConnection();
-			    	connection.execute();			    	
+			    	logInConnection _connection = new logInConnection();
+			    	_connection.execute();			    	
 			    } 
 			    else 			        
 			    {
@@ -112,7 +108,7 @@ public class LogIn extends Activity
 	public boolean onCreateOptionsMenu(Menu menu) 
 	{
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.log_in, menu);
+		//getMenuInflater().inflate(R.menu.log_in, menu);
 		return true;
 	}
 	
@@ -120,7 +116,7 @@ public class LogIn extends Activity
 	// Background process
     private class logInConnection extends AsyncTask<String, String, String>
     {    	
-    	private ProgressDialog pDialog;
+    	private ProgressDialog _pDialog;
     	private String _message = "";
     	private int _internalError = 0;
     	/**
@@ -129,21 +125,12 @@ public class LogIn extends Activity
     	protected void onPreExecute() 
     	{  
     		super.onPreExecute();
-            pDialog = new ProgressDialog(LogIn.this);
+            _pDialog = new ProgressDialog(LogIn.this);
             //pDialog.setView(getLayoutInflater().inflate(R.layout.loading_icon_view,null));
-            pDialog.setMessage("Loading. Please wait...");
-            pDialog.setIndeterminate(false);
-            pDialog.setCancelable(false);
-            pDialog.show();
-            
-//            AlertDialog.Builder keyBuilder = new AlertDialog.Builder(LogIn.this);
-//            keyBuilder.setView(getLayoutInflater().inflate(R.layout.loading_icon_view, null));
-//            pDialog = keyBuilder.create();
-//            ImageView _logo = (ImageView) findViewById(R.id.world_loading_view);
-//            Animation anim = AnimationUtils.loadAnimation(LogIn.this, R.anim.rotate_indefinitely);
-//            //Start animating the image
-//             _logo.startAnimation(anim);     
-//            pDialog.show();            
+            _pDialog.setMessage("Loading. Please wait...");
+            _pDialog.setIndeterminate(false);
+            _pDialog.setCancelable(false);
+            _pDialog.show();          
         }
     	
     	@Override
@@ -152,57 +139,35 @@ public class LogIn extends Activity
 			try 
 			{		             
 				//Query
-				ArrayList<String> parametros = new ArrayList<String>();
+				ArrayList<String> _parametros = new ArrayList<String>();
 				
-				parametros.add("command");
-				parametros.add("login");
-				parametros.add("username");
+				_parametros.add("command");
+				_parametros.add("login");
+				_parametros.add("username");
 				//parametros.add(_user.getText().toString());
-				parametros.add("luis");
-				parametros.add("password");
+				_parametros.add("luis");
+				_parametros.add("password");
 				//parametros.add(_post.md5(_password.getText().toString()));
-				parametros.add(_post.md5("luis"));
+				_parametros.add(_post.md5("luis"));
 			 			
 				//Variable 'Data' saves the query response
-				JSONArray data = _post.getServerData(parametros,"http://5.231.69.226/EHControlConnect/index.php");//"http://192.168.2.147/EHControlConnect/index.php");
-				log(data.toString());
-				
-				
-				//////////////////////////////////////////////////
-				
-//				parametros.add("command");
-//				parametros.add("doaction");
-//				parametros.add("username");
-//				parametros.add(_user.getText().toString());
-//				parametros.add("housename");
-//				parametros.add("basicHouse1");
-//				parametros.add("roomname");
-//				parametros.add("LAB");
-//				parametros.add("servicename");
-//				parametros.add("TV");
-//				parametros.add("actionname");
-//				parametros.add("ENVIAR");
-//				parametros.add("data");
-//				parametros.add("POWER");
-//				JSONArray data2 = _post.getServerData(parametros,"http://5.231.69.226/EHControlConnect/index.php"/*"http://ehcontrol.net/EHControlConnect/index.php"*/);
-//				log(data2.toString());
-				//////////////////////////////////////////////////
-				
+				JSONArray _data = _post.getServerData(_parametros,"http://5.231.69.226/EHControlConnect/index.php");//"http://192.168.2.147/EHControlConnect/index.php");
+				log(_data.toString());
 				
 				try 
 				{
-					JSONObject json_data = data.getJSONObject(0);
-					switch(json_data.getInt("ERROR"))
+					JSONObject _json_data = _data.getJSONObject(0);
+					switch(_json_data.getInt("ERROR"))
 					{
 						case 0:
 						{
-							_message = json_data.getString("ENGLISH");					
+							_message = _json_data.getString("ENGLISH");					
 							break;
 						}
 						default:
 						{
-							_internalError = json_data.getInt("ERROR");
-							_message = json_data.getString("ENGLISH");
+							_internalError = _json_data.getInt("ERROR");
+							_message = _json_data.getString("ENGLISH");
 							break;
 						}
 					}
@@ -211,96 +176,36 @@ public class LogIn extends Activity
 				catch (JSONException e) 
 				{
 					e.printStackTrace();
-				}	
+				}
 				
-//				parametros.add("command");
-//				parametros.add("deleteuser");
-//				parametros.add("username");
-//				//parametros.add(_user.getText().toString());
-//				parametros.add("alex");
-//				parametros.add("password");
-//				//parametros.add(md5(_password.getText().toString()));
-//				parametros.add(md5("luis"));
-//				
-//				JSONArray data2 = _post.getServerData(parametros,"http://5.231.69.226/EHControlConnect/index.php"/*"http://ehcontrol.net/EHControlConnect/index.php"*/);
-//				log(data2.toString());
-				
-				
-//				parametros.add("command");
-//				parametros.add("modifyuser");
-//				parametros.add("username");
-//				//parametros.add(_user.getText().toString());
-//				parametros.add("alex");
-//				parametros.add("password");
-//				//parametros.add(md5(_password.getText().toString()));
-//				parametros.add(md5("luis"));
-//				parametros.add("n_username");
-//				//parametros.add(_user.getText().toString());
-//				parametros.add("luis_caca_caca");
-//				parametros.add("password");
-//				//parametros.add(md5(_password.getText().toString()));
-//				parametros.add("email");
-//				//parametros.add(md5(_password.getText().toString()));
-//				parametros.add(md5("luis"));
-//				parametros.add("hint");
-//				//parametros.add(md5(_password.getText().toString()));
-//				parametros.add(md5("luis"));
-//				
-//				
-//				JSONArray data2 = _post.getServerData(parametros,"http://5.231.69.226/EHControlConnect/index.php"/*"http://ehcontrol.net/EHControlConnect/index.php"*/);
-//				log(data2.toString());
-				
-				
-				///////////////////////////////////////////////////////
-//				ArrayList<String> parametros2 = new ArrayList<String>();
-//				parametros2.add("command");
-//				parametros2.add("doaction");
-//				parametros2.add("username");
-//				parametros2.add("bertoldo");
-//				parametros2.add("housename");
-//				parametros2.add("casaBertoldo");
-//				parametros2.add("roomname");
-//				parametros2.add("cocina");
-//				parametros2.add("servicename");
-//				parametros2.add("TV");
-//				parametros2.add("actionname");
-//				parametros2.add("ENCENDER");
-//				parametros2.add("data");
-//				parametros2.add("CACA");
-//			 			
-//				//Variable 'Data' saves the query response
-//				JSONArray data2 = _post.getServerData(parametros2,"http://5.231.69.226/EHControlConnect/index.php"/*"http://ehcontrol.net/EHControlConnect/index.php"*/);
-//				log(data2.toString());
-				
-				/////////////////////////////////////////////////////
-
-				
-				if (data != null && data.length() > 0) 
+				if (_data != null && _data.length() > 0) 
 				{				
-					JSONObject json_data = data.getJSONObject(0);
+					JSONObject _json_data = _data.getJSONObject(0);
 					//log(json_data.toString());
 					
-					if (json_data.getInt("IDUSER")==0) 
+					if (_json_data.getInt("IDUSER")==0) 
 					{ 
 						log("Incorrect user. ");
 					}
 					else
 					{ 	
 						//Save the profile's information.
-						saveProfileInfo(json_data);
+						saveProfileInfo(_json_data);
 						//Save the house's configuration
-						saveConfig(json_data.get("JSON"));
+						saveConfig(_json_data.get("JSON"));
 						//Activate the next Activity("MainMenu")
 						createdIntent();
 					}				
-				}else 
+				}
+				else 
 				{
 					log("JSON, ERROR ");
-					log(data.toString());
+					log(_data.toString());
 				}			 
-			 }catch (Exception e) 
+			 }
+			catch (Exception _e) 
 			 {
-			 	e.printStackTrace();
+			 	_e.printStackTrace();
 			 }
 			 // End call to PHP server
 			return null;
@@ -309,7 +214,7 @@ public class LogIn extends Activity
 		protected void onPostExecute(String file_url) 
 		{
             // dismiss the dialog after getting all products
-            pDialog.dismiss();
+            _pDialog.dismiss();
             if(_internalError!=0)Toast.makeText(getBaseContext(), _message, Toast.LENGTH_SHORT).show();
 		}
     }
@@ -321,9 +226,9 @@ public class LogIn extends Activity
 	{
 		try 
 		{
-			FileOutputStream outputStream = openFileOutput("profileInformation.json", MODE_PRIVATE);
-			outputStream.write(JSON.toString().getBytes());
-			outputStream.close();	
+			FileOutputStream _outputStream = openFileOutput("profileInformation.json", MODE_PRIVATE);
+			_outputStream.write(JSON.toString().getBytes());
+			_outputStream.close();	
 		} 
 		catch (IOException e) 
 		{
@@ -340,9 +245,9 @@ public class LogIn extends Activity
 	{	
 		try 
 		{
-			FileOutputStream outputStream = openFileOutput("configuration.json", MODE_PRIVATE);
-			outputStream.write(JSON.toString().getBytes());
-			outputStream.close();
+			FileOutputStream _outputStream = openFileOutput("configuration.json", MODE_PRIVATE);
+			_outputStream.write(JSON.toString().getBytes());
+			_outputStream.close();
 		} catch (IOException e) 
 		{
 			// TODO Auto-generated catch block
@@ -358,7 +263,8 @@ public class LogIn extends Activity
     
     private void createdIntent()
     {
-    	try {
+    	try 
+    	{
 			Class<?> _clazz = Class.forName( "ehc.net.MainMenu" );
 			Intent _intent = new Intent( this,_clazz );
 			startActivity( _intent );
@@ -370,235 +276,26 @@ public class LogIn extends Activity
 		}
     }
 	
-	
-	/**
-	 * Method that created a new user.
-	 */
-	private void createUser()
-	{
-		// custom dialog
-		final Dialog dialog = new Dialog(LogIn.this);
-		dialog.setContentView(R.layout.create_user);
-		Button dialogButtonCancel = (Button) dialog.findViewById(R.id.newUserCancel);
-		Button dialogButtonConfirm = (Button) dialog.findViewById(R.id.newUserConfirm);
-	 
-		dialog.setTitle("NEW USER");
-		//Dialog goes up when keyboard is shown
-		//dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-		//dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-	
-		WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-		lp.copyFrom(dialog.getWindow().getAttributes());
-		lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-		lp.height = WindowManager.LayoutParams.MATCH_PARENT;
-    
-		dialog.show();
-		dialog.getWindow().setAttributes(lp);        
-   
-		// if button is clicked, close the custom dialog
-		dialogButtonCancel.setOnClickListener(new View.OnClickListener() 
-		{	
-			@Override
-			public void onClick(View v) 
-			{
-				// TODO Auto-generated method stub
-				dialog.dismiss();
-			}
-		});		
-	 
-		// if button is clicked, send the query and close the custom dialog
-		dialogButtonConfirm.setOnClickListener(new View.OnClickListener() 
-		{	
-			@Override
-			public void onClick(View v) 
-			{
-				
-				int _internalError = 0;
-				
-				//It checks if exists connection
-				ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-				NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-			      
-				if (networkInfo != null && networkInfo.isConnected()) 			        
-				{			            			        			            
-					_post = new Post();    		
-				} 
-				else 			        
-				{
-					_internalError=-1;
-				}		
-			
-				/**
-				 * ------------------------------------
-				 * Linked:  variable <- component XML
-				 *-------------------------------------
-				 **/
-				EditText user = (EditText) dialog.findViewById(R.id.newUser);
-				EditText email = (EditText) dialog.findViewById(R.id.newEmail);
-				EditText password = (EditText) dialog.findViewById(R.id.newPassword);
-				EditText repeatPassword = (EditText) dialog.findViewById(R.id.newRepeatPassword);
-				
-				//Creation the query.
-				ArrayList<String> parametros = new ArrayList<String>();
-				
-				parametros.add("command");
-				parametros.add("createuser");
-				parametros.add("username");
-				parametros.add(user.getText().toString());
-				parametros.add("password");
-				parametros.add(_post.md5(password.getText().toString()));
-				parametros.add("email");
-				parametros.add(email.getText().toString());
-				parametros.add("hint");
-				parametros.add("");
-			
-				//Identify errors.
-				if( user.getText().toString().isEmpty())_internalError=-2;
-				else if(email.getText().toString().isEmpty() )_internalError=-3;
-				else if(!email.getText().toString().contains("@"))_internalError=-4;				
-				else if (password.getText().toString().isEmpty())_internalError=-5;
-				else if (password.getText().toString().length()<2)_internalError=-6;
-				else if (repeatPassword.getText().toString().isEmpty())_internalError=-7;
-				else if (!password.getText().toString().equals(repeatPassword.getText().toString()))_internalError=-8;
-				
-				errorControl(dialog,parametros,_internalError);				
-			}
-		});
-	}
-
-	/**
-	 * Error control for creating user.
-	 * @param dialog
-	 * @param parametros
-	 * @param _internalError
-	 */
-	private void errorControl(Dialog dialog,ArrayList<String> parametros,int _internalError)
-	{
-		String _message = "";
-		switch(_internalError)
-		{
-			case 0:
-			{
-				_post = new Post();						
-		    	createUserConnection createUser = new createUserConnection(parametros);
-		    	createUser.execute();	    	
-				break;
-			}
-			case -1:
-			{
-				_message = "Not network connection available";
-				break;
-			}
-			case -2:
-			{
-				_message = "Box user is empty";				
-				break;
-			}
-			case -3:
-			{
-				_message = "Box e-mail is empty";
-				break;
-			}
-			case -4:
-			{
-				_message = "Erroneous format in e-mail box";
-				break;
-			}
-			case -5:
-			{
-				_message = "Box password is empty";				
-				break;
-			}
-			case -6:
-			{
-				_message = "Password is too sort";
-				break;
-			}
-			case -7:
-			{
-				_message = "Box repeat password is empty";
-				break;
-			}
-			case -8:
-			{
-				_message = "Passwords do not match";
-				break;
-			}				
-		}
-		if(_internalError!=0)Toast.makeText(getBaseContext(), _message, Toast.LENGTH_SHORT).show();
-			else dialog.dismiss();
-	}
-	
-	private class createUserConnection extends AsyncTask<String, String, String>
-	{
-		private ArrayList<String> parametros;
-		private String _message = "";
-		private ProgressDialog pDialog;
-		
-		public createUserConnection(ArrayList<String> parametros) 
-		{
-			// TODO Auto-generated constructor stub
-			this.parametros = parametros;
-		}
-		
-		/**
-    	 * Message "Loading"
-    	 */
-    	protected void onPreExecute() 
+    /**
+     * -----------------------------------------
+     * Executes the CreateUser's Activity
+     * -----------------------------------------
+     */
+    private void createUser()
+    {
+    	try 
     	{
-            super.onPreExecute();
-            pDialog = new ProgressDialog(LogIn.this);
-            pDialog.setMessage("Loading. Please wait...");
-            pDialog.setIndeterminate(false);
-            pDialog.setCancelable(false);
-            pDialog.show();
-        }    	
-    	    	
-		@Override
-		protected String doInBackground(String... params) 
+			Class<?> _clazz = Class.forName( "ehc.net.CreateUser" );
+			Intent _intent = new Intent( this,_clazz );
+			startActivity( _intent );
+			onDestroy();
+		} 
+		catch ( ClassNotFoundException e ) 
 		{
-			// TODO Auto-generated method stub
-			//Variable 'Data' saves the query response
-			log("query");
-			log(parametros.toString());
-			JSONArray data = _post.getServerData(parametros,"http://5.231.69.226/EHControlConnect/index.php");//"http://192.168.2.147/EHControlConnect/index.php");
-			log(data.toString());
-			try 
-			{
-				JSONObject json_data = data.getJSONObject(0);
-				switch(json_data.getInt("ERROR"))
-				{
-					case 0:
-					{
-						_message = json_data.getString("ENGLISH");					
-						break;
-					}
-					default:
-					{
-						_message = json_data.getString("ENGLISH");
-						break;
-					}
-				}
-			
-			} catch (JSONException e) 
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}		
-			return null;
+			e.printStackTrace();
 		}
-		
-		/**
-		 * 
-		 */
-		protected void onPostExecute(String file_url) 
-		{
-            // dismiss the dialog after getting all products
-            pDialog.dismiss();
-            Toast.makeText(getBaseContext(), _message, Toast.LENGTH_SHORT).show();
-		}
-	}
-	
+    }
+    
     /**
      * Method for debug
      * @param _text

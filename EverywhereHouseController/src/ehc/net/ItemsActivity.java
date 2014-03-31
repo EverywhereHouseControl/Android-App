@@ -12,15 +12,10 @@ import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemLongClickListener;
-import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.ExpandableListView.OnChildClickListener;
 import environment.DVD;
 import environment.Light;
 import framework.ExpandableListAdapter;
@@ -30,13 +25,13 @@ import framework.JSON;
 	public class ItemsActivity extends Fragment//Activity
 	{
 
-		private JSON JSONFile;
-		private String button;
-		com.actionbarsherlock.view.Menu menu;
+		private JSON _JSONFile;
+		private String _button;
+		com.actionbarsherlock.view.Menu _menu;
 		TextView _textRoom;
-		ExpandableListView expListView;
-		List<String> groupList;
-		HashMap<String, List<String>> listDataChild;
+		ExpandableListView _expListView;
+		List<String> _groupList;
+		HashMap<String, List<String>> _listDataChild;
 
 		
 //		@Override
@@ -83,7 +78,7 @@ import framework.JSON;
 		
 		public ItemsActivity(String button)
 		{
-			this.button = button;
+			this._button = button;
 		}
 			    
 	    /**
@@ -91,9 +86,9 @@ import framework.JSON;
 		 * @param ll
 		 * @param itemList
 		 */
-		public void setItemViews(LinearLayout ll, ArrayList<String> itemList)
+		public void setItemViews( LinearLayout ll, ArrayList<String> itemList )
 		{
-			for (int i=0; i < itemList.size(); i++)
+			for ( int i=0; i < itemList.size(); i++ )
 			{			
 				if (itemList.get(i).equals("DVD"))
 				{
@@ -104,7 +99,7 @@ import framework.JSON;
 				}
 				if (itemList.get(i).equals("Lights"))
 				{
-					Light light = new Light(button);
+					Light light = new Light(_button);
 					light.setView(getActivity().getApplicationContext(), ll);
 				}
 					
@@ -125,33 +120,43 @@ import framework.JSON;
 	    }
 	 
 	    private HashMap<String, List<String>> createHashMapItems(List<String> items){
-	    	for (int i=0; i<=items.size()-1; i++){
-	    		if (items.get(i).equals("DOOR")){
+	    	for (int i=0; i<=items.size()-1; i++)
+	    	{
+	    		if (items.get(i).equals("DOOR"))
+	    		{
 	    			List<String> door = new ArrayList<String>();
 	    			door.add("boolean");
-	    			listDataChild.put(items.get(i),door);
-	    		} else if (items.get(i).equals("LIGHTS")){
+	    			_listDataChild.put(items.get(i),door);
+	    		} 
+	    		else if (items.get(i).equals("LIGHTS"))
+	    		{
 	    			List<String> lights = new ArrayList<String>();
 	    			lights.add("boolean");
-	    			listDataChild.put(items.get(i),lights);
-    			} else if (items.get(i).equals("AIRCONDITIONING")){
+	    			_listDataChild.put(items.get(i),lights);
+    			} 
+	    		else if (items.get(i).equals("AIRCONDITIONING"))
+    			{
 	    			List<String> air = new ArrayList<String>();
 	    			air.add("float");
 	    			air.add("boolean");
-	    			listDataChild.put(items.get(i),air);
-    			} else if (items.get(i).equals("STEREO")){
+	    			_listDataChild.put(items.get(i),air);
+    			} 
+    			else if (items.get(i).equals("STEREO"))
+    			{
 	    			List<String> stereo = new ArrayList<String>();
 	    			stereo.add("float");
 	    			stereo.add("boolean");
-	    			listDataChild.put(items.get(i),stereo);
-    			} else if (items.get(i).equals("DVD") || items.get(i).equals("TV")){
+	    			_listDataChild.put(items.get(i),stereo);
+    			} 
+    			else if (items.get(i).equals("DVD") || items.get(i).equals("TV"))
+    			{
 	    			List<String> controller = new ArrayList<String>();
 	    			controller.add("controller");
-	    			listDataChild.put(items.get(i),controller);
+	    			_listDataChild.put(items.get(i),controller);
     			} 	    			
 	    	}
 	    	
-	    	return listDataChild;
+	    	return _listDataChild;
 	    }
 	    
 	    /**Crea la vista ligando el archivo .XML al rootView
@@ -161,24 +166,24 @@ import framework.JSON;
 	    public View onCreateView( LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState )
 	    {
 	    	ViewGroup rootView = ( ViewGroup ) inflater.inflate( R.layout.items_view, container, false );
-	    	expListView = (ExpandableListView) rootView.findViewById(R.id.itemlist);
+	    	_expListView = (ExpandableListView) rootView.findViewById(R.id.itemlist);
 	    	    	
 	    	_textRoom = (TextView)rootView.findViewById(R.id.textRoom);
-	    	_textRoom.setText(button);
+	    	_textRoom.setText(_button);
 	    	
-	    	JSONFile = JSON.getInstance(getActivity().getApplicationContext());
+	    	_JSONFile = JSON.getInstance(getActivity().getApplicationContext());
 	    		
-	    	groupList = new ArrayList<String>();
-			listDataChild = new HashMap<String, List<String>>();
+	    	_groupList = new ArrayList<String>();
+			_listDataChild = new HashMap<String, List<String>>();
 
 	    	try 
 	    	{
-	    		groupList = JSONFile.getItems(button);
+	    		_groupList = _JSONFile.getItems(_button);
 		        final ExpandableListAdapter expListAdapter = new 
-		        		ExpandableListAdapter(button,
+		        		ExpandableListAdapter(_button,
 		        				rootView.getContext().getApplicationContext(), 
-		        				groupList, createHashMapItems(groupList));
-		        expListView.setAdapter(expListAdapter);       
+		        				_groupList, createHashMapItems(_groupList));
+		        _expListView.setAdapter(expListAdapter);       
 	    	} 
 	    	catch (JSONException e) 
 	    	{

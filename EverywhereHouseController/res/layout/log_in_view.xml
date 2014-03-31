@@ -78,8 +78,6 @@
         android:singleLine="true"
         android:textColor="@color/Black" >
 
-        <requestFocus android:layout_width="wrap_content" />
-
     </EditText>
 
     <TextView

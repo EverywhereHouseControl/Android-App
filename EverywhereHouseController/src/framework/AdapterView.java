@@ -132,8 +132,8 @@ public class AdapterView extends FragmentPagerAdapter
 	//------Variables----------
 	private int _position;
 	private int _num;
-	private String _room;
-	HashMap<String, String> tableButtons;
+//	private String _room;
+	HashMap<String, String> _tableButtons;
 	//-------------------------
 	
 	public AdapterView(FragmentManager fm, HashMap<String, String> tableButtons) 
@@ -142,7 +142,7 @@ public class AdapterView extends FragmentPagerAdapter
 		// TODO Auto-generated constructor stub
 		_position = -1;
 		_num = tableButtons.size();
-		this.tableButtons = tableButtons;
+		this._tableButtons = tableButtons;
 	}
 
     @Override
@@ -154,7 +154,7 @@ public class AdapterView extends FragmentPagerAdapter
     @Override
     public Fragment getItem( int _position ) 
     {
-        return new ItemsActivity(tableButtons.get(String.valueOf(_position)));
+        return new ItemsActivity(_tableButtons.get(String.valueOf(_position)));
     }
     
     public int getPosition()

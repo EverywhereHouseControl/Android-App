@@ -76,7 +76,8 @@ public class SimpleActivityTask extends AsyncTask<String, String, String>
 	}
 
 	@Override
-	protected String doInBackground(String... _params) {
+	protected String doInBackground(String... _params) 
+	{
 		// TODO Auto-generated method stub
 		int _internalError = 0;
 
@@ -116,7 +117,8 @@ public class SimpleActivityTask extends AsyncTask<String, String, String>
 	/**
 		 * 
 		 */
-	protected void onPostExecute(String file_url) {
+	protected void onPostExecute(String file_url) 
+	{
 		Toast.makeText(_context, _message, Toast.LENGTH_SHORT).show();
 	}
 
@@ -168,23 +170,24 @@ public class SimpleActivityTask extends AsyncTask<String, String, String>
 
 	private void parser() 
 	{
-		String file2;
+		String _file2;
 		try 
 		{
-			InputStream is = _context.openFileInput("profileInformation.json");
-			int size = is.available();
-			byte[] buffer = new byte[size];
-			is.read(buffer);
-			is.close();
+			InputStream _is = _context.openFileInput("profileInformation.json");
+			int _size = _is.available();
+			byte[] buffer = new byte[_size];
+			_is.read(buffer);
+			_is.close();
 			this._file = new String(buffer, "UTF-8");
-			is = _context.openFileInput("configuration.json");
-			size = is.available();
-			buffer = new byte[size];
-			is.read(buffer);
-			is.close();
-			file2 = new String(buffer, "UTF-8");
-			JSONObject obj = new JSONObject(file2);
-			_house = obj.getString("House");
+			
+			_is = _context.openFileInput("configuration.json");
+			_size = _is.available();
+			buffer = new byte[_size];
+			_is.read(buffer);
+			_is.close();
+			_file2 = new String(buffer, "UTF-8");
+			JSONObject _obj = new JSONObject(_file2);
+			_house = _obj.getString("House");
 
 		} 
 		catch (IOException _ex) 

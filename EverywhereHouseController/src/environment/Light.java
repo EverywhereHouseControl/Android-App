@@ -3,16 +3,13 @@ package environment;
 import java.util.List;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
-import android.view.View.OnAttachStateChangeListener;
-import android.view.View.OnClickListener;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
-import android.widget.TextView;
 
-public class Light extends RoomDecorator{
+public class Light extends RoomDecorator
+{
 	
 	String _item="Light";
 	String _name;
@@ -27,24 +24,28 @@ public class Light extends RoomDecorator{
 		this._roomName = _roomName;
 	}
 	
-	public Light(Room room, String name){
+	public Light(Room room, String name)
+	{
 		_room=room;
 		this._name=name;
 	}
 	
 	@Override
-	public String getDescription(){
+	public String getDescription()
+	{
 		return _room.getDescription() + "+ light ";
 	}
 	
 	@Override
-	public void setDescription(String description){
+	public void setDescription(String description)
+	{
 		_description = description;
 	}
 
 
 	@Override
-	public void setView(Context c, LinearLayout ll) {
+	public void setView(Context c, LinearLayout ll) 
+	{
 		setViewBoolean(c, ll);
 		setViewFloat(c, ll);		
 	}
@@ -54,11 +55,12 @@ public class Light extends RoomDecorator{
 	 * @param c
 	 * @param ll
 	 */
-	private void setViewBoolean(Context c, LinearLayout ll) {
-		CheckBox checkbox = new CheckBox(c);
-		checkbox.setClickable(true);
-		checkbox.setText("On/Off");
-		ll.addView(checkbox);
+	private void setViewBoolean(Context c, LinearLayout ll) 
+	{
+		CheckBox _checkbox = new CheckBox(c);
+		_checkbox.setClickable(true);
+		_checkbox.setText("On/Off");
+		ll.addView(_checkbox);
 	}
 
 	/**
@@ -66,9 +68,10 @@ public class Light extends RoomDecorator{
 	 * @param c
 	 * @param ll
 	 */
-	private void setViewFloat(Context c, LinearLayout ll) {
-		SeekBar seekbar = new SeekBar(c);
-		ll.addView(seekbar);
+	private void setViewFloat(Context c, LinearLayout ll) 
+	{
+		SeekBar _seekbar = new SeekBar(c);
+		ll.addView(_seekbar);
 	}
 
 	

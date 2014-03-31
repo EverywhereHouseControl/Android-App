@@ -18,13 +18,12 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import android.app.Activity;
 import android.util.Log;
 
 public class Post 
 {	                        
-	private InputStream is = null;		                         
-	private String response = "";
+	private InputStream _is = null;		                         
+	private String _response = "";
 
 	public Post(){}
 	
@@ -34,16 +33,16 @@ public class Post
 	 * @param _URL
 	 * @return
 	 */
-	public JSONArray getServerData(ArrayList<String> _parameters, String _URL) 
+	public JSONArray getServerData(ArrayList<String> parameters, String URL) 
 	{				 					 
-		connectionPost( _parameters, _URL );
+		connectionPost( parameters, URL );
 		
-		if (is != null) 
+		if (_is != null) 
 		{				                                                
 			getResponsePost();
 		}
 		
-		if (response != null /*&& response.trim() != ""*/) 
+		if (_response != null /*&& response.trim() != ""*/) 
 		{		
 			return getJsonArray();				                                                                        
 		} 
@@ -58,35 +57,33 @@ public class Post
 	 * @param _parametros
 	 * @param _URL
 	 */
-	private void connectionPost(ArrayList<String> _parametros, String _URL) 
+	private void connectionPost(ArrayList<String> parametros, String URL) 
 	{				                         
-		ArrayList<BasicNameValuePair> nameValuePairs;	                         
+		ArrayList<BasicNameValuePair> _nameValuePairs;	                         
 		try 
 		{                                              
-			HttpClient httpclient = new DefaultHttpClient();                                              
-			HttpPost httppost = new HttpPost(_URL);				                                                
+			HttpClient _httpclient = new DefaultHttpClient();                                              
+			HttpPost _httppost = new HttpPost(URL);				                                                
 			//------------------------
-			httppost.setURI( new URI(_URL) );
+			_httppost.setURI( new URI(URL) );
 			//-------------------------
-			nameValuePairs = new ArrayList<BasicNameValuePair>();			
+			_nameValuePairs = new ArrayList<BasicNameValuePair>();			
 			                                                
-			if (_parametros != null) 
+			if (parametros != null) 
 			{				                                                                        
-				for (int i = 0; i < _parametros.size() - 1; i += 2) 
+				for (int i = 0; i < parametros.size() - 1; i += 2) 
 				{			 
-					nameValuePairs.add(new BasicNameValuePair( _parametros.get(i), _parametros.get(i + 1)));				                                                                        
+					_nameValuePairs.add(new BasicNameValuePair( parametros.get(i), parametros.get(i + 1)));				                                                                        
 				}				 
-				httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));				                                                
+				_httppost.setEntity(new UrlEncodedFormEntity(_nameValuePairs));				                                                
 			}
 					
-			HttpResponse response = httpclient.execute(httppost);
-			HttpEntity entity = response.getEntity();
-			is = entity.getContent();  
+			HttpResponse _response = _httpclient.execute(_httppost);
+			HttpEntity _entity = _response.getEntity();
+			_is = _entity.getContent();
 			
-			//Log.e("","is");
-			//Log.e("", is.toString() );
-			
-		} catch (Exception e) 
+		} 
+		catch (Exception e) 
 		{				                                                
 			Log.e("log_tag", "Error in http connection " + e.toString());				                         
 		}			
@@ -99,20 +96,21 @@ public class Post
 	{				 
 		try 
 		{				 
-			BufferedReader reader = new BufferedReader( new InputStreamReader(is, "iso-8859-1"), 8 );				 
-			StringBuilder sb = new StringBuilder();				 
-			String line = null;
+			BufferedReader _reader = new BufferedReader( new InputStreamReader(_is, "iso-8859-1"), 8 );				 
+			StringBuilder _sb = new StringBuilder();				 
+			String _line = null;
 			 
-			while ((line = reader.readLine()) != null) 
+			while ((_line = _reader.readLine()) != null) 
 			{				                         
-				sb.append(line + "\n");	
-				Log.e("line",line.toString());
+				_sb.append(_line + "\n");	
+				Log.e("line",_line.toString());
 			}				 
-			is.close();				 
-			response = sb.toString();				 
+			_is.close();				 
+			_response = _sb.toString();				 
 			//Log.e("log_tag", "String JSon " + response.toString());
 			
-		} catch (Exception e) 
+		} 
+		catch (Exception e) 
 		{				                         
 			Log.e("log_tag", "Error converting result " + e.toString());				                         
 		}
@@ -125,18 +123,18 @@ public class Post
 	 */
 	private JSONArray getJsonArray() 
 	{				                         
-		JSONArray jArray = null;
+		JSONArray _jArray = null;
 		try 
 		{	
-			JSONObject json = new JSONObject( response );
-			jArray = json.getJSONArray( "result" );
+			JSONObject _json = new JSONObject( _response );
+			_jArray = _json.getJSONArray( "result" );
 			
 		} catch ( Exception e ) 
 		{
 			System.out.print( "ERROR:" + e );
 		} 
 						                                                
-		return jArray;		                         		 
+		return _jArray;		                         		 
 	}
 			 
 	/**
@@ -149,15 +147,15 @@ public class Post
 	    try 
 	    {
 	        // Create MD5 Hash
-	        MessageDigest digest = java.security.MessageDigest.getInstance("MD5");
-	        digest.update(s.getBytes());
-	        byte messageDigest[] = digest.digest();
+	        MessageDigest _digest = java.security.MessageDigest.getInstance("MD5");
+	        _digest.update(s.getBytes());
+	        byte messageDigest[] = _digest.digest();
 
 	        // Create Hex String
-	        StringBuffer hexString = new StringBuffer();
+	        StringBuffer _hexString = new StringBuffer();
 	        for (int i=0; i<messageDigest.length; i++)
-	            hexString.append(Integer.toHexString(0xFF & messageDigest[i]));
-	        return hexString.toString();
+	            _hexString.append(Integer.toHexString(0xFF & messageDigest[i]));
+	        return _hexString.toString();
 
 	    } catch (NoSuchAlgorithmException e) 
 	    {

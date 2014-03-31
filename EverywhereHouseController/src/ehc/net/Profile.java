@@ -28,8 +28,8 @@ public class Profile extends Activity
 	private EditText _user;
 	private EditText _email;
 	private EditText _password;
-	private String file;
-	private ProgressDialog pDialog;
+	private String _file;
+	private ProgressDialog _pDialog;
 	private Post _post;
 	private String _message = "";
 	//-------------------------------
@@ -84,12 +84,12 @@ public class Profile extends Activity
 	{
 		try 
 		{
-			InputStream is = openFileInput("profileInformation.json");
-			int size = is.available();
-	        byte[] buffer = new byte[size];
-	        is.read(buffer);
-	        is.close();
-	        this.file = new String(buffer, "UTF-8");
+			InputStream _is = openFileInput("profileInformation.json");
+			int _size = _is.available();
+	        byte[] buffer = new byte[_size];
+	        _is.read(buffer);
+	        _is.close();
+	        this._file = new String(buffer, "UTF-8");
 	        loadProfileInfo();
 		} 
     	catch (IOException ex) 
@@ -108,16 +108,16 @@ public class Profile extends Activity
 	 */
 	private void loadProfileInfo() throws JSONException 
 	{
-		JSONObject obj = new JSONObject(file);
-		_user.setText(obj.getString("USERNAME"));
-		_email.setText(obj.getString("EMAIL"));
+		JSONObject _obj = new JSONObject(_file);
+		_user.setText(_obj.getString("USERNAME"));
+		_email.setText(_obj.getString("EMAIL"));
 		_password.setText("*/*^^*/*^^*/*^^*/*");
 	}
 	
 	
 	private class modifyConnection extends AsyncTask<String, String, String>
 	{
-		private ArrayList<String> parametros = new ArrayList<String>();
+		private ArrayList<String> _parametros = new ArrayList<String>();
 		
 		/**
     	 * Message "Loading"
@@ -125,11 +125,11 @@ public class Profile extends Activity
     	protected void onPreExecute() 
     	{
             super.onPreExecute();
-            pDialog = new ProgressDialog(Profile.this);
-            pDialog.setMessage("Loading. Please wait...");
-            pDialog.setIndeterminate(false);
-            pDialog.setCancelable(false);
-            pDialog.show();
+            _pDialog = new ProgressDialog(Profile.this);
+            _pDialog.setMessage("Loading. Please wait...");
+            _pDialog.setIndeterminate(false);
+            _pDialog.setCancelable(false);
+            _pDialog.show();
         }    	
     	    	
 		@Override
@@ -143,29 +143,29 @@ public class Profile extends Activity
 			try 
 			{
 			
-				JSONObject obj = new JSONObject(file);
+				JSONObject obj = new JSONObject(_file);
 				log("Antes: " + obj.toString());
 			
-				parametros.add("command");
-				parametros.add("modifyuser");
-				parametros.add("username");
-				parametros.add(obj.getString("USERNAME"));
-				parametros.add("password");
-				parametros.add(obj.getString("PASSWORD"));
-				parametros.add("n_username");
-				parametros.add(_user.getText().toString());
-				parametros.add("n_password");
+				_parametros.add("command");
+				_parametros.add("modifyuser");
+				_parametros.add("username");
+				_parametros.add(obj.getString("USERNAME"));
+				_parametros.add("password");
+				_parametros.add(obj.getString("PASSWORD"));
+				_parametros.add("n_username");
+				_parametros.add(_user.getText().toString());
+				_parametros.add("n_password");
 				if(_password.getText().toString().equals("*/*^^*/*^^*/*^^*/*") || _post.md5(_password.getText().toString()).equals(obj.getString("PASSWORD")))
 				{
-					parametros.add(obj.getString("PASSWORD"));
+					_parametros.add(obj.getString("PASSWORD"));
 					_internalError = -5;
 				}
-				else parametros.add(_post.md5(_password.getText().toString()));
+				else _parametros.add(_post.md5(_password.getText().toString()));
 				
-				parametros.add("n_email");
-				parametros.add(_email.getText().toString());
-				parametros.add("n_hint");
-				parametros.add("caca");
+				_parametros.add("n_email");
+				_parametros.add(_email.getText().toString());
+				_parametros.add("n_hint");
+				_parametros.add("caca");
 				
 				if(_user.getText().toString().isEmpty())_internalError=-1;
 				else if(_password.getText().toString().isEmpty())_internalError=-2;
@@ -176,10 +176,7 @@ public class Profile extends Activity
 						_email.getText().toString().equals(obj.getString("EMAIL")) &&
 						_internalError==-5)_internalError=-6;
 				
-				
-				log("Después: " + obj.toString());
-				log("Parámetros: "+parametros.toString());
-				errorControl(parametros,_internalError);	
+				errorControl(_parametros,_internalError);	
 			
 			} 
 			catch (Exception e1) 
@@ -198,7 +195,7 @@ public class Profile extends Activity
 		protected void onPostExecute(String file_url) 
 		{
             // dismiss the dialog after getting all products
-            pDialog.dismiss();
+            _pDialog.dismiss();
             Toast.makeText(getBaseContext(), _message, Toast.LENGTH_SHORT).show();
 		}
 	}
@@ -214,21 +211,21 @@ public class Profile extends Activity
 		{
 			case 0:
 			{
-				JSONArray data = _post.getServerData(parametros,"http://5.231.69.226/EHControlConnect/index.php");//"http://192.168.2.147/EHControlConnect/index.php");
-				log(data.toString());
+				JSONArray _data = _post.getServerData(parametros,"http://5.231.69.226/EHControlConnect/index.php");//"http://192.168.2.147/EHControlConnect/index.php");
+				log(_data.toString());
 				try 
 				{
-					JSONObject json_data = data.getJSONObject(0);
-					switch(json_data.getInt("ERROR"))
+					JSONObject _json_data = _data.getJSONObject(0);
+					switch(_json_data.getInt("ERROR"))
 					{
 						case 0:
 						{
-							_message = json_data.getString("ENGLISH");					
+							_message = _json_data.getString("ENGLISH");					
 							break;
 						}
 						default:
 						{
-							_message = json_data.getString("ENGLISH");
+							_message = _json_data.getString("ENGLISH");
 							break;
 						}
 					}

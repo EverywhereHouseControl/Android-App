@@ -29,8 +29,8 @@ public class RemoteController extends Activity
 	
 	private void setListeners()
 	{
-		ImageView button_one = (ImageView) findViewById(R.id.one_remote);
-		button_one.setOnClickListener(new OnClickListener() 
+		ImageView _button_one = (ImageView) findViewById(R.id.one_remote);
+		_button_one.setOnClickListener(new OnClickListener() 
 		{
 			@Override
 			public void onClick(View v) 
@@ -39,8 +39,8 @@ public class RemoteController extends Activity
 			}
 		});
 		
-		ImageView button_two = (ImageView) findViewById(R.id.two_remote);
-		button_two.setOnClickListener(new OnClickListener() 
+		ImageView _button_two = (ImageView) findViewById(R.id.two_remote);
+		_button_two.setOnClickListener(new OnClickListener() 
 		{
 			@Override
 			public void onClick(View v) 
@@ -49,8 +49,8 @@ public class RemoteController extends Activity
 			}
 		});
 		
-		ImageView button_three = (ImageView) findViewById(R.id.three_remote);
-		button_three.setOnClickListener(new OnClickListener() 
+		ImageView _button_three = (ImageView) findViewById(R.id.three_remote);
+		_button_three.setOnClickListener(new OnClickListener() 
 		{
 			
 			@Override
@@ -60,8 +60,8 @@ public class RemoteController extends Activity
 			}
 		});
 		
-		ImageView button_four = (ImageView) findViewById(R.id.four_remote);
-		button_four.setOnClickListener(new OnClickListener() 
+		ImageView _button_four = (ImageView) findViewById(R.id.four_remote);
+		_button_four.setOnClickListener(new OnClickListener() 
 		{
 			
 			@Override
@@ -71,8 +71,8 @@ public class RemoteController extends Activity
 			}
 		});
 		
-		ImageView button_five = (ImageView) findViewById(R.id.five_remote);
-		button_five.setOnClickListener(new OnClickListener() 
+		ImageView _button_five = (ImageView) findViewById(R.id.five_remote);
+		_button_five.setOnClickListener(new OnClickListener() 
 		{
 			@Override
 			public void onClick(View v) 
@@ -81,8 +81,8 @@ public class RemoteController extends Activity
 			}
 		});
 		
-		ImageView button_six = (ImageView) findViewById(R.id.six_remote);
-		button_six.setOnClickListener(new OnClickListener() 
+		ImageView _button_six = (ImageView) findViewById(R.id.six_remote);
+		_button_six.setOnClickListener(new OnClickListener() 
 		{
 			@Override
 			public void onClick(View v) 
@@ -91,8 +91,8 @@ public class RemoteController extends Activity
 			}
 		});
 		
-		ImageView button_seven = (ImageView) findViewById(R.id.seven_remote);
-		button_seven.setOnClickListener(new OnClickListener() 
+		ImageView _button_seven = (ImageView) findViewById(R.id.seven_remote);
+		_button_seven.setOnClickListener(new OnClickListener() 
 		{
 			@Override
 			public void onClick(View v) 
@@ -101,8 +101,8 @@ public class RemoteController extends Activity
 			}
 		});
 		
-		ImageView button_eight = (ImageView) findViewById(R.id.eight_remote);
-		button_eight.setOnClickListener(new OnClickListener() 
+		ImageView _button_eight = (ImageView) findViewById(R.id.eight_remote);
+		_button_eight.setOnClickListener(new OnClickListener() 
 		{
 			@Override
 			public void onClick(View v) 
@@ -111,8 +111,8 @@ public class RemoteController extends Activity
 			}
 		});
 		
-		ImageView button_nine = (ImageView) findViewById(R.id.nine_remote);
-		button_nine.setOnClickListener(new OnClickListener() 
+		ImageView _button_nine = (ImageView) findViewById(R.id.nine_remote);
+		_button_nine.setOnClickListener(new OnClickListener() 
 		{
 			@Override
 			public void onClick(View v) 
@@ -121,8 +121,8 @@ public class RemoteController extends Activity
 			}
 		});
 		
-		ImageView button_zero = (ImageView) findViewById(R.id.zero_remote);
-		button_zero.setOnClickListener(new OnClickListener() 
+		ImageView _button_zero = (ImageView) findViewById(R.id.zero_remote);
+		_button_zero.setOnClickListener(new OnClickListener() 
 		{
 			@Override
 			public void onClick(View v) 
@@ -131,8 +131,8 @@ public class RemoteController extends Activity
 			}
 		});
 		
-		ImageView button_fav = (ImageView) findViewById(R.id.star_remote);
-		button_fav.setOnClickListener(new OnClickListener() 
+		ImageView _button_fav = (ImageView) findViewById(R.id.star_remote);
+		_button_fav.setOnClickListener(new OnClickListener() 
 		{	
 			@Override
 			public void onClick(View v) {	
@@ -140,8 +140,8 @@ public class RemoteController extends Activity
 			}
 		});
 		
-		ImageView button_up = (ImageView) findViewById(R.id.up_arrow_remote);
-		button_up.setOnClickListener(new OnClickListener() 
+		ImageView _button_up = (ImageView) findViewById(R.id.up_arrow_remote);
+		_button_up.setOnClickListener(new OnClickListener() 
 		{
 			@Override
 			public void onClick(View v) 
@@ -150,8 +150,8 @@ public class RemoteController extends Activity
 			}
 		});
 		
-		ImageView button_down = (ImageView) findViewById(R.id.down_arrow_remote);
-		button_down.setOnClickListener(new OnClickListener() 
+		ImageView _button_down = (ImageView) findViewById(R.id.down_arrow_remote);
+		_button_down.setOnClickListener(new OnClickListener() 
 		{
 			@Override
 			public void onClick(View v) 
@@ -160,8 +160,8 @@ public class RemoteController extends Activity
 			}
 		});
 		
-		ImageView button_left = (ImageView) findViewById(R.id.left_arrow_remote);
-		button_left.setOnClickListener(new OnClickListener() 
+		ImageView _button_left = (ImageView) findViewById(R.id.left_arrow_remote);
+		_button_left.setOnClickListener(new OnClickListener() 
 		{
 			@Override
 			public void onClick(View v) 
@@ -170,8 +170,8 @@ public class RemoteController extends Activity
 			}
 		});
 		
-		ImageView button_play = (ImageView) findViewById(R.id.play_remote);
-		button_play.setOnClickListener(new OnClickListener() 
+		ImageView _button_play = (ImageView) findViewById(R.id.play_remote);
+		_button_play.setOnClickListener(new OnClickListener() 
 		{
 			@Override
 			public void onClick(View v) 
@@ -180,8 +180,8 @@ public class RemoteController extends Activity
 			}
 		});
 		
-		ImageView button_right = (ImageView) findViewById(R.id.right_arrow_remote);
-		button_right.setOnClickListener(new OnClickListener() 
+		ImageView _button_right = (ImageView) findViewById(R.id.right_arrow_remote);
+		_button_right.setOnClickListener(new OnClickListener() 
 		{
 			@Override
 			public void onClick(View v) 
@@ -190,8 +190,8 @@ public class RemoteController extends Activity
 			}
 		});
 				
-		ImageView button_mute = (ImageView) findViewById(R.id.mute_remote);
-		button_mute.setOnClickListener(new OnClickListener() 
+		ImageView _button_mute = (ImageView) findViewById(R.id.mute_remote);
+		_button_mute.setOnClickListener(new OnClickListener() 
 		{
 			@Override
 			public void onClick(View v) 
@@ -200,8 +200,8 @@ public class RemoteController extends Activity
 			}
 		});
 		
-		ImageView button_setup = (ImageView) findViewById(R.id.config_remote);
-		button_setup.setOnClickListener(new OnClickListener() 
+		ImageView _button_setup = (ImageView) findViewById(R.id.config_remote);
+		_button_setup.setOnClickListener(new OnClickListener() 
 		{
 			@Override
 			public void onClick(View v) 
@@ -210,8 +210,8 @@ public class RemoteController extends Activity
 			}
 		});
 		
-		ImageView button_power = (ImageView) findViewById(R.id.on_off_remote);
-		button_power.setOnClickListener(new OnClickListener() 
+		ImageView _button_power = (ImageView) findViewById(R.id.on_off_remote);
+		_button_power.setOnClickListener(new OnClickListener() 
 		{
 			@Override
 			public void onClick(View v) 

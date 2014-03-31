@@ -6,7 +6,8 @@ package environment;
  * @author Colin
  *
  */
-public abstract class Room {
+public abstract class Room 
+{
 	String _description= "Undefined";
 
 	/**
@@ -19,7 +20,8 @@ public abstract class Room {
 	 * Set the room's description.
 	 * @param description
 	 */
-	public void setDescription(String description){
+	public void setDescription(String description)
+	{
 		_description = description;
 	}
 	
