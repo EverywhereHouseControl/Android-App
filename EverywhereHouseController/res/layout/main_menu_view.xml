@@ -58,7 +58,7 @@
                 android:textSize="20sp" />
 
             <Button
-                android:id="@+id/buttonWorks"
+                android:id="@+id/buttonEvents"
                 android:layout_width="wrap_content"
                 android:layout_height="70dp"
                 android:layout_alignBaseline="@+id/buttonManagement"

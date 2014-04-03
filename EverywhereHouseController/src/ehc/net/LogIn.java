@@ -145,10 +145,10 @@ public class LogIn extends Activity
 				_parametros.add("login");
 				_parametros.add("username");
 				_parametros.add(_user.getText().toString());
-				//_parametros.add("luis");
+				//_parametros.add("bertoldo");
 				_parametros.add("password");
 				_parametros.add(_post.md5(_password.getText().toString()));
-				//_parametros.add(_post.md5("luis"));
+				//_parametros.add(_post.md5("bertoldo"));
 			 			
 				//Variable 'Data' saves the query response
 				JSONArray _data = _post.getServerData(_parametros,"http://5.231.69.226/EHControlConnect/index.php");//"http://192.168.2.147/EHControlConnect/index.php");

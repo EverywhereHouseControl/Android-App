@@ -5,16 +5,19 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="10"
+        android:minSdkVersion="11"
         android:targetSdkVersion="19" />
 
-  <!--    <supports-screens
+    <!--
+          <supports-screens
         android:anyDensity="true"
         android:largeScreens="true"
         android:normalScreens="true"
         android:resizeable="true"
         android:smallScreens="true"
-        android:xlargeScreens="true" />-->
+        android:xlargeScreens="true" />
+    -->
+
 
     <!-- Permiso de acceso a todas las APIs de internet -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -37,9 +40,8 @@
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
-        android:label="EHC">
-        
-       <activity
+        android:label="EHC" >
+        <activity
             android:name="ehc.net.LogIn"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
@@ -109,7 +111,7 @@
             android:name="framework.ContainerFragments"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-             android:theme="@style/Theme.MyTheme" >
+            android:theme="@style/Theme.MyTheme" >
             <intent-filter>
                 <action android:name="framework.ContainerFragments" />
 
@@ -136,6 +138,14 @@
                 <action android:name="environment.RemoteController" />
 
                 <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="ehc.net.CalendarActivity"
+            android:theme="@style/Theme.Sherlock.NoActionBar" >
+            <intent-filter>
+                <action android:name="android.intent.action.CalendarActivity" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
     </application>

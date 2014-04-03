@@ -3,6 +3,8 @@ package ehc.net;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.CalendarContract;
+import android.provider.CalendarContract.Events;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -11,16 +13,16 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 
-public class MainMenu extends Activity
-{
-	//---------Variables----------------
+public class MainMenu extends Activity {
+	// ---------Variables----------------
 	private Button _buttonProfile;
 	private Button _buttonManagement;
-//	private Button _buttonEvent;
-//	private Button _buttonConfig;
+	private Button _buttonEvent;
+	// private Button _buttonConfig;
 	private ImageView _logo;
-	//-------------------------------
-	
+
+	// -------------------------------
+
 	@Override
     protected void onCreate( Bundle savedInstanceState ) 
     {
@@ -34,7 +36,7 @@ public class MainMenu extends Activity
          */
         _buttonProfile = ( Button ) findViewById( R.id.buttonProfile );
         _buttonManagement = ( Button ) findViewById( R.id.buttonManagement);
-       // _buttonEvent = ( Button ) findViewById( R.id.buttonEvent );
+        _buttonEvent = ( Button ) findViewById( R.id.buttonEvents );
        // _buttonConfig = ( Button ) findViewById( R.id.buttonConfig );
         _logo = (ImageView) findViewById(R.id.world_loading_view);
         
@@ -62,23 +64,41 @@ public class MainMenu extends Activity
 				createdProfileIntent();
 			}
 		});
+        
+        _buttonEvent.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				log(" Button events pressed");
+				createdEventIntent();				
+			}
+		});
                  
-    }	
-	
-	/**
+    }	/**
 	 * Method that executes Management's activity
 	 */
-	 
-	private void createdManagementIntent()
-	{
-		try 
-		{
-			Class<?> _clazz = Class.forName( "ehc.net.ManagementMenu");
-			Intent _intent = new Intent( this,_clazz );
-			startActivity( _intent );
-		} 
-		catch ( ClassNotFoundException e ) 
-		{
+
+	private void createdManagementIntent() {
+		try {
+			Class<?> _clazz = Class.forName("ehc.net.ManagementMenu");
+			Intent _intent = new Intent(this, _clazz);
+			startActivity(_intent);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Method that executes Profile's activity
+	 */
+
+	private void createdProfileIntent() {
+		try {
+			Class<?> _clazz = Class.forName("ehc.net.Profile");
+			Intent _intent = new Intent(this, _clazz);
+			startActivity(_intent);
+		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 	}
@@ -86,46 +106,39 @@ public class MainMenu extends Activity
 	/**
 	 * Method that executes Profile's activity
 	 */
-	 
-	private void createdProfileIntent()
-	{
-		try
-		{
-			Class<?> _clazz = Class.forName( "ehc.net.Profile");
-			Intent _intent = new Intent( this,_clazz );
-			startActivity( _intent );
-		} 
-		catch ( ClassNotFoundException e ) 
-		{
+
+	private void createdEventIntent() {
+		try {
+			Class<?> _clazz = Class.forName("ehc.net.CalendarActivity");
+			Intent _intent = new Intent(this, _clazz);
+			startActivity(_intent);
+		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
+	}	
+	
+
+	/**
+	 * Method for debug
+	 * 
+	 * @param _text
+	 */
+	private void log(String _text) {
+		Log.d("Action :", _text);
 	}
-	
-	
-	 /**
-     * Method for debug
-     * @param _text
-     */
-    private void log( String _text )
-    {
-    	Log.d( "Action :", _text );
-    }
-    
-    
-    protected void onResume()
-    {
-    	super.onResume();
-    	log( "Resumed" );
-    }
-    
-    protected void onPause()
-    {
-    	super.onPause();
-    	log( "Paused" );
-    }
-    protected void onStop()
-    {
-    	super.onStop();
-    	log( "Stoped" );
-    }
+
+	protected void onResume() {
+		super.onResume();
+		log("Resumed");
+	}
+
+	protected void onPause() {
+		super.onPause();
+		log("Paused");
+	}
+
+	protected void onStop() {
+		super.onStop();
+		log("Stoped");
+	}
 }
