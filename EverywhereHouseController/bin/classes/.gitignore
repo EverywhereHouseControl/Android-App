@@ -1,3 +1,5 @@
 /com
 /ehc
+/.gitignore
+/environment
 /framework

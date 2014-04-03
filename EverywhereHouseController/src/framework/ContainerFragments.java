@@ -61,13 +61,20 @@ public class ContainerFragments extends SherlockFragmentActivity//FragmentActivi
 	        _mPager.setCurrentItem(Integer.parseInt(buttonPosition));
 	        ////////////////////////////////////////////////////////////////////////////////
 	        LinearLayout _l = (LinearLayout) findViewById(R.id.HorizontalListView);
+	        
+	        //Button _genericButton = (Button) findViewById(R.id.genericButton);
+	        
 	        for(int i=0; i<_tableButtons.size(); i++)
 	        {
 	        	final Button _newButton = new Button(this.getApplicationContext());
 	        	_newButton.setBackgroundResource(R.drawable.button_config);
 	        	_newButton.setTextColor(R.drawable.button_text_color);
 	        	_newButton.setText(_tableButtons.get(Integer.toString(i)));
-	        	_newButton.setOnClickListener(new View.OnClickListener() 
+	        	
+	        	//_newButton.setHeight(_genericButton.getHeight());
+	    		//_newButton.setWidth(_genericButton.getWidth());
+	    		 
+	        	_newButton.setOnClickListener(new View.OnClickListener()
 	        	{
 					
 					@Override

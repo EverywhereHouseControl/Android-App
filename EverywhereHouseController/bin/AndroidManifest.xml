@@ -8,13 +8,13 @@
         android:minSdkVersion="10"
         android:targetSdkVersion="19" />
 
-    <supports-screens
+  <!--    <supports-screens
         android:anyDensity="true"
         android:largeScreens="true"
         android:normalScreens="true"
         android:resizeable="true"
         android:smallScreens="true"
-        android:xlargeScreens="true" />
+        android:xlargeScreens="true" />-->
 
     <!-- Permiso de acceso a todas las APIs de internet -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -37,12 +37,11 @@
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
-        <activity
+        android:label="EHC">
+        
+       <activity
             android:name="ehc.net.LogIn"
             android:configChanges="keyboard|keyboardHidden|orientation"
-            android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Sherlock.NoActionBar" >
             <intent-filter>
@@ -52,9 +51,19 @@
             </intent-filter>
         </activity>
         <activity
+            android:name="ehc.net.CreateUser"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Sherlock.NoActionBar" >
+            <intent-filter>
+                <action android:name="ehc.net.CreateUser" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name="ehc.net.MainMenu"
             android:configChanges="keyboard|keyboardHidden|orientation"
-            android:label="@style/AppTheme"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Sherlock.NoActionBar" >
             <intent-filter>
@@ -100,7 +109,7 @@
             android:name="framework.ContainerFragments"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.Sherlock.NoActionBar" >
+             android:theme="@style/Theme.MyTheme" >
             <intent-filter>
                 <action android:name="framework.ContainerFragments" />
 
