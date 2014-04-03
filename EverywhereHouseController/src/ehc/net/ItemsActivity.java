@@ -14,6 +14,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
+import android.widget.ExpandableListView.OnGroupCollapseListener;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import environment.DVD;
@@ -93,8 +95,7 @@ import framework.JSON;
 				if (itemList.get(i).equals("DVD"))
 				{
 					DVD dvd = new DVD();
-					Log.e("Activity: ",getActivity().getApplicationContext().toString());
-					
+					Log.e("Activity: ",getActivity().getApplicationContext().toString());	
 					dvd.setView(getActivity().getApplicationContext(), ll);
 				}
 				if (itemList.get(i).equals("Lights"))
@@ -151,7 +152,8 @@ import framework.JSON;
     			else if (items.get(i).equals("DVD") || items.get(i).equals("TV"))
     			{
 	    			List<String> controller = new ArrayList<String>();
-	    			controller.add("controller");
+	    			//controller.add("controller");
+	    			controller.add("integer");
 	    			_listDataChild.put(items.get(i),controller);
     			} 	    			
 	    	}
@@ -179,11 +181,26 @@ import framework.JSON;
 	    	try 
 	    	{
 	    		_groupList = _JSONFile.getItems(_button);
-		        final ExpandableListAdapter expListAdapter = new 
+		        final ExpandableListAdapter _expListAdapter = new 
 		        		ExpandableListAdapter(_button,
 		        				rootView.getContext().getApplicationContext(), 
 		        				_groupList, createHashMapItems(_groupList));
-		        _expListView.setAdapter(expListAdapter);       
+		        _expListAdapter.notifyDataSetChanged();
+		        _expListView.setAdapter(_expListAdapter);
+		        
+		        _expListView.setOnGroupCollapseListener(new OnGroupCollapseListener() 
+		        {
+		            int previousItem = -1;
+					@Override
+					public void onGroupCollapse(int groupPosition) 
+					{
+						// TODO Auto-generated method stub
+						if(groupPosition != previousItem )
+							 _expListView.collapseGroup(previousItem );
+		                previousItem = groupPosition;
+					}
+		        });
+		        
 	    	} 
 	    	catch (JSONException e) 
 	    	{

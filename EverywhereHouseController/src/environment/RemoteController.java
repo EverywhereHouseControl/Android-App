@@ -221,4 +221,12 @@ public class RemoteController extends Activity
 		});
 		
 	}
+	
+	protected void onStop()
+    {
+    	super.onStop();
+    	onBackPressed();
+    }
+	
+	
 }

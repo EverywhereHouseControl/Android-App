@@ -109,7 +109,7 @@
             android:name="framework.ContainerFragments"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.Sherlock.NoActionBar" >
+             android:theme="@style/Theme.MyTheme" >
             <intent-filter>
                 <action android:name="framework.ContainerFragments" />
 

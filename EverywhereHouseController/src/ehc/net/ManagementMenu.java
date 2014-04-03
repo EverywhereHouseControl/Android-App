@@ -133,7 +133,7 @@ public class ManagementMenu extends SherlockActivity {//Activity{
         }  */     
     }
 	
-	
+	//////////////////////////////////////////////////////////////////////////////
 	@Override
     public boolean onCreateOptionsMenu(com.actionbarsherlock.view.Menu menu) {
         getSupportMenuInflater().inflate(R.menu.action_bar, menu);
@@ -175,7 +175,7 @@ public class ManagementMenu extends SherlockActivity {//Activity{
         }
         return true;
     }
-	
+    //////////////////////////////////////////////////////////////////////////////
 	/**
 	 * Method which executes the next activity
 	 * @param room 

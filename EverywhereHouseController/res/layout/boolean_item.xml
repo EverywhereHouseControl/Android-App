@@ -3,20 +3,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-    
-    <TextView 
-        android:id="@+id/childname"
-        android:layout_gravity="center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
 
-    <ToggleButton 
-	    android:id="@+id/boolean_value"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_gravity="center_horizontal"
-	    android:textOn="On!"
-	    android:textOff="Off!">
+    <TextView
+        android:id="@+id/childname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal" />
+
+    <ToggleButton
+        android:id="@+id/boolean_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:textOff="Off!"
+        android:textOn="On!" >
+
     </ToggleButton>
 
 
