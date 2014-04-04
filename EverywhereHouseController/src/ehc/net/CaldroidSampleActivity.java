@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.roomorama.caldroid.CaldroidFragment;
@@ -21,6 +22,7 @@ public class CaldroidSampleActivity extends FragmentActivity {
 	private boolean undo = false;
 	private CaldroidFragment caldroidFragment;
 	private CaldroidFragment dialogCaldroidFragment;
+	private TextView tvEvent;
 
 	private void setCustomResourceForDates() {
 		Calendar cal = Calendar.getInstance();
@@ -50,17 +52,9 @@ public class CaldroidSampleActivity extends FragmentActivity {
 		setContentView(R.layout.activity_main);
 
 		final SimpleDateFormat formatter = new SimpleDateFormat("dd MMM yyyy");
-
 		// Setup caldroid fragment
 		// **** If you want normal CaldroidFragment, use below line ****
 		caldroidFragment = new CaldroidFragment();
-
-		// //////////////////////////////////////////////////////////////////////
-		// **** This is to show customized fragment. If you want customized
-		// version, uncomment below line ****
-//		 caldroidFragment = new CaldroidSampleCustomFragment();
-
-		// Setup arguments
 
 		// If Activity is created after rotation
 		if (savedInstanceState != null) {
@@ -84,9 +78,10 @@ public class CaldroidSampleActivity extends FragmentActivity {
 
 		setCustomResourceForDates();
 		FragmentTransaction e = getSupportFragmentManager().beginTransaction();
-		EventFragment ef = new EventFragment();
+		final EventFragment ef = new EventFragment();
 		e.replace(R.id.event_fragment, ef);
 		e.commit();
+
 		// Attach to the activity
 		FragmentTransaction t = getSupportFragmentManager().beginTransaction();
 		t.replace(R.id.calendar1, caldroidFragment);
@@ -97,9 +92,7 @@ public class CaldroidSampleActivity extends FragmentActivity {
 
 			@Override
 			public void onSelectDate(Date date, View view) {
-				Toast.makeText(getApplicationContext(), formatter.format(date),
-						Toast.LENGTH_SHORT).show();
-
+				ef.setText(date.toString());
 			}
 
 			@Override
