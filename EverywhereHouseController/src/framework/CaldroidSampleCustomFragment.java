@@ -1,4 +1,4 @@
-package com.candroidsample;
+package framework;
 
 import com.roomorama.caldroid.CaldroidFragment;
 import com.roomorama.caldroid.CaldroidGridAdapter;

@@ -109,7 +109,7 @@ public class MainMenu extends Activity {
 
 	private void createdEventIntent() {
 		try {
-			Class<?> _clazz = Class.forName("ehc.net.CalendarActivity");
+			Class<?> _clazz = Class.forName("ehc.net.CaldroidSampleActivity");
 			Intent _intent = new Intent(this, _clazz);
 			startActivity(_intent);
 		} catch (ClassNotFoundException e) {
