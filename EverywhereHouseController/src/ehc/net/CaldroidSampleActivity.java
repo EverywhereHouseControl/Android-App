@@ -1,8 +1,17 @@
 package ehc.net;
 
+import hirondelle.date4j.DateTime;
+
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -14,8 +23,10 @@ import android.widget.Toast;
 
 import com.roomorama.caldroid.CaldroidFragment;
 import com.roomorama.caldroid.CaldroidListener;
+import com.roomorama.caldroid.CalendarHelper;
 
 import framework.EventFragment;
+import framework.JSON;
 
 @SuppressLint("SimpleDateFormat")
 public class CaldroidSampleActivity extends FragmentActivity {
@@ -23,26 +34,41 @@ public class CaldroidSampleActivity extends FragmentActivity {
 	private CaldroidFragment caldroidFragment;
 	private CaldroidFragment dialogCaldroidFragment;
 	private TextView tvEvent;
+	private ArrayList<Date> eventDays;
 
-	private void setCustomResourceForDates() {
+	/**
+	 * Gets user events and then it will be stored in user's calendar
+	 * 
+	 * @throws ParseException
+	 */
+	private void setCustomResourceForDates() throws ParseException {
 		Calendar cal = Calendar.getInstance();
+		eventDays = new ArrayList<Date>();
+		JSON events = JSON.getInstance(getApplicationContext());
+		HashMap<String, ArrayList<Object>> event = events.getEvents();
 
-		// Min date is last 7 days
-		cal.add(Calendar.DATE, -18);
-		Date blueDate = cal.getTime();
+		Date date = null;
 
-		// Max date is next 7 days
-		cal = Calendar.getInstance();
-		cal.add(Calendar.DATE, 16);
-		Date greenDate = cal.getTime();
+		// Getting all the information about user. This information has been
+		// stored in loadJSONEvent (JSON Class)
+		for (Entry<String, ArrayList<Object>> entry : event.entrySet()) {
+			int index = 0;
+			List<Object> l = entry.getValue();
+			String name = (String) l.get(0);
+			int item = (Integer) l.get(1);
+			String created = (String) l.get(2);
+			String dateFormat = (String) l.get(3) + "-" + (String) l.get(4)
+					+ "-" + (String) l.get(5);
+			date = CalendarHelper.getDateFromString(dateFormat, "yyyy-MM-dd");
+			eventDays.add(date);
+		}
 
-		if (caldroidFragment != null) {
-			caldroidFragment.setBackgroundResourceForDate(R.color.Blue,
-					blueDate);
-			caldroidFragment.setBackgroundResourceForDate(R.color.Green,
-					greenDate);
-			caldroidFragment.setTextColorForDate(R.color.White, blueDate);
-			caldroidFragment.setTextColorForDate(R.color.White, greenDate);
+		for (Date d : eventDays) {
+			if (caldroidFragment != null) {
+				caldroidFragment.setBackgroundResourceForDate(R.color.Blue,
+						(Date) d);
+				caldroidFragment.setTextColorForDate(R.color.White, (Date) d);
+			}
 		}
 	}
 
@@ -76,7 +102,12 @@ public class CaldroidSampleActivity extends FragmentActivity {
 			caldroidFragment.setArguments(args);
 		}
 
-		setCustomResourceForDates();
+		try {
+			setCustomResourceForDates();
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		FragmentTransaction e = getSupportFragmentManager().beginTransaction();
 		final EventFragment ef = new EventFragment();
 		e.replace(R.id.event_fragment, ef);
@@ -123,7 +154,6 @@ public class CaldroidSampleActivity extends FragmentActivity {
 		// Setup Caldroid
 		caldroidFragment.setCaldroidListener(listener);
 
-	
 	}
 
 	/**
@@ -142,6 +172,10 @@ public class CaldroidSampleActivity extends FragmentActivity {
 			dialogCaldroidFragment.saveStatesToKey(outState,
 					"DIALOG_CALDROID_SAVED_STATE");
 		}
+	}
+
+	private void eventLoader() {
+
 	}
 
 }
