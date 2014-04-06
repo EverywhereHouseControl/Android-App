@@ -45,20 +45,19 @@ public class CaldroidSampleActivity extends FragmentActivity {
 		Calendar cal = Calendar.getInstance();
 		eventDays = new ArrayList<Date>();
 		JSON events = JSON.getInstance(getApplicationContext());
-		HashMap<String, ArrayList<Object>> event = events.getEvents();
+		HashMap<String, Event> event = events.getEvents();
 
 		Date date = null;
 
 		// Getting all the information about user. This information has been
 		// stored in loadJSONEvent (JSON Class)
-		for (Entry<String, ArrayList<Object>> entry : event.entrySet()) {
+		for (Entry<String, Event> entry : event.entrySet()) {
 			int index = 0;
-			List<Object> l = entry.getValue();
-			String name = (String) l.get(0);
-			int item = (Integer) l.get(1);
-			String created = (String) l.get(2);
-			String dateFormat = (String) l.get(3) + "-" + (String) l.get(4)
-					+ "-" + (String) l.get(5);
+			Event e = entry.getValue();
+			String name = e.getName();
+			int item = e.getItem();
+			String created = e.getCreator();
+			String dateFormat = e.getYear() + "-" + e.getMonth() + "-" + e.getDay();
 			date = CalendarHelper.getDateFromString(dateFormat, "yyyy-MM-dd");
 			eventDays.add(date);
 		}

@@ -20,4 +20,6 @@ public class EventFragment extends Fragment {
         TextView textView = (TextView) getView().findViewById(R.id.eventtext);
         textView.setText(text);
     }
+    
+    public void loadEvent(){}
 }

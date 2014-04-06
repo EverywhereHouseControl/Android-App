@@ -9,6 +9,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import ehc.net.Event;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
@@ -17,7 +18,7 @@ public class JSON {
 	private static JSON _instance;
 	public ArrayList<String> _rooms;
 	public ArrayList<String> _items;
-	public HashMap<String, ArrayList<Object>> _events;
+	public HashMap<String, Event> _events;
 
 	private static final String _TAG_NAME = "name";
 	// private static final String _TAG_USER = "User";
@@ -60,7 +61,7 @@ public class JSON {
 
 	private void loadUserEvents(Context c) {
 		try {
-			_events = new HashMap<String, ArrayList<Object>>();
+			_events = new HashMap<String, Event>();
 			InputStream _is = c.getAssets().open("event.json");
 			int _size = _is.available();
 			byte[] buffer = new byte[_size];
@@ -83,17 +84,10 @@ public class JSON {
 		JSONObject obj = new JSONObject(_eventFile);
 		try {
 			for (int i = 0; i <= obj.length(); i++) {
-				ArrayList<Object> l = new ArrayList<Object>();
 				JSONObject event = obj.getJSONObject("Event" + i);
-				l.add((String) event.get("Name"));
-				l.add((int) event.getInt("item"));
-				l.add((String) event.get("Created"));
-				l.add((String) event.get("Year"));
-				l.add((String) event.get("Month"));
-				l.add((String) event.get("Day"));
-				l.add((String) event.get("Hour"));
-				l.add((String) event.get("Minute"));
-				_events.put("Event" + i, l);
+				Event ev = new Event((String) event.get("Name"), (int) event.getInt("item"), (String) event.get("Created"), (String) event.get("Year"),
+						(String) event.get("Month"), (String) event.get("Day"), (String) event.get("Hour"), (String) event.get("Minute"));
+				_events.put("Event" + i, ev);
 
 			}
 		} catch (JSONException e) {
@@ -101,7 +95,7 @@ public class JSON {
 		}
 	}
 
-	public HashMap<String, ArrayList<Object>> getEvents() {
+	public HashMap<String, Event> getEvents() {
 		return _events;
 	}
 
