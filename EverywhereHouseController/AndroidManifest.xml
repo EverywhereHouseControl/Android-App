@@ -86,12 +86,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="ehc.net.PlacesMenu"
+            android:name="ehc.net.ManagementMenuExample"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.Sherlock.NoActionBar" >
+            android:theme="@style/Theme.MyTheme" >
             <intent-filter>
-                <action android:name="ehc.net.PlacesMenu" />
+                <action android:name="ehc.net.ManagementMenuExample" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>

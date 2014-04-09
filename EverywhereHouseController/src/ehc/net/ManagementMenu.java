@@ -6,6 +6,7 @@ import org.json.JSONException;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -13,6 +14,7 @@ import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.MenuItem;
 
@@ -57,26 +59,28 @@ public class ManagementMenu extends SherlockActivity {//Activity{
     protected void onCreate( Bundle savedInstanceState ) 
     {   
 		super.onCreate( savedInstanceState );
-        setContentView( R.layout.management_menu_view );
-     
+		setContentView( R.layout.management_menu_view );
+        
+		//----------------ActionBar-----
+		_ab = getSupportActionBar();
+        _ab.setDisplayShowHomeEnabled(false);
+        _ab.setDisplayUseLogoEnabled(false);
+        _ab.setDisplayShowTitleEnabled(false);
+        //-------------------------------      
+        
         _table1 = (TableLayout) findViewById(R.id.table1);
                 
         _table2 = (TableLayout) findViewById(R.id.table2);
-          
-         //----------------ActionBar-----
-         _ab = getSupportActionBar();
-         _ab.setDisplayShowHomeEnabled(false);
-         _ab.setDisplayUseLogoEnabled(false);
-         _ab.setDisplayShowTitleEnabled(false);
-         //-------------------------------
 
          //-----------------It Reads config.json-----------------
 
         _JSONFile = JSON.getInstance(getApplicationContext());
-		ArrayList<String> _rooms;
+		
+        
+        ArrayList<String> _rooms;
 		try 
 		{
-			_rooms = _JSONFile.getRooms();
+			_rooms = _JSONFile.getRooms("");
 			log("Número de habitaciones: "+ _rooms);
 			for (int i=0; i < _rooms.size(); i++)
 			{
@@ -123,19 +127,13 @@ public class ManagementMenu extends SherlockActivity {//Activity{
 				_table2.addView(tr);
 	        	_table2.addView(_buttonList.get(i));
 			}        	
-        }
-		/*
-        for(int i=(_buttonList.size()/2); i<_buttonList.size(); i++)
-        {
-        	TableRow tr = new TableRow(this.getBaseContext());
-        	_table2.addView(tr);
-        	_table2.addView(_buttonList.get(i));
-        }  */     
+        }   
     }
 	
 	//////////////////////////////////////////////////////////////////////////////
 	@Override
-    public boolean onCreateOptionsMenu(com.actionbarsherlock.view.Menu menu) {
+    public boolean onCreateOptionsMenu(com.actionbarsherlock.view.Menu menu) 
+	{
         getSupportMenuInflater().inflate(R.menu.action_bar, menu);
         return super.onCreateOptionsMenu(menu);
     }

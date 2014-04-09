@@ -81,7 +81,7 @@ public class MainMenu extends Activity {
 
 	private void createdManagementIntent() {
 		try {
-			Class<?> _clazz = Class.forName("ehc.net.ManagementMenu");
+			Class<?> _clazz = Class.forName("ehc.net.ManagementMenuExample");
 			Intent _intent = new Intent(this, _clazz);
 			startActivity(_intent);
 		} catch (ClassNotFoundException e) {
