@@ -86,7 +86,8 @@ public class CreateUser extends Activity
 				ArrayList<String> _parametros = new ArrayList<String>();
 				
 				_parametros.add("command");
-				_parametros.add("createuser");
+//				_parametros.add("createuser");
+				_parametros.add("createuser2");
 				_parametros.add("username");
 				_parametros.add(_user.getText().toString());
 				_parametros.add("password");
@@ -212,11 +213,11 @@ public class CreateUser extends Activity
 			//Variable 'Data' saves the query response
 			log("query");
 			log(_parametros.toString());
-			JSONArray _data = _post.getServerData(_parametros,"http://5.231.69.226/EHControlConnect/index.php");//"http://192.168.2.147/EHControlConnect/index.php");
+			JSONObject _data = _post.getServerData(_parametros,"http://5.231.69.226/EHControlConnect/index.php");//"http://192.168.2.147/EHControlConnect/index.php");
 			log(_data.toString());
 			try 
 			{
-				JSONObject _json_data = _data.getJSONObject(0);
+				JSONObject _json_data = _data.getJSONObject("error");
 				switch(_json_data.getInt("ERROR"))
 				{
 					case 0:

@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -132,11 +131,11 @@ public class SimpleActivityTask extends AsyncTask<String, String, String>
 		{
 			case 0: 
 			{
-				JSONArray data = _post.getServerData(parametros,
+				JSONObject data = _post.getServerData(parametros,
 					"http://5.231.69.226/EHControlConnect/index.php");//"http://192.168.2.147/EHControlConnect/index.php");
 				try 
 				{
-					JSONObject json_data = data.getJSONObject(0);
+					JSONObject json_data = data.getJSONObject("error");
 					Log.d("ERROR", json_data.toString());
 
 					switch (json_data.getInt("ERROR")) 

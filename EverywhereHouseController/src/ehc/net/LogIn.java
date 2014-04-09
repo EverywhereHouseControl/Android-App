@@ -142,21 +142,22 @@ public class LogIn extends Activity
 				ArrayList<String> _parametros = new ArrayList<String>();
 				
 				_parametros.add("command");
-				_parametros.add("login");
+				_parametros.add("login2");
+				//_parametros.add("login");
 				_parametros.add("username");
-//				_parametros.add(_user.getText().toString());
-				_parametros.add("bertoldo");
+				_parametros.add(_user.getText().toString());
+//				_parametros.add("bertoldo");
 				_parametros.add("password");
-//				_parametros.add(_post.md5(_password.getText().toString()));
-				_parametros.add(_post.md5("bertoldo"));
+				_parametros.add(_post.md5(_password.getText().toString()));
+//				_parametros.add(_post.md5("bertoldo"));
 			 			
 				//Variable 'Data' saves the query response
-				JSONArray _data = _post.getServerData(_parametros,"http://5.231.69.226/EHControlConnect/index.php");//"http://192.168.2.147/EHControlConnect/index.php");
+				JSONObject _data = _post.getServerData(_parametros,"http://5.231.69.226/EHControlConnect/index.php");//"http://192.168.2.147/EHControlConnect/index.php");
 				log(_data.toString());
 				
 				try 
 				{
-					JSONObject _json_data = _data.getJSONObject(0);
+					JSONObject _json_data = _data.getJSONObject("error");
 					switch(_json_data.getInt("ERROR"))
 					{
 						case 0:
@@ -180,7 +181,7 @@ public class LogIn extends Activity
 				
 				if (_data != null && _data.length() > 0) 
 				{				
-					JSONObject _json_data = _data.getJSONObject(0);
+					JSONObject _json_data = _data.getJSONObject("result");
 					//log(json_data.toString());
 					
 					if (_json_data.getInt("IDUSER")==0) 

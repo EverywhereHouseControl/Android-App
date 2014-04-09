@@ -15,7 +15,7 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.util.Log;
@@ -33,7 +33,8 @@ public class Post
 	 * @param _URL
 	 * @return
 	 */
-	public JSONArray getServerData(ArrayList<String> parameters, String URL) 
+//	public JSONArray getServerData(ArrayList<String> parameters, String URL)
+	public JSONObject getServerData(ArrayList<String> parameters, String URL)
 	{				 					 
 		connectionPost( parameters, URL );
 		
@@ -44,7 +45,18 @@ public class Post
 		
 		if (_response != null /*&& response.trim() != ""*/) 
 		{		
-			return getJsonArray();				                                                                        
+//			return getJsonArray();
+			JSONObject _json = null;
+			try 
+			{
+				_json = new JSONObject( _response );
+			} 
+			catch (JSONException e) 
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return _json;
 		} 
 		else 
 		{				                                                                                               
@@ -121,21 +133,21 @@ public class Post
 	 * Convierte el string "respuesta" en un JSONArray
 	 * @return
 	 */
-	private JSONArray getJsonArray() 
-	{				                         
-		JSONArray _jArray = null;
-		try 
-		{	
-			JSONObject _json = new JSONObject( _response );
-			_jArray = _json.getJSONArray( "result" );
-			
-		} catch ( Exception e ) 
-		{
-			System.out.print( "ERROR:" + e );
-		} 
-						                                                
-		return _jArray;		                         		 
-	}
+//	private JSONArray getJsonArray() 
+//	{				                         
+//		JSONArray _jArray = null;
+//		try 
+//		{	
+//			JSONObject _json = new JSONObject( _response );
+//			_jArray = _json.getJSONArray( "result" );
+//			
+//		} catch ( Exception e ) 
+//		{
+//			System.out.print( "ERROR:" + e );
+//		} 
+//						                                                
+//		return _jArray;		                         		 
+//	}
 			 
 	/**
 	 * Method that encrypts the password
