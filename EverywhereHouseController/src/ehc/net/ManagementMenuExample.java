@@ -15,6 +15,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewTreeObserver;
+import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
@@ -31,50 +33,8 @@ public class ManagementMenuExample extends SherlockFragmentActivity
 
 	private ViewPager mViewPager;
 	private TabsAdapter mTabsAdapter;
-	private TextView tabCenter;
-	private TextView tabText;
 	private JSON _JSONFile;
 	private ArrayList<String> _houseNames = new ArrayList<String>();
-	private ManagementMenuFragment _mMF;
-
-	
-	/**
-	 * Method called when the view has been loaded.
-	 */
-	@Override
-	public void onWindowFocusChanged(boolean hasFocus) 
-	{
-	    // TODO Auto-generated method stub
-	    if (hasFocus) 
-	    {
-	    	//It Links the 'genericButton' button for obtain his dimensions.
-	    	 Button _genericButton = (Button) findViewById(R.id.genericButton);
-	    	 Log.d("Tamaño botón: " , Integer.toString(_genericButton.getHeight()) +" "+ Integer.toString(_genericButton.getWidth()));
-	    	 
-	    	 TableLayout _table1 = (TableLayout) findViewById(R.id.table1);
-	    	 
-	    	 for(int j=0; j<mTabsAdapter.getCount(); j++)
-	    	 {
-	    	 
-		    	 ArrayList<Button> _buttonList = new ArrayList<Button>();
-		    	 mTabsAdapter.getItem(j);
-		    	 _buttonList = _mMF.getButtonList();
-		    	 Log.d("BUTTONS: ", _buttonList.toString());
-		    	 
-		    	 //It applies the previous dimension for the other buttons
-		    	 for(int i=0; i<_buttonList.size(); i++)
-		         {
-		    		 _buttonList.get(i).setHeight(_genericButton.getHeight());
-		    		 _buttonList.get(i).setWidth(_genericButton.getWidth());		 
-		         }
-	    	 
-	    	 }
-	    	 //It is deleted the button 'genericButton'
-	    	 _table1.getChildAt(0).setVisibility(8);
-	    	 
-	    }
-	    super.onWindowFocusChanged(hasFocus);
-	}
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -177,8 +137,7 @@ public class ManagementMenuExample extends SherlockFragmentActivity
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			_mMF = new ManagementMenuFragment(mContext,_houseNames.get(position),_rooms);
-			return _mMF;
+			return new ManagementMenuFragment(mContext,_houseNames.get(position),_rooms);			
 		}
 
 		public void onPageScrolled(int position, float positionOffset,
@@ -216,46 +175,46 @@ public class ManagementMenuExample extends SherlockFragmentActivity
 		}
 	}
 	
-	@Override
-    public boolean onCreateOptionsMenu(com.actionbarsherlock.view.Menu menu) 
-	{
-        getSupportMenuInflater().inflate(R.menu.action_bar, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
- 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) 
-    {
-        super.onOptionsItemSelected(item);
- 
-        switch(item.getItemId())
-        {
-            case R.id.Profile:
-			try 
-			{
-				Class<?> _clazz;
-				_clazz = Class.forName( "ehc.net.Profile");
-				Intent _intent = new Intent( this,_clazz );
-    			startActivity( _intent );
-			} 
-			catch (ClassNotFoundException e) 
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-                break;
-            case R.id.ChangeProfile:
-            	Intent exitIntent = new Intent(this,LogIn.class);
-            	exitIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP|Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            	startActivity(exitIntent);  	
-                break;
-            case R.id.Exit:
-            	Intent intent = new Intent(Intent.ACTION_MAIN);
-            	intent.addCategory(Intent.CATEGORY_HOME);
-            	intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            	startActivity(intent);  	
-                break;
-        }
-        return true;
-    }
+//	@Override
+//    public boolean onCreateOptionsMenu(com.actionbarsherlock.view.Menu menu) 
+//	{
+//        getSupportMenuInflater().inflate(R.menu.action_bar, menu);
+//        return super.onCreateOptionsMenu(menu);
+//    }
+// 
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) 
+//    {
+//        super.onOptionsItemSelected(item);
+// 
+//        switch(item.getItemId())
+//        {
+//            case R.id.Profile:
+//			try 
+//			{
+//				Class<?> _clazz;
+//				_clazz = Class.forName( "ehc.net.Profile");
+//				Intent _intent = new Intent( this,_clazz );
+//    			startActivity( _intent );
+//			} 
+//			catch (ClassNotFoundException e) 
+//			{
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//                break;
+//            case R.id.ChangeProfile:
+//            	Intent exitIntent = new Intent(this,LogIn.class);
+//            	exitIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP|Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//            	startActivity(exitIntent);  	
+//                break;
+//            case R.id.Exit:
+//            	Intent intent = new Intent(Intent.ACTION_MAIN);
+//            	intent.addCategory(Intent.CATEGORY_HOME);
+//            	intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//            	startActivity(intent);  	
+//                break;
+//        }
+//        return true;
+//    }
 }

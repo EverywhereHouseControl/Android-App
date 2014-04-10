@@ -89,7 +89,7 @@
             android:name="ehc.net.ManagementMenuExample"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.MyTheme" >
+            android:theme="@style/Theme.Sherlock" >
             <intent-filter>
                 <action android:name="ehc.net.ManagementMenuExample" />
 

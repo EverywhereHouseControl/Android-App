@@ -49,7 +49,7 @@
                 android:id="@+id/buttonProfile"
                 android:layout_width="wrap_content"
                 android:layout_height="70dp"
-                android:layout_alignLeft="@+id/buttonWorks"
+                android:layout_alignLeft="@+id/buttonEvents"
                 android:layout_alignParentRight="true"
                 android:layout_alignTop="@+id/buttonConfig"
                 android:background="@drawable/button_config"

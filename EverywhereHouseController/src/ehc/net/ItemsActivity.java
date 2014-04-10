@@ -29,6 +29,7 @@ import framework.JSON;
 
 		private JSON _JSONFile;
 		private String _button;
+		private String _house;
 		com.actionbarsherlock.view.Menu _menu;
 		TextView _textRoom;
 		ExpandableListView _expListView;
@@ -78,9 +79,10 @@ import framework.JSON;
 //		 * Method which executes the next activity
 //		 */
 		
-		public ItemsActivity(String button)
+		public ItemsActivity(String button, String houseName)
 		{
-			this._button = button;
+			_button = button;
+			_house = houseName;
 		}
 			    
 	    /**
@@ -180,7 +182,7 @@ import framework.JSON;
 
 	    	try 
 	    	{
-	    		_groupList = _JSONFile.getItems(_button);
+	    		_groupList = _JSONFile.getItems(_button,_house);
 		        final ExpandableListAdapter _expListAdapter = new 
 		        		ExpandableListAdapter(_button,
 		        				rootView.getContext().getApplicationContext(), 

@@ -49,7 +49,8 @@ public class ContainerFragments extends SherlockFragmentActivity//FragmentActivi
 	    	// Link the XML which contains the pager.
 	        _mPager = (ViewPager) findViewById(R.id.pager);
 	        // Create an adapter with the fragments that will show on the ViewPager.
-	        _mAdapter = new AdapterView(getSupportFragmentManager(),_tableButtons); 
+	       String _houseName = getIntent().getExtras().getString("House");
+	        _mAdapter = new AdapterView(getSupportFragmentManager(),_tableButtons,_houseName); 
 	    	// Set the adapter.
 	    	_mPager.setAdapter(_mAdapter);
 	        

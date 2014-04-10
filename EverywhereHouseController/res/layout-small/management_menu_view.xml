@@ -54,7 +54,7 @@
                             android:layout_height="80dp"
                             android:layout_marginBottom="10dp"
                             android:text="Habitación"
-                            android:textSize="15sp" />
+                            android:textSize="10sp" />
                     </TableRow>
                 </TableLayout>
 

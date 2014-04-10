@@ -28,7 +28,6 @@ public class JSON {
 	private static final String _TAG_HOUSES = "houses";
 	private static final String _TAG_ROOMS = "rooms";
 	private static final String _TAG_SERIVICES = "services";
-	private static final String _TAG_ITEMS = "items";
 	private String _file = null;
 	private String _eventFile = null;
 
@@ -103,7 +102,11 @@ public class JSON {
 	public HashMap<String, Event> getEvents() {
 		return _events;
 	}
-
+	
+	/**
+	 * 
+	 * @throws JSONException
+	 */
 	private void loadJSON() throws JSONException 
 	{
 		Log.d("JSON ", _file.toString());
@@ -133,25 +136,8 @@ public class JSON {
 					Log.d("SERVICES", _services.toString());
 					
 				}
-				
-				_roomsHouses.put(_house.getString("name"), _roomsList);
-				Log.d("Table houses: ", _house.getString("name") +" "+_roomsHouses.get(_house.getString("name")));
-				
-				
-//				JSONObject _habitaciones = _obj.getJSONObject(_TAG_ROOMS);
-//				for (int j = 0; j <= _habitaciones.length(); j++) {
-//					JSONObject _habitacion = _habitaciones.getJSONObject("R" + j);
-//	
-//					System.out.println(_habitacion.getString(_TAG_NAME));
-//	
-//					Log.e("COLIN_TAG", _habitacion.getString(_TAG_NAME));
-//					JSONArray items = _habitacion.getJSONArray(_TAG_ITEMS);
-//	
-//					for (int k = 0; k <= items.length(); k++) {
-//						Log.e("COLIN_TAG", items.getString(k));
-//						System.out.println(items.getString(k));
-//					}
-//				}
+				_roomsHouses.put(_house.getString(_TAG_NAME), _roomsList);
+				Log.d("Table houses: ", _house.getString(_TAG_NAME) +" "+_roomsHouses.get(_house.getString(_TAG_NAME)));
 			}
 		} 
 		catch (JSONException e) 
@@ -178,23 +164,12 @@ public class JSON {
 		return _housesList;
 	}
 	
-//	public ArrayList<String> getRooms() throws JSONException 
-//	{
-//		JSONObject _obj = new JSONObject(this._file);
-//		ArrayList<String> _rooms = new ArrayList<String>();
-//
-//		try {
-//			JSONObject _habitaciones = _obj.getJSONObject(_TAG_ROOMS);
-//			for (int i = 1; i <= _habitaciones.length(); i++) {
-//				JSONObject _habitacion = _habitaciones.getJSONObject("R" + i);
-//				_rooms.add(_habitacion.getString(_TAG_NAME));
-//			}
-//		} catch (JSONException e) {
-//			e.printStackTrace();
-//		}
-//		return _rooms;
-//	}
-	
+	/**
+	 * 
+	 * @param house
+	 * @return
+	 * @throws JSONException
+	 */
 	public ArrayList<String> getRooms(String house) throws JSONException 
 	{
 		ArrayList<String> _roomsList = new ArrayList<String>();
@@ -205,11 +180,10 @@ public class JSON {
 			
 			Log.d("NUM ROOMS: ",Integer.toString(_rooms.length()));
 			
-			for (int i = 1; i <= _rooms.length(); i++) 
+			for (int i = 0; i < _rooms.length(); i++) 
 			{
 				JSONObject _room = _rooms.getJSONObject(i);
-				_roomsList.add(_room.getString("name"));
-				//_rooms.add(_habitacion.getString(_TAG_NAME));
+				_roomsList.add(_room.getString(_TAG_NAME));
 			}
 		} catch (JSONException e) {
 			e.printStackTrace();
@@ -245,26 +219,34 @@ public class JSON {
 //	}
 
 	@SuppressLint("DefaultLocale")
-	public ArrayList<String> getItems(String roomName) throws JSONException {
-
-		JSONObject _obj = new JSONObject(this._file);
-		ArrayList<String> _rooms = new ArrayList<String>();
-
-		try {
-			JSONObject _habitaciones = _obj.getJSONObject(_TAG_ROOMS);
-			for (int i = 1; i <= _habitaciones.length(); i++) {
-				JSONObject _habitacion = _habitaciones.getJSONObject("R" + i);
-				JSONArray _items = _habitacion.getJSONArray(_TAG_ITEMS);
-				Log.e("getItems", "items " + _items);
-				if (roomName.equals(_habitacion.getString(_TAG_NAME))) {
-					for (int j = 0; j < _items.length(); j++) {
-						_rooms.add(_items.getString(j).toUpperCase());
+	public ArrayList<String> getItems(String roomName, String house) throws JSONException 
+	{		
+		ArrayList<String> _itemList = new ArrayList<String>();
+		
+		try 
+		{
+			JSONArray _rooms = new JSONArray();
+			_rooms = _roomsHouses.get(house);
+			
+			for (int i = 0; i < _rooms.length(); i++) 
+			{
+				JSONObject _room = _rooms.getJSONObject(i);
+				
+				if(_room.get(_TAG_NAME).equals(roomName))
+				{
+					JSONArray _services = _room.getJSONArray(_TAG_SERIVICES);
+					for(int j=0; j< _services.length(); j++)
+					{
+						JSONObject _item = _services.getJSONObject(j);
+						_itemList.add(_item.getString(_TAG_NAME));
 					}
 				}
 			}
-		} catch (JSONException e) {
+		} 
+		catch (JSONException e) 
+		{
 			e.printStackTrace();
 		}
-		return _rooms;
+		return _itemList;
 	}
 }
