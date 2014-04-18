@@ -1,5 +1,7 @@
 package ehc.net;
 
+import java.util.Date;
+
 public class Event {
 	private String name;
 	private int item;
@@ -9,6 +11,17 @@ public class Event {
 	private String day;
 	private String hour;
 	private String minute;
+	private Date date;
+	
+	public Event(String name, int item, String creator, Date date, String hour, String minute) {
+		super();
+		this.name = name;
+		this.item = item;
+		this.creator = creator;
+		this.setDate(date);
+		this.hour = hour;
+		this.minute = minute;
+	}
 	
 	public Event(String name, int item, String creator, String year,
 			String month, String day, String hour, String minute) {
@@ -85,5 +98,13 @@ public class Event {
 
 	public void setMinute(String minute) {
 		this.minute = minute;
+	}
+	
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
 	}
 }

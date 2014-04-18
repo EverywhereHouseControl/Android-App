@@ -11,21 +11,10 @@
         android:orientation="vertical" >
     </LinearLayout>
 
-	<LinearLayout
-	    android:id="@+id/event_fragment"
+    <ListView
+        android:id="@+id/eventList"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"	
-        android:orientation="vertical"     
-	    ></LinearLayout>
-
-	        <TextView
-            android:id="@+id/textRsoom"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:text="TextView"
-            android:textColor="@color/Black"
-            android:textSize="30sp" />
+        android:layout_height="wrap_content" >
+    </ListView>
 
 </LinearLayout>

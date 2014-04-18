@@ -1,40 +1,36 @@
 package ehc.net;
 
-import hirondelle.date4j.DateTime;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Map.Entry;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.roomorama.caldroid.CaldroidFragment;
 import com.roomorama.caldroid.CaldroidListener;
-import com.roomorama.caldroid.CalendarHelper;
 
 import framework.EventFragment;
 import framework.JSON;
 
 @SuppressLint("SimpleDateFormat")
 public class CaldroidSampleActivity extends FragmentActivity {
-	private boolean undo = false;
 	private CaldroidFragment caldroidFragment;
 	private CaldroidFragment dialogCaldroidFragment;
-	private TextView tvEvent;
 	private ArrayList<Date> eventDays;
+	private HashMap<Date, ArrayList<Event>> eventsPerDate;
+	private EventAdapter adapter;
 
 	/**
 	 * Gets user events and then it will be stored in user's calendar
@@ -44,22 +40,39 @@ public class CaldroidSampleActivity extends FragmentActivity {
 	private void setCustomResourceForDates() throws ParseException {
 		Calendar cal = Calendar.getInstance();
 		eventDays = new ArrayList<Date>();
-		JSON events = JSON.getInstance(getApplicationContext());
-		HashMap<String, Event> event = events.getEvents();
-
+		eventsPerDate = new HashMap<Date, ArrayList<Event>>();
 		Date date = null;
+
+		JSON events = JSON.getInstance(getApplicationContext());
+		HashMap<String, Event> eventInfo = events.getEvents();
 
 		// Getting all the information about user. This information has been
 		// stored in loadJSONEvent (JSON Class)
-		for (Entry<String, Event> entry : event.entrySet()) {
-			int index = 0;
+		for (Entry<String, Event> entry : eventInfo.entrySet()) {
+			boolean dateWithEvents = false;
 			Event e = entry.getValue();
-			String name = e.getName();
-			int item = e.getItem();
-			String created = e.getCreator();
-			String dateFormat = e.getYear() + "-" + e.getMonth() + "-" + e.getDay();
-			date = CalendarHelper.getDateFromString(dateFormat, "yyyy-MM-dd");
-			eventDays.add(date);
+			date = entry.getValue().getDate();
+			for (Date d : eventDays) {
+				if (d.equals(date)) {
+					dateWithEvents = true;
+					for (Entry<Date, ArrayList<Event>> entry2 : eventsPerDate
+							.entrySet()) {
+						if (entry2.getKey().equals(date)) {
+							ArrayList<Event> eventlist = entry2.getValue();
+							eventlist.add(new Event(e.getName(), e.getItem(), e
+									.getCreator(), date, e.getHour(), e
+									.getMinute()));
+						}
+					}
+				}
+			}
+			if (!dateWithEvents) {
+				eventDays.add(date);
+				ArrayList<Event> eventList = new ArrayList<Event>();
+				eventList.add(new Event(e.getName(), e.getItem(), e
+						.getCreator(), date, e.getHour(), e.getMinute()));
+				eventsPerDate.put(date, eventList);
+			}
 		}
 
 		for (Date d : eventDays) {
@@ -107,10 +120,6 @@ public class CaldroidSampleActivity extends FragmentActivity {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		FragmentTransaction e = getSupportFragmentManager().beginTransaction();
-		final EventFragment ef = new EventFragment();
-		e.replace(R.id.event_fragment, ef);
-		e.commit();
 
 		// Attach to the activity
 		FragmentTransaction t = getSupportFragmentManager().beginTransaction();
@@ -122,7 +131,7 @@ public class CaldroidSampleActivity extends FragmentActivity {
 
 			@Override
 			public void onSelectDate(Date date, View view) {
-				ef.setText(date.toString());
+				updateEventList(getApplicationContext(), date);
 			}
 
 			@Override
@@ -173,8 +182,28 @@ public class CaldroidSampleActivity extends FragmentActivity {
 		}
 	}
 
-	private void eventLoader() {
+	private boolean hasEvent(Date date) {
+		for (Date d : eventDays)
+			if (d.equals(date))
+				return true;
+		return false;
+	}
 
+	private ArrayList<Event> getEvents(Date d) {
+		return eventsPerDate.get(d);
+	}
+
+	private void updateEventList(Context c, Date date) {
+		if (hasEvent(date)) {
+			adapter = new EventAdapter(this, getEvents(date));
+			ListView list = (ListView) findViewById(R.id.eventList);
+			list.setAdapter(adapter);
+		} else {
+			adapter = new EventAdapter(this, new ArrayList<Event>());
+			ListView list = (ListView) findViewById(R.id.eventList);
+			list.setAdapter(adapter);
+		}
+			
 	}
 
 }
