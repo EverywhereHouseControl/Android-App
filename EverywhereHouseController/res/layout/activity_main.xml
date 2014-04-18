@@ -11,6 +11,14 @@
         android:orientation="vertical" >
     </LinearLayout>
 
+    <TextView 
+        android:id="@+id/event_list_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/daily"
+        android:gravity="center"
+        />
+    
     <ListView
         android:id="@+id/eventList"
         android:layout_width="match_parent"

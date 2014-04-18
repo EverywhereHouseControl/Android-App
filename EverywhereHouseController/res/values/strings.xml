@@ -6,5 +6,6 @@
     <string name="profile">Perfil</string>
     <string name="change_user">Cambiar Usuario</string>
     <string name="exit">Salir</string>
+    <string name="daily">Daily Appointments</string>
 
 </resources>
