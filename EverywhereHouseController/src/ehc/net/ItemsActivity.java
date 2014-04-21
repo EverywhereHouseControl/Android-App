@@ -89,7 +89,7 @@ import framework.JSON;
 		 * Mapping objects from a list of items.		
 		 * @param ll
 		 * @param itemList
-		 */
+		 *//*
 		public void setItemViews( LinearLayout ll, ArrayList<String> itemList )
 		{
 			for ( int i=0; i < itemList.size(); i++ )
@@ -107,7 +107,7 @@ import framework.JSON;
 				}
 					
 			}
-		}
+		}*/
 	    
 	    @Override
 	    public void onCreate( Bundle savedInstanceState )
@@ -136,14 +136,7 @@ import framework.JSON;
 	    			List<String> lights = new ArrayList<String>();
 	    			lights.add("boolean");
 	    			_listDataChild.put(items.get(i),lights);
-    			} 
-	    		else if (items.get(i).equals("AIRCONDITIONING"))
-    			{
-	    			List<String> air = new ArrayList<String>();
-	    			air.add("float");
-	    			air.add("boolean");
-	    			_listDataChild.put(items.get(i),air);
-    			} 
+    			}
     			else if (items.get(i).equals("STEREO"))
     			{
 	    			List<String> stereo = new ArrayList<String>();
@@ -151,13 +144,20 @@ import framework.JSON;
 	    			stereo.add("boolean");
 	    			_listDataChild.put(items.get(i),stereo);
     			} 
-    			else if (items.get(i).equals("DVD") || items.get(i).equals("TV"))
+    			else if (items.get(i).equals("DVD") || items.get(i).equals("TV") || 
+    					items.get(i).equals("AIRCONDITIONING") || items.get(i).equals("HEATING"))
     			{
 	    			List<String> controller = new ArrayList<String>();
-	    			//controller.add("controller");
-	    			controller.add("integer");
+	    			controller.add("controller");
 	    			_listDataChild.put(items.get(i),controller);
-    			} 	    			
+    			}
+    			else if (items.get(i).equals("BLINDS"))
+    			{
+	    			List<String> blinds = new ArrayList<String>();
+	    			blinds.add("integer");
+	    			blinds.add("integer");
+	    			_listDataChild.put(items.get(i),blinds);
+    			} 
 	    	}
 	    	
 	    	return _listDataChild;
@@ -176,32 +176,37 @@ import framework.JSON;
 	    	_textRoom.setText(_button);
 	    	
 	    	_JSONFile = JSON.getInstance(getActivity().getApplicationContext());
-	    		
+	    	Log.d("_JSONFILE", "creado");
+	    	
 	    	_groupList = new ArrayList<String>();
 			_listDataChild = new HashMap<String, List<String>>();
+			Log.d("_JSONFILE", "creación estructuras");
 
 	    	try 
 	    	{
 	    		_groupList = _JSONFile.getItems(_button,_house);
-		        final ExpandableListAdapter _expListAdapter = new 
-		        		ExpandableListAdapter(_button,
-		        				rootView.getContext().getApplicationContext(), 
-		        				_groupList, createHashMapItems(_groupList));
-		        _expListAdapter.notifyDataSetChanged();
-		        _expListView.setAdapter(_expListAdapter);
-		        
-		        _expListView.setOnGroupCollapseListener(new OnGroupCollapseListener() 
+		        if(_groupList.size()!=0)
 		        {
-		            int previousItem = -1;
-					@Override
-					public void onGroupCollapse(int groupPosition) 
-					{
-						// TODO Auto-generated method stub
-						if(groupPosition != previousItem )
-							 _expListView.collapseGroup(previousItem );
-		                previousItem = groupPosition;
-					}
-		        });
+		    		final ExpandableListAdapter _expListAdapter = new 
+			        		ExpandableListAdapter(_button,
+			        				rootView.getContext().getApplicationContext(), 
+			        				_groupList, createHashMapItems(_groupList));
+			        _expListAdapter.notifyDataSetChanged();
+			        _expListView.setAdapter(_expListAdapter);
+			        
+			        _expListView.setOnGroupCollapseListener(new OnGroupCollapseListener() 
+			        {
+			            int previousItem = -1;
+						@Override
+						public void onGroupCollapse(int groupPosition) 
+						{
+							// TODO Auto-generated method stub
+							if(groupPosition != previousItem )
+								 _expListView.collapseGroup(previousItem );
+			                previousItem = groupPosition;
+						}
+			        });
+		        }
 		        
 	    	} 
 	    	catch (JSONException e) 

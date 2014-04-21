@@ -5,7 +5,7 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="11"
+        android:minSdkVersion="10"
         android:targetSdkVersion="19" />
 
     <!--
@@ -40,7 +40,8 @@
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
-        android:label="EHC" >
+        android:label="EHC" 
+        >
         <activity
             android:name="ehc.net.LogIn"
             android:configChanges="keyboard|keyboardHidden|orientation"
@@ -78,20 +79,9 @@
             android:name="ehc.net.ManagementMenu"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.MyTheme" >
-            <intent-filter>
-                <action android:name="ehc.net.ManagementMenu" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name="ehc.net.PlacesMenu"
-            android:configChanges="keyboard|keyboardHidden|orientation"
-            android:screenOrientation="portrait"
             android:theme="@style/Theme.Sherlock.NoActionBar" >
             <intent-filter>
-                <action android:name="ehc.net.PlacesMenu" />
+                <action android:name="ehc.net.ManagementMenu" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -111,7 +101,7 @@
             android:name="framework.ContainerFragments"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.MyTheme" >
+            android:theme="@style/Theme.Sherlock" >
             <intent-filter>
                 <action android:name="framework.ContainerFragments" />
 
@@ -155,7 +145,17 @@
                 <action android:name="android.intent.action.CaldroidSampleActivity" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>        
+        </activity>
+        <activity
+            android:name="ehc.net.HousesMenu"
+            android:theme="@style/Theme.Sherlock.NoActionBar"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="ehc.net.HousesMenu" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity> 
     </application>
 
 </manifest>

@@ -9,170 +9,128 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
+import android.widget.AdapterView.OnItemClickListener;
+
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.MenuItem;
 
 import framework.JSON;
+import framework.HouseListAdapter;
+import framework.ListAdapter;
+import framework.SlidingMenuAdapter;
 
-public class ManagementMenu extends SherlockActivity {//Activity{
+public class ManagementMenu extends SherlockActivity{//Activity{
 	//-----------Variables-----------
-	private TableLayout _table1;
-	private TableLayout _table2;
-	private ArrayList<Button> _buttonList = new ArrayList<Button>();
+	private ArrayList<String> _roomsList = new ArrayList<String>();
 	private JSON _JSONFile;
 	private ActionBar _ab;
 	//-------------------------------
-	
-	/**
-	 * Method called when the view has been loaded.
-	 */
-	@Override
-	public void onWindowFocusChanged(boolean hasFocus) 
-	{
-	    // TODO Auto-generated method stub
-	    if (hasFocus) 
-	    {
-	    	//It Links the 'genericButton' button for obtain his dimensions.
-	    	 Button _genericButton = (Button) findViewById(R.id.genericButton);
-	    	 log("Tamaño botón :" + Integer.toString(_genericButton.getHeight()) +" "+ Integer.toString(_genericButton.getWidth()));
-	    	 
-	    	 //It applies the previous dimension for the other buttons
-	    	 for(int i=0; i<_buttonList.size(); i++)
-	         {
-	    		 _buttonList.get(i).setHeight(_genericButton.getHeight());
-	    		 _buttonList.get(i).setWidth(_genericButton.getWidth());		 
-	         }
-	    	 //It is deleted the button 'genericButton'
-	    	 _table1.getChildAt(0).setVisibility(8);
-	    	 
-	    }
-	    super.onWindowFocusChanged(hasFocus);
-	}
-	
+
 	@Override
     protected void onCreate( Bundle savedInstanceState ) 
     {   
 		super.onCreate( savedInstanceState );
 		setContentView( R.layout.management_menu_view );
-        
-		//----------------ActionBar-----
-		_ab = getSupportActionBar();
-        _ab.setDisplayShowHomeEnabled(false);
-        _ab.setDisplayUseLogoEnabled(false);
-        _ab.setDisplayShowTitleEnabled(false);
-        //-------------------------------      
-        
-        _table1 = (TableLayout) findViewById(R.id.table1);
-                
-        _table2 = (TableLayout) findViewById(R.id.table2);
-
-         //-----------------It Reads config.json-----------------
+		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        /////////////////////////////////////////////////////////////////////////////////////////
+        ListView _drawer = (ListView) findViewById(R.id.ListViewSlidingMenu);		
+		final SlidingMenuAdapter _adapter = new 
+				SlidingMenuAdapter(this.getBaseContext(),getIntent().getExtras().getString("House"));
+		_drawer.setAdapter(_adapter);
+		_adapter.notifyDataSetChanged();
+		/////////////////////////////////////////////////////////////////////////////////////////
+        //-----------------It Reads config.json-----------------
 
         _JSONFile = JSON.getInstance(getApplicationContext());
-		
-        
-        ArrayList<String> _rooms;
 		try 
 		{
-			_rooms = _JSONFile.getRooms("");
-			log("Número de habitaciones: "+ _rooms);
-			for (int i=0; i < _rooms.size(); i++)
-			{
-				final String selectedRoom = _rooms.get(i);
-				final Button _button = new Button(getApplicationContext());
-				_button.setClickable(true);
-				
-				_button.setTextColor(R.drawable.button_text_color);
-				_button.setTextSize(25);
-				_button.setText(selectedRoom);
-				_button.setBackgroundResource(R.drawable.button_config);
-				
-				_button.setOnClickListener(new OnClickListener()
-				{
-					@Override
-					public void onClick(View v) 
-					{
-						String buttonName = (String) _button.getText();
-						log("Se ha pulsado: "+ buttonName);
-						createdManagementIntent(selectedRoom);
-					}
-			});
-			_buttonList.add(_button);
-			 }
+			String _house = getIntent().getExtras().getString("House");
+			log("_house");
+			_roomsList = _JSONFile.getRooms(_house);
+			log("Después _roomList");
+			 
 		} 
 		catch (JSONException e) 
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		//---------------------------------------------------------------------
 		
-		//The buttons are added to tables
-		for(int i=0; i<_buttonList.size(); i++)//i<_buttonList.size()/2; i++)
-        {
-			TableRow tr = new TableRow(this.getBaseContext());
-			if((i % 2) == 0)
+		if(_roomsList.size()!=0)
+		{
+		
+			ListView _ListView = (ListView) findViewById(R.id.roomsListView);
+			
+			final ListAdapter _ListAdapter = new 
+					ListAdapter(this.getBaseContext(),_roomsList,R.layout.group_item);
+			_ListAdapter.notifyDataSetChanged();
+			_ListView.setAdapter(_ListAdapter);
+			
+			_ListView.setOnItemClickListener(new OnItemClickListener() 
 			{
-				_table1.addView(tr);
-				_table1.addView(_buttonList.get(i));
-			}
-			else
-			{
-				_table2.addView(tr);
-	        	_table2.addView(_buttonList.get(i));
-			}        	
-        }   
+				@Override
+				public void onItemClick(AdapterView<?> parent, View view,
+						int position, long id) 
+				{
+					// TODO Auto-generated method stub
+					createdManagementIntent(_roomsList.get(position));
+				}
+			});
+		}
     }
 	
 	//////////////////////////////////////////////////////////////////////////////
-	@Override
-    public boolean onCreateOptionsMenu(com.actionbarsherlock.view.Menu menu) 
-	{
-        getSupportMenuInflater().inflate(R.menu.action_bar, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
- 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) 
-    {
-        super.onOptionsItemSelected(item);
- 
-        switch(item.getItemId())
-        {
-            case R.id.Profile:
-			try 
-			{
-				Class<?> _clazz;
-				_clazz = Class.forName( "ehc.net.Profile");
-				Intent _intent = new Intent( this,_clazz );
-    			startActivity( _intent );
-			} 
-			catch (ClassNotFoundException e) 
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-                break;
-            case R.id.ChangeProfile:
-            	Intent exitIntent = new Intent(this,LogIn.class);
-            	exitIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP|Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            	startActivity(exitIntent);  	
-                break;
-            case R.id.Exit:
-            	Intent intent = new Intent(Intent.ACTION_MAIN);
-            	intent.addCategory(Intent.CATEGORY_HOME);
-            	intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            	startActivity(intent);  	
-                break;
-        }
-        return true;
-    }
+//	@Override
+//    public boolean onCreateOptionsMenu(com.actionbarsherlock.view.Menu menu) 
+//	{
+//        getSupportMenuInflater().inflate(R.menu.action_bar, menu);
+//        return super.onCreateOptionsMenu(menu);
+//    }
+// 
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) 
+//    {
+//        super.onOptionsItemSelected(item);
+// 
+//        switch(item.getItemId())
+//        {
+//            case R.id.Profile:
+//			try 
+//			{
+//				Class<?> _clazz;
+//				_clazz = Class.forName( "ehc.net.Profile");
+//				Intent _intent = new Intent( this,_clazz );
+//    			startActivity( _intent );
+//			} 
+//			catch (ClassNotFoundException e) 
+//			{
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//                break;
+//            case R.id.ChangeProfile:
+//            	Intent exitIntent = new Intent(this,LogIn.class);
+//            	exitIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP|Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//            	startActivity(exitIntent);  	
+//                break;
+//            case R.id.Exit:
+//            	Intent intent = new Intent(Intent.ACTION_MAIN);
+//            	intent.addCategory(Intent.CATEGORY_HOME);
+//            	intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//            	startActivity(intent);  	
+//                break;
+//        }
+//        return true;
+//    }
     //////////////////////////////////////////////////////////////////////////////
 	/**
 	 * Method which executes the next activity
@@ -185,18 +143,21 @@ public class ManagementMenu extends SherlockActivity {//Activity{
 			Class<?> _class = Class.forName("framework.ContainerFragments");
 			Intent _intent = new Intent( getApplicationContext(),_class );
 			
+			//Current house
+			_intent.putExtra("House", getIntent().getExtras().getString("House"));
+			
 			//Room name being clicked
 			_intent.putExtra("Room",room);
 			//Room's number
-			_intent.putExtra("NumRooms", _buttonList.size());
+			_intent.putExtra("NumRooms", _roomsList.size());
 				
-			for(int i=0; i<_buttonList.size(); i++)
+			for(int i=0; i<_roomsList.size(); i++)
 			{		
 				// Key: position, Value button Name.
-				_intent.putExtra(Integer.toString(i) , _buttonList.get(i).getText().toString());	
+				_intent.putExtra(Integer.toString(i) , _roomsList.get(i));	
 				// Key: button name, Value: position.
 				//Necessary to move the 'viewPager' to the desired view.
-				_intent.putExtra(_buttonList.get(i).getText().toString(),Integer.toString(i));	
+				_intent.putExtra(_roomsList.get(i),Integer.toString(i));	
 			}	
 			startActivity( _intent );
 		} 

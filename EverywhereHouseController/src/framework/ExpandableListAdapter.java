@@ -126,7 +126,6 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter
 				}
 			});
 		}	
-		
 		else if (itemType == R.layout.boolean_item) 
 		{
 			final ToggleButton _toggleButton = (ToggleButton) convertView.findViewById(R.id.boolean_value);
@@ -139,7 +138,6 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter
 					if (isChecked) 
 					{
 						_action = "ENVIAR";	_data = "1";
-
 					} 
 					else 
 					{
@@ -148,12 +146,12 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter
 					new SimpleActivityTask(_context).sendAction(_currentRoom,_servicename,_action,_data);
 				}
 			});
-		}else if (itemType == R.layout.integer_item)
+		}
+		else if (itemType == R.layout.controller_item)
 		{
-			Button _remote_control = (Button) convertView.findViewById(R.id.integer_value);
+			Button _remote_control = (Button) convertView.findViewById(R.id.launch_value);
 			_remote_control.setOnClickListener(new View.OnClickListener() 
 			{
-				
 				@Override
 				public void onClick(View v) 
 				{
@@ -163,6 +161,23 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter
 					intent.putExtra("Room",_currentRoom);
 					intent.putExtra("Service",(String) getGroup(groupPosition));
 					_context.startActivity(intent);
+				}
+			});
+		}
+		else if (itemType == R.layout.integer_item)
+		{
+			Button _remote_control = (Button) convertView.findViewById(R.id.integer_value);
+			_remote_control.setOnClickListener(new View.OnClickListener() 
+			{
+				@Override
+				public void onClick(View v) 
+				{
+					// TODO Auto-generated method stub
+//					Intent intent = new Intent(_context, RemoteController.class);
+//					intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//					intent.putExtra("Room",_currentRoom);
+//					intent.putExtra("Service",(String) getGroup(groupPosition));
+//					_context.startActivity(intent);
 				}
 			});
 		}
@@ -182,6 +197,10 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter
 		else if (itemType.equals("integer"))
 		{
 			return R.layout.integer_item;
+		}
+		else if (itemType.equals("controller"))
+		{
+			return R.layout.controller_item;
 		}
 		else
 			return R.layout.boolean_item;
@@ -216,19 +235,49 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter
 			LayoutInflater _infalInflater = (LayoutInflater) _context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			convertView = _infalInflater.inflate(R.layout.group_item, null);
 		}
-		TextView item = (TextView) convertView.findViewById(R.id.groupname);
+		TextView item = (TextView) convertView.findViewById(R.id.RoomGroupName);
 		item.setTypeface(null, Typeface.BOLD);
 		item.setText(_laptopName);
 		///////////////////////////////////////
 		if(_laptopName.equals("LIGHTS"))
 		{
-			ImageView _image = (ImageView) convertView.findViewById(R.id.imageItemList);
+			ImageView _image = (ImageView) convertView.findViewById(R.id.HouseImageList);
 			_image.setBackgroundResource(R.drawable.lamp);
 		}
 		else if(_laptopName.equals("TV"))
 		{
-			ImageView _image = (ImageView) convertView.findViewById(R.id.imageItemList);
+			ImageView _image = (ImageView) convertView.findViewById(R.id.HouseImageList);
 			_image.setBackgroundResource(R.drawable.tv);
+		}
+		else if(_laptopName.equals("DVD"))
+		{
+			ImageView _image = (ImageView) convertView.findViewById(R.id.HouseImageList);
+			_image.setBackgroundResource(R.drawable.dvd);
+		}
+		else if(_laptopName.equals("STEREO"))
+		{
+			ImageView _image = (ImageView) convertView.findViewById(R.id.HouseImageList);
+			_image.setBackgroundResource(R.drawable.stereo);
+		}
+		else if(_laptopName.equals("AIRCONDITIONING"))
+		{
+			ImageView _image = (ImageView) convertView.findViewById(R.id.HouseImageList);
+			_image.setBackgroundResource(R.drawable.air_conditioning);
+		}
+		else if(_laptopName.equals("DOOR"))
+		{
+			ImageView _image = (ImageView) convertView.findViewById(R.id.HouseImageList);
+			_image.setBackgroundResource(R.drawable.door);
+		}
+		else if(_laptopName.equals("HEATING"))
+		{
+			ImageView _image = (ImageView) convertView.findViewById(R.id.HouseImageList);
+			_image.setBackgroundResource(R.drawable.heating);
+		}
+		else if(_laptopName.equals("BLINDS"))
+		{
+			ImageView _image = (ImageView) convertView.findViewById(R.id.HouseImageList);
+			_image.setBackgroundResource(R.drawable.blinds);
 		}
 		/////////////////////////////////////////
 		

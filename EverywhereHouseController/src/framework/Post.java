@@ -1,6 +1,7 @@
 package framework;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URI;
@@ -13,10 +14,16 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.content.ContentBody;
+import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 
 import android.util.Log;
 
@@ -176,4 +183,70 @@ public class Post
 	    return "";
 	}
 	
+	public JSONObject connectionPostUpload(ArrayList<String> parametros, String URL, String imagePath)
+	{	
+//		ArrayList<BasicNameValuePair> _nameValuePairs;
+		
+		try
+		{
+			HttpClient _httpclient = new DefaultHttpClient();
+			HttpPost _httppost = new HttpPost(URL);	
+			//------------------------
+			_httppost.setURI( new URI(URL) );
+			//-------------------------
+//			_nameValuePairs = new ArrayList<BasicNameValuePair>();	
+
+			File file = new File(imagePath);
+			
+			MultipartEntity mpEntity = new MultipartEntity();
+			ContentBody cbFile = new FileBody(file, "image/jpeg");
+			mpEntity.addPart(parametros.get(0), new StringBody(parametros.get(1)));
+			mpEntity.addPart("imagen", cbFile);
+			
+//			if (parametros != null)
+//			{	
+//				for (int i = 0; i < parametros.size() - 1; i += 2)
+//				{	
+//					_nameValuePairs.add(new BasicNameValuePair( parametros.get(i), parametros.get(i + 1)));	
+//				}	
+//				_httppost.setEntity(new UrlEncodedFormEntity(_nameValuePairs));	
+//			}
+
+			_httppost.setEntity(mpEntity);  
+			HttpResponse _response = _httpclient.execute(_httppost);
+			HttpEntity _entity = _response.getEntity();
+			_is = _entity.getContent();
+			
+//			_httpclient.getConnectionManager().shutdown();
+		}
+		catch (Exception e)
+		{	
+			Log.e("log_tag", "Error in http connection " + e.toString());	
+		}
+		
+		if (_is != null) 
+		{				                                                
+			getResponsePost();
+		}
+		if (_response != null /*&& response.trim() != ""*/) 
+		{		
+//			return getJsonArray();
+			JSONObject _json = null;
+			try 
+			{
+				_json = new JSONObject( _response );
+			} 
+			catch (JSONException e) 
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return _json;
+		} 
+		else 
+		{				                                                                                               
+			return null;				                                                                        
+		}		
+	}
+
 }

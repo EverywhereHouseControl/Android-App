@@ -6,7 +6,7 @@
     android:orientation="vertical" >
 
     <TextView
-        android:id="@+id/groupname"
+        android:id="@+id/RoomGroupName"
         android:layout_width="fill_parent"
         android:layout_height="60dp"
         android:background="@drawable/button_config"
@@ -17,10 +17,10 @@
         android:typeface="monospace" />
 
     <ImageView
-        android:id="@+id/imageItemList"
+        android:id="@+id/HouseImageList"
         android:layout_width="40dp"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/groupname"
+        android:layout_alignBottom="@+id/RoomGroupName"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginBottom="10dp"

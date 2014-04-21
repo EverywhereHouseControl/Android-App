@@ -144,11 +144,11 @@ public class LogIn extends Activity
 				_parametros.add("login2");
 				//_parametros.add("login");
 				_parametros.add("username");
-				_parametros.add(_user.getText().toString());
-//				_parametros.add("bertoldo");
+//				_parametros.add(_user.getText().toString());
+				_parametros.add("bertoldo");
 				_parametros.add("password");
-				_parametros.add(_post.md5(_password.getText().toString()));
-//				_parametros.add(_post.md5("bertoldo"));
+//				_parametros.add(_post.md5(_password.getText().toString()));
+				_parametros.add(_post.md5("bertoldo"));
 			 			
 				//Variable 'Data' saves the query response
 				JSONObject _data = _post.getServerData(_parametros,"http://5.231.69.226/EHControlConnect/index.php");//"http://192.168.2.147/EHControlConnect/index.php");
@@ -265,10 +265,10 @@ public class LogIn extends Activity
     {
     	try 
     	{
-			Class<?> _clazz = Class.forName( "ehc.net.MainMenu" );
+//			Class<?> _clazz = Class.forName( "ehc.net.MainMenu" );
+			Class<?> _clazz = Class.forName( "ehc.net.HousesMenu" );
 			Intent _intent = new Intent( this,_clazz );
 			startActivity( _intent );
-			onDestroy();
 		} 
 		catch ( ClassNotFoundException e ) 
 		{
@@ -288,12 +288,22 @@ public class LogIn extends Activity
 			Class<?> _clazz = Class.forName( "ehc.net.CreateUser" );
 			Intent _intent = new Intent( this,_clazz );
 			startActivity( _intent );
-			onDestroy();
 		} 
 		catch ( ClassNotFoundException e ) 
 		{
 			e.printStackTrace();
 		}
+    }
+    
+    @Override
+    public void onBackPressed() 
+    {
+    	// TODO Auto-generated method stub
+    	super.onStop();
+    	Intent _intent = new Intent(Intent.ACTION_MAIN);
+    	_intent.addCategory(Intent.CATEGORY_HOME);
+    	_intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    	startActivity(_intent); 
     }
     
     /**

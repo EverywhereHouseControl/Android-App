@@ -15,22 +15,24 @@ import android.widget.TextView;
 public class ListAdapter extends BaseAdapter
 {
 
-	private String _houseName;
 	private Context _context;
-	private ArrayList<String> _roomsList;
+	private ArrayList<String> _list;
+	private int _itemView;
 	
-	public ListAdapter(String houseName, Context context, ArrayList<String> rooms)
+	
+	public ListAdapter(Context context, ArrayList<String> list, int contentView)
 	{
-		this._houseName = houseName;
-		this._context = context;
-		this._roomsList = rooms;
+		_context = context;
+		_list = new ArrayList<String>();
+		_list = list;
+		_itemView = contentView;
 	}
 	
 	@Override
 	public int getCount() 
 	{
 		// TODO Auto-generated method stub
-		return _roomsList.size();
+		return _list.size();
 	}
 
 	@Override
@@ -51,17 +53,18 @@ public class ListAdapter extends BaseAdapter
 	public View getView(int position, View convertView, ViewGroup parent) 
 	{
 		// TODO Auto-generated method stub
-		
-		if (convertView == null) 
+		View _view = convertView;
+		if(_view == null)
 		{
-			LayoutInflater _infalInflater = (LayoutInflater) _context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			convertView = _infalInflater.inflate(R.layout.group_item, null);
+			LayoutInflater _inflater = (LayoutInflater) _context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			_view = _inflater.inflate(_itemView,null);	
 		}
-		TextView item = (TextView) convertView.findViewById(R.id.groupname);
-		item.setTypeface(null, Typeface.BOLD);
-		item.setText(_roomsList.get(position));
 		
-		return convertView;
+		TextView _textView = (TextView) _view.findViewById(R.id.RoomGroupName);
+		_textView.setTypeface(null, Typeface.BOLD);
+		_textView.setText(_list.get(position));
+		
+		return _view;
 	}
 
 }

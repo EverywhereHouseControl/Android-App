@@ -1,10 +1,13 @@
 package ehc.net;
 
-import android.app.Activity;
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.SherlockActivity;
+
+import framework.SlidingMenuAdapter;
+
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.CalendarContract;
-import android.provider.CalendarContract.Events;
+import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -12,14 +15,17 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 
-public class MainMenu extends Activity {
+public class MainMenu extends SherlockActivity 
+{
 	// ---------Variables----------------
 	private Button _buttonProfile;
 	private Button _buttonManagement;
 	private Button _buttonEvent;
 	// private Button _buttonConfig;
 	private ImageView _logo;
+	private ActionBar _ab;
 
 	// -------------------------------
 
@@ -29,6 +35,14 @@ public class MainMenu extends Activity {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.main_menu_view );
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        
+        /////////////////////////////////////////////////////////////////////////////////////////
+        ListView _drawer = (ListView) findViewById(R.id.ListViewSlidingMenu);		
+		final SlidingMenuAdapter _adapter = new 
+				SlidingMenuAdapter(this.getBaseContext(),getIntent().getExtras().getString("House"));
+		_drawer.setAdapter(_adapter);
+		_adapter.notifyDataSetChanged();
+		/////////////////////////////////////////////////////////////////////////////////////////
         /**
          * ------------------------------------
          * Liked:  variable <- XML component 
@@ -75,14 +89,16 @@ public class MainMenu extends Activity {
 			}
 		});
                  
-    }	/**
+    }	
+	/**
 	 * Method that executes Management's activity
 	 */
 
 	private void createdManagementIntent() {
 		try {
-			Class<?> _clazz = Class.forName("ehc.net.ManagementMenuExample");
+			Class<?> _clazz = Class.forName("ehc.net.ManagementMenu");
 			Intent _intent = new Intent(this, _clazz);
+			_intent.putExtra("House",getIntent().getExtras().getString("House"));
 			startActivity(_intent);
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();

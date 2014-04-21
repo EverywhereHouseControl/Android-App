@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+	
+  <item
+	android:id="@+id/TakePicture"
+	android:icon="@drawable/ic_action_camera"
+	android:title="Take picture"
+	android:showAsAction="never|withText">
+  </item>
+  
+  <item
+	android:id="@+id/Picture"
+	android:icon="@drawable/ic_action_picture"
+	android:title="Mobile Gallery"
+	android:showAsAction="never|withText">
+  </item>
+
+  <item
+	android:id="@+id/NewPicture"
+	android:icon="@drawable/ic_action_picture"
+	android:title="Gallery"
+	android:showAsAction="never|withText">
+  </item>
+
+</menu>

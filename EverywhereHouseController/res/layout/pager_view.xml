@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/mainPlacesMenu"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
+<android.support.v4.widget.DrawerLayout
+	 xmlns:android="http://schemas.android.com/apk/res/android"
+	 android:id="@+id/drawer_layout"
+	 android:layout_width="match_parent"
+	 android:layout_height="match_parent" >
+	 
+	<LinearLayout
+	    android:id="@+id/mainPlacesMenu"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:orientation="vertical" >
 
     <HorizontalScrollView
         android:id="@+id/horizontalScrollView1"
@@ -18,7 +24,6 @@
             android:layout_height="wrap_content"
             android:background="@color/White"
             android:orientation="horizontal" >
-
         </LinearLayout>
     </HorizontalScrollView>
 
@@ -26,7 +31,15 @@
         android:id="@+id/pager"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" >
-
     </android.support.v4.view.ViewPager>
 
-</LinearLayout>
+	</LinearLayout>
+
+	<ListView
+	    android:id="@+id/ListViewSlidingMenu"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:layout_gravity="left"
+	    android:background="@color/White" />
+ 
+</android.support.v4.widget.DrawerLayout>
