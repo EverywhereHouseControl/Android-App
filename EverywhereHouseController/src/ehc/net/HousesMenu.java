@@ -19,7 +19,11 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.AsyncTask.Status;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -49,6 +53,9 @@ public class HousesMenu extends Activity implements ImageChooserListener
 	private static Activity _activity;
 	private Post _post;
 	private ChosenImage _choosenImage = null;
+	JSONObject _data = new JSONObject();
+	boolean _finished = false;
+	boolean _wait = true;
 
     private static final int REQUEST_CODE = 6384; // onActivityResult request
                                                   // code
@@ -104,26 +111,6 @@ public class HousesMenu extends Activity implements ImageChooserListener
 		_activity = this;
 		_currentImage = new ImageView(_activity);
 		_textViewFile = new TextView(_activity);
-        
-		/*
-		new Thread( new Runnable() 
-		{
-			@Override
-			public void run() 
-			{
-				// TODO Auto-generated method stub
-				while(true)
-				{
-					if(_choosenImage!=null)
-					{
-						_post = new Post();						
-						uploadImageConnection _connection = new uploadImageConnection(_textViewFile.getText().toString());
-				    	_connection.execute();
-				    	_choosenImage=null;
-					}
-				}
-			}
-		}).start();*/
     }
 	
 	/**
@@ -274,6 +261,23 @@ public class HousesMenu extends Activity implements ImageChooserListener
 //					_ListAdapter.notifyDataSetChanged();
 					_ListAdapter.setCheckOFF();
 					_choosenImage = image;
+					
+					_post = new Post();						
+					uploadImageConnection _connection = new uploadImageConnection(_textViewFile.getText().toString());
+			    	_connection.execute();
+			    	Log.d("THREAD","1");
+			    	
+					try 
+					{
+						finalize();
+					} 
+					catch (Throwable e) 
+					{
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+					showMessage(_data);
 				}
 			}
 		});
@@ -297,7 +301,6 @@ public class HousesMenu extends Activity implements ImageChooserListener
 			}
 			imageChooserManager.submit(requestCode, data);
 		} 
-		Log.d("IMAGEN","LISTA");
 	}
 	
 	// Should be called if for some reason the ImageChooserManager is null (Due
@@ -318,10 +321,10 @@ public class HousesMenu extends Activity implements ImageChooserListener
     	private String _message = "";
     	private String _imagePath;
     	
+    	
     	public uploadImageConnection(String path)
     	{
     		_imagePath = path;
-    		Log.d("IMAGE PATH",_imagePath);
     	}
     	
     	/**
@@ -345,25 +348,26 @@ public class HousesMenu extends Activity implements ImageChooserListener
 			ArrayList<String> _parametros = new ArrayList<String>();
 			_parametros.add("command");
 			_parametros.add("subir");
-			JSONObject _data = _post.connectionPostUpload(_parametros, "http://5.231.69.226/EHControlConnect/index.php", _imagePath);
-			try 
+			_data = _post.connectionPostUpload(_parametros, "http://5.231.69.226/EHControlConnect/index.php", _imagePath);			
+			
+			runOnUiThread(new Runnable() 
 			{
-				JSONObject _json_data = _data.getJSONObject("error");
-				_message = _json_data.getString("ENGLISH");			
-			} 
-			catch (JSONException e) 
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();				
-			}
+				
+				@Override
+				public void run() 
+				{
+					// TODO Auto-generated method stub
+					showMessage(_data);
+				}
+			});
 			return null;
 		}
 		
 		protected void onPostExecute(String file_url) 
 		{
             // dismiss the dialog after getting all products
+			super.onPostExecute(file_url);
             _pDialog.dismiss();
-            Toast.makeText(_activity, _message, Toast.LENGTH_SHORT).show();
 		}
     	
     }
@@ -375,6 +379,25 @@ public class HousesMenu extends Activity implements ImageChooserListener
 	 */
 	private void log(String _text) {
 		Log.d("Action :", _text);
+	}
+
+	public static void showMessage(JSONObject _data) 
+	{
+		// TODO Auto-generated method stub
+		JSONObject _json_data;
+		String _message = "";
+		try 
+		{
+			_json_data = _data.getJSONObject("error");
+			_message = _json_data.getString("ENGLISH");
+		} catch (Exception e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			_message = "internal error.";
+		}
+		
+		Toast.makeText(_activity, _message, Toast.LENGTH_SHORT).show();
 	}
 
 	protected void onResume() 
