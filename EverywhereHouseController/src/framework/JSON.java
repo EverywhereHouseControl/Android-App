@@ -386,4 +386,33 @@ public HashMap<String, Event> getEvents()
 		}
 		return _itemList;
 	}
+	
+	/*
+	 * Returns service's name + room's name
+	 */
+	// At the moment, testing with bertoldo+mansion
+	public SpinnerEventContainer getItemsWithLocation() throws JSONException {
+		SpinnerEventContainer info = new SpinnerEventContainer();
+		String house = "casaBertoldo";
+		try {
+			JSONArray _rooms = new JSONArray();
+			_rooms = _roomsHouses.get(house);
+
+			for (int i = 0; i < _rooms.length(); i++) {
+				JSONObject _room = _rooms.getJSONObject(i);
+				String room = _room.getString(_TAG_NAME);
+
+				JSONArray _services = _room.getJSONArray(_TAG_SERIVICES);
+				Log.d("SERVICES", _services.toString());
+				for (int j = 0; j < _services.length(); j++) {
+					String service = _services.getJSONObject(j).getString(
+							_TAG_NAME);
+					info.add(room, service, house);
+				}
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return info;
+	}
 }
