@@ -79,7 +79,32 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter
 //			_context.startActivity(intent);
 //			convertView = _inflater.inflate(R.layout.empty_item, parent, false);
 //			return convertView;
-		} 
+		}
+		else if(_itemName.equals("integer") )
+		{
+			
+			String _laptopName = (String) getGroup(groupPosition);
+			
+			if(_laptopName.equals("BLINDS"))
+			{
+				int _childsNum = getChildrenCount(groupPosition);
+				int _itemType = getChildXML(_itemName);
+				convertView = _inflater.inflate(_itemType, parent, false);
+				if(childPosition<_childsNum-1)
+				{
+					Button _b = (Button)convertView.findViewById(R.id.integer_value);
+					_b.setText("Up");
+				}
+				else
+				{
+					Button _b = (Button)convertView.findViewById(R.id.integer_value);
+					_b.setText("Down");
+				}
+				setListeners(convertView, _itemType, groupPosition);//setListeners(convertView, _itemType);
+				_servicename = (String) getGroup(groupPosition);
+				_servicename = _servicename.toUpperCase();
+			}			
+		}
 		else 
 		{
 			int _itemType = getChildXML(_itemName);
@@ -98,7 +123,6 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter
 		
 		if (itemType == R.layout.float_item) 
 		{
-
 			SeekBar _sb = (SeekBar) convertView.findViewById(R.id.float_value);
 			_sb.setOnSeekBarChangeListener(new OnSeekBarChangeListener() 
 			{

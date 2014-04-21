@@ -9,6 +9,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import framework.Post;
+import framework.SlidingMenuAdapter;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -20,6 +21,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 
 public class Profile extends Activity
@@ -44,6 +46,13 @@ public class Profile extends Activity
 		setContentView(R.layout.profile_view);
 		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		_currentHouse = getIntent().getExtras().getString("House");
+		/////////////////////////////////////////////////////////////////////////////////////////
+		ListView _drawer = (ListView) findViewById(R.id.ListViewSlidingMenu);		
+		final SlidingMenuAdapter _adapter = new 
+		SlidingMenuAdapter(this.getBaseContext(),_currentHouse);
+		_drawer.setAdapter(_adapter);
+		_adapter.notifyDataSetChanged();
+		/////////////////////////////////////////////////////////////////////////////////////////
 		/**
          * ------------------------------------
          * Liked:  variable <- XML component 
