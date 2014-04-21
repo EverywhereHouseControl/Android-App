@@ -78,12 +78,14 @@ public class HousesMenu extends Activity implements ImageChooserListener
         //-----------------It Reads config.json-----------------
         _JSONFile = JSON.getInstance(getApplicationContext());
         _housesList = new ArrayList<String>();
+        ArrayList<String> _accessHousesList = new ArrayList<String>();
         
         ArrayList<String> _urls = _JSONFile.getUrlsImage();
-                    
+        				
         try 
         {
-			_housesList = _JSONFile.getHousesName();			
+			_housesList = _JSONFile.getHousesName();
+			_accessHousesList = _JSONFile.getHousesAccess();
 		} 
         catch (JSONException e) 
 		{
@@ -91,7 +93,7 @@ public class HousesMenu extends Activity implements ImageChooserListener
 			e.printStackTrace();
 		}
         
-        _ListAdapter = new HouseListAdapter("",getApplicationContext(),_housesList,_urls,R.layout.house_item);
+        _ListAdapter = new HouseListAdapter(getApplicationContext(),_housesList,_urls,_accessHousesList,R.layout.house_item);
 		_ListView.setAdapter(_ListAdapter);
 		_ListAdapter.notifyDataSetChanged ();
 			

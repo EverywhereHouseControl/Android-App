@@ -19,9 +19,10 @@ import android.util.Log;
 
 public class JSON {
 private static JSON _instance;
-public ArrayList<String> _houses;
-public ArrayList<String> _rooms;
-public ArrayList<String> _items;
+public ArrayList<String> _houses = new ArrayList<String>();
+public ArrayList<String> _rooms = new ArrayList<String>();
+public ArrayList<String> _items = new ArrayList<String>();
+public ArrayList<String> _access = new ArrayList<String>();
 public HashMap<String, String> _urls = new HashMap<String, String>();
 public HashMap<String, Event> _events;
 public HashMap<String, JSONArray> _roomsHouses = new HashMap<String, JSONArray>();
@@ -165,6 +166,7 @@ public HashMap<String, Event> getEvents()
 			{				
 				JSONObject _house = _houses.getJSONObject(i);
 				this._houses.add(_house.getString("name"));
+				_access.add(_house.getString("access"));
 				try
 				{
 					String _url = _house.getString("image");
@@ -243,6 +245,15 @@ public HashMap<String, Event> getEvents()
 	public String getUrlImage(String house)
 	{
 		return _urls.get(house);
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public ArrayList<String> getHousesAccess()
+	{
+		return _access;
 	}
 	
 	/**

@@ -7,7 +7,10 @@ import com.kbeanie.imagechooser.api.ChosenImage;
 import ehc.net.HousesMenu;
 import ehc.net.R;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +18,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.Toast;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
 
@@ -33,11 +37,11 @@ public class HouseListAdapter extends BaseAdapter
 	private ImageView _image;
 	private String _path;
 	private ArrayList<String> _urls = new ArrayList<String>();
+	private ArrayList<String> _access = new ArrayList<String>();
 	private ImageLoader _imgLoader;
 	
-	public HouseListAdapter(String houseName, Context context, ArrayList<String> ObjectList,ArrayList<String> urls, int convertView)
+	public HouseListAdapter(Context context, ArrayList<String> ObjectList,ArrayList<String> urls,ArrayList<String> access, int convertView)
 	{
-		_name = houseName;
 		_context = context;
 		_objectList = ObjectList;
 		_check = false;
@@ -47,6 +51,7 @@ public class HouseListAdapter extends BaseAdapter
 		_convertView = convertView;
 		_urls = urls;
 		_imgLoader = new ImageLoader(_context);
+		_access = access;
 	}
 	
 	@Override
@@ -70,7 +75,7 @@ public class HouseListAdapter extends BaseAdapter
 	}
 
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent) 
+	public View getView(final int position, View convertView, ViewGroup parent) 
 	{
 		// TODO Auto-generated method stub
 		_parent = parent;
@@ -88,8 +93,13 @@ public class HouseListAdapter extends BaseAdapter
 			@Override
 			public void onClick(View v) 
 			{
-				// TODO Auto-generated method stub
-				HousesMenu.createdMainMenuIntent(_button.getText().toString());
+				 //TODO Auto-generated method stub
+				if(_access.get(position).equals("3"))
+				{
+					Toast.makeText(_context, "Required access", Toast.LENGTH_SHORT).show();
+				}
+				else 
+					HousesMenu.createdMainMenuIntent(_button.getText().toString());
 			}
 		});
 		

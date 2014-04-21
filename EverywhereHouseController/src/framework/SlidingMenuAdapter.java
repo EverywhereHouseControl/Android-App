@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class SlidingMenuAdapter extends BaseAdapter
 {
@@ -28,6 +29,7 @@ public class SlidingMenuAdapter extends BaseAdapter
 	private JSON _JSONFile;
 	private ArrayList<String> _houses = new ArrayList<String>();
 	private ArrayList<String> _urls = new ArrayList<String>();
+	private ArrayList<String> _access = new ArrayList<String>();
 	private ArrayList<String> _optionList = new ArrayList<String>();
 	private ImageLoader _imgLoader;
 	private int _count = 5;
@@ -47,7 +49,8 @@ public class SlidingMenuAdapter extends BaseAdapter
 		try 
 		{
 			_houses = _JSONFile.getHousesName();
-			_urls = _JSONFile.getUrlsImage();			 
+			_urls = _JSONFile.getUrlsImage();	
+			_access = _JSONFile.getHousesAccess();
 		} 
 		catch (JSONException e) 
 		{
@@ -79,7 +82,7 @@ public class SlidingMenuAdapter extends BaseAdapter
 	}
 
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent) 
+	public View getView(final int position, View convertView, ViewGroup parent) 
 	{
 		// TODO Auto-generated method stub
 		View _view = convertView;
@@ -103,7 +106,13 @@ public class SlidingMenuAdapter extends BaseAdapter
 				public void onClick(View v) 
 				{
 					// TODO Auto-generated method stub
-					HousesMenu.createdMainMenuIntent(_button.getText().toString());
+					if(_access.get(position-1).equals("3"))
+					{
+						Toast.makeText(_context, "Required access", Toast.LENGTH_SHORT).show();
+					}
+					else 
+						HousesMenu.createdMainMenuIntent(_button.getText().toString());
+					
 				}
 			});
 			
