@@ -21,7 +21,7 @@ import android.widget.ListView;
 public class ContainerFragments extends SherlockFragmentActivity//FragmentActivity
 {
 	//----------Variables------------
-	private AdapterView _mAdapter;
+//	private AdapterView _mAdapter;
 	private ViewPager _mPager;
 	private ActionBar _ab;
 	private HashMap<String,String> _tableButtons;
@@ -37,7 +37,7 @@ public class ContainerFragments extends SherlockFragmentActivity//FragmentActivi
 	        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 	        
 	        //----------------ActionBar-----
-	        ActionBar _ab = getSupportActionBar();
+	        _ab = getSupportActionBar();
 			_ab.setDisplayShowHomeEnabled(false);
 	        _ab.setDisplayUseLogoEnabled(false);
 	        _ab.setDisplayShowTitleEnabled(false);
@@ -134,47 +134,47 @@ public class ContainerFragments extends SherlockFragmentActivity//FragmentActivi
 	 private class TabsAdapter extends FragmentPagerAdapter implements
 		ActionBar.TabListener, ViewPager.OnPageChangeListener
 	{
-		private final Context mContext;
-		private final ActionBar mActionBar;
-		private final ViewPager mViewPager;
-		private final ArrayList<TabInfo> mTabs = new ArrayList<TabInfo>();
+		private final Context _mContext;
+		private final ActionBar _mActionBar;
+		private final ViewPager _mViewPager;
+		private final ArrayList<TabInfo> _mTabs = new ArrayList<TabInfo>();
 	
 		final class TabInfo
 		{
-			private final Class<?> clss;
-			private final Bundle args;
+			private final Class<?> _clss;
+			private final Bundle _args;
 	
-			TabInfo(Class<?> _class, Bundle _args)
+			TabInfo(Class<?> _class, Bundle args)
 			{
-				clss = _class;
-				args = _args;
+				_clss = _class;
+				_args = args;
 			}
 		}
 	
 		public TabsAdapter(SherlockFragmentActivity activity, ViewPager pager)
 		{
 			super(activity.getSupportFragmentManager());
-			mContext = activity;
-			mActionBar = activity.getSupportActionBar();
-			mViewPager = pager;
-			mViewPager.setAdapter(this);
-			mViewPager.setOnPageChangeListener(this);
+			_mContext = activity;
+			_mActionBar = activity.getSupportActionBar();
+			_mViewPager = pager;
+			_mViewPager.setAdapter(this);
+			_mViewPager.setOnPageChangeListener(this);
 		}
 	
 		public void addTab(ActionBar.Tab tab, Class<?> clss, Bundle args)
 		{
-			TabInfo info = new TabInfo(clss, args);
-			tab.setTag(info);
+			TabInfo _info = new TabInfo(clss, args);
+			tab.setTag(_info);
 			tab.setTabListener(this);
-			mTabs.add(info);
-			mActionBar.addTab(tab);
+			_mTabs.add(_info);
+			_mActionBar.addTab(tab);
 			notifyDataSetChanged();
 		}
 	
 		@Override
 		public int getCount()
 		{
-			return mTabs.size();
+			return _mTabs.size();
 		}
 	
 		@Override
@@ -190,7 +190,7 @@ public class ContainerFragments extends SherlockFragmentActivity//FragmentActivi
 	
 		public void onPageSelected(int position)
 		{
-			mActionBar.setSelectedNavigationItem(position);
+			_mActionBar.setSelectedNavigationItem(position);
 		}
 	
 		public void onPageScrollStateChanged(int state)
@@ -199,12 +199,12 @@ public class ContainerFragments extends SherlockFragmentActivity//FragmentActivi
 	
 		public void onTabSelected(Tab tab, FragmentTransaction ft)
 		{
-			Object tag = tab.getTag();
-			for (int i = 0; i < mTabs.size(); i++)
+			Object _tag = tab.getTag();
+			for (int i = 0; i < _mTabs.size(); i++)
 			{
-				if (mTabs.get(i) == tag)
+				if (_mTabs.get(i) == _tag)
 				{
-					mViewPager.setCurrentItem(i);
+					_mViewPager.setCurrentItem(i);
 				}
 			}
 		}

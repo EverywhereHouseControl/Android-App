@@ -15,34 +15,28 @@ import framework.JSON;
 import framework.HouseListAdapter;
 import framework.Post;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.AsyncTask.Status;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.ProgressBar;
-import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class HousesMenu extends Activity implements ImageChooserListener
 {
-
-	private TableLayout _table;
+	//------------Variables-----------------------
 	private JSON _JSONFile;
 	private static ImageChooserManager imageChooserManager;
 	private static int chooserType;
-	private ProgressBar pbar;
 	private static String filePath;
 	private ImageView _currentImage;
 	private TextView _textViewFile;
@@ -52,13 +46,8 @@ public class HousesMenu extends Activity implements ImageChooserListener
 	private boolean _selectMode;
 	private static Activity _activity;
 	private Post _post;
-	private ChosenImage _choosenImage = null;
 	JSONObject _data = new JSONObject();
-	boolean _finished = false;
-	boolean _wait = true;
-
-    private static final int REQUEST_CODE = 6384; // onActivityResult request
-                                                  // code
+	//------------------------------------------
        
 	@Override
     protected void onCreate( Bundle savedInstanceState ) 
@@ -114,7 +103,10 @@ public class HousesMenu extends Activity implements ImageChooserListener
     }
 	
 	/**
-	 * 
+	 /**
+     * -----------------------------------------
+     * Executes the MainMenu's Activity for a explicit house
+     * -----------------------------------------
 	 * @param house
 	 */
 	public static void createdMainMenuIntent(String house) 
@@ -258,14 +250,11 @@ public class HousesMenu extends Activity implements ImageChooserListener
 					_ListAdapter.setChosenImage(image);
 					_ListAdapter.setStateChosenImage(true);
 					_ListAdapter.setPathImage(_textViewFile.getText().toString());
-//					_ListAdapter.notifyDataSetChanged();
 					_ListAdapter.setCheckOFF();
-					_choosenImage = image;
 					
 					_post = new Post();						
 					uploadImageConnection _connection = new uploadImageConnection(_textViewFile.getText().toString());
 			    	_connection.execute();
-			    	Log.d("THREAD","1");
 			    	
 					try 
 					{
@@ -276,8 +265,6 @@ public class HousesMenu extends Activity implements ImageChooserListener
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					
-					showMessage(_data);
 				}
 			}
 		});
@@ -352,12 +339,21 @@ public class HousesMenu extends Activity implements ImageChooserListener
 			
 			runOnUiThread(new Runnable() 
 			{
-				
 				@Override
 				public void run() 
 				{
 					// TODO Auto-generated method stub
-					showMessage(_data);
+					try 
+					{
+						JSONObject _json_data = _data.getJSONObject("error");
+						_message = _json_data.getString("ENGLISH");
+					} catch (Exception e) 
+					{
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+						_message = "internal error.";
+					}
+					Toast.makeText(_activity, _message, Toast.LENGTH_SHORT).show();
 				}
 			});
 			return null;
@@ -372,32 +368,50 @@ public class HousesMenu extends Activity implements ImageChooserListener
     	
     }
 	
+    @Override
+    public void onBackPressed() 
+    {
+    	// TODO Auto-generated method stub
+    	//super.onBackPressed();
+    	
+    	new AlertDialog.Builder(this)
+        .setTitle("Log out")
+        .setMessage("Are you sure you want to log out?")
+        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() 
+        {
+            public void onClick(DialogInterface dialog, int which) 
+            { 
+            	try 
+        		{
+        			Class<?> _clazz = Class.forName("ehc.net.LogIn");
+        			Intent _intent = new Intent(HousesMenu.this, _clazz);
+        			startActivity(_intent);
+        		} 
+            	catch (ClassNotFoundException e) 
+        		{
+        			e.printStackTrace();
+        		}
+            }
+         })
+        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() 
+        {
+            public void onClick(DialogInterface dialog, int which) 
+            { 
+                // do nothing
+            }
+         })
+        .setIcon(android.R.drawable.ic_dialog_alert)
+         .show();
+    }
+    
 	/**
 	 * Method for debug
 	 * 
 	 * @param _text
 	 */
-	private void log(String _text) {
-		Log.d("Action :", _text);
-	}
-
-	public static void showMessage(JSONObject _data) 
+	private void log(String _text) 
 	{
-		// TODO Auto-generated method stub
-		JSONObject _json_data;
-		String _message = "";
-		try 
-		{
-			_json_data = _data.getJSONObject("error");
-			_message = _json_data.getString("ENGLISH");
-		} catch (Exception e) 
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			_message = "internal error.";
-		}
-		
-		Toast.makeText(_activity, _message, Toast.LENGTH_SHORT).show();
+		Log.d("Action :", _text);
 	}
 
 	protected void onResume() 

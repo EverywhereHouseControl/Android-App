@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -13,6 +12,7 @@ import framework.Post;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -34,6 +34,7 @@ public class Profile extends Activity
 	private ProgressDialog _pDialog;
 	private Post _post;
 	private String _message = "";
+	private String _currentHouse;
 	//-------------------------------
 		
 	@Override
@@ -42,6 +43,7 @@ public class Profile extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.profile_view);
 		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		_currentHouse = getIntent().getExtras().getString("House");
 		/**
          * ------------------------------------
          * Liked:  variable <- XML component 
@@ -301,6 +303,24 @@ public class Profile extends Activity
 		catch (IOException e) 
 		{
 			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Method that executes the previous activity
+	 */
+	@Override
+	public void onBackPressed() 
+	{
+		// TODO Auto-generated method stub
+		try 
+		{
+			Class<?> _clazz = Class.forName("ehc.net.MainMenu");
+			Intent _intent = new Intent(this, _clazz);
+			_intent.putExtra("House",_currentHouse);
+			startActivity(_intent);
+		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 	}

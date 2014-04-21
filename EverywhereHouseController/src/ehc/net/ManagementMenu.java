@@ -6,25 +6,15 @@ import org.json.JSONException;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
-import android.view.View.OnClickListener;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.AdapterView.OnItemClickListener;
 
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.app.SherlockActivity;
-import com.actionbarsherlock.view.MenuItem;
-
 import framework.JSON;
-import framework.HouseListAdapter;
 import framework.ListAdapter;
 import framework.SlidingMenuAdapter;
 
@@ -32,7 +22,6 @@ public class ManagementMenu extends SherlockActivity{//Activity{
 	//-----------Variables-----------
 	private ArrayList<String> _roomsList = new ArrayList<String>();
 	private JSON _JSONFile;
-	private ActionBar _ab;
 	//-------------------------------
 
 	@Override

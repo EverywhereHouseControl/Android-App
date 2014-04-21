@@ -68,15 +68,12 @@ public class LogIn extends Activity
 			@Override
 			public void onClick( View _v ) 
 			{
-				log("Button pressed");
-				
 				//It checks if exists connection
 				ConnectivityManager _connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 			    NetworkInfo _networkInfo = _connMgr.getActiveNetworkInfo();
 			      
 			    if (_networkInfo != null && _networkInfo.isConnected()) 			        
-			    {			            			        	
-			    	log("Connection");			            
+			    {			            			        			            
 			    	_post = new Post();						
 			    	logInConnection _connection = new logInConnection();
 			    	_connection.execute();			    	
@@ -96,7 +93,6 @@ public class LogIn extends Activity
 			public void onClick(View v) 
 			{
 				// TODO Auto-generated method stub
-				log("Crear usuario");
 				createUser();
 			}
 		});        
@@ -213,7 +209,7 @@ public class LogIn extends Activity
     	
 		protected void onPostExecute(String file_url) 
 		{
-            // dismiss the dialog after getting all products
+            // dismiss the dialog
             _pDialog.dismiss();
             if(_internalError!=0)Toast.makeText(getBaseContext(), _message, Toast.LENGTH_SHORT).show();
 		}
@@ -265,7 +261,6 @@ public class LogIn extends Activity
     {
     	try 
     	{
-//			Class<?> _clazz = Class.forName( "ehc.net.MainMenu" );
 			Class<?> _clazz = Class.forName( "ehc.net.HousesMenu" );
 			Intent _intent = new Intent( this,_clazz );
 			startActivity( _intent );

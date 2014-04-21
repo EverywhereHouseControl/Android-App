@@ -1,13 +1,11 @@
 package ehc.net;
 
-import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
 
 import framework.SlidingMenuAdapter;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -25,7 +23,6 @@ public class MainMenu extends SherlockActivity
 	private Button _buttonEvent;
 	// private Button _buttonConfig;
 	private ImageView _logo;
-	private ActionBar _ab;
 
 	// -------------------------------
 
@@ -113,6 +110,7 @@ public class MainMenu extends SherlockActivity
 		try {
 			Class<?> _clazz = Class.forName("ehc.net.Profile");
 			Intent _intent = new Intent(this, _clazz);
+			_intent.putExtra("House",getIntent().getExtras().getString("House"));
 			startActivity(_intent);
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -123,8 +121,10 @@ public class MainMenu extends SherlockActivity
 	 * Method that executes Profile's activity
 	 */
 
-	private void createdEventIntent() {
-		try {
+	private void createdEventIntent() 
+	{
+		try 
+		{
 			Class<?> _clazz = Class.forName("ehc.net.CaldroidSampleActivity");
 			Intent _intent = new Intent(this, _clazz);
 			startActivity(_intent);
@@ -133,27 +133,47 @@ public class MainMenu extends SherlockActivity
 		}
 	}	
 	
+	/**
+	 * Method that executes the previous activity
+	 */
+	@Override
+	public void onBackPressed() 
+	{
+		// TODO Auto-generated method stub
+		try 
+		{
+			Class<?> _clazz = Class.forName("ehc.net.HousesMenu");
+			Intent _intent = new Intent(this, _clazz);
+			startActivity(_intent);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
 
 	/**
 	 * Method for debug
 	 * 
 	 * @param _text
 	 */
-	private void log(String _text) {
+	private void log(String _text) 
+	{
 		Log.d("Action :", _text);
 	}
 
-	protected void onResume() {
+	protected void onResume() 
+	{
 		super.onResume();
 		log("Resumed");
 	}
 
-	protected void onPause() {
+	protected void onPause() 
+	{
 		super.onPause();
 		log("Paused");
 	}
 
-	protected void onStop() {
+	protected void onStop() 
+	{
 		super.onStop();
 		log("Stoped");
 	}

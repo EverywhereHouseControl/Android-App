@@ -2,7 +2,6 @@ package ehc.net;
 
 import java.util.ArrayList;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -24,10 +23,11 @@ import android.widget.Toast;
 
 public class CreateUser extends Activity
 {
+	//------------Variables-----------------------
 	private Post _post;
 	private Button _buttonCancel;
 	private Button _buttonConfirm;
-	
+	//--------------------------------------------
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
@@ -36,6 +36,11 @@ public class CreateUser extends Activity
 		setContentView(R.layout.create_user);
 		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 				
+		/**
+         * ------------------------------------
+         * Linked:  variable <- component XML
+         *-------------------------------------
+         **/
 		_buttonCancel = (Button) findViewById(R.id.newUserCancel);
 		_buttonConfirm = (Button) findViewById(R.id.newUserConfirm);     
    
@@ -181,6 +186,11 @@ public class CreateUser extends Activity
 		if(internalError!=0)Toast.makeText(getBaseContext(), _message, Toast.LENGTH_SHORT).show();
 	}
 	
+	/**
+	 * 
+	 * @author Miguel
+	 *
+	 */
 	private class createUserConnection extends AsyncTask<String, String, String>
 	{
 		private ArrayList<String> _parametros;
@@ -245,7 +255,7 @@ public class CreateUser extends Activity
 		 */
 		protected void onPostExecute(String file_url) 
 		{
-            // dismiss the dialog after getting all products
+            // dismiss the dialog
             _pDialog.dismiss();
             Toast.makeText(getBaseContext(), _message, Toast.LENGTH_SHORT).show();
 		}

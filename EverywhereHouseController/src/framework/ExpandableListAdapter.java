@@ -7,7 +7,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -279,6 +278,11 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter
 			ImageView _image = (ImageView) convertView.findViewById(R.id.HouseImageList);
 			_image.setBackgroundResource(R.drawable.blinds);
 		}
+		else
+		{
+			ImageView _image = (ImageView) convertView.findViewById(R.id.HouseImageList);
+			_image.setBackgroundResource(R.drawable.interrogation);
+		}
 		/////////////////////////////////////////
 		
 		return convertView;
@@ -294,13 +298,4 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter
 		return true;
 	}
 	
-	/**
-     * Method for debug.
-     * @param _text
-     */
-    private void log( String _text )
-    {
-    	Log.d("Action :", _text);
-    }
-
 }

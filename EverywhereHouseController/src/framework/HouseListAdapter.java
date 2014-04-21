@@ -1,33 +1,15 @@
 package framework;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 
-import loadUrlImageFramework.FileCache;
 import loadUrlImageFramework.ImageLoader;
-import loadUrlImageFramework.Utils;
-
 import com.kbeanie.imagechooser.api.ChosenImage;
-import com.kbeanie.imagechooser.api.ImageChooserManager;
-
 import ehc.net.HousesMenu;
 import ehc.net.R;
 
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Typeface;
-import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -35,7 +17,6 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 public class HouseListAdapter extends BaseAdapter
 {
@@ -51,7 +32,6 @@ public class HouseListAdapter extends BaseAdapter
 	private ChosenImage _currentImage;
 	private ImageView _image;
 	private String _path;
-	private File _f;
 	private ArrayList<String> _urls = new ArrayList<String>();
 	private ImageLoader _imgLoader;
 	
@@ -115,41 +95,11 @@ public class HouseListAdapter extends BaseAdapter
 		
 		_image = (ImageView) _view.findViewById(R.id.HouseImageList);
 		
-//		boolean haveImage = false;
-		
 		if(!_urls.get(position).equals("null"))
 		{
-//			haveImage = true;
 			_path = _urls.get(position);
-			
-			// ImageLoader class instance
-	        
-	         
-	        // whenever you want to load an image from url
-	        // call DisplayImage function
-	        // url - image url to load
-	        // loader - loader image, will be displayed before getting image
-	        // image - ImageView
 	        _imgLoader.DisplayImage(_path, R.drawable.base_picture, _image);
-//		}
-//		
-//		if(haveImage)
-//		{
-//			FileCache fileCache=new FileCache(_context);
-//			_f=fileCache.getFile(_path);
-//		    _image.setImageBitmap(decodeFile());
-//		    notifyDataSetChanged();
-	       
-//		}		
-//		else if((_currentOption!=0 && _stateChosenImage))
-//		{
-//			_f = new  File(_path);
-//			_image.setImageBitmap(decodeFile());
-//			_currentOption = 0;
-//			_stateChosenImage = false;
-//			notifyDataSetChanged();
 	    } 
-	
 		else _image.setImageResource(R.drawable.base_picture);
 		
 
@@ -237,58 +187,5 @@ public class HouseListAdapter extends BaseAdapter
 	public void setPathImage(String path)
 	{
 		_path = path;
-	}
-	
-	
-	/**
-	 * 
-	 * @return
-	 */
-	private Bitmap decodeFile()
-	{
-		try 
-        {
-            URL _imageUrl = new URL(_path);
-            HttpURLConnection _conn = (HttpURLConnection)_imageUrl.openConnection();
-            _conn.setConnectTimeout(30000);
-            _conn.setReadTimeout(30000);
-            _conn.setInstanceFollowRedirects(true);
-            InputStream _is=_conn.getInputStream();
-            OutputStream _os = new FileOutputStream(_f);
-            Utils.CopyStream(_is, _os);
-            _os.close();
-            
-            // Assume documentId points to an image file. Build a thumbnail no
-	        // larger than twice the sizeHint
-            BitmapFactory.Options _options = new BitmapFactory.Options();
-	        _options.inJustDecodeBounds = true;
-	        BitmapFactory.decodeFile(_f.getAbsolutePath(), _options);
-	        final int _targetHeight = _image.getHeight(); //175
-	        final int _targetWidth = _image.getWidth();	//175
-	        final int _height = _options.outHeight;
-	        final int _width = _options.outWidth;
-	        _options.inSampleSize = 1;
-	        if (_height > _targetHeight || _width > _targetWidth) 
-	        {
-	            final int _halfHeight = _height / 2;
-	            final int _halfWidth = _width / 2;
-	            // Calculate the largest inSampleSize value that is a power of 2 and
-	            // keeps both
-	            // height and width larger than the requested height and width.
-	            while ((_halfHeight / _options.inSampleSize) > _targetHeight
-	                    || (_halfWidth / _options.inSampleSize) > _targetWidth) 
-	            {
-	                _options.inSampleSize *= 2;
-	            }
-	        }
-	        _options.inJustDecodeBounds = false;
-	      //options.inDensity = (int) _context.getResources().getDisplayMetrics().density;
-	        return BitmapFactory.decodeFile(_f.getAbsolutePath(), _options);
-        }
-		catch (Exception ex)
-	    {
-	        ex.printStackTrace();
-	    }
-		return null;
 	}
 }

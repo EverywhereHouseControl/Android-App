@@ -15,11 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnGroupCollapseListener;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import environment.DVD;
-import environment.Light;
 import framework.ExpandableListAdapter;
 import framework.JSON;
 
@@ -158,6 +154,12 @@ import framework.JSON;
 	    			blinds.add("integer");
 	    			_listDataChild.put(items.get(i),blinds);
     			} 
+    			else
+    			{
+    				List<String> other = new ArrayList<String>();
+    				other.add("boolean");
+	    			_listDataChild.put(items.get(i),other);
+    			}
 	    	}
 	    	
 	    	return _listDataChild;

@@ -20,7 +20,6 @@ import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -185,8 +184,6 @@ public class Post
 	
 	public JSONObject connectionPostUpload(ArrayList<String> parametros, String URL, String imagePath)
 	{	
-//		ArrayList<BasicNameValuePair> _nameValuePairs;
-		
 		try
 		{
 			HttpClient _httpclient = new DefaultHttpClient();
@@ -194,7 +191,6 @@ public class Post
 			//------------------------
 			_httppost.setURI( new URI(URL) );
 			//-------------------------
-//			_nameValuePairs = new ArrayList<BasicNameValuePair>();	
 
 			File file = new File(imagePath);
 			
@@ -202,22 +198,11 @@ public class Post
 			ContentBody cbFile = new FileBody(file, "image/jpeg");
 			mpEntity.addPart(parametros.get(0), new StringBody(parametros.get(1)));
 			mpEntity.addPart("imagen", cbFile);
-			
-//			if (parametros != null)
-//			{	
-//				for (int i = 0; i < parametros.size() - 1; i += 2)
-//				{	
-//					_nameValuePairs.add(new BasicNameValuePair( parametros.get(i), parametros.get(i + 1)));	
-//				}	
-//				_httppost.setEntity(new UrlEncodedFormEntity(_nameValuePairs));	
-//			}
 
 			_httppost.setEntity(mpEntity);  
 			HttpResponse _response = _httpclient.execute(_httppost);
 			HttpEntity _entity = _response.getEntity();
 			_is = _entity.getContent();
-			
-//			_httpclient.getConnectionManager().shutdown();
 		}
 		catch (Exception e)
 		{	
@@ -228,9 +213,8 @@ public class Post
 		{				                                                
 			getResponsePost();
 		}
-		if (_response != null /*&& response.trim() != ""*/) 
+		if (_response != null ) 
 		{		
-//			return getJsonArray();
 			JSONObject _json = null;
 			try 
 			{

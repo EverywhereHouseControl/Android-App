@@ -11,7 +11,6 @@ import ehc.net.LogIn;
 import ehc.net.R;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,14 +18,12 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 public class SlidingMenuAdapter extends BaseAdapter
 {
 	private Context _context;
-	private int _itemView;
 	private String _currentHouse;
 	private JSON _JSONFile;
 	private ArrayList<String> _houses = new ArrayList<String>();
@@ -159,6 +156,7 @@ public class SlidingMenuAdapter extends BaseAdapter
 						}
 						Intent _intent = new Intent( _context,_clazz );
 						_intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+						_intent.putExtra("House",_currentHouse);
 		    			_context.startActivity( _intent );
 					}
 					else if(_button.getText().equals("Change Profile"))
