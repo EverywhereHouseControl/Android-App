@@ -11,11 +11,16 @@ import java.util.Map.Entry;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
+import android.view.View.OnClickListener;
 
 import com.roomorama.caldroid.CaldroidFragment;
 import com.roomorama.caldroid.CaldroidListener;
@@ -156,6 +161,25 @@ public class CaldroidSampleActivity extends FragmentActivity {
 			}
 
 		};
+		
+		/** Fragment Dialog creation **/
+		
+		LinearLayout ll = (LinearLayout) this.findViewById(R.id.ll_event);
+		
+		ImageButton ib = (ImageButton) ll.findViewById(R.id.create_event_button);
+		ib.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+				DialogFragment dialog = CreateUserFragmentDialog.newInstance();
+				dialog.show(ft, "dialog"); 
+				
+			}
+		});
+		
+		
+		
 
 		// Setup Caldroid
 		caldroidFragment.setCaldroidListener(listener);

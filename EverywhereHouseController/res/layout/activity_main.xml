@@ -11,14 +11,27 @@
         android:orientation="vertical" >
     </LinearLayout>
 
-    <TextView 
+    <TextView
         android:id="@+id/event_list_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/daily"
         android:gravity="center"
-        />
-    
+        android:text="@string/daily" />
+
+    <LinearLayout
+        android:id="@+id/ll_event"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <ImageButton
+            android:id="@+id/create_event_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:src="@drawable/check" />
+    </LinearLayout>
+
     <ListView
         android:id="@+id/eventList"
         android:layout_width="match_parent"

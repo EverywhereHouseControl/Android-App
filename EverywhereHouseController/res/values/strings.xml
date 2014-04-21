@@ -8,5 +8,6 @@
     <string name="chooser_title">Lorem ipsum</string>
     <string name="exit">Salir</string>
     <string name="daily">Daily Appointments</string>
-
+    <string name="event_name">Event name</string>
+    
 </resources>
