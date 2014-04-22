@@ -1,6 +1,7 @@
 package ehc.net;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -429,13 +431,19 @@ public class HousesMenu extends Activity implements ImageChooserListener
 						_message = "internal error.";
 					}
 					Toast.makeText(_activity, _message, Toast.LENGTH_SHORT).show();
-					
+					JSONObject obj = null;
 					if(_correct)
 					{
 						try 
 						{
-							JSONObject obj = new JSONObject(_file);
-						
+
+							obj = new JSONObject(_file);
+							Pair<String,String> _place = _JSONFile.getPlace(_currentHouse);
+							
+							log(_imagePath);
+							File file = new File(_imagePath);
+							log(file.getName());
+							
 							ArrayList<String> _parametros = new ArrayList<String>();
 							_parametros.add("command");
 							_parametros.add("modifyhouse");
@@ -445,8 +453,12 @@ public class HousesMenu extends Activity implements ImageChooserListener
 							_parametros.add(_currentHouse);
 							_parametros.add("n_housename");
 							_parametros.add(_currentHouse);
-							_parametros.add("idimage");
-							_parametros.add("http://ehcontrol.net/EHControlConnect/images/"+_imagePath);
+							_parametros.add("city");
+							_parametros.add(_place.first);
+							_parametros.add("country");
+							_parametros.add(_place.second);
+							_parametros.add("image");
+							_parametros.add("images/"+file.getName());
 							_data = _post.getServerData(_parametros, "http://5.231.69.226/EHControlConnect/index.php");
 						
 							JSONObject _json_data = _data.getJSONObject("error");
@@ -473,6 +485,36 @@ public class HousesMenu extends Activity implements ImageChooserListener
 						}
 						
 						Toast.makeText(_activity, _message, Toast.LENGTH_SHORT).show();
+						if(_correct)
+						{
+							try 
+							{
+								ArrayList<String> _parametros = new ArrayList<String>();
+								_parametros.add("command");
+								_parametros.add("login2");
+								_parametros.add("username");
+								_parametros.add(obj.getString("USERNAME"));
+								_parametros.add("password");
+								_parametros.add(obj.getString("PASSWORD"));
+								
+								//Variable 'Data' saves the query response
+								JSONObject _data = _post.getServerData(_parametros,"http://5.231.69.226/EHControlConnect/index.php");//"http://192.168.2.147/EHControlConnect/index.php");
+								JSONObject _json_data = _data.getJSONObject("result");
+								
+								//Save the profile's information.
+								saveProfileInfo(_json_data);
+								//Save the house's configuration
+								saveConfig(_json_data.get("JSON"));
+								//
+								onCreate(null);
+							} 
+							catch (Exception e) 
+							{
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+						
 					}
 				}
 			});
@@ -491,7 +533,41 @@ public class HousesMenu extends Activity implements ImageChooserListener
 		}
     	
     }
-	
+    
+    
+    /**
+	 * Saves from the server query the profile information in the file 'profile.json'.
+	 */
+	private void saveProfileInfo(JSONObject JSON)
+	{
+		try 
+		{
+			FileOutputStream _outputStream = openFileOutput("profileInformation.json", MODE_PRIVATE);
+			_outputStream.write(JSON.toString().getBytes());
+			_outputStream.close();	
+		} 
+		catch (IOException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+    /**
+	 * Saves from the server query the house configuration in the file 'configuration.json'.
+	 */
+	private void saveConfig(Object JSON)
+	{	
+		try 
+		{
+			FileOutputStream _outputStream = openFileOutput("configuration.json", MODE_PRIVATE);
+			_outputStream.write(JSON.toString().getBytes());
+			_outputStream.close();
+		} catch (IOException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+	}
     @Override
     public void onBackPressed() 
     {

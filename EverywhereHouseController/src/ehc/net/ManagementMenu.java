@@ -54,7 +54,7 @@ public class ManagementMenu extends SherlockActivity{//Activity{
 		/////////////////////////////////////////////////////////////////////////////////////////
         //-----------------It Reads config.json-----------------
 
-        _JSONFile = JSON.getInstance(getApplicationContext());
+        _JSONFile = JSON.getInstance(getApplicationContext());	
 		try 
 		{
 			String _house = getIntent().getExtras().getString("House");

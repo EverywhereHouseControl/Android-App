@@ -6,6 +6,8 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -16,6 +18,7 @@ import ehc.net.Event;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
+import android.util.Pair;
 
 public class JSON {
 	private static JSON _instance;
@@ -23,6 +26,7 @@ public class JSON {
 	public ArrayList<String> _rooms = new ArrayList<String>();
 	public ArrayList<String> _items = new ArrayList<String>();
 	public ArrayList<String> _access = new ArrayList<String>();
+	public HashMap<String,Pair<String, String>> _places = new HashMap<String,Pair<String, String>>();
 	public HashMap<String, String> _urls = new HashMap<String, String>();
 	public HashMap<String, Event> _events;
 	public HashMap<String, JSONArray> _roomsHouses = new HashMap<String, JSONArray>();
@@ -137,9 +141,15 @@ public class JSON {
 			JSONArray _houses = _obj.getJSONArray(_TAG_HOUSES);
 
 			for (int i = 0; i < _houses.length(); i++) {
+				
 				JSONObject _house = _houses.getJSONObject(i);
+				
 				this._houses.add(_house.getString("name"));
+				
 				_access.add(_house.getString("access"));
+				
+				_places.put(_house.getString("name"),new Pair<String, String>(_house.getString("city"), _house.getString("country")));
+				
 				try {
 					String _url = _house.getString("image");
 					Log.d("URL", _url);
@@ -227,6 +237,15 @@ public class JSON {
 			_urls.add(this._urls.get(_houses.get(i)));
 		}
 		return _urls;
+	}
+	
+	/**
+	 * 
+	 * @param house
+	 * @return
+	 */
+	public Pair<String,String> getPlace(String house) {
+		return _places.get(house);
 	}
 
 	/**

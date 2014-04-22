@@ -1,14 +1,22 @@
 package ehc.net;
 
+import java.util.ArrayList;
+
+import org.json.JSONObject;
+
 import com.actionbarsherlock.app.SherlockActivity;
 
+import framework.JSON;
+import framework.Post;
 import framework.SlidingMenuAdapter;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
-import android.view.Gravity;
+import android.util.Pair;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
@@ -17,6 +25,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 public class MainMenu extends SherlockActivity 
 {
@@ -26,6 +35,7 @@ public class MainMenu extends SherlockActivity
 	private Button _buttonEvent;
 	// private Button _buttonConfig;
 	private ImageView _logo;
+	private Post _post;
 
 	// -------------------------------
 
@@ -101,6 +111,10 @@ public class MainMenu extends SherlockActivity
 				createdEventIntent();				
 			}
 		});
+        
+        _post = new Post();						
+    	getWeather _connection = new getWeather();
+    	_connection.execute();
                  
     }	
 	/**
@@ -166,6 +180,89 @@ public class MainMenu extends SherlockActivity
 		}
 	}
 
+	
+	// Background process
+    private class getWeather extends AsyncTask<String, String, String>
+    {    	
+    	private ProgressDialog _pDialog;
+    	private String _message = "";
+    	private int _internalError = 0;
+    	/**
+    	 * Message "Loading"
+    	 */
+    	protected void onPreExecute() 
+    	{  
+    		super.onPreExecute();
+            _pDialog = new ProgressDialog(MainMenu.this);
+            //pDialog.setView(getLayoutInflater().inflate(R.layout.loading_icon_view,null));
+            _pDialog.setMessage("Loading. Please wait...");
+            _pDialog.setIndeterminate(false);
+            _pDialog.setCancelable(false);
+            _pDialog.show();          
+        }
+    	
+    	@Override
+		protected String doInBackground(String... arg0) 
+		{
+			try 
+			{	
+				JSON _JSONFile = JSON.getInstance(getApplicationContext());
+				Pair<String,String> _place = _JSONFile.getPlace(getIntent().getExtras().getString("House"));
+				
+				//Query
+				ArrayList<String> _parametros = new ArrayList<String>();
+				
+				_parametros.add("command");
+				_parametros.add("getweather");
+				_parametros.add("city");
+				_parametros.add(_place.first);
+				_parametros.add("country");
+				_parametros.add(_place.second);
+			 			
+				//Variable 'Data' saves the query response
+				JSONObject _data = _post.getServerData(_parametros,"http://5.231.69.226/EHControlConnect/index.php");//"http://192.168.2.147/EHControlConnect/index.php");
+				log(_data.toString());
+				
+//				try 
+//				{
+//					JSONObject _json_data = _data.getJSONObject("error");
+//					switch(_json_data.getInt("ERROR"))
+//					{
+//						case 0:
+//						{
+//							_message = _json_data.getString("ENGLISH");					
+//							break;
+//						}
+//						default:
+//						{
+//							_internalError = _json_data.getInt("ERROR");
+//							_message = _json_data.getString("ENGLISH");
+//							break;
+//						}
+//					}
+//				
+//				} 
+//				catch (JSONException e) 
+//				{
+//					e.printStackTrace();
+//				}
+					 
+			 }
+			catch (Exception _e) 
+			 {
+			 	_e.printStackTrace();
+			 }
+			 // End call to PHP server
+			return null;
+		}
+    	
+		protected void onPostExecute(String file_url) 
+		{
+            // dismiss the dialog
+            _pDialog.dismiss();
+            if(_internalError!=0)Toast.makeText(getBaseContext(), _message, Toast.LENGTH_SHORT).show();
+		}
+    }
 	/**
 	 * Method for debug
 	 * 
