@@ -20,6 +20,17 @@
             android:layout_centerVertical="true"
             android:src="@drawable/white_house_icon" />
 
+        <ImageButton
+            android:id="@+id/imageOverflow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="15dp"
+            android:background="@color/GreenApp"
+            android:src="@drawable/ic_action_overflow" />
+
     </RelativeLayout>
 
     <ListView

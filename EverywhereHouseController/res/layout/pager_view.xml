@@ -10,27 +10,12 @@
 	    android:layout_width="match_parent"
 	    android:layout_height="match_parent"
 	    android:orientation="vertical" >
-
-    <HorizontalScrollView
-        android:id="@+id/horizontalScrollView1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/White"
-        android:fillViewport="true" >
-
-        <LinearLayout
-            android:id="@+id/HorizontalListView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/White"
-            android:orientation="horizontal" >
-        </LinearLayout>
-    </HorizontalScrollView>
-
+	    
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" >
+
     </android.support.v4.view.ViewPager>
 
 	</LinearLayout>

@@ -27,7 +27,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -100,6 +102,19 @@ public class HousesMenu extends Activity implements ImageChooserListener
         _ListAdapter = new HouseListAdapter(getApplicationContext(),_housesList,_urls,_accessHousesList,R.layout.house_item);
 		_ListView.setAdapter(_ListAdapter);
 		_ListAdapter.notifyDataSetChanged ();
+		
+		ImageButton _imageButton = (ImageButton) findViewById(R.id.imageOverflow);
+		_imageButton.setOnClickListener(new View.OnClickListener() 
+		{
+			
+			@Override
+			public void onClick(View v) 
+			{
+				// TODO Auto-generated method stub
+				openOptionsMenu();
+			}
+		});
+				
 			
 		_selectMode = false;
 		_currentOption = 0;       
@@ -340,6 +355,7 @@ public class HousesMenu extends Activity implements ImageChooserListener
     	private ProgressDialog _pDialog;
     	private String _message = "";
     	private String _imagePath;
+    	private boolean _correct = false;
     	
     	
     	public uploadImageConnection(String path)
@@ -394,26 +410,14 @@ public class HousesMenu extends Activity implements ImageChooserListener
 						{
 							case 0:
 							{
-//								JSONObject obj = new JSONObject(_file);
-//								
-//								ArrayList<String> _parametros = new ArrayList<String>();
-//								_parametros.add("command");
-//								_parametros.add("modifyhouse");
-//								_parametros.add("username");
-//								_parametros.add(obj.getString("USERNAME"));
-//								_parametros.add("housename");
-//								_parametros.add(_currentHouse);
-//								_parametros.add("n_housename");
-//								_parametros.add(_currentHouse);
-//								_parametros.add("idimage");
-//								_parametros.add(_imagePath);
-//								_data = _post.connectionPostUpload(_parametros, "http://5.231.69.226/EHControlConnect/index.php", _imagePath);		
-								_message = _json_data.getString("ENGLISH");					
+								_message = _json_data.getString("ENGLISH");
+								_correct = true;
 								break;
 							}
 							default:
 							{
 								_message = _json_data.getString("ENGLISH");
+								_correct = false;
 								break;
 							}
 						}
@@ -425,8 +429,57 @@ public class HousesMenu extends Activity implements ImageChooserListener
 						_message = "internal error.";
 					}
 					Toast.makeText(_activity, _message, Toast.LENGTH_SHORT).show();
+					
+					if(_correct)
+					{
+						try 
+						{
+							JSONObject obj = new JSONObject(_file);
+						
+							ArrayList<String> _parametros = new ArrayList<String>();
+							_parametros.add("command");
+							_parametros.add("modifyhouse");
+							_parametros.add("username");
+							_parametros.add(obj.getString("USERNAME"));
+							_parametros.add("housename");
+							_parametros.add(_currentHouse);
+							_parametros.add("n_housename");
+							_parametros.add(_currentHouse);
+							_parametros.add("idimage");
+							_parametros.add(_imagePath);//_parametros.add("http://ehcontrol.net/EHControlConnect/images/"+_imagePath);
+							_data = _post.getServerData(_parametros, "http://5.231.69.226/EHControlConnect/index.php");
+						
+							JSONObject _json_data = _data.getJSONObject("error");
+							switch(_json_data.getInt("ERROR"))
+							{
+								case 0:
+								{
+									_message = _json_data.getString("ENGLISH");
+									_correct = true;
+									break;
+								}
+								default:
+								{
+									_message = _json_data.getString("ENGLISH");
+									_correct = false;
+									break;
+								}
+							}
+						} 
+						catch (JSONException e) 
+						{
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						
+						Toast.makeText(_activity, _message, Toast.LENGTH_SHORT).show();
+					}
 				}
 			});
+			
+			
+			
+			
 			return null;
 		}
 		
