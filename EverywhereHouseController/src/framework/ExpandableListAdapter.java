@@ -70,7 +70,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter
 			convertView = _inflater.inflate(_itemType, parent, false);
 			setListeners(convertView, _itemType, groupPosition);//setListeners(convertView, _itemType);
 			_servicename = (String) getGroup(groupPosition);
-			_servicename = _servicename.toUpperCase();
+//			_servicename = _servicename.toUpperCase();
 			
 //			Intent intent = new Intent(_context, RemoteController.class);
 //			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -102,7 +102,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter
 				}
 				setListeners(convertView, _itemType, groupPosition);//setListeners(convertView, _itemType);
 				_servicename = (String) getGroup(groupPosition);
-				_servicename = _servicename.toUpperCase();
+//				_servicename = _servicename.toUpperCase();
 			}			
 		}
 		else 
@@ -112,21 +112,19 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter
 			// -------------------------------------
 			setListeners(convertView, _itemType, groupPosition);//setListeners(convertView, _itemType);
 			_servicename = (String) getGroup(groupPosition);
-			_servicename = _servicename.toUpperCase();
+//			_servicename = _servicename.toUpperCase();
 		}
 		return convertView;
 	}
 
 	private void setListeners(final View convertView, int itemType, final int groupPosition) 
 	{
-		final TextView _tv = (TextView) convertView.findViewById(R.id.childname);
-		
+		final TextView _tv = (TextView) convertView.findViewById(R.id.childname);	
 		if (itemType == R.layout.float_item) 
 		{
 			SeekBar _sb = (SeekBar) convertView.findViewById(R.id.float_value);
 			_sb.setOnSeekBarChangeListener(new OnSeekBarChangeListener() 
 			{
-
 				@Override
 				public void onStopTrackingTouch(SeekBar seekBar) 
 				{

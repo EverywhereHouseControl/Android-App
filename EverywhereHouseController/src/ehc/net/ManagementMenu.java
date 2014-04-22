@@ -6,10 +6,12 @@ import org.json.JSONException;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 
@@ -31,11 +33,24 @@ public class ManagementMenu extends SherlockActivity{//Activity{
 		setContentView( R.layout.management_menu_view );
 		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         /////////////////////////////////////////////////////////////////////////////////////////
-        ListView _drawer = (ListView) findViewById(R.id.ListViewSlidingMenu);		
+        final ListView _drawer = (ListView) findViewById(R.id.ListViewSlidingMenu);		
 		final SlidingMenuAdapter _adapter = new 
 				SlidingMenuAdapter(this.getBaseContext(),getIntent().getExtras().getString("House"));
 		_drawer.setAdapter(_adapter);
 		_adapter.notifyDataSetChanged();
+		
+		ImageButton _iv = (ImageButton) findViewById(R.id.lateralMenu);
+		_iv.setOnClickListener(new View.OnClickListener() 
+		{
+			
+			@Override
+			public void onClick(View v) 
+			{
+				// TODO Auto-generated method stub
+				DrawerLayout _dl = (DrawerLayout) findViewById(R.id.drawer_layout);
+				_dl.openDrawer(_drawer);
+			}
+		});	
 		/////////////////////////////////////////////////////////////////////////////////////////
         //-----------------It Reads config.json-----------------
 

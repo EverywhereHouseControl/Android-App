@@ -9,14 +9,24 @@
 	    android:id="@+id/mainPlacesMenu"
 	    android:layout_width="match_parent"
 	    android:layout_height="match_parent"
+	    android:background="@color/GreenApp"
 	    android:orientation="vertical" >
 	    
-    <android.support.v4.view.ViewPager
-        android:id="@+id/pager"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
-
-    </android.support.v4.view.ViewPager>
+	   <ImageButton
+		    android:id="@+id/lateralMenu"
+		    android:layout_width="50dp"
+		    android:layout_height="50dp"
+		    android:layout_marginLeft="15dp"
+		    android:layout_marginTop="15dp"
+		    android:background="@color/GreenApp"
+		    android:src="@drawable/ic_drawer" />
+	    		
+	    <android.support.v4.view.ViewPager
+	        android:id="@+id/pager"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content" >
+	
+	    </android.support.v4.view.ViewPager>
 
 	</LinearLayout>
 

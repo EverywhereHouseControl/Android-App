@@ -118,6 +118,11 @@ public class HouseListAdapter extends BaseAdapter
 		{
 			_check.setChecked(false);
 			_check.setVisibility(View.VISIBLE);
+			
+			if(_access.get(position).equals("3"))
+			{
+				_check.setVisibility(View.GONE);
+			}
 		}
 		else _check.setVisibility(View.GONE);
 		

@@ -6,12 +6,15 @@ import framework.SlidingMenuAdapter;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 
@@ -34,11 +37,24 @@ public class MainMenu extends SherlockActivity
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         
         /////////////////////////////////////////////////////////////////////////////////////////
-        ListView _drawer = (ListView) findViewById(R.id.ListViewSlidingMenu);		
+        final ListView _drawer = (ListView) findViewById(R.id.ListViewSlidingMenu);		
 		final SlidingMenuAdapter _adapter = new 
 				SlidingMenuAdapter(this.getBaseContext(),getIntent().getExtras().getString("House"));
 		_drawer.setAdapter(_adapter);
 		_adapter.notifyDataSetChanged();
+		
+		ImageButton _iv = (ImageButton) findViewById(R.id.lateralMenu);
+		_iv.setOnClickListener(new View.OnClickListener() 
+		{
+			
+			@Override
+			public void onClick(View v) 
+			{
+				// TODO Auto-generated method stub
+				DrawerLayout _dl = (DrawerLayout) findViewById(R.id.drawer_layout);
+				_dl.openDrawer(_drawer);
+			}
+		});		
 		/////////////////////////////////////////////////////////////////////////////////////////
         /**
          * ------------------------------------
@@ -159,8 +175,8 @@ public class MainMenu extends SherlockActivity
 	{
 		Log.d("Action :", _text);
 	}
-
-	protected void onResume() 
+	
+	protected void onResume()
 	{
 		super.onResume();
 		log("Resumed");

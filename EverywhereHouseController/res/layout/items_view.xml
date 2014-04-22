@@ -8,25 +8,19 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="91dp"
+        android:layout_height="71dp"
         android:background="@color/GreenApp" >
 
         <TextView
             android:id="@+id/textRoom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
             android:text="TextView"
             android:textColor="@color/White"
             android:textSize="30sp" />
-		<ImageView
-		    android:id="@+id/imageView1"
-		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content"
-		    android:layout_marginLeft="15dp"
-		    android:layout_marginTop="15dp"
-		    android:src="@drawable/ic_drawer" />
+
     </RelativeLayout>
     
      <ExpandableListView

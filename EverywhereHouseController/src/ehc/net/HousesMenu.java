@@ -446,7 +446,7 @@ public class HousesMenu extends Activity implements ImageChooserListener
 							_parametros.add("n_housename");
 							_parametros.add(_currentHouse);
 							_parametros.add("idimage");
-							_parametros.add(_imagePath);//_parametros.add("http://ehcontrol.net/EHControlConnect/images/"+_imagePath);
+							_parametros.add("http://ehcontrol.net/EHControlConnect/images/"+_imagePath);
 							_data = _post.getServerData(_parametros, "http://5.231.69.226/EHControlConnect/index.php");
 						
 							JSONObject _json_data = _data.getJSONObject("error");

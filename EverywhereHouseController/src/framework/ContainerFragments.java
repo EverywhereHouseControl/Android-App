@@ -14,8 +14,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageButton;
 import android.widget.ListView;
 
 public class ContainerFragments extends SherlockFragmentActivity//FragmentActivity
@@ -45,11 +49,27 @@ public class ContainerFragments extends SherlockFragmentActivity//FragmentActivi
 	         //-------------------------------
 			
 	        /////////////////////////////////////////////////////////////////////////////////////////
-	        ListView _drawer = (ListView) findViewById(R.id.ListViewSlidingMenu);		
+	        final ListView _drawer = (ListView) findViewById(R.id.ListViewSlidingMenu);		
 			final SlidingMenuAdapter _adapter = new 
 					SlidingMenuAdapter(this.getBaseContext(),getIntent().getExtras().getString("House"));
 			_drawer.setAdapter(_adapter);
 			_adapter.notifyDataSetChanged();
+			
+			LayoutInflater _inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			View _view = _inflater.inflate(R.layout.items_view,null);
+			
+			ImageButton _iv = (ImageButton) findViewById(R.id.lateralMenu);
+			_iv.setOnClickListener(new View.OnClickListener() 
+			{
+				
+				@Override
+				public void onClick(View v) 
+				{
+					// TODO Auto-generated method stub
+					DrawerLayout _dl = (DrawerLayout) findViewById(R.id.drawer_layout);
+					_dl.openDrawer(_drawer);
+				}
+			});	
 			/////////////////////////////////////////////////////////////////////////////////////////
  
 	        // Create a HashMap with < Key: position, Value button name >.
