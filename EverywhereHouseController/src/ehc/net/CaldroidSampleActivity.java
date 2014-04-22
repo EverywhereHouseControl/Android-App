@@ -10,6 +10,7 @@ import java.util.Map.Entry;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -171,10 +172,11 @@ public class CaldroidSampleActivity extends FragmentActivity {
 			
 			@Override
 			public void onClick(View v) {
-				FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-				DialogFragment dialog = CreateUserFragmentDialog.newInstance();
-				dialog.show(ft, "dialog"); 
-				
+//				FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+//				DialogFragment dialog = CreateUserFragmentDialog.newInstance();
+//				dialog.show(ft, "dialog"); 
+
+					startActivity(new Intent(getApplicationContext(), CreateNewEventActivity.class));
 			}
 		});
 		
