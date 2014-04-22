@@ -1,5 +1,6 @@
 package ehc.net;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import org.json.JSONException;
@@ -32,6 +33,7 @@ public class CreateNewEventActivity extends Activity {
 	private SpinnerEventContainer servicesList;
 	private boolean serviceSelected = false;
 	private boolean textChanged = false;
+	private boolean actionSelected = false;
 	private int daySelected = 0;
 	private int monthSelected = 0;
 	private int yearSelected = 0;
@@ -55,12 +57,12 @@ public class CreateNewEventActivity extends Activity {
 		yearSelected = c.get(Calendar.YEAR);
 		hourSelected = c.get(Calendar.HOUR);
 		minuteSelected = c.get(Calendar.MINUTE);
-		
+
 		dateSelected = (TextView) findViewById(R.id.tv_date);
 		timeSelected = (TextView) findViewById(R.id.tv_time);
 
 		/**
-		 * Spinner info
+		 * Spinner info : services
 		 */
 		final Spinner itemList = (Spinner) findViewById(R.id.sp_item);
 		try {
@@ -80,9 +82,40 @@ public class CreateNewEventActivity extends Activity {
 			@Override
 			public void onItemSelected(AdapterView<?> parent, View view,
 					int position, long id) {
-				if (position != 0)
+				if (position != 0) {
 					serviceSelected = true;
+					final Spinner actionList = (Spinner) findViewById(R.id.sp_action);
+					ArrayList<String> actions = JSON.getInstance(
+							getApplicationContext()).getServices(
+							servicesList.getHouse(position-1),
+							servicesList.getRoom(position-1),
+							servicesList.getService(position-1));
+					ArrayAdapter<String> spinnerActionAdapter = new ArrayAdapter<String>(
+							getApplicationContext(),
+							R.layout.spinner_simple_data, actions);
+					actionList.setAdapter(spinnerActionAdapter);
+					actionList.setSelection(0);
 
+					actionList
+							.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+								@Override
+								public void onItemSelected(
+										AdapterView<?> parent, View view,
+										int position, long id) {
+									if ((position != 0) && (serviceSelected))
+										actionSelected = true;
+								}
+
+								@Override
+								public void onNothingSelected(
+										AdapterView<?> parent) {
+									// TODO Auto-generated method stub
+
+								}
+							});
+
+				}
 			}
 
 			@Override
@@ -91,6 +124,10 @@ public class CreateNewEventActivity extends Activity {
 
 			}
 		});
+
+		/**
+		 * Spinner info : actions
+		 */
 
 		EditText et = (EditText) findViewById(R.id.event_name);
 		et.addTextChangedListener(new TextWatcher() {
@@ -156,7 +193,7 @@ public class CreateNewEventActivity extends Activity {
 			public void onClick(View v) {
 				String date = (String) dateSelected.getText();
 				String time = (String) timeSelected.getText();
-				
+
 				if (textChanged == false)
 					Toast.makeText(getApplicationContext(), "Insert a name",
 							Toast.LENGTH_LONG).show();

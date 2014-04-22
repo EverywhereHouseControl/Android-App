@@ -32,6 +32,18 @@ public class SpinnerEventContainer {
 		return fullInfo;
 	}
 
+	public String getHouse(int index){
+		return list.get(index).getHouse();
+	}
+	
+	public String getRoom(int index){
+		return list.get(index).getRoom();
+	}
+	
+	public String getService(int index){
+		return list.get(index).getService();
+	}
+	
 	private static class SpinnerEventInfo {
 
 		private String room;
@@ -51,6 +63,18 @@ public class SpinnerEventContainer {
 		
 		static String getDefaultSpinnerRegister(){
 			return "Select a service.";
+		}
+		
+		public String getHouse(){
+			return house;
+		}
+		
+		public String getRoom(){
+			return room;
+		}
+		
+		public String getService(){
+			return service;
 		}
 
 	}

@@ -18,211 +18,175 @@ import android.content.Context;
 import android.util.Log;
 
 public class JSON {
-private static JSON _instance;
-public ArrayList<String> _houses = new ArrayList<String>();
-public ArrayList<String> _rooms = new ArrayList<String>();
-public ArrayList<String> _items = new ArrayList<String>();
-public ArrayList<String> _access = new ArrayList<String>();
-public HashMap<String, String> _urls = new HashMap<String, String>();
-public HashMap<String, Event> _events;
-public HashMap<String, JSONArray> _roomsHouses = new HashMap<String, JSONArray>();
+	private static JSON _instance;
+	public ArrayList<String> _houses = new ArrayList<String>();
+	public ArrayList<String> _rooms = new ArrayList<String>();
+	public ArrayList<String> _items = new ArrayList<String>();
+	public ArrayList<String> _access = new ArrayList<String>();
+	public HashMap<String, String> _urls = new HashMap<String, String>();
+	public HashMap<String, Event> _events;
+	public HashMap<String, JSONArray> _roomsHouses = new HashMap<String, JSONArray>();
 
-private static final String _TAG_NAME = "name";
-// private static final String _TAG_USER = "User";
-private static final String _TAG_HOUSES = "houses";
-private static final String _TAG_ROOMS = "rooms";
-private static final String _TAG_SERIVICES = "services";
-private String _file = null;
-private String _eventFile = null;
+	private static final String _TAG_NAME = "name";
+	// private static final String _TAG_USER = "User";
+	private static final String _TAG_HOUSES = "houses";
+	private static final String _TAG_ROOMS = "rooms";
+	private static final String _TAG_SERVICES = "services";
+	private static final String _TAG_ACTIONS = "actions";
+	private String _file = null;
+	private String _eventFile = null;
 
-@SuppressWarnings("unused")
-private JSON() 
-{
-}
-
-public static synchronized JSON getInstance(Context c) 
-{
-	_instance = new JSON(c);
-	return _instance;
-}
-
-public JSON(Context c) 
-{
-	loadUserEnvironment(c);
-	loadUserEvents(c);
-}
-
-private void loadUserEnvironment(Context c) 
-{
-	try 
-	{
-		InputStream _is = c.openFileInput("configuration.json");
-		int _size = _is.available();
-		byte[] buffer = new byte[_size];
-		_is.read(buffer);
-		_is.close();
-	this._file = new String(buffer, "UTF-8");
-	try 
-	{
-		loadJSON();
-	} 
-	catch (JSONException e) 
-	{
-		e.printStackTrace();
+	@SuppressWarnings("unused")
+	private JSON() {
 	}
-	} 
-	catch (IOException ex) 
-	{
-		ex.printStackTrace();
-	}
-}
 
-private void loadUserEvents(Context c) 
-{
-	try 
-	{
-		_events = new HashMap<String, Event>();
-		InputStream _is = c.getAssets().open("event.json");
-		int _size = _is.available();
-		byte[] buffer = new byte[_size];
-		_is.read(buffer);
-		_is.close();
-		this._eventFile = new String(buffer, "UTF-8");
-	try 
-	{
-		loadJSONEvent();
-	} 
-	catch (JSONException e) 
-	{
-		e.printStackTrace();
+	public static synchronized JSON getInstance(Context c) {
+		_instance = new JSON(c);
+		return _instance;
 	}
-	} catch (IOException ex) 
-	{
-		ex.printStackTrace();
+
+	public JSON(Context c) {
+		loadUserEnvironment(c);
+		loadUserEvents(c);
 	}
-}
 
-private void loadJSONEvent() throws JSONException 
-{
-Log.d("JSON ", _eventFile.toString());
-
-	JSONObject obj = new JSONObject(_eventFile);
-	try 
-	{
-		for (int i = 0; i <= obj.length(); i++) 
-		{
-			JSONObject event = obj.getJSONObject("Event" + i);
-			String dateFormat = event.get("Year") + "-"
-			+ event.get("Month") + "-" + event.get("Day");
-			Date date = null;
-		
-			try 
-			{
-			date = CalendarHelper.getDateFromString(dateFormat,
-			"yyyy-MM-dd");
-			} 
-			catch (ParseException e) 
-			{
-				// TODO Auto-generated catch block
+	private void loadUserEnvironment(Context c) {
+		try {
+			InputStream _is = c.openFileInput("configuration.json");
+			int _size = _is.available();
+			byte[] buffer = new byte[_size];
+			_is.read(buffer);
+			_is.close();
+			this._file = new String(buffer, "UTF-8");
+			try {
+				loadJSON();
+			} catch (JSONException e) {
 				e.printStackTrace();
 			}
-	
-			Event ev = new Event((String) event.get("Name"),
-			(int) event.getInt("item"),
-			(String) event.get("Created"), date,
-			(String) event.get("Hour"),
-			(String) event.get("Minute"));
-			_events.put("Event" + i, ev);
-
+		} catch (IOException ex) {
+			ex.printStackTrace();
 		}
-	} 
-	catch (JSONException e)
-	{
-		e.printStackTrace();
 	}
-}
 
-public HashMap<String, Event> getEvents() 
-{
-	return _events;
-}
-	
+	private void loadUserEvents(Context c) {
+		try {
+			_events = new HashMap<String, Event>();
+			InputStream _is = c.getAssets().open("event.json");
+			int _size = _is.available();
+			byte[] buffer = new byte[_size];
+			_is.read(buffer);
+			_is.close();
+			this._eventFile = new String(buffer, "UTF-8");
+			try {
+				loadJSONEvent();
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+	}
+
+	private void loadJSONEvent() throws JSONException {
+		Log.d("JSON ", _eventFile.toString());
+
+		JSONObject obj = new JSONObject(_eventFile);
+		try {
+			for (int i = 0; i <= obj.length(); i++) {
+				JSONObject event = obj.getJSONObject("Event" + i);
+				String dateFormat = event.get("Year") + "-"
+						+ event.get("Month") + "-" + event.get("Day");
+				Date date = null;
+
+				try {
+					date = CalendarHelper.getDateFromString(dateFormat,
+							"yyyy-MM-dd");
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+				Event ev = new Event((String) event.get("Name"),
+						(int) event.getInt("item"),
+						(String) event.get("Created"), date,
+						(String) event.get("Hour"),
+						(String) event.get("Minute"));
+				_events.put("Event" + i, ev);
+
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public HashMap<String, Event> getEvents() {
+		return _events;
+	}
+
 	/**
 	 * 
 	 * @throws JSONException
 	 */
-	private void loadJSON() throws JSONException 
-	{
+	private void loadJSON() throws JSONException {
 		Log.d("JSON ", _file.toString());
 
 		JSONObject _obj = new JSONObject(_file);
-		try 
-		{
+		try {
 			this._houses = new ArrayList<String>();
-			
+
 			JSONArray _houses = _obj.getJSONArray(_TAG_HOUSES);
-			
-			for (int i = 0; i < _houses.length(); i++) 
-			{				
+
+			for (int i = 0; i < _houses.length(); i++) {
 				JSONObject _house = _houses.getJSONObject(i);
 				this._houses.add(_house.getString("name"));
 				_access.add(_house.getString("access"));
-				try
-				{
+				try {
 					String _url = _house.getString("image");
 					Log.d("URL", _url);
-					if(_url.equals("null"))// == null)
+					if (_url.equals("null"))// == null)
 					{
 						Log.d("URL", _url);
 						_url = "null";
 					}
-					_urls.put(_house.getString("name"),_url );
-				}
-				catch(Exception e)
-				{
+					_urls.put(_house.getString("name"), _url);
+				} catch (Exception e) {
 					Log.d("ERROR", e.toString());
 				}
-				
+
 				Log.d("HOUSE", _house.toString());
-				
-				try
-				{
+
+				try {
 					JSONArray _rooms = _house.getJSONArray(_TAG_ROOMS);
 					Log.d("ROOMS", _rooms.toString());
-				
-				
+
 					JSONArray _roomsList = new JSONArray();
-					
-					for (int j=0; j< _rooms.length(); j++)
-					{
+
+					for (int j = 0; j < _rooms.length(); j++) {
 						JSONObject _room = _rooms.getJSONObject(j);
 						Log.d("ROOM", _room.toString());
 						_roomsList.put(_room);
-						try
-						{
-							JSONArray _services = _room.getJSONArray(_TAG_SERIVICES);
+						try {
+							JSONArray _services = _room
+									.getJSONArray(_TAG_SERVICES);
 							Log.d("SERVICES", _services.toString());
-						}
-						catch(Exception e)
-						{
+						} catch (Exception e) {
 							Log.d("ERROR", e.toString());
 						}
-						
+
 					}
 					_roomsHouses.put(_house.getString(_TAG_NAME), _roomsList);
-					Log.d("Table houses: ", _house.getString(_TAG_NAME) +" "+_roomsHouses.get(_house.getString(_TAG_NAME)));
-				}
-				catch(Exception e)
-				{
+					Log.d("Table houses: ", _house.getString(_TAG_NAME) + " "
+							+ _roomsHouses.get(_house.getString(_TAG_NAME)));
+				} catch (Exception e) {
 					Log.d("ERROR", e.toString());
-					_roomsHouses.put(_house.getString(_TAG_NAME),new JSONArray());
-					Log.d("Table houses: ", _house.getString(_TAG_NAME) +" "+_roomsHouses.get(_house.getString(_TAG_NAME)));
+					_roomsHouses.put(_house.getString(_TAG_NAME),
+							new JSONArray());
+					Log.d("Table houses: ", _house.getString(_TAG_NAME) + " "
+							+ _roomsHouses.get(_house.getString(_TAG_NAME)));
 				}
-				
+
 			}
-		} 
-		catch (JSONException e) 
-		{
+		} catch (JSONException e) {
 			e.printStackTrace();
 		}
 	}
@@ -232,161 +196,137 @@ public HashMap<String, Event> getEvents()
 	 * @return
 	 * @throws JSONException
 	 */
-	public ArrayList<String> getHousesName() throws JSONException 
-	{
+	public ArrayList<String> getHousesName() throws JSONException {
 		return _houses;
 	}
-	
+
 	/**
 	 * 
 	 * @param house
 	 * @return
 	 */
-	public String getUrlImage(String house)
-	{
+	public String getUrlImage(String house) {
 		return _urls.get(house);
 	}
-	
+
 	/**
 	 * 
 	 * @return
 	 */
-	public ArrayList<String> getHousesAccess()
-	{
+	public ArrayList<String> getHousesAccess() {
 		return _access;
 	}
-	
+
 	/**
 	 * 
 	 * @return
 	 */
-	public ArrayList<String> getUrlsImage()
-	{
+	public ArrayList<String> getUrlsImage() {
 		ArrayList<String> _urls = new ArrayList<String>();
-		for(int i=0; i<_houses.size(); i++)
-		{
+		for (int i = 0; i < _houses.size(); i++) {
 			_urls.add(this._urls.get(_houses.get(i)));
 		}
 		return _urls;
 	}
-	
+
 	/**
 	 * 
 	 * @return
 	 * @throws JSONException
-	 *//*
-	public ArrayList<String> getHouses() throws JSONException 
-	{
-		ArrayList<String> _housesList = new ArrayList<String>();
-		Set<String> s = _roomsHouses.keySet();
-		Iterator<String> it = s.iterator();
-		
-		while(it.hasNext())
-		{
-			_housesList.add(it.next());
-		}
-		return _housesList;
-	}*/
-	
+	 */
+	/*
+	 * public ArrayList<String> getHouses() throws JSONException {
+	 * ArrayList<String> _housesList = new ArrayList<String>(); Set<String> s =
+	 * _roomsHouses.keySet(); Iterator<String> it = s.iterator();
+	 * 
+	 * while(it.hasNext()) { _housesList.add(it.next()); } return _housesList; }
+	 */
+
 	/**
 	 * 
 	 * @param house
 	 * @return
 	 * @throws JSONException
 	 */
-	public ArrayList<String> getRooms(String house) throws JSONException 
-	{
+	public ArrayList<String> getRooms(String house) throws JSONException {
 		ArrayList<String> _roomsList = new ArrayList<String>();
-		try 
-		{
+		try {
 			JSONArray _rooms = new JSONArray();
 			_rooms = _roomsHouses.get(house);
-			
-			Log.d("NUM ROOMS: ",Integer.toString(_rooms.length()));
-			
-			for (int i = 0; i < _rooms.length(); i++) 
-			{
+
+			Log.d("NUM ROOMS: ", Integer.toString(_rooms.length()));
+
+			for (int i = 0; i < _rooms.length(); i++) {
 				JSONObject _room = _rooms.getJSONObject(i);
 				_roomsList.add(_room.getString(_TAG_NAME));
 			}
-		} 
-		catch (JSONException e) 
-		{
+		} catch (JSONException e) {
 			e.printStackTrace();
 		}
 		return _roomsList;
-	}	
+	}
 
-//	public ArrayList<String> getAllItems() throws JSONException {
-//
-//		JSONObject _obj = new JSONObject(this._file);
-//		ArrayList<String> _rooms = new ArrayList<String>();
-//
-//		try {
-//			JSONObject _habitaciones = _obj.getJSONObject(_TAG_ROOMS);
-//			for (int i = 1; i <= _habitaciones.length(); i++) {
-//				JSONObject _habitacion = _habitaciones.getJSONObject("R" + i);
-//
-//				System.out.println(_habitacion.getString(_TAG_NAME));
-//
-//				Log.e("COLIN_TAG", _habitacion.getString(_TAG_NAME));
-//				JSONArray _items = _habitacion.getJSONArray(_TAG_ITEMS);
-//
-//				for (int j = 0; j < _items.length(); j++) {
-//					_rooms.add(_items.getString(j));
-//					Log.e("COLIN_TAG", _items.getString(j));
-//					System.out.println(_items.getString(j));
-//				}
-//			}
-//		} catch (JSONException e) {
-//			e.printStackTrace();
-//		}
-//		return _rooms;
-//	}
+	// public ArrayList<String> getAllItems() throws JSONException {
+	//
+	// JSONObject _obj = new JSONObject(this._file);
+	// ArrayList<String> _rooms = new ArrayList<String>();
+	//
+	// try {
+	// JSONObject _habitaciones = _obj.getJSONObject(_TAG_ROOMS);
+	// for (int i = 1; i <= _habitaciones.length(); i++) {
+	// JSONObject _habitacion = _habitaciones.getJSONObject("R" + i);
+	//
+	// System.out.println(_habitacion.getString(_TAG_NAME));
+	//
+	// Log.e("COLIN_TAG", _habitacion.getString(_TAG_NAME));
+	// JSONArray _items = _habitacion.getJSONArray(_TAG_ITEMS);
+	//
+	// for (int j = 0; j < _items.length(); j++) {
+	// _rooms.add(_items.getString(j));
+	// Log.e("COLIN_TAG", _items.getString(j));
+	// System.out.println(_items.getString(j));
+	// }
+	// }
+	// } catch (JSONException e) {
+	// e.printStackTrace();
+	// }
+	// return _rooms;
+	// }
 
 	@SuppressLint("DefaultLocale")
-	public ArrayList<String> getItems(String roomName, String house) throws JSONException 
-	{		
+	public ArrayList<String> getItems(String roomName, String house)
+			throws JSONException {
 		ArrayList<String> _itemList = new ArrayList<String>();
-		
-		try 
-		{
+
+		try {
 			JSONArray _rooms = new JSONArray();
-			Log.d("ROOMS",_roomsHouses.toString());
+			Log.d("ROOMS", _roomsHouses.toString());
 			_rooms = _roomsHouses.get(house);
-			Log.d("ROOMS",_rooms.toString());
-			
-			for (int i = 0; i < _rooms.length(); i++) 
-			{
+			Log.d("ROOMS", _rooms.toString());
+
+			for (int i = 0; i < _rooms.length(); i++) {
 				JSONObject _room = _rooms.getJSONObject(i);
-				Log.d("ROOM$",_room.toString());
-				if(_room.get(_TAG_NAME).equals(roomName))
-				{
-					try
-					{
-						JSONArray _services = _room.getJSONArray(_TAG_SERIVICES);
-						Log.d("SERVICES",_services.toString());
-						for(int j=0; j< _services.length(); j++)
-						{
+				Log.d("ROOM$", _room.toString());
+				if (_room.get(_TAG_NAME).equals(roomName)) {
+					try {
+						JSONArray _services = _room.getJSONArray(_TAG_SERVICES);
+						Log.d("SERVICES", _services.toString());
+						for (int j = 0; j < _services.length(); j++) {
 							JSONObject _item = _services.getJSONObject(j);
-							Log.d("ITEM",_item.toString());
+							Log.d("ITEM", _item.toString());
 							_itemList.add(_item.getString(_TAG_NAME));
 						}
-					}
-					catch(Exception e)
-					{
+					} catch (Exception e) {
 						Log.d("ERROR", e.toString());
 					}
 				}
 			}
-		} 
-		catch (JSONException e) 
-		{
+		} catch (JSONException e) {
 			e.printStackTrace();
 		}
 		return _itemList;
 	}
-	
+
 	/*
 	 * Returns service's name + room's name
 	 */
@@ -402,7 +342,7 @@ public HashMap<String, Event> getEvents()
 				JSONObject _room = _rooms.getJSONObject(i);
 				String room = _room.getString(_TAG_NAME);
 
-				JSONArray _services = _room.getJSONArray(_TAG_SERIVICES);
+				JSONArray _services = _room.getJSONArray(_TAG_SERVICES);
 				Log.d("SERVICES", _services.toString());
 				for (int j = 0; j < _services.length(); j++) {
 					String service = _services.getJSONObject(j).getString(
@@ -414,5 +354,40 @@ public HashMap<String, Event> getEvents()
 			e.printStackTrace();
 		}
 		return info;
+	}
+
+	public ArrayList<String> getServices(String house, String room, String item) {
+		ArrayList<String> serviceList = new ArrayList<String>();
+		serviceList.add("Select an action: ");
+
+		try {
+			JSONArray _rooms = new JSONArray();
+			_rooms = _roomsHouses.get(house);
+
+			for (int i = 0; i < _rooms.length(); i++) {
+				JSONObject _room = _rooms.getJSONObject(i);
+				Log.d("ROOM$", _room.toString());
+				if (_room.get(_TAG_NAME).equals(room)) {
+					try {
+						JSONArray _services = _room.getJSONArray(_TAG_SERVICES);
+						Log.d("SERVICES", _services.toString());
+						for (int j = 0; j < _services.length(); j++) {
+							JSONObject _item = _services.getJSONObject(j);
+							if (_item.get(_TAG_NAME).equals(item)) {
+								JSONArray actions = _item.getJSONArray(_TAG_ACTIONS);
+								for (int k = 0; k < actions.length(); k++)
+									serviceList.add(actions.get(k).toString());
+							}							
+						}
+					} catch (Exception e) {
+						Log.d("ERROR", e.toString());
+					}
+				}
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return serviceList;
+
 	}
 }
