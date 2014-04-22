@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -124,13 +125,29 @@ public class SlidingMenuAdapter extends BaseAdapter
 			CheckBox _check = (CheckBox) _view.findViewById(R.id.HouseCheckBox);
 			_check.setVisibility(View.GONE);
 			
-			ImageView _image = (ImageView) _view.findViewById(R.id.HouseImageList);
+			final ImageButton _image = (ImageButton) _view.findViewById(R.id.HouseImageList);
 			
 			if(!_urls.get(position-1).equals("null"))
 			{
 				 _imgLoader.DisplayImage(_urls.get(position-1), R.drawable.base_picture, _image);
 			}
 			else _image.setImageResource(R.drawable.base_picture);
+			
+			_image.setOnClickListener(new View.OnClickListener() 
+			{
+				
+				@Override
+				public void onClick(View v) 
+				{
+					// TODO Auto-generated method stub
+					if(_access.get(position-1).equals("3"))
+					{
+						Toast.makeText(_context, "Required access", Toast.LENGTH_SHORT).show();
+					}
+					else 
+						HousesMenu.createdMainMenuIntent(_button.getText().toString());
+				}
+			});
 		}
 		else if( position == (_houses.size()+1))
 		{

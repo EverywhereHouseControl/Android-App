@@ -7,10 +7,7 @@ import com.kbeanie.imagechooser.api.ChosenImage;
 import ehc.net.HousesMenu;
 import ehc.net.R;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,9 +15,9 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.Toast;
 import android.widget.CompoundButton.OnCheckedChangeListener;
-import android.widget.ImageView;
 
 public class HouseListAdapter extends BaseAdapter
 {
@@ -34,7 +31,7 @@ public class HouseListAdapter extends BaseAdapter
 	private boolean _stateChosenImage;
 	private int _currentOption;
 	private ChosenImage _currentImage;
-	private ImageView _image;
+	private ImageButton _image;
 	private String _path;
 	private ArrayList<String> _urls = new ArrayList<String>();
 	private ArrayList<String> _access = new ArrayList<String>();
@@ -103,7 +100,7 @@ public class HouseListAdapter extends BaseAdapter
 			}
 		});
 		
-		_image = (ImageView) _view.findViewById(R.id.HouseImageList);
+		_image = (ImageButton) _view.findViewById(R.id.HouseImageList);
 		
 		if(!_urls.get(position).equals("null"))
 		{
@@ -111,6 +108,22 @@ public class HouseListAdapter extends BaseAdapter
 	        _imgLoader.DisplayImage(_path, R.drawable.base_picture, _image);
 	    } 
 		else _image.setImageResource(R.drawable.base_picture);
+		
+		_image.setOnClickListener(new View.OnClickListener() 
+		{
+			
+			@Override
+			public void onClick(View v) 
+			{
+				// TODO Auto-generated method stub
+				if(_access.get(position).equals("3"))
+				{
+					Toast.makeText(_context, "Required access", Toast.LENGTH_SHORT).show();
+				}
+				else 
+					HousesMenu.createdMainMenuIntent(_button.getText().toString());
+			}
+		});
 		
 
 		CheckBox _check = (CheckBox) _view.findViewById(R.id.HouseCheckBox);
