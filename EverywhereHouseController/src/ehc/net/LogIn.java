@@ -316,8 +316,8 @@ public class LogIn extends Activity
     	super.onResume();
     	log( "Resumed" );
     	//Reset the boxes
-        _user.setText("");
-        _password.setText("");
+        _user.setHint("User");//setText("");
+        _password.setHint("Password");//setText("");
     }
     
     protected void onPause()

@@ -1,6 +1,8 @@
 package ehc.net;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 import org.json.JSONException;
@@ -48,6 +50,8 @@ public class HousesMenu extends Activity implements ImageChooserListener
 	private Post _post;
 	JSONObject _data = new JSONObject();
 	//------------------------------------------
+	private String _file;
+	public static String _currentHouse;
        
 	@Override
     protected void onCreate( Bundle savedInstanceState ) 
@@ -102,6 +106,7 @@ public class HousesMenu extends Activity implements ImageChooserListener
 		_activity = this;
 		_currentImage = new ImageView(_activity);
 		_textViewFile = new TextView(_activity);
+		parser();
     }
 	
 	/**
@@ -176,6 +181,32 @@ public class HousesMenu extends Activity implements ImageChooserListener
         }
         return true;
     }
+	
+    
+    /**
+	 * 
+	 */
+	private void parser()
+	{
+		try 
+		{
+			InputStream _is = openFileInput("profileInformation.json");
+			int _size = _is.available();
+	        byte[] buffer = new byte[_size];
+	        _is.read(buffer);
+	        _is.close();
+	        this._file =null;
+	        this._file = new String(buffer, "UTF-8");
+		} 
+    	catch (IOException ex) 
+    	{
+    		ex.printStackTrace();
+    	}
+		catch (Exception ex) 
+    	{
+    		ex.printStackTrace();
+    	}
+	}
 	
     /**
      * 
@@ -345,13 +376,51 @@ public class HousesMenu extends Activity implements ImageChooserListener
 				public void run() 
 				{
 					// TODO Auto-generated method stub
+//					try 
+//					{
+//						JSONObject _json_data = _data.getJSONObject("error");
+//						_message = _json_data.getString("ENGLISH");
+//					} 
+//					catch (Exception e) 
+//					{
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//						_message = "internal error.";
+//					}
 					try 
 					{
 						JSONObject _json_data = _data.getJSONObject("error");
-						_message = _json_data.getString("ENGLISH");
-					} catch (Exception e) 
+						switch(_json_data.getInt("ERROR"))
+						{
+							case 0:
+							{
+//								JSONObject obj = new JSONObject(_file);
+//								
+//								ArrayList<String> _parametros = new ArrayList<String>();
+//								_parametros.add("command");
+//								_parametros.add("modifyhouse");
+//								_parametros.add("username");
+//								_parametros.add(obj.getString("USERNAME"));
+//								_parametros.add("housename");
+//								_parametros.add(_currentHouse);
+//								_parametros.add("n_housename");
+//								_parametros.add(_currentHouse);
+//								_parametros.add("idimage");
+//								_parametros.add(_imagePath);
+//								_data = _post.connectionPostUpload(_parametros, "http://5.231.69.226/EHControlConnect/index.php", _imagePath);		
+								_message = _json_data.getString("ENGLISH");					
+								break;
+							}
+							default:
+							{
+								_message = _json_data.getString("ENGLISH");
+								break;
+							}
+						}
+					
+					} 
+					catch (Exception e) 
 					{
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 						_message = "internal error.";
 					}

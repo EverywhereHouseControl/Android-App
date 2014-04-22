@@ -3,22 +3,34 @@
     android:id="@+id/LinearLayout1"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@color/White"
+    android:background="@color/GreenApp"
     android:orientation="vertical" >
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="80dp"
-        android:src="@drawable/house_icon" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="138dp" >
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/white_house_icon" />
+
+    </RelativeLayout>
 
     <ListView
         android:id="@+id/HousesListView"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:background="@color/GreenApp"
         android:clickable="true"
         android:scrollingCache="true"
         android:smoothScrollbar="true" >
+
     </ListView>
 
 </LinearLayout>

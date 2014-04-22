@@ -10,7 +10,7 @@
 	    android:layout_width="match_parent"
 	    android:layout_height="match_parent"
 	    android:orientation="vertical"
-	    android:background="@color/White" >
+	    android:background="@color/GreenApp" >
 
 
 	    <ImageView
@@ -70,7 +70,7 @@
 	        android:background="@drawable/button_config"
 	        android:onClick="onClickButton"
 	        android:text="Exit"
-	        android:textColor="@drawable/button_text_color"
+	        android:textColor="@drawable/button_text_color2"
 	        android:textSize="20sp" />
 	
 	    <TextView
@@ -81,7 +81,7 @@
 	        android:layout_marginTop="58dp"
 	        android:layout_toLeftOf="@+id/on_off_remote"
 	        android:text="Password"
-	        android:textColor="@color/Black"
+	        android:textColor="@color/White"
 	        android:textSize="20sp" />
 	
 	    <Button
@@ -95,7 +95,7 @@
 	        android:layout_marginTop="46dp"
 	        android:background="@drawable/button_config"
 	        android:text="Save"
-	        android:textColor="@drawable/button_text_color"
+	        android:textColor="@drawable/button_text_color2"
 	        android:textSize="20sp" />
 	
 	    <TextView
@@ -106,7 +106,7 @@
 	        android:layout_alignLeft="@+id/profileSave"
 	        android:layout_marginBottom="35dp"
 	        android:text="User"
-	        android:textColor="@color/Black"
+	        android:textColor="@color/White"
 	        android:textSize="20sp" />
 	
 	    <TextView
@@ -116,15 +116,16 @@
 	        android:layout_alignLeft="@+id/textView3"
 	        android:layout_centerVertical="true"
 	        android:text="E-mail"
-	        android:textColor="@color/Black"
+	        android:textColor="@color/White"
 	        android:textSize="20sp" />
 
 	</RelativeLayout>
+
 	<ListView
 	    android:id="@+id/ListViewSlidingMenu"
 	    android:layout_width="match_parent"
 	    android:layout_height="match_parent"
 	    android:layout_gravity="left"
-	    android:background="@color/White" />
+	    android:background="@color/GreenApp" />
  
 </android.support.v4.widget.DrawerLayout>

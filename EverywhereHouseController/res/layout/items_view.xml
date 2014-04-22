@@ -3,12 +3,13 @@
     android:id="@+id/llid"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" 
-    android:background="@color/White">
+    android:background="@color/GreenApp"
+    android:orientation="vertical" >
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="91dp" >
+        android:layout_height="91dp"
+        android:background="@color/GreenApp" >
 
         <TextView
             android:id="@+id/textRoom"
@@ -17,7 +18,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:text="TextView"
-            android:textColor="@color/Black"
+            android:textColor="@color/White"
             android:textSize="30sp" />
 
     </RelativeLayout>

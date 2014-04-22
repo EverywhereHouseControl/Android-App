@@ -132,9 +132,11 @@ public class HouseListAdapter extends BaseAdapter
 					switch( _currentOption )
 					{
 						case 1:
+							HousesMenu._currentHouse = _button.getText().toString();
 							HousesMenu.takePicture();
 							break;
 						case 2:
+							HousesMenu._currentHouse = _button.getText().toString();
 							HousesMenu.chooseImage();
 							break;
 						default:

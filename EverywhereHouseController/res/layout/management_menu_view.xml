@@ -1,51 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.DrawerLayout
-	 xmlns:android="http://schemas.android.com/apk/res/android"
-	 xmlns:tools="http://schemas.android.com/tools"
-	 tools:context=".ManagementMenu" 
-	 android:id="@+id/drawer_layout"
-	 android:layout_width="match_parent"
-	 android:layout_height="match_parent" >
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ManagementMenu" >
 
-	<ScrollView 
-	    android:layout_width="fill_parent"
-	    android:layout_height="fill_parent"
-	    android:background="@android:color/white"
-	    android:fillViewport="true"
-	    android:gravity="top|bottom|left|right|center">
-    	    	
-        <LinearLayout
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/White"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="164dp" >
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:textColor="@color/GreenApp"
+                android:text="ROOMS"
+                android:textSize="30sp"
+                 />
+
+        </RelativeLayout>
+
+        <ListView
+            android:id="@+id/roomsListView"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:orientation="vertical" >
+            android:background="@color/GreenApp">
+        </ListView>
+    </LinearLayout>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
+    <ListView
+        android:id="@+id/ListViewSlidingMenu"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="left"
+        android:background="@color/GreenApp" />
 
-                <ImageView
-                    android:id="@+id/HouseIconManagementMenu"
-                    android:layout_width="match_parent"
-                    android:layout_height="120dp"
-                    android:src="@drawable/house_icon" />
-
-            </RelativeLayout>
-
-            <ListView
-                android:id="@+id/roomsListView"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent" >
-            </ListView>
-
-        </LinearLayout>
-
-	</ScrollView>
-	
-<ListView
-	    android:id="@+id/ListViewSlidingMenu"
-	    android:layout_width="match_parent"
-	    android:layout_height="match_parent"
-	    android:layout_gravity="left"
-	    android:background="@color/White" />
- 
 </android.support.v4.widget.DrawerLayout>

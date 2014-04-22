@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class ListAdapter extends BaseAdapter
@@ -63,6 +64,21 @@ public class ListAdapter extends BaseAdapter
 		TextView _textView = (TextView) _view.findViewById(R.id.RoomGroupName);
 		_textView.setTypeface(null, Typeface.BOLD);
 		_textView.setText(_list.get(position));
+		
+		ImageView _imageView = (ImageView) _view.findViewById(R.id.HouseImageList);
+		if(_textView.getText().toString().contains("cocina"))
+		{
+			_imageView.setBackgroundResource(R.drawable.cooker);
+		}
+		else if(_textView.getText().toString().contains("terraza"))
+		{
+			_imageView.setBackgroundResource(R.drawable.terrace);
+		}
+		else
+		{
+			_imageView.setBackgroundResource(R.drawable.interrogation);
+		}
+		
 		
 		return _view;
 	}
