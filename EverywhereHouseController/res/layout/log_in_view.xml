@@ -29,17 +29,6 @@
         android:layout_centerHorizontal="true"
         android:src="@drawable/word_ehc" />
 
-    <TextView
-        android:id="@+id/createUser"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="16dp"
-        android:text="Create user"
-        android:textColor="@color/Blue"
-        android:textColorHint="@color/Blue" />
-
     <RelativeLayout
         android:id="@+id/relativeLayout1"
         android:layout_width="wrap_content"
@@ -97,5 +86,26 @@
         android:text="Login"
         android:textColor="@drawable/button_text_color3"
         android:textSize="25sp" />
+
+    <TextView
+        android:id="@+id/forgotPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/buttonLogin"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:text="Forgot password?"
+        android:textColor="@color/Blue" />
+
+    <TextView
+        android:id="@+id/createUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="14dp"
+        android:text="Create user"
+        android:textColor="@color/Blue"
+        android:textColorHint="@color/Blue" />
 
 </RelativeLayout>

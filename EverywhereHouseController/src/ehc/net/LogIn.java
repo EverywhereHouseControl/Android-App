@@ -13,6 +13,7 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -37,6 +38,7 @@ public class LogIn extends Activity
 		private ImageView _logo;
 		private Post _post;
 		private TextView _createUser;
+		private TextView _forgotPassword;
 	//***********************************
 		
 	@Override
@@ -54,6 +56,7 @@ public class LogIn extends Activity
         
         _buttonLog = ( Button ) findViewById( R.id.buttonLogin );
         _user = ( EditText ) findViewById( R.id.idText );
+        _forgotPassword = ( TextView ) findViewById( R.id.forgotPassword );
         _password = ( EditText ) findViewById( R.id.passwordText );
         _logo = (ImageView) findViewById(R.id.HouseIconManagementMenu);     
         
@@ -61,7 +64,7 @@ public class LogIn extends Activity
         //Start animating the image
          _logo.startAnimation(_anim);
       
-        //final logInConnection connection = new logInConnection();
+//        final logInConnection connection = new logInConnection();
         
         _buttonLog.setOnClickListener( new View.OnClickListener() 
         {	
@@ -95,10 +98,109 @@ public class LogIn extends Activity
 				// TODO Auto-generated method stub
 				createUser();
 			}
-		});        
+		});
+    	
+    	_forgotPassword = (TextView) findViewById(R.id.forgotPassword);
+    	_forgotPassword.setOnClickListener(new View.OnClickListener() 
+        {	
+			@Override
+			public void onClick(View v) 
+			{
+				// TODO Auto-generated method stub
+				forgotPassword();
+			}
+		});
         
 	}
 	
+	/**
+     * -----------------------------------------
+     * Executes the MainMenu's Activity
+     * -----------------------------------------
+     */
+    
+    private void createdIntent()
+    {
+    	try 
+    	{
+			Class<?> _clazz = Class.forName( "ehc.net.HousesMenu" );
+			Intent _intent = new Intent( this,_clazz );
+			startActivity( _intent );
+		} 
+		catch ( ClassNotFoundException e ) 
+		{
+			e.printStackTrace();
+		}
+    }
+	
+    /**
+     * -----------------------------------------
+     * Executes the CreateUser's Activity
+     * -----------------------------------------
+     */
+    private void createUser()
+    {
+    	try 
+    	{
+			Class<?> _clazz = Class.forName( "ehc.net.CreateUser" );
+			Intent _intent = new Intent( this,_clazz );
+			startActivity( _intent );
+		} 
+		catch ( ClassNotFoundException e ) 
+		{
+			e.printStackTrace();
+		}
+    }
+    /**
+     * 
+     */
+	private void forgotPassword() 
+	{
+		// TODO Auto-generated method stub
+		// custom dialog
+		final Dialog dialog = new Dialog(this);
+		dialog.setContentView(R.layout.forgot_password_dialog);
+		dialog.setTitle("Forgot password?");
+ 
+		final EditText _userName = (EditText) dialog.findViewById(R.id.UserEditText);
+		final EditText _userEmail = (EditText) dialog.findViewById(R.id.EmailEditText);
+		
+		Button _sendButton = (Button) dialog.findViewById(R.id.SendButton);
+		// if button is clicked, close the custom dialog
+		_sendButton.setOnClickListener(new View.OnClickListener() 
+		{
+			@Override
+			public void onClick(View v) 
+			{
+				if(!_userName.getText().toString().isEmpty() && !_userEmail.getText().toString().isEmpty())
+				{
+					_post = new Post();						
+			    	forgotPasswordConnection _connection = new forgotPasswordConnection(_userName.getText().toString());
+			    	_connection.execute();
+				}
+				else 
+				{
+					if(_userName.getText().toString().isEmpty())
+						Toast.makeText(getBaseContext(), "User box is empty.", Toast.LENGTH_SHORT).show();
+					else if(_userEmail.getText().toString().isEmpty())
+						Toast.makeText(getBaseContext(), "Email box is empty.", Toast.LENGTH_SHORT).show();
+				}
+			}
+		});
+		
+		Button _exitButton = (Button) dialog.findViewById(R.id.ExitButton);
+		// if button is clicked, close the custom dialog
+		_exitButton.setOnClickListener(new View.OnClickListener() 
+		{
+			@Override
+			public void onClick(View v) 
+			{
+				dialog.dismiss();
+			}
+		});
+		dialog.show();
+	}
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) 
 	{
@@ -141,11 +243,12 @@ public class LogIn extends Activity
 				//_parametros.add("login");
 				_parametros.add("username");
 //				_parametros.add(_user.getText().toString());
-				_parametros.add("bertoldo");
+				_parametros.add("demo");
+//				_parametros.add("bertoldo");
 				_parametros.add("password");
 //				_parametros.add(_post.md5(_password.getText().toString()));
-				_parametros.add(_post.md5("bertoldo"));
-			 			
+				_parametros.add(_post.md5("demo"));
+//				_parametros.add(_post.md5("bertoldo"));
 				//Variable 'Data' saves the query response
 				JSONObject _data = _post.getServerData(_parametros,"http://5.231.69.226/EHControlConnect/index.php");//"http://192.168.2.147/EHControlConnect/index.php");
 				log(_data.toString());
@@ -214,6 +317,84 @@ public class LogIn extends Activity
             if(_internalError!=0)Toast.makeText(getBaseContext(), _message, Toast.LENGTH_SHORT).show();
 		}
     }
+    
+ // Background process
+    private class forgotPasswordConnection extends AsyncTask<String, String, String>
+    {    	
+    	private ProgressDialog _pDialog;
+    	private String _message = "";
+    	private int _internalError = 0;
+    	private String _userName = "";
+    	
+    	public forgotPasswordConnection(String userName)
+    	{
+    		_userName = userName;
+    	}
+    	
+    	/**
+    	 * Message "Loading"
+    	 */
+    	protected void onPreExecute() 
+    	{  
+    		super.onPreExecute();
+            _pDialog = new ProgressDialog(LogIn.this);
+            //pDialog.setView(getLayoutInflater().inflate(R.layout.loading_icon_view,null));
+            _pDialog.setMessage("Loading. Please wait...");
+            _pDialog.setIndeterminate(false);
+            _pDialog.setCancelable(false);
+            _pDialog.show();          
+        }
+    	
+    	@Override
+		protected String doInBackground(String... arg0) 
+		{
+			try 
+			{		             
+				//Query
+				ArrayList<String> _parametros = new ArrayList<String>();
+				
+				_parametros.add("command");
+				_parametros.add("lostpass");
+				_parametros.add("username");
+				_parametros.add(_userName);
+			 			
+				//Variable 'Data' saves the query response
+				JSONObject _data = _post.getServerData(_parametros,"http://5.231.69.226/EHControlConnect/index.php");//"http://192.168.2.147/EHControlConnect/index.php");
+				log(_data.toString());
+				
+
+				JSONObject _json_data = _data.getJSONObject("error");
+				switch(_json_data.getInt("ERROR"))
+				{
+					case 0:
+					{
+						_message = _json_data.getString("ENGLISH");
+						break;
+					}
+					default:
+					{
+						_internalError = _json_data.getInt("ERROR");
+						_message = _json_data.getString("ENGLISH");
+						break;
+					}
+				}
+			 
+			 }
+			catch (Exception _e) 
+			 {
+			 	_e.printStackTrace();
+			 }
+			 // End call to PHP server
+			return null;
+		}
+    	
+		protected void onPostExecute(String file_url) 
+		{
+            // dismiss the dialog
+            _pDialog.dismiss();
+            Toast.makeText(getBaseContext(), _message, Toast.LENGTH_SHORT).show();
+		}
+    }
     	
 	/**
 	 * Saves from the server query the profile information in the file 'profile.json'.
@@ -250,45 +431,6 @@ public class LogIn extends Activity
 			e.printStackTrace();
 		}		
 	}
-	
-	/**
-     * -----------------------------------------
-     * Executes the MainMenu's Activity
-     * -----------------------------------------
-     */
-    
-    private void createdIntent()
-    {
-    	try 
-    	{
-			Class<?> _clazz = Class.forName( "ehc.net.HousesMenu" );
-			Intent _intent = new Intent( this,_clazz );
-			startActivity( _intent );
-		} 
-		catch ( ClassNotFoundException e ) 
-		{
-			e.printStackTrace();
-		}
-    }
-	
-    /**
-     * -----------------------------------------
-     * Executes the CreateUser's Activity
-     * -----------------------------------------
-     */
-    private void createUser()
-    {
-    	try 
-    	{
-			Class<?> _clazz = Class.forName( "ehc.net.CreateUser" );
-			Intent _intent = new Intent( this,_clazz );
-			startActivity( _intent );
-		} 
-		catch ( ClassNotFoundException e ) 
-		{
-			e.printStackTrace();
-		}
-    }
     
     @Override
     public void onBackPressed() 

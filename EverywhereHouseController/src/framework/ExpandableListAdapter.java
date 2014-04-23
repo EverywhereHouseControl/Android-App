@@ -68,7 +68,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter
 		{
 			int _itemType = getChildXML(_itemName);
 			convertView = _inflater.inflate(_itemType, parent, false);
-			setListeners(convertView, _itemType, groupPosition);//setListeners(convertView, _itemType);
+			setListeners(convertView, _itemType, groupPosition,childPosition);//setListeners(convertView, _itemType);
 			_servicename = (String) getGroup(groupPosition);
 //			_servicename = _servicename.toUpperCase();
 			
@@ -100,7 +100,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter
 					Button _b = (Button)convertView.findViewById(R.id.integer_value);
 					_b.setText("Down");
 				}
-				setListeners(convertView, _itemType, groupPosition);//setListeners(convertView, _itemType);
+				setListeners(convertView, _itemType, groupPosition,childPosition);//setListeners(convertView, _itemType);
 				_servicename = (String) getGroup(groupPosition);
 //				_servicename = _servicename.toUpperCase();
 			}			
@@ -110,14 +110,14 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter
 			int _itemType = getChildXML(_itemName);
 			convertView = _inflater.inflate(_itemType, parent, false);
 			// -------------------------------------
-			setListeners(convertView, _itemType, groupPosition);//setListeners(convertView, _itemType);
+			setListeners(convertView, _itemType, groupPosition,childPosition);//setListeners(convertView, _itemType);
 			_servicename = (String) getGroup(groupPosition);
 //			_servicename = _servicename.toUpperCase();
 		}
 		return convertView;
 	}
 
-	private void setListeners(final View convertView, int itemType, final int groupPosition) 
+	private void setListeners(final View convertView, int itemType, final int groupPosition, final int childPosition) 
 	{
 		final TextView _tv = (TextView) convertView.findViewById(R.id.childname);	
 		if (itemType == R.layout.float_item) 
@@ -158,11 +158,11 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter
 					// TODO Auto-generated method stub
 					if (isChecked) 
 					{
-						_action = "ENVIAR";	_data = "1";
+						_action = "SEND";	_data = "ON";
 					} 
 					else 
 					{
-						_action = "ENVIAR";	_data = "0";
+						_action = "SEND";	_data = "OFF";
 					}
 					new SimpleActivityTask(_context).sendAction(_currentRoom,_servicename,_action,_data);
 				}
@@ -199,6 +199,22 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter
 //					intent.putExtra("Room",_currentRoom);
 //					intent.putExtra("Service",(String) getGroup(groupPosition));
 //					_context.startActivity(intent);
+					String _laptopName = (String) getGroup(groupPosition);
+					
+					if(_laptopName.equals("BLINDS"))
+					{
+						int _childsNum = getChildrenCount(groupPosition);
+						if(childPosition<_childsNum-1)
+						{
+							_action = "SEND";	_data = "UP";
+							new SimpleActivityTask(_context).sendAction(_currentRoom,_servicename,_action,_data);
+						}
+						else
+						{
+							_action = "SEND";	_data = "DOWN";
+							new SimpleActivityTask(_context).sendAction(_currentRoom,_servicename,_action,_data);
+						}
+					}
 				}
 			});
 		}

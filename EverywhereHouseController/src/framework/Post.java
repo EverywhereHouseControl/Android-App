@@ -24,6 +24,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
+import android.content.Intent;
 import android.util.Log;
 
 public class Post 
@@ -162,24 +163,21 @@ public class Post
 	 */
 	public String md5(String s) 
 	{
-	    try 
-	    {
-	        // Create MD5 Hash
-	        MessageDigest _digest = java.security.MessageDigest.getInstance("MD5");
-	        _digest.update(s.getBytes());
-	        byte messageDigest[] = _digest.digest();
-
-	        // Create Hex String
-	        StringBuffer _hexString = new StringBuffer();
-	        for (int i=0; i<messageDigest.length; i++)
-	            _hexString.append(Integer.toHexString(0xFF & messageDigest[i]));
-	        return _hexString.toString();
-
-	    } catch (NoSuchAlgorithmException e) 
-	    {
-	        e.printStackTrace();
-	    }
-	    return "";
+		StringBuffer sb = new StringBuffer();
+        try 
+        {
+            final java.security.MessageDigest md = java.security.MessageDigest.getInstance("MD5");
+            final byte[] array = md.digest(s.getBytes("UTF-8"));
+            for (int i = 0; i < array.length; ++i) {
+                sb.append(Integer.toHexString((array[i] & 0xFF) | 0x100).substring(1, 3));
+            }
+            return sb.toString();
+        } 
+        catch (Exception e) 
+        {
+        	e.printStackTrace();
+        }
+        return sb.toString();
 	}
 	
 	public JSONObject connectionPostUpload(ArrayList<String> parametros, String URL, String imagePath)
@@ -192,7 +190,21 @@ public class Post
 			_httppost.setURI( new URI(URL) );
 			//-------------------------
 
+//			imagePath.replace(" ", "");
 			File file = new File(imagePath);
+			
+//        	Intent photoPickerIntent = new Intent(
+//                    Intent.ACTION_PICK,
+//                    android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//            // photoPickerIntent.setType("image/*");
+//            photoPickerIntent.putExtra("crop", "true");
+//            photoPickerIntent.putExtra("outputX", 512);
+//            photoPickerIntent.putExtra("outputY", 512);
+//            photoPickerIntent.putExtra("aspectX", 1);
+//            photoPickerIntent.putExtra("aspectY", 1);
+//            photoPickerIntent.putExtra("scale", true);
+//            File file = new File(android.os.Environment
+//                    .getExternalStoragePublicDirectory(f.getParent()), f.getName());
 			
 			MultipartEntity mpEntity = new MultipartEntity();
 			ContentBody cbFile = new FileBody(file, "image/jpeg");

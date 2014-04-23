@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
 import loadUrlImageFramework.ImageLoader;
@@ -461,6 +463,7 @@ public class HousesMenu extends Activity implements ImageChooserListener
 							_parametros.add(_place.second);
 							_parametros.add("image");
 							_parametros.add("images/"+file.getName());
+							
 							_data = _post.getServerData(_parametros, "http://5.231.69.226/EHControlConnect/index.php");
 						
 							JSONObject _json_data = _data.getJSONObject("error");
@@ -480,7 +483,7 @@ public class HousesMenu extends Activity implements ImageChooserListener
 								}
 							}
 						} 
-						catch (JSONException e) 
+						catch (Exception e) 
 						{
 							// TODO Auto-generated catch block
 							e.printStackTrace();

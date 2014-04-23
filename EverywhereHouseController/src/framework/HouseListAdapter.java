@@ -35,7 +35,7 @@ public class HouseListAdapter extends BaseAdapter
 	private String _path;
 	private ArrayList<String> _urls = new ArrayList<String>();
 	private ArrayList<String> _access = new ArrayList<String>();
-	private ImageLoader _imgLoader;
+	public static ImageLoader _imgLoader;
 	
 	public HouseListAdapter(Context context, ArrayList<String> ObjectList,ArrayList<String> urls,ArrayList<String> access, int convertView)
 	{

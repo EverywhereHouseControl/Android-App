@@ -37,8 +37,10 @@ public class JSON {
 	private static final String _TAG_ROOMS = "rooms";
 	private static final String _TAG_SERVICES = "services";
 	private static final String _TAG_ACTIONS = "actions";
-	private String _file = null;
+	private String _fileConfig = null;
+	private String _fileInfo = null;
 	private String _eventFile = null;
+	private String _urlImage = null;
 
 	@SuppressWarnings("unused")
 	private JSON() {
@@ -49,25 +51,57 @@ public class JSON {
 		return _instance;
 	}
 
-	public JSON(Context c) {
+	public JSON(Context c) 
+	{
+		loadUserInformation(c);
 		loadUserEnvironment(c);
 		loadUserEvents(c);
 	}
 
-	private void loadUserEnvironment(Context c) {
-		try {
+	private void loadUserEnvironment(Context c) 
+	{
+		try 
+		{
 			InputStream _is = c.openFileInput("configuration.json");
 			int _size = _is.available();
 			byte[] buffer = new byte[_size];
 			_is.read(buffer);
 			_is.close();
-			this._file = new String(buffer, "UTF-8");
-			try {
-				loadJSON();
-			} catch (JSONException e) {
+			this._fileConfig = new String(buffer, "UTF-8");
+			try 
+			{
+				loadJSONconfig();
+			} 
+			catch (JSONException e) 
+			{
 				e.printStackTrace();
 			}
-		} catch (IOException ex) {
+		} 
+		catch (IOException ex) 
+		{
+			ex.printStackTrace();
+		}
+	}
+	
+	private void loadUserInformation(Context c) 
+	{
+		try {
+			InputStream _is = c.openFileInput("profileInformation.json");
+			int _size = _is.available();
+			byte[] buffer = new byte[_size];
+			_is.read(buffer);
+			_is.close();
+			this._fileInfo = new String(buffer, "UTF-8");
+			try 
+			{
+				loadJSONinfo();
+			} catch (JSONException e) 
+			{
+				e.printStackTrace();
+			}
+		} 
+		catch (IOException ex) 
+		{
 			ex.printStackTrace();
 		}
 	}
@@ -131,10 +165,10 @@ public class JSON {
 	 * 
 	 * @throws JSONException
 	 */
-	private void loadJSON() throws JSONException {
-		Log.d("JSON ", _file.toString());
+	private void loadJSONconfig() throws JSONException {
+		Log.d("JSON ", _fileConfig.toString());
 
-		JSONObject _obj = new JSONObject(_file);
+		JSONObject _obj = new JSONObject(_fileConfig);
 		try {
 			this._houses = new ArrayList<String>();
 
@@ -200,6 +234,17 @@ public class JSON {
 			e.printStackTrace();
 		}
 	}
+	
+	private void loadJSONinfo() throws JSONException 
+	{
+		Log.d("JSON ", _fileInfo.toString());
+
+		JSONObject _obj = new JSONObject(_fileInfo);
+
+		_urlImage = _obj.getString("URL");
+		Log.d("URL image", _urlImage);
+		
+	}
 
 	/**
 	 * 
@@ -210,6 +255,13 @@ public class JSON {
 		return _houses;
 	}
 
+	
+	public String getURLUserImage()
+	{
+		return _eventFile;
+		
+	}
+	
 	/**
 	 * 
 	 * @param house

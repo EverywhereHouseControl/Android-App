@@ -35,7 +35,7 @@ public class RemoteController extends Activity
 			@Override
 			public void onClick(View v) 
 			{	
-				new SimpleActivityTask(_context).sendAction(_currentRoom, _servicename, "ENVIAR", "UNO");	
+				new SimpleActivityTask(_context).sendAction(_currentRoom, _servicename, "SEND", "ONE");	
 			}
 		});
 		
@@ -45,7 +45,7 @@ public class RemoteController extends Activity
 			@Override
 			public void onClick(View v) 
 			{	
-				new SimpleActivityTask(_context).sendAction(_currentRoom, _servicename, "ENVIAR","DOS");				
+				new SimpleActivityTask(_context).sendAction(_currentRoom, _servicename, "SEND","TWO");				
 			}
 		});
 		
@@ -56,7 +56,7 @@ public class RemoteController extends Activity
 			@Override
 			public void onClick(View v) 
 			{	
-				new SimpleActivityTask(_context).sendAction(_currentRoom, _servicename, "ENVIAR","TRES");				
+				new SimpleActivityTask(_context).sendAction(_currentRoom, _servicename, "SEND","THREE");				
 			}
 		});
 		
@@ -67,7 +67,7 @@ public class RemoteController extends Activity
 			@Override
 			public void onClick(View v) 
 			{	
-				new SimpleActivityTask(_context).sendAction(_currentRoom, _servicename, "ENVIAR","CUATRO");				
+				new SimpleActivityTask(_context).sendAction(_currentRoom, _servicename, "SEND","FOUR");				
 			}
 		});
 		
@@ -77,7 +77,7 @@ public class RemoteController extends Activity
 			@Override
 			public void onClick(View v) 
 			{	
-				new SimpleActivityTask(_context).sendAction(_currentRoom, _servicename, "ENVIAR","CINCO");				
+				new SimpleActivityTask(_context).sendAction(_currentRoom, _servicename, "SEND","FIVE");				
 			}
 		});
 		
@@ -87,7 +87,7 @@ public class RemoteController extends Activity
 			@Override
 			public void onClick(View v) 
 			{	
-				new SimpleActivityTask(_context).sendAction(_currentRoom, _servicename, "ENVIAR","SEIS");				
+				new SimpleActivityTask(_context).sendAction(_currentRoom, _servicename, "SEND","SIX");				
 			}
 		});
 		
@@ -97,7 +97,7 @@ public class RemoteController extends Activity
 			@Override
 			public void onClick(View v) 
 			{	
-				new SimpleActivityTask(_context).sendAction(_currentRoom, _servicename, "ENVIAR","SIETE");				
+				new SimpleActivityTask(_context).sendAction(_currentRoom, _servicename, "SEND","SEVEN");				
 			}
 		});
 		
@@ -107,7 +107,7 @@ public class RemoteController extends Activity
 			@Override
 			public void onClick(View v) 
 			{	
-				new SimpleActivityTask(_context).sendAction(_currentRoom, _servicename, "ENVIAR","OCHO");				
+				new SimpleActivityTask(_context).sendAction(_currentRoom, _servicename, "SEND","EIGHT");				
 			}
 		});
 		
@@ -117,7 +117,7 @@ public class RemoteController extends Activity
 			@Override
 			public void onClick(View v) 
 			{	
-				new SimpleActivityTask(_context).sendAction(_currentRoom, _servicename, "ENVIAR","NUEVE");				
+				new SimpleActivityTask(_context).sendAction(_currentRoom, _servicename, "SEND","NINE");				
 			}
 		});
 		
@@ -127,7 +127,7 @@ public class RemoteController extends Activity
 			@Override
 			public void onClick(View v) 
 			{	
-				new SimpleActivityTask(_context).sendAction(_currentRoom, _servicename, "ENVIAR","CERO");				
+				new SimpleActivityTask(_context).sendAction(_currentRoom, _servicename, "SEND","ZERO");				
 			}
 		});
 		
@@ -136,7 +136,7 @@ public class RemoteController extends Activity
 		{	
 			@Override
 			public void onClick(View v) {	
-				new SimpleActivityTask(_context).sendAction(_currentRoom, _servicename, "ENVIAR","FAV");				
+				new SimpleActivityTask(_context).sendAction(_currentRoom, _servicename, "SEND","FAV");				
 			}
 		});
 		
@@ -146,7 +146,7 @@ public class RemoteController extends Activity
 			@Override
 			public void onClick(View v) 
 			{	
-				new SimpleActivityTask(_context).sendAction(_currentRoom, _servicename, "ENVIAR","UP");				
+				new SimpleActivityTask(_context).sendAction(_currentRoom, _servicename, "SEND","UP");				
 			}
 		});
 		
@@ -156,7 +156,7 @@ public class RemoteController extends Activity
 			@Override
 			public void onClick(View v) 
 			{	
-				new SimpleActivityTask(_context).sendAction(_currentRoom, _servicename, "ENVIAR","DOWN");				
+				new SimpleActivityTask(_context).sendAction(_currentRoom, _servicename, "SEND","DOWN");				
 			}
 		});
 		
@@ -166,7 +166,7 @@ public class RemoteController extends Activity
 			@Override
 			public void onClick(View v) 
 			{	
-				new SimpleActivityTask(_context).sendAction(_currentRoom, _servicename, "ENVIAR","LEFT");				
+				new SimpleActivityTask(_context).sendAction(_currentRoom, _servicename, "SEND","LEFT");				
 			}
 		});
 		
@@ -176,7 +176,7 @@ public class RemoteController extends Activity
 			@Override
 			public void onClick(View v) 
 			{	
-				new SimpleActivityTask(_context).sendAction(_currentRoom, _servicename, "ENVIAR","PLAY");				
+				new SimpleActivityTask(_context).sendAction(_currentRoom, _servicename, "SEND","PLAY");				
 			}
 		});
 		
@@ -186,7 +186,7 @@ public class RemoteController extends Activity
 			@Override
 			public void onClick(View v) 
 			{	
-				new SimpleActivityTask(_context).sendAction(_currentRoom, _servicename, "ENVIAR","RIGHT");				
+				new SimpleActivityTask(_context).sendAction(_currentRoom, _servicename, "SEND","RIGHT");				
 			}
 		});
 				
@@ -196,7 +196,7 @@ public class RemoteController extends Activity
 			@Override
 			public void onClick(View v) 
 			{	
-				new SimpleActivityTask(_context).sendAction(_currentRoom, _servicename, "ENVIAR","MUTE");				
+				new SimpleActivityTask(_context).sendAction(_currentRoom, _servicename, "SEND","MUTE");				
 			}
 		});
 		
@@ -206,17 +206,37 @@ public class RemoteController extends Activity
 			@Override
 			public void onClick(View v) 
 			{	
-				new SimpleActivityTask(_context).sendAction(_currentRoom, _servicename, "ENVIAR","SETUP");				
+				new SimpleActivityTask(_context).sendAction(_currentRoom, _servicename, "SEND","SETUP");				
 			}
 		});
 		
-		ImageView _button_power = (ImageView) findViewById(R.id.on_off_remote);
+		ImageView _button_power = (ImageView) findViewById(R.id.UserImage);
 		_button_power.setOnClickListener(new OnClickListener() 
 		{
 			@Override
 			public void onClick(View v) 
 			{	
-				new SimpleActivityTask(_context).sendAction(_currentRoom, _servicename, "ENVIAR","POWER");				
+				new SimpleActivityTask(_context).sendAction(_currentRoom, _servicename, "SEND","POWER");				
+			}
+		});
+		
+		ImageView _button_up_volumen = (ImageView) findViewById(R.id.up_volume_remote);
+		_button_up_volumen.setOnClickListener(new OnClickListener() 
+		{
+			@Override
+			public void onClick(View v) 
+			{	
+				new SimpleActivityTask(_context).sendAction(_currentRoom, _servicename, "SEND","VOLUMEUP");				
+			}
+		});
+		
+		ImageView _button_down_volume = (ImageView) findViewById(R.id.down_volume_remote);
+		_button_down_volume.setOnClickListener(new OnClickListener() 
+		{
+			@Override
+			public void onClick(View v) 
+			{	
+				new SimpleActivityTask(_context).sendAction(_currentRoom, _servicename, "SEND","VOLUMEDOWN");				
 			}
 		});
 		

@@ -4,20 +4,32 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.Collections;
 import java.util.Map;
 import java.util.WeakHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.StatusLine;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
+
 import ehc.net.R;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Handler;
@@ -73,22 +85,58 @@ public class ImageLoader
         Bitmap b = decodeFile(f);
         if(b!=null)
         {
-        	Log.d("FILE","cache");
+        	Log.d("FILE",url + " está en cache");
         	return b;
         }
         //from web
         try {
+//        	clearCache();
+        	Log.d("FILE",url + " está en server");
             Bitmap bitmap=null;
+            Log.d("FILE","0");
             URL imageUrl = new URL(url);
+            Log.d("FILE","1");
             HttpURLConnection conn = (HttpURLConnection)imageUrl.openConnection();
+            Log.d("FILE","2");
+//            conn.setDoInput(true);
+//            conn.setDoOutput(true);
             conn.setConnectTimeout(30000);
             conn.setReadTimeout(30000);
+            Log.d("FILE","3");
             conn.setInstanceFollowRedirects(true);
+            Log.d("FILE","4");
+            if (conn.getResponseCode() != HttpURLConnection.HTTP_OK) {
+            	  Log.d("FILE", "http response code is " + conn.getResponseCode());
+            	  return null;
+            }
             InputStream is=conn.getInputStream();
+            Log.d("FILE","5");
             OutputStream os = new FileOutputStream(f);
+            Log.d("FILE","6");
             Utils.CopyStream(is, os);
+            Log.d("FILE","7");
             os.close();
+            Log.d("FILE","8");
             bitmap = decodeFile(f);
+            Log.d("FILE","9");
+            
+//            HttpUriRequest request = new HttpGet(url.toString());
+//            HttpClient httpClient = new DefaultHttpClient();
+//            HttpResponse response = httpClient.execute(request);
+//     
+//            StatusLine statusLine = response.getStatusLine();
+//            int statusCode = statusLine.getStatusCode();
+//            if (statusCode == 200) {
+//                HttpEntity entity = response.getEntity();
+//                byte[] bytes = EntityUtils.toByteArray(entity);
+//     
+//                bitmap = BitmapFactory.decodeByteArray(bytes, 0,
+//                        bytes.length);
+//                return bitmap;
+//            } else {
+//                throw new IOException("Download failed, HTTP response code "
+//                        + statusCode + " - " + statusLine.getReasonPhrase());
+//            }
             return bitmap;
         } catch (Exception ex){
            ex.printStackTrace();
@@ -102,9 +150,9 @@ public class ImageLoader
             //decode image size
         	// Assume documentId points to an image file. Build a thumbnail no
 	        // larger than twice the sizeHint
-//            BitmapFactory.Options _options = new BitmapFactory.Options();
-//	        _options.inJustDecodeBounds = true;
-//	        BitmapFactory.decodeFile(f.getAbsolutePath(), _options);
+            BitmapFactory.Options _options = new BitmapFactory.Options();
+	        _options.inJustDecodeBounds = true;
+	        BitmapFactory.decodeFile(f.getAbsolutePath(), _options);
 //	        final int _targetHeight = _image.getHeight(); //175
 //	        final int _targetWidth = _image.getWidth();	//175
 //	        final int _height = _options.outHeight;
@@ -123,14 +171,24 @@ public class ImageLoader
 //	                _options.inSampleSize *= 2;
 //	            }
 //	        }
-//	        _options.inJustDecodeBounds = false;
-//	        _options.inScaled = true;
-	        
 	        BitmapFactory.Options _options2 = new BitmapFactory.Options();
-	        _options2.inJustDecodeBounds = false;
-	        _options2.inSampleSize = 2;
+	        
+	        Log.d("TAMAÑOS",f.getName()+": "+"Height: "+Integer.toString(_options.outHeight)+" "+"Width: "+Integer.toString(_options.outWidth));
+	        
+            if(_options.outHeight >1000 || _options.outWidth>1000)
+            {
+            	_options2.inSampleSize = 14;
+            }
+            else
+            {
+            	_options2.inSampleSize = 2;
+            }
             
-            return BitmapFactory.decodeStream(new FileInputStream(f), null, _options2);//_options);
+            
+            _options2.inJustDecodeBounds = false;
+	        _options2.inScaled = true;
+        	     
+            return BitmapFactory.decodeStream(new FileInputStream(f), null, _options2);
         } catch (FileNotFoundException e) {}
         return null;
     }
@@ -140,7 +198,8 @@ public class ImageLoader
     {
         public String url;
         public ImageView imageView;
-        public PhotoToLoad(String u, ImageView i){
+        public PhotoToLoad(String u, ImageView i)
+        {
             url=u;
             imageView=i;
         }
@@ -192,7 +251,8 @@ public class ImageLoader
         }
     }
   
-    public void clearCache() {
+    public void clearCache() 
+    {
         memoryCache.clear();
         fileCache.clear();
     }

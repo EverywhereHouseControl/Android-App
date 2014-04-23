@@ -5,7 +5,7 @@
     android:background="@drawable/background_remote" >
 
     <ImageView
-        android:id="@+id/on_off_remote"
+        android:id="@+id/UserImage"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_alignParentRight="true"
@@ -19,7 +19,7 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_alignParentLeft="true"
-        android:layout_alignTop="@+id/on_off_remote"
+        android:layout_alignTop="@+id/UserImage"
         android:layout_marginLeft="37dp"
         android:src="@drawable/mute_remote" />
 
@@ -118,7 +118,7 @@
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:layout_alignRight="@+id/three_remote"
-        android:layout_below="@+id/on_off_remote"
+        android:layout_below="@+id/UserImage"
         android:layout_marginTop="19dp"
         android:src="@drawable/right_arrow_remote" />
 
@@ -162,5 +162,21 @@
         android:layout_alignLeft="@+id/nine_remote"
         android:layout_alignTop="@+id/zero_remote"
         android:src="@drawable/star_remote" />
+
+    <ImageView
+        android:id="@+id/up_volume_remote"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_alignTop="@+id/right_arrow_remote"
+        android:layout_toRightOf="@+id/right_arrow_remote"
+        android:src="@drawable/up_volume_remote" />
+
+    <ImageView
+        android:id="@+id/down_volume_remote"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_alignRight="@+id/mute_remote"
+        android:layout_alignTop="@+id/play_remote"
+        android:src="@drawable/down_volume_remote" />
 
 </RelativeLayout>

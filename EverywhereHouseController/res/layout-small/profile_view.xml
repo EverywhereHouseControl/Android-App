@@ -63,7 +63,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView2"
         android:layout_marginTop="58dp"
-        android:layout_toLeftOf="@+id/on_off_remote"
+        android:layout_toLeftOf="@+id/UserImage"
         android:text="Password"
         android:textColor="@color/Black"
         android:textSize="20sp" />
@@ -104,7 +104,7 @@
         android:textSize="20sp" />
 
     <ImageView
-        android:id="@+id/on_off_remote"
+        android:id="@+id/UserImage"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_above="@+id/profileUser"

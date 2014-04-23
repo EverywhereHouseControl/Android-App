@@ -32,7 +32,7 @@ public class SlidingMenuAdapter extends BaseAdapter
 	private ArrayList<String> _urls = new ArrayList<String>();
 	private ArrayList<String> _access = new ArrayList<String>();
 	private ArrayList<String> _optionList = new ArrayList<String>();
-	private ImageLoader _imgLoader;
+	private ImageLoader _imgLoader = HouseListAdapter._imgLoader;
 	private int _count = 5;
 	
 	
@@ -40,7 +40,7 @@ public class SlidingMenuAdapter extends BaseAdapter
 	{
 		_context = context;
 		_currentHouse = currentHouse;
-		_imgLoader = new ImageLoader(_context);
+//		_imgLoader = new ImageLoader(_context);
 		_optionList.add("Profile");
 		_optionList.add("Change Profile");
 		_optionList.add("Exit");
