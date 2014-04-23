@@ -59,6 +59,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/fragment_item"
-        android:layout_below="@+id/textView3" />
+        android:layout_below="@+id/textView3"
+        android:layout_marginBottom="2dp" />
 
 </RelativeLayout>

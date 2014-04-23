@@ -11,6 +11,7 @@ import java.util.Map.Entry;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -20,6 +21,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.view.View.OnClickListener;
 
@@ -166,6 +168,10 @@ public class CaldroidSampleActivity extends FragmentActivity {
 		/** Fragment Dialog creation **/
 		
 		LinearLayout ll = (LinearLayout) this.findViewById(R.id.ll_event);
+		
+		TextView txt = (TextView) findViewById(R.id.event_list_title);
+		Typeface font = Typeface.createFromAsset(getAssets(), "imagine_earth.ttf");
+		txt.setTypeface(font);
 		
 		ImageButton ib = (ImageButton) ll.findViewById(R.id.create_event_button);
 		ib.setOnClickListener(new OnClickListener() {

@@ -2,40 +2,44 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:background="@color/White" >
 
     <LinearLayout
         android:id="@+id/calendar1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:background="@color/White" >
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/event_list_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/daily" />
 
     <LinearLayout
         android:id="@+id/ll_event"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        android:background="@color/White" >
 
         <ImageButton
             android:id="@+id/create_event_button"
             android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:src="@drawable/add_icon" />
+
+        <TextView
+            android:id="@+id/event_list_title"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="left"
-            android:src="@drawable/check" />
+            android:layout_gravity="left|center_vertical"
+            android:textSize="25sp"
+            android:text="@string/daily" />
     </LinearLayout>
 
     <ListView
         android:id="@+id/eventList"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:background="@color/White" >
     </ListView>
 
 </LinearLayout>
