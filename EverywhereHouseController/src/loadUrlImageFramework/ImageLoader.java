@@ -21,6 +21,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Handler;
+import android.util.Log;
 import android.widget.ImageView;
 
 public class ImageLoader 
@@ -67,19 +68,21 @@ public class ImageLoader
     private Bitmap getBitmap(String url)
     {
         File f=fileCache.getFile(url);
-  
+        Log.d("FILE",f.getName());
         //from SD cache
         Bitmap b = decodeFile(f);
         if(b!=null)
-            return b;
-  
+        {
+        	Log.d("FILE","cache");
+        	return b;
+        }
         //from web
         try {
             Bitmap bitmap=null;
             URL imageUrl = new URL(url);
             HttpURLConnection conn = (HttpURLConnection)imageUrl.openConnection();
-//            conn.setConnectTimeout(30000);
-//            conn.setReadTimeout(30000);
+            conn.setConnectTimeout(30000);
+            conn.setReadTimeout(30000);
             conn.setInstanceFollowRedirects(true);
             InputStream is=conn.getInputStream();
             OutputStream os = new FileOutputStream(f);
@@ -99,33 +102,35 @@ public class ImageLoader
             //decode image size
         	// Assume documentId points to an image file. Build a thumbnail no
 	        // larger than twice the sizeHint
-            BitmapFactory.Options _options = new BitmapFactory.Options();
-	        _options.inJustDecodeBounds = true;
-	        BitmapFactory.decodeFile(f.getAbsolutePath(), _options);
-	        final int _targetHeight = _image.getHeight(); //175
-	        final int _targetWidth = _image.getWidth();	//175
-	        final int _height = _options.outHeight;
-	        final int _width = _options.outWidth;
-	        _options.inSampleSize = 1;
-	        if (_height > _targetHeight || _width > _targetWidth) 
-	        {
-	            final int _halfHeight = _height / 2;
-	            final int _halfWidth = _width / 2;
-	            // Calculate the largest inSampleSize value that is a power of 2 and
-	            // keeps both
-	            // height and width larger than the requested height and width.
-	            while ((_halfHeight / _options.inSampleSize) > _targetHeight
-	                    || (_halfWidth / _options.inSampleSize) > _targetWidth) 
-	            {
-	                _options.inSampleSize *= 2;
-	            }
-	        }
-	        _options.inJustDecodeBounds = false;
-  
-            //decode with inSampleSize
-            BitmapFactory.Options o2 = new BitmapFactory.Options();
-
-            return BitmapFactory.decodeStream(new FileInputStream(f), null, o2);
+//            BitmapFactory.Options _options = new BitmapFactory.Options();
+//	        _options.inJustDecodeBounds = true;
+//	        BitmapFactory.decodeFile(f.getAbsolutePath(), _options);
+//	        final int _targetHeight = _image.getHeight(); //175
+//	        final int _targetWidth = _image.getWidth();	//175
+//	        final int _height = _options.outHeight;
+//	        final int _width = _options.outWidth;
+//	        _options.inSampleSize = 1;
+//	        if (_height > _targetHeight ||	 _width > _targetWidth) 
+//	        {
+//	            final int _halfHeight = _height / 2;
+//	            final int _halfWidth = _width / 2;
+//	            // Calculate the largest inSampleSize value that is a power of 2 and
+//	            // keeps both
+//	            // height and width larger than the requested height and width.
+//	            while ((_halfHeight / _options.inSampleSize) > _targetHeight
+//	                    || (_halfWidth / _options.inSampleSize) > _targetWidth) 
+//	            {
+//	                _options.inSampleSize *= 2;
+//	            }
+//	        }
+//	        _options.inJustDecodeBounds = false;
+//	        _options.inScaled = true;
+	        
+	        BitmapFactory.Options _options2 = new BitmapFactory.Options();
+	        _options2.inJustDecodeBounds = false;
+	        _options2.inSampleSize = 2;
+            
+            return BitmapFactory.decodeStream(new FileInputStream(f), null, _options2);//_options);
         } catch (FileNotFoundException e) {}
         return null;
     }

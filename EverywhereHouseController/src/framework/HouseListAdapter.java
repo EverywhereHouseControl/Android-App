@@ -75,6 +75,7 @@ public class HouseListAdapter extends BaseAdapter
 	public View getView(final int position, View convertView, ViewGroup parent) 
 	{
 		// TODO Auto-generated method stub
+		
 		_parent = parent;
 		View _view = convertView;
 		if(_view == null)
@@ -105,7 +106,8 @@ public class HouseListAdapter extends BaseAdapter
 		if(!_urls.get(position).equals("null"))
 		{
 			_path = _urls.get(position);
-	        _imgLoader.DisplayImage(_path, R.drawable.base_picture, _image);
+			_imgLoader.DisplayImage(_path, R.drawable.base_picture, _image);
+			
 	    } 
 		else _image.setImageResource(R.drawable.base_picture);
 		

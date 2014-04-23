@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
+import loadUrlImageFramework.ImageLoader;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 

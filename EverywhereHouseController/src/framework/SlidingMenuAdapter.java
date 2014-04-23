@@ -120,6 +120,7 @@ public class SlidingMenuAdapter extends BaseAdapter
 			if(_button.getText().equals(_currentHouse))
 			{
 				_button.setClickable(false);
+				_button.setBackgroundResource(R.drawable.abs__ab_bottom_solid_light_holo);
 			}
 			
 			CheckBox _check = (CheckBox) _view.findViewById(R.id.HouseCheckBox);
