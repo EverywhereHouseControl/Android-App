@@ -42,7 +42,7 @@ public class SlidingMenuAdapter extends BaseAdapter
 		_currentHouse = currentHouse;
 //		_imgLoader = new ImageLoader(_context);
 		_optionList.add("Profile");
-		_optionList.add("Change Profile");
+		_optionList.add("Log out");
 		_optionList.add("Exit");
 		
 		//-----------------It Reads config.json-----------------
@@ -186,7 +186,7 @@ public class SlidingMenuAdapter extends BaseAdapter
 						_intent.putExtra("House",_currentHouse);
 		    			_context.startActivity( _intent );
 					}
-					else if(_button.getText().equals("Change Profile"))
+					else if(_button.getText().equals("Log out"))
 					{
 						Log.d("OPTION","CHANGE");
 						Intent _intent = new Intent(_context,LogIn.class);

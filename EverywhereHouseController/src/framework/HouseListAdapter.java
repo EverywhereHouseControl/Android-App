@@ -133,6 +133,7 @@ public class HouseListAdapter extends BaseAdapter
 		{
 			_check.setChecked(false);
 			_check.setVisibility(View.VISIBLE);
+			_check.setBackgroundColor(_context.getResources().getColor(R.color.White));
 			
 			if(_access.get(position).equals("3"))
 			{

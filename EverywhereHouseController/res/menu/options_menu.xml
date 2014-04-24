@@ -14,12 +14,12 @@
 	android:title="Mobile Gallery"
 	android:showAsAction="never|withText">
   </item>
-
+<!-- 
   <item
 	android:id="@+id/NewPicture"
 	android:icon="@drawable/ic_action_picture"
 	android:title="Gallery"
 	android:showAsAction="never|withText">
   </item>
-
+ -->
 </menu>

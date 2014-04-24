@@ -196,8 +196,8 @@ public class HousesMenu extends Activity implements ImageChooserListener
 	        	_ListAdapter.setChosenOption(_currentOption);
 	        	setCheckBoxON();
                 break;
-            case R.id.NewPicture:
-                break;
+//            case R.id.NewPicture:
+//                break;
             
         }
         return true;

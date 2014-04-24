@@ -244,6 +244,7 @@ public class Profile extends Activity implements ImageChooserListener
 	{
 		// TODO Auto-generated method stub
 		_checkBox.setVisibility(View.VISIBLE);
+		_checkBox.setBackgroundColor(getResources().getColor(R.color.White));
 		return super.onMenuOpened(featureId, menu);
 	}
 	
@@ -271,8 +272,8 @@ public class Profile extends Activity implements ImageChooserListener
 	        	_currentOption = 2;
 	        	_checkBox.setVisibility(View.VISIBLE);
                 break;
-            case R.id.NewPicture:
-                break;
+//            case R.id.NewPicture:
+//                break;
             
         }
         return true;
@@ -688,6 +689,8 @@ public class Profile extends Activity implements ImageChooserListener
      */
     private void takePicture() 
     {
+    	_checkBox.setVisibility(View.GONE);
+    	_checkBox.setChecked(false);
 		chooserType = ChooserType.REQUEST_CAPTURE_PICTURE;
 		imageChooserManager = new ImageChooserManager(this,
 				ChooserType.REQUEST_CAPTURE_PICTURE, "myfolder", true);
@@ -710,6 +713,8 @@ public class Profile extends Activity implements ImageChooserListener
      */
     private void chooseImage() 
     {
+    	_checkBox.setVisibility(View.GONE);
+    	_checkBox.setChecked(false);
 		chooserType = ChooserType.REQUEST_PICK_PICTURE;
 		imageChooserManager = new ImageChooserManager(this,
 				ChooserType.REQUEST_PICK_PICTURE, "myfolder", true);

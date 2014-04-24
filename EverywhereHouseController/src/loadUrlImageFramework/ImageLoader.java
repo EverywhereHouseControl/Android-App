@@ -98,8 +98,8 @@ public class ImageLoader
             Log.d("FILE","1");
             HttpURLConnection conn = (HttpURLConnection)imageUrl.openConnection();
             Log.d("FILE","2");
-//            conn.setDoInput(true);
-//            conn.setDoOutput(true);
+            conn.setDoInput(true);
+            conn.setDoOutput(true);
             conn.setConnectTimeout(30000);
             conn.setReadTimeout(30000);
             Log.d("FILE","3");
