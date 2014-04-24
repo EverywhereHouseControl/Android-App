@@ -2,10 +2,15 @@ package framework;
 
 import java.util.ArrayList;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import ehc.net.R;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,14 +24,16 @@ public class ListAdapter extends BaseAdapter
 	private Context _context;
 	private ArrayList<String> _list;
 	private int _itemView;
+	private String _house;
 	
 	
-	public ListAdapter(Context context, ArrayList<String> list, int contentView)
+	public ListAdapter(Context context, ArrayList<String> list, int contentView, String house)
 	{
 		_context = context;
 		_list = new ArrayList<String>();
 		_list = list;
 		_itemView = contentView;
+		_house = house;
 	}
 	
 	@Override
@@ -66,18 +73,78 @@ public class ListAdapter extends BaseAdapter
 		_textView.setText(_list.get(position));
 		
 		ImageView _imageView = (ImageView) _view.findViewById(R.id.HouseImageList);
-		if(_textView.getText().toString().contains("cocina"))
+		
+		
+		 JSON _JSONFile = JSON.getInstance(_context);
+		 JSONArray _rooms = _JSONFile._roomsHouses.get(_house);
+		 JSONObject _room;
+		 try 
+		 {
+			_room = _rooms.getJSONObject(position);
+			Log.d("ROOM",_room.toString());
+			
+			switch(_room.getInt("interface"))
+			{
+				case 0:
+				{
+					_imageView.setBackgroundResource(R.drawable.cooker);
+					break;
+				}
+				case 1:
+				{
+					_imageView.setBackgroundResource(R.drawable.sofa);
+					break;
+				}
+				case 2:
+				{
+					_imageView.setBackgroundResource(R.drawable.bed);
+					break;
+				}
+				case 3:
+				{
+					_imageView.setBackgroundResource(R.drawable.bathroom);
+					break;
+				}
+				case 4:
+				{
+					_imageView.setBackgroundResource(R.drawable.watering_can);
+					break;
+				}
+				case 5:
+				{
+					_imageView.setBackgroundResource(R.drawable.garage);
+					break;
+				}
+				case 6:
+				{
+					_imageView.setBackgroundResource(R.drawable.terrace);
+					break;
+				}
+				default:
+				{
+					_imageView.setBackgroundResource(R.drawable.interrogation);
+				}
+			}
+			
+		} 
+		 catch (JSONException e) 
 		{
-			_imageView.setBackgroundResource(R.drawable.cooker);
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		else if(_textView.getText().toString().contains("terraza"))
-		{
-			_imageView.setBackgroundResource(R.drawable.terrace);
-		}
-		else
-		{
-			_imageView.setBackgroundResource(R.drawable.interrogation);
-		}
+		
+//		if(_textView.getText().toString().contains("cocina"))
+//		{
+//			_imageView.setBackgroundResource(R.drawable.cooker);
+//		}
+//		else if(_textView.getText().toString().contains("terraza"))
+//		{
+//			_imageView.setBackgroundResource(R.drawable.terrace);
+//		}
+//		else
+//		{
+//			_imageView.setBackgroundResource(R.drawable.interrogation);
+//		}
 		
 		
 		return _view;

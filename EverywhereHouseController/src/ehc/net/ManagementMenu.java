@@ -53,11 +53,11 @@ public class ManagementMenu extends SherlockActivity{//Activity{
 		});	
 		/////////////////////////////////////////////////////////////////////////////////////////
         //-----------------It Reads config.json-----------------
-
+		String _house = null;
         _JSONFile = JSON.getInstance(getApplicationContext());	
 		try 
 		{
-			String _house = getIntent().getExtras().getString("House");
+			_house = getIntent().getExtras().getString("House");
 			log("_house");
 			_roomsList = _JSONFile.getRooms(_house);
 			log("Después _roomList");
@@ -75,7 +75,7 @@ public class ManagementMenu extends SherlockActivity{//Activity{
 			ListView _ListView = (ListView) findViewById(R.id.roomsListView);
 			
 			final ListAdapter _ListAdapter = new 
-					ListAdapter(this.getBaseContext(),_roomsList,R.layout.group_item);
+					ListAdapter(this.getBaseContext(),_roomsList,R.layout.group_item,_house);
 			_ListAdapter.notifyDataSetChanged();
 			_ListView.setAdapter(_ListAdapter);
 			

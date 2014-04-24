@@ -2,6 +2,7 @@ package ehc.net;
 
 import java.util.ArrayList;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.actionbarsherlock.app.SherlockActivity;
@@ -25,6 +26,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainMenu extends SherlockActivity 
@@ -36,6 +38,7 @@ public class MainMenu extends SherlockActivity
 	// private Button _buttonConfig;
 	private ImageView _logo;
 	private Post _post;
+	private Double _temp = 0.0;
 
 	// -------------------------------
 
@@ -187,6 +190,7 @@ public class MainMenu extends SherlockActivity
     	private ProgressDialog _pDialog;
     	private String _message = "";
     	private int _internalError = 0;
+    	private JSONObject _data;
     	/**
     	 * Message "Loading"
     	 */
@@ -215,13 +219,38 @@ public class MainMenu extends SherlockActivity
 				_parametros.add("command");
 				_parametros.add("getweather");
 				_parametros.add("city");
-				_parametros.add(_place.first);
+				_parametros.add(_place.first.toUpperCase());
 				_parametros.add("country");
-				_parametros.add(_place.second);
+				_parametros.add(_place.second.toUpperCase());
 			 			
 				//Variable 'Data' saves the query response
-				JSONObject _data = _post.getServerData(_parametros,"http://5.231.69.226/EHControlConnect/index.php");//"http://192.168.2.147/EHControlConnect/index.php");
+				_data = _post.getServerData(_parametros,"http://5.231.69.226/EHControlConnect/index.php");//"http://192.168.2.147/EHControlConnect/index.php");
 				log(_data.toString());
+				
+				
+//				ImageView  _weather = (ImageView) findViewById(R.id.WeatherImage); 
+//				Animation anim = AnimationUtils.loadAnimation(MainMenu.this, R.anim.rotate_indefinitely);
+//		        //Start animating the image
+//		         _weather.startAnimation(anim); 
+				
+//				String _clima = _data.getString("main");
+//				if(_clima.equals("Clouds"))
+//				{
+//					_weather.setImageResource(R.drawable.clouds);
+//				}
+//				else if (_clima.equals("Rain"))
+//				{
+//					_weather.setImageResource(R.drawable.clouds);
+//				}
+//				else if (_clima.equals("Clear"))
+//				{
+//					_weather.setImageResource(R.drawable.clouds);
+//				}
+				
+				
+				
+				
+				
 				
 //				try 
 //				{
@@ -261,6 +290,68 @@ public class MainMenu extends SherlockActivity
             // dismiss the dialog
             _pDialog.dismiss();
             if(_internalError!=0)Toast.makeText(getBaseContext(), _message, Toast.LENGTH_SHORT).show();
+            
+            try 
+            {
+				_temp = (Double) _data.get("temperature");
+			} catch (JSONException e) 
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			_temp = _temp - 273.15;
+            TextView _temperature = (TextView) MainMenu.this.findViewById(R.id.temperature);
+    		_temperature.setText(Integer.toString(_temp.intValue()) + "ºC");
+    		Log.d("TEMPERATURE", Integer.toString(_temp.intValue()));
+	         
+    		ImageView  _weather1 = (ImageView)  MainMenu.this.findViewById(R.id.WeatherImage1); 
+    		ImageView  _weather2 = (ImageView)  MainMenu.this.findViewById(R.id.WeatherImage2);
+    		ImageView  _weather3 = (ImageView)  MainMenu.this.findViewById(R.id.WeatherImage3);
+    		ImageView  _weather4 = (ImageView)  MainMenu.this.findViewById(R.id.WeatherImage4);
+    		ImageView  _weather5 = (ImageView)  MainMenu.this.findViewById(R.id.WeatherImage5);
+	         String _clima = null;
+			try 
+			{
+				_clima = _data.getString("main");
+			} 
+			catch (JSONException e) 
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+				if(_clima.equals("Clouds"))
+				{
+					Animation anim = AnimationUtils.loadAnimation(MainMenu.this, R.anim.translate_enter);
+					//Start animating the image
+			         _weather1.startAnimation(anim);
+					_weather1.setImageResource(R.drawable.clouds);
+					Animation anim2 = AnimationUtils.loadAnimation(MainMenu.this, R.anim.translate_exit);
+					//Start animating the image
+			        _weather2.startAnimation(anim2);
+					_weather2.setImageResource(R.drawable.clouds);
+				}
+				else if (_clima.equals("Rain"))
+				{
+					Animation anim1 = AnimationUtils.loadAnimation(MainMenu.this, R.anim.translate_down);
+					//Start animating the image
+			         _weather4.startAnimation(anim1);
+					_weather4.setImageResource(R.drawable.rain);
+					Animation anim2 = AnimationUtils.loadAnimation(MainMenu.this, R.anim.translate_down);
+					//Start animating the image
+			        _weather5.startAnimation(anim2);
+					_weather5.setImageResource(R.drawable.rain);
+
+					_weather1.setImageResource(R.drawable.clouds);
+					_weather2.setImageResource(R.drawable.clouds);
+				}
+				else if (_clima.equals("Clear"))
+				{
+					_weather3.setImageResource(R.drawable.sun);
+					Animation anim = AnimationUtils.loadAnimation(MainMenu.this, R.anim.rotate_indefinitely);
+					//Start animating the image
+			         _weather3.startAnimation(anim);
+			         
+				}
 		}
     }
 	/**
