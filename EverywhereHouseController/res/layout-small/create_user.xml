@@ -9,19 +9,6 @@
         android:layout_height="match_parent"
         android:background="@color/GreenApp" >
 
-        <Button
-            android:id="@+id/newUserConfirm"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_marginBottom="60dp"
-            android:layout_marginLeft="42dp"
-            android:background="@drawable/button_config"
-            android:text="Confirm"
-            android:textColor="@drawable/button_text_color2"
-            android:textSize="20sp" />
-
         <RelativeLayout
             android:id="@+id/RelativeLayout1"
             android:layout_width="match_parent"
@@ -45,18 +32,6 @@
                 android:textSize="30sp" />
 
         </RelativeLayout>
-
-        <Button
-            android:id="@+id/newUserCancel"
-            android:layout_width="80dp"
-            android:layout_height="40dp"
-            android:layout_alignParentRight="true"
-            android:layout_alignTop="@+id/newUserConfirm"
-            android:layout_marginRight="36dp"
-            android:background="@drawable/button_config"
-            android:text="Exit"
-            android:textColor="@drawable/button_text_color2"
-            android:textSize="20sp" />
 
         <RelativeLayout
             android:id="@+id/RelativeLayout01"
@@ -126,6 +101,30 @@
                 android:textColorHint="@color/DarkGray"
                 android:textSize="20sp" />
         </LinearLayout>
+
+        <Button
+            android:id="@+id/newUserCancel"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignTop="@+id/newUserConfirm"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/button_config"
+            android:text="Exit"
+            android:textColor="@drawable/button_text_color2"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/newUserConfirm"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/RelativeLayout01"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/button_config"
+            android:text="Confirm"
+            android:textColor="@drawable/button_text_color2"
+            android:textSize="20sp" />
 
     </RelativeLayout>
 

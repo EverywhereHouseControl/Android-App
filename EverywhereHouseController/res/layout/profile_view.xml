@@ -20,20 +20,6 @@
 	        android:layout_centerHorizontal="true"
 	        android:layout_marginTop="43dp"
 	        android:src="@drawable/user_icon" />
-	
-	    <Button
-	        android:id="@+id/profileExit"
-	        android:layout_width="100dp"
-	        android:layout_height="40dp"
-	        android:layout_alignBaseline="@+id/profileSave"
-	        android:layout_alignBottom="@+id/profileSave"
-	        android:layout_alignParentRight="true"
-	        android:layout_marginRight="34dp"
-	        android:background="@drawable/button_config"
-	        android:onClick="onClickButton"
-	        android:text="Exit"
-	        android:textColor="@drawable/button_text_color2"
-	        android:textSize="20sp" />
 	    
 	<ImageButton
             android:id="@+id/imageOverflow"
@@ -101,19 +87,6 @@
 		        android:textColor="@color/White"
 		        android:textSize="20sp" />
 
-		    <Button
-		        android:id="@+id/profileSave"
-		        android:layout_width="100dp"
-		        android:layout_height="40dp"
-		        android:layout_alignParentBottom="true"
-		        android:layout_marginBottom="42dp"
-		        android:layout_toLeftOf="@+id/profilePassword"
-		        android:background="@drawable/button_config"
-		        android:onClick="onClickButton"
-		        android:text="Save"
-		        android:textColor="@drawable/button_text_color2"
-		        android:textSize="20sp" />
-
 		    <EditText
 		        android:id="@+id/profileUser"
 		        android:layout_width="160dp"
@@ -145,6 +118,32 @@
 		        android:ems="10"
 		        android:singleLine="true"
 		        android:textColor="@color/Black"
+		        android:textSize="20sp" />
+
+		    <Button
+		        android:id="@+id/profileSave"
+		        android:layout_width="140dp"
+		        android:layout_height="wrap_content"
+		        android:textSize="20sp"
+		        android:layout_alignParentBottom="true"
+		        android:layout_alignParentRight="true"
+		        android:background="@drawable/button_config"
+		        android:onClick="onClickButton"
+		        android:layout_marginRight="10dp"
+		        android:text="Save"
+		        android:textColor="@drawable/button_text_color2" />
+
+		    <Button
+		        android:id="@+id/profileExit"
+		        android:layout_width="140dp"
+		        android:layout_height="wrap_content"
+		        android:layout_alignParentBottom="true"
+		        android:layout_alignParentLeft="true"
+		        android:background="@drawable/button_config"
+		        android:layout_marginLeft="10dp"
+		        android:onClick="onClickButton"
+		        android:text="Exit"
+		        android:textColor="@drawable/button_text_color2"
 		        android:textSize="20sp" />
 
 	</RelativeLayout>

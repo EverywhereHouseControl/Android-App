@@ -104,30 +104,28 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/newUserCancel"
-            android:layout_width="90dp"
-            android:layout_height="40dp"
-            android:layout_alignBaseline="@+id/newUserConfirm"
-            android:layout_alignBottom="@+id/newUserConfirm"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="50dp"
-            android:background="@drawable/button_config"
-            android:text="Exit"
-            android:textColor="@drawable/button_text_color2"
-            android:textSize="20sp" />
-
-        <Button
             android:id="@+id/newUserConfirm"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
             android:layout_above="@+id/RelativeLayout01"
-            android:layout_alignParentLeft="true"
-            android:layout_marginBottom="15dp"
-            android:layout_marginLeft="50dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
             android:background="@drawable/button_config"
             android:text="Confirm"
             android:textColor="@drawable/button_text_color2"
-            android:textSize="20sp" />
+            android:textSize="25sp" />
+
+        <Button
+            android:id="@+id/newUserCancel"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/RelativeLayout01"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/button_config"
+            android:text="Exit"
+            android:textColor="@drawable/button_text_color2"
+            android:textSize="25sp" />
 
     </RelativeLayout>
 

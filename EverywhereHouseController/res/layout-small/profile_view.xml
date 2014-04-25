@@ -11,20 +11,6 @@
 	    android:layout_height="match_parent"
 	    android:orientation="vertical"
 	    android:background="@color/GreenApp" >
-	
-	    <Button
-	        android:id="@+id/profileExit"
-	        android:layout_width="100dp"
-	        android:layout_height="40dp"
-	        android:layout_alignBaseline="@+id/profileSave"
-	        android:layout_alignBottom="@+id/profileSave"
-	        android:layout_alignParentRight="true"
-	        android:layout_marginRight="34dp"
-	        android:background="@drawable/button_config"
-	        android:onClick="onClickButton"
-	        android:text="Exit"
-	        android:textColor="@drawable/button_text_color2"
-	        android:textSize="20sp" />
 	    
 	<ImageButton
             android:id="@+id/imageOverflow"
@@ -54,19 +40,6 @@
 		        android:layout_alignTop="@+id/lateralMenu"
 		        android:layout_centerHorizontal="true"
 		        android:src="@drawable/user_icon" />
-
-		    <Button
-		        android:id="@+id/profileSave"
-		        android:layout_width="100dp"
-		        android:layout_height="40dp"
-		        android:layout_alignParentBottom="true"
-		        android:layout_marginBottom="28dp"
-		        android:layout_toRightOf="@+id/lateralMenu"
-		        android:background="@drawable/button_config"
-		        android:onClick="onClickButton"
-		        android:text="Save"
-		        android:textColor="@drawable/button_text_color2"
-		        android:textSize="20sp" />
 
 		    <CheckBox
 		        android:id="@+id/checkBoxProfileImage"
@@ -151,6 +124,32 @@
 		        android:layout_below="@+id/UserImage"
 		        android:layout_toLeftOf="@+id/profileSave"
 		        android:orientation="vertical" />
+
+		    <Button
+		        android:id="@+id/profileExit"
+		         android:layout_width="130dp"
+		        android:layout_height="wrap_content"
+		        android:layout_alignBaseline="@+id/profileSave"
+		        android:layout_alignBottom="@+id/profileSave"
+		        android:layout_marginLeft="10dp"
+		        android:background="@drawable/button_config"
+		        android:onClick="onClickButton"
+		        android:text="Exit"
+		        android:textColor="@drawable/button_text_color2"
+		        android:textSize="20sp" />
+
+		    <Button
+		        android:id="@+id/profileSave"
+		        android:layout_width="130dp"
+		        android:layout_height="wrap_content"
+		        android:layout_alignParentBottom="true"
+		        android:layout_alignParentRight="true"
+		        android:background="@drawable/button_config"
+		        android:onClick="onClickButton"
+		        android:layout_marginRight="10dp"
+		        android:text="Save"
+		        android:textColor="@drawable/button_text_color2"
+		        android:textSize="20sp" />
 
 	</RelativeLayout>
 
