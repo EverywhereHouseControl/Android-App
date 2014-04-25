@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:background="@color/GreenApp" >
 
     <TextView
         android:id="@+id/forgotPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Name " />
+        android:text="Name "
+        android:textColor="@color/Black"
+        android:textSize="20sp" />
 
     <TextView
         android:id="@+id/textView2"
@@ -15,7 +18,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/forgotPassword"
-        android:text="Item " />
+        android:text="Item "
+        android:textColor="@color/Black"
+        android:textSize="20sp" />
 
     <TextView
         android:id="@+id/textView3"
@@ -23,7 +28,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/textView2"
-        android:text="Created by " />
+        android:text="Created by "
+        android:textColor="@color/Black"
+        android:textSize="20sp" />
 
     <TextView
         android:id="@+id/textView4"
@@ -31,28 +38,36 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/textView3"
-        android:text="Hour" />
+        android:text="Hour"
+        android:textColor="@color/Black"
+        android:textSize="20sp" />
 
     <TextView
         android:id="@+id/fragment_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/White"
+        android:textSize="20sp" />
 
     <TextView
         android:id="@+id/fragment_item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/fragment_name"
-        android:layout_alignTop="@+id/textView2" />
+        android:layout_alignTop="@+id/textView2"
+        android:textColor="@color/White"
+        android:textSize="20sp" />
 
     <TextView
         android:id="@+id/fragment_creator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/fragment_name"
-        android:layout_below="@+id/textView2" />
+        android:layout_below="@+id/textView2"
+        android:textColor="@color/White"
+        android:textSize="20sp" />
 
     <TextView
         android:id="@+id/fragment_hour"
@@ -60,6 +75,19 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/fragment_item"
         android:layout_below="@+id/textView3"
-        android:layout_marginBottom="2dp" />
+        android:layout_marginBottom="2dp"
+        android:textColor="@color/White"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/fragment_hour"
+        android:text="________________________________________________"
+        android:textColor="@color/Black"
+        android:textSize="15sp" />
 
 </RelativeLayout>
