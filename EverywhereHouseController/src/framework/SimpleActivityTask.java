@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -186,8 +187,8 @@ public class SimpleActivityTask extends AsyncTask<String, String, String>
 			_is.close();
 			_file2 = new String(buffer, "UTF-8");
 			JSONObject _obj = new JSONObject(_file2);
-			_house = _obj.getString("House");
-
+			JSONObject infoCasa = _obj.getJSONArray("houses").getJSONObject(0);
+			_house = infoCasa.getString("name");
 		} 
 		catch (IOException _ex) 
 		{
