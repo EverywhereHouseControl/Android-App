@@ -26,7 +26,7 @@ public class JSON {
 	public ArrayList<String> _rooms = new ArrayList<String>();
 	public ArrayList<String> _items = new ArrayList<String>();
 	public ArrayList<String> _access = new ArrayList<String>();
-	public HashMap<String,Pair<String, String>> _places = new HashMap<String,Pair<String, String>>();
+	public HashMap<String, Pair<String, String>> _places = new HashMap<String, Pair<String, String>>();
 	public HashMap<String, String> _urls = new HashMap<String, String>();
 	public HashMap<String, Event> _events;
 	public HashMap<String, JSONArray> _roomsHouses = new HashMap<String, JSONArray>();
@@ -51,40 +51,35 @@ public class JSON {
 		return _instance;
 	}
 
-	public JSON(Context c) 
-	{
+	public JSON(Context c) {
 		loadUserInformation(c);
 		loadUserEnvironment(c);
-		loadUserEvents(c);
+		try {
+			loadJSONEvent();
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
 	}
 
-	private void loadUserEnvironment(Context c) 
-	{
-		try 
-		{
+	private void loadUserEnvironment(Context c) {
+		try {
 			InputStream _is = c.openFileInput("configuration.json");
 			int _size = _is.available();
 			byte[] buffer = new byte[_size];
 			_is.read(buffer);
 			_is.close();
 			this._fileConfig = new String(buffer, "UTF-8");
-			try 
-			{
+			try {
 				loadJSONconfig();
-			} 
-			catch (JSONException e) 
-			{
+			} catch (JSONException e) {
 				e.printStackTrace();
 			}
-		} 
-		catch (IOException ex) 
-		{
+		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
 	}
-	
-	private void loadUserInformation(Context c) 
-	{
+
+	private void loadUserInformation(Context c) {
 		try {
 			InputStream _is = c.openFileInput("profileInformation.json");
 			int _size = _is.available();
@@ -92,31 +87,8 @@ public class JSON {
 			_is.read(buffer);
 			_is.close();
 			this._fileInfo = new String(buffer, "UTF-8");
-			try 
-			{
-				loadJSONinfo();
-			} catch (JSONException e) 
-			{
-				e.printStackTrace();
-			}
-		} 
-		catch (IOException ex) 
-		{
-			ex.printStackTrace();
-		}
-	}
-
-	private void loadUserEvents(Context c) {
-		try {
-			_events = new HashMap<String, Event>();
-			InputStream _is = c.getAssets().open("event.json");
-			int _size = _is.available();
-			byte[] buffer = new byte[_size];
-			_is.read(buffer);
-			_is.close();
-			this._eventFile = new String(buffer, "UTF-8");
 			try {
-				loadJSONEvent();
+				loadJSONinfo();
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
@@ -126,12 +98,13 @@ public class JSON {
 	}
 
 	private void loadJSONEvent() throws JSONException {
-		Log.d("JSON ", _eventFile.toString());
-
-		JSONObject obj = new JSONObject(_eventFile);
-		try {
-			for (int i = 0; i <= obj.length(); i++) {
-				JSONObject event = obj.getJSONObject("Event" + i);
+		_events = new HashMap<String, Event>();
+		JSONObject obj = new JSONObject(_fileInfo);
+		for (int i = 0; i <= obj.getJSONObject("JSON").getJSONArray("houses").length(); i++) {
+			JSONObject house = obj.getJSONObject("JSON").getJSONArray("houses").getJSONObject(i).getJSONObject("events");
+			
+			for (int j = 0; j <= house.length(); j++) {
+				JSONObject event = house.getJSONObject("Event" + j);
 				String dateFormat = event.get("Year") + "-"
 						+ event.get("Month") + "-" + event.get("Day");
 				Date date = null;
@@ -149,11 +122,9 @@ public class JSON {
 						(String) event.get("Created"), date,
 						(String) event.get("Hour"),
 						(String) event.get("Minute"));
-				_events.put("Event" + i, ev);
-
+				_events.put("Event" + j, ev);
 			}
-		} catch (JSONException e) {
-			e.printStackTrace();
+
 		}
 	}
 
@@ -175,15 +146,16 @@ public class JSON {
 			JSONArray _houses = _obj.getJSONArray(_TAG_HOUSES);
 
 			for (int i = 0; i < _houses.length(); i++) {
-				
+
 				JSONObject _house = _houses.getJSONObject(i);
-				
+
 				this._houses.add(_house.getString("name"));
-				
+
 				_access.add(_house.getString("access"));
-				
-				_places.put(_house.getString("name"),new Pair<String, String>(_house.getString("city"), _house.getString("country")));
-				
+
+				_places.put(_house.getString("name"), new Pair<String, String>(
+						_house.getString("city"), _house.getString("country")));
+
 				try {
 					String _url = _house.getString("image");
 					Log.d("URL", _url);
@@ -234,16 +206,15 @@ public class JSON {
 			e.printStackTrace();
 		}
 	}
-	
-	private void loadJSONinfo() throws JSONException 
-	{
+
+	private void loadJSONinfo() throws JSONException {
 		Log.d("JSON ", _fileInfo.toString());
 
 		JSONObject _obj = new JSONObject(_fileInfo);
 
 		_urlImage = _obj.getString("URL");
 		Log.d("URL image", _urlImage);
-		
+
 	}
 
 	/**
@@ -255,13 +226,11 @@ public class JSON {
 		return _houses;
 	}
 
-	
-	public String getURLUserImage()
-	{
+	public String getURLUserImage() {
 		return _eventFile;
-		
+
 	}
-	
+
 	/**
 	 * 
 	 * @param house
@@ -290,13 +259,13 @@ public class JSON {
 		}
 		return _urls;
 	}
-	
+
 	/**
 	 * 
 	 * @param house
 	 * @return
 	 */
-	public Pair<String,String> getPlace(String house) {
+	public Pair<String, String> getPlace(String house) {
 		return _places.get(house);
 	}
 
@@ -445,10 +414,11 @@ public class JSON {
 						for (int j = 0; j < _services.length(); j++) {
 							JSONObject _item = _services.getJSONObject(j);
 							if (_item.get(_TAG_NAME).equals(item)) {
-								JSONArray actions = _item.getJSONArray(_TAG_ACTIONS);
+								JSONArray actions = _item
+										.getJSONArray(_TAG_ACTIONS);
 								for (int k = 0; k < actions.length(); k++)
 									serviceList.add(actions.get(k).toString());
-							}							
+							}
 						}
 					} catch (Exception e) {
 						Log.d("ERROR", e.toString());
