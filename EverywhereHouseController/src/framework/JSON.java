@@ -100,9 +100,11 @@ public class JSON {
 	private void loadJSONEvent() throws JSONException {
 		_events = new HashMap<String, Event>();
 		JSONObject obj = new JSONObject(_fileInfo);
-		for (int i = 0; i <= obj.getJSONObject("JSON").getJSONArray("houses").length(); i++) {
-			JSONObject house = obj.getJSONObject("JSON").getJSONArray("houses").getJSONObject(i).getJSONObject("events");
-			
+		for (int i = 0; i <= obj.getJSONObject("JSON").getJSONArray("houses")
+				.length(); i++) {
+			JSONObject house = obj.getJSONObject("JSON").getJSONArray("houses")
+					.getJSONObject(i).getJSONObject("events");
+
 			for (int j = 0; j <= house.length(); j++) {
 				JSONObject event = house.getJSONObject("Event" + j);
 				String dateFormat = event.get("Year") + "-"
@@ -373,25 +375,27 @@ public class JSON {
 	// At the moment, testing with bertoldo+mansion
 	public SpinnerEventContainer getItemsWithLocation() throws JSONException {
 		SpinnerEventContainer info = new SpinnerEventContainer();
-		String house = "casaBertoldo";
-		try {
-			JSONArray _rooms = new JSONArray();
-			_rooms = _roomsHouses.get(house);
+		for (int k = 0; k < _houses.size(); k++) {
+			String house = _houses.get(k);
+			try {
+				JSONArray _rooms = new JSONArray();
+				_rooms = _roomsHouses.get(house);
 
-			for (int i = 0; i < _rooms.length(); i++) {
-				JSONObject _room = _rooms.getJSONObject(i);
-				String room = _room.getString(_TAG_NAME);
+				for (int i = 0; i < _rooms.length(); i++) {
+					JSONObject _room = _rooms.getJSONObject(i);
+					String room = _room.getString(_TAG_NAME);
 
-				JSONArray _services = _room.getJSONArray(_TAG_SERVICES);
-				Log.d("SERVICES", _services.toString());
-				for (int j = 0; j < _services.length(); j++) {
-					String service = _services.getJSONObject(j).getString(
-							_TAG_NAME);
-					info.add(room, service, house);
+					JSONArray _services = _room.getJSONArray(_TAG_SERVICES);
+					Log.d("SERVICES", _services.toString());
+					for (int j = 0; j < _services.length(); j++) {
+						String service = _services.getJSONObject(j).getString(
+								_TAG_NAME);
+						info.add(room, service, house);
+					}
 				}
+			} catch (JSONException e) {
+				e.printStackTrace();
 			}
-		} catch (JSONException e) {
-			e.printStackTrace();
 		}
 		return info;
 	}
