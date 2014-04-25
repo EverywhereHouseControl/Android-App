@@ -7,7 +7,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="120dp"
         android:background="@color/Black" >
 
         <TextView
@@ -18,19 +18,19 @@
             android:layout_centerVertical="true"
             android:text="New scheduled task"
             android:textColor="@color/White"
-            android:textSize="20sp" />
+            android:textSize="30sp" />
 
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="30dp" >
+        android:layout_height="100dp" >
     </RelativeLayout>
 
     <EditText
         android:id="@+id/event_name"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_gravity="center_horizontal"
         android:ems="10"
         android:hint="@string/event_name"
@@ -55,7 +55,7 @@
         android:layout_gravity="center_horizontal"
         android:text="No date selected"
         android:textColor="@color/White"
-        android:textSize="20sp" />
+        android:textSize="30sp" />
 
     <Button
         android:id="@+id/bt_select_date"
@@ -66,7 +66,7 @@
         android:background="@drawable/button_config"
         android:text="Select date"
         android:textColor="@drawable/button_text_color2"
-        android:textSize="20sp" />
+        android:textSize="40sp" />
 
     <TextView
         android:id="@+id/tv_time"
@@ -75,7 +75,7 @@
         android:layout_gravity="center_horizontal"
         android:text="No time selected"
         android:textColor="@color/White"
-        android:textSize="20sp" />
+        android:textSize="30sp" />
 
     <Button
         android:id="@+id/bt_select_time"
@@ -86,37 +86,37 @@
         android:background="@drawable/button_config"
         android:text="Select time"
         android:textColor="@drawable/button_text_color2"
-        android:textSize="20sp" />
+        android:textSize="40sp" />
 
     <RelativeLayout
         android:id="@+id/RelativeLayout1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="95dp"
         android:orientation="horizontal" >
 
         <Button
-            android:id="@+id/cancel_event"
-            android:layout_width="130dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/button_config"
-            android:text="Cancel"
-            android:textColor="@drawable/button_text_color2"
-            android:textSize="20sp" />
-
-        <Button
             android:id="@+id/create_event"
-            android:layout_width="130dp"
+            android:layout_width="180dp"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
+            android:layout_marginRight="30dp"
             android:background="@drawable/button_config"
             android:text="Confirm"
             android:textColor="@drawable/button_text_color2"
-            android:textSize="20sp" />
+            android:textSize="30sp" />
+
+        <Button
+            android:id="@+id/cancel_event"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="30dp"
+            android:background="@drawable/button_config"
+            android:text="Cancel"
+            android:textColor="@drawable/button_text_color2"
+            android:textSize="30sp" />
 
     </RelativeLayout>
 

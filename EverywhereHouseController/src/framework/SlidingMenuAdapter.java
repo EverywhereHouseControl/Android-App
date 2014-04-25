@@ -92,7 +92,8 @@ public class SlidingMenuAdapter extends BaseAdapter
 			LayoutInflater _inflater = (LayoutInflater) _context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			_view = _inflater.inflate(R.layout.title_text_view,null);
 			TextView _text = (TextView) _view.findViewById(R.id.HousesTextView);
-			_text.setText("HOUSES");		
+			if(_houses.size()>1)_text.setText("HOUSES");
+			else _text.setText("HOUSE");		
 		}	
 		else if( position < (_houses.size()+1))
 		{

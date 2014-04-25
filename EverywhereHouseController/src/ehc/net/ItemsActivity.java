@@ -175,7 +175,7 @@ import framework.JSON;
 	    	_expListView = (ExpandableListView) rootView.findViewById(R.id.itemlist);
 	    	    	
 	    	_textRoom = (TextView)rootView.findViewById(R.id.textRoom);
-	    	_textRoom.setText(_button);
+	    	_textRoom.setText(_button.toUpperCase());
 	    	
 	    	_JSONFile = JSON.getInstance(getActivity().getApplicationContext());
 	    	Log.d("_JSONFILE", "creado");

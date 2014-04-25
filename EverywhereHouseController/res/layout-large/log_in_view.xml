@@ -55,18 +55,6 @@
 
     </RelativeLayout>
 
-    <TextView
-        android:id="@+id/createUser"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="14dp"
-        android:text="Create user"
-        android:textColor="@color/Blue"
-        android:textColorHint="@color/Blue"
-        android:textSize="20sp" />
-
     <ImageView
         android:id="@+id/HouseIconManagementMenu"
         android:layout_width="300dp"
@@ -90,7 +78,7 @@
         android:layout_height="70dp"
         android:layout_below="@+id/relativeLayout1"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="54dp"
+        android:layout_marginTop="29dp"
         android:background="@drawable/button_config2"
         android:onClick="onClickButton"
         android:text="Login"
@@ -98,12 +86,23 @@
         android:textSize="40sp" />
 
     <TextView
+        android:id="@+id/createUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="Create user"
+        android:textColor="@color/Blue"
+        android:textColorHint="@color/Blue"
+        android:textSize="20sp" />
+
+    <TextView
         android:id="@+id/forgotPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/buttonLogin"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="42dp"
+        android:layout_marginTop="35dp"
         android:text="Forgot password?"
         android:textColor="@color/Blue"
         android:textSize="20sp" />
