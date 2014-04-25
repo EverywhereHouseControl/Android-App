@@ -13,8 +13,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
-public class SimpleActivityTask extends AsyncTask<String, String, String> 
-{
+public class SimpleActivityTask extends AsyncTask<String, String, String> {
 
 	private String _currentRoom;
 	private String _file;
@@ -24,48 +23,42 @@ public class SimpleActivityTask extends AsyncTask<String, String, String>
 	private String _message;
 	private String _data;
 	private String _house;
+	private String _start;
+	private String _eventName;
 	private Context _context;
 
 	private ArrayList<String> _parametros = new ArrayList<String>();
 
-
 	/** The working. */
 	private static volatile boolean _working = false;
-	
-	
+
 	/**
 	 * Execute task.
 	 * 
 	 * @param task
 	 *            the task
 	 */
-	public static void executeTask(SimpleActivityTask task) 
-	{
-		if (!_working) 
-		{
+	public static void executeTask(SimpleActivityTask task) {
+		if (!_working) {
 			_working = true;
 			task.execute();
 		}
 	}
-	
 
-	
 	/**
 	 * Instantiates a new simple activity task.
 	 * 
 	 * @param activity
 	 *            the activity
 	 */
-	public SimpleActivityTask(Context _c) 
-	{
+	public SimpleActivityTask(Context _c) {
 		this._context = _c;
 	}
-	
+
 	/**
 	 * Message "Loading"
 	 */
-	protected void onPreExecute() 
-	{
+	protected void onPreExecute() {
 		super.onPreExecute();
 		/*
 		 * pDialog = new ProgressDialog(context);
@@ -76,13 +69,11 @@ public class SimpleActivityTask extends AsyncTask<String, String, String>
 	}
 
 	@Override
-	protected String doInBackground(String... _params) 
-	{
+	protected String doInBackground(String... _params) {
 		// TODO Auto-generated method stub
 		int _internalError = 0;
 
-		try 
-		{
+		try {
 			Log.e("servicename", _servicename.toString());
 			JSONObject obj = new JSONObject(_file);
 
@@ -104,9 +95,7 @@ public class SimpleActivityTask extends AsyncTask<String, String, String>
 			Log.d("PARAMETROS", _parametros.toString());
 			errorControl(_parametros, _internalError);
 
-		} 
-		catch (Exception _e1) 
-		{
+		} catch (Exception _e1) {
 			// TODO Auto-generated catch block
 			_e1.printStackTrace();
 		}
@@ -117,69 +106,56 @@ public class SimpleActivityTask extends AsyncTask<String, String, String>
 	/**
 		 * 
 		 */
-	protected void onPostExecute(String file_url) 
-	{
+	protected void onPostExecute(String file_url) {
 		Toast.makeText(_context, _message, Toast.LENGTH_SHORT).show();
 	}
 
 	/**
 	 * Error control for modify user.
 	 */
-	private void errorControl(ArrayList<String> parametros, int _internalError) 
-	{
+	private void errorControl(ArrayList<String> parametros, int _internalError) {
 
-		switch (_internalError) 
-		{
-			case 0: 
-			{
-				JSONObject data = _post.getServerData(parametros,
-					"http://5.231.69.226/EHControlConnect/index.php");//"http://192.168.2.147/EHControlConnect/index.php");
-				try 
-				{
-					JSONObject json_data = data.getJSONObject("error");
-					Log.d("ERROR", json_data.toString());
+		switch (_internalError) {
+		case 0: {
+			JSONObject data = _post.getServerData(parametros,
+					"http://5.231.69.226/EHControlConnect/index.php");// "http://192.168.2.147/EHControlConnect/index.php");
+			try {
+				JSONObject json_data = data.getJSONObject("error");
+				Log.d("ERROR", json_data.toString());
 
-					switch (json_data.getInt("ERROR")) 
-					{
-						case 0: 
-						{
-							_message = json_data.getString("ENGLISH");
-							break;
-						}
-						default: 
-						{
-							_message = json_data.getString("ENGLISH");
-							break;
-						}
-					}
-
-				} 
-				catch (JSONException _e) 
-				{
-					// TODO Auto-generated catch block
-					_e.printStackTrace();
+				switch (json_data.getInt("ERROR")) {
+				case 0: {
+					_message = json_data.getString("ENGLISH");
+					break;
 				}
-				break;
-			}
-			default: 
-			{
+				default: {
+					_message = json_data.getString("ENGLISH");
+					break;
+				}
+				}
 
+			} catch (JSONException _e) {
+				// TODO Auto-generated catch block
+				_e.printStackTrace();
 			}
+			break;
+		}
+		default: {
+
+		}
 		}
 	}
 
-	private void parser() 
-	{
+	private void parser() {
 		String _file2;
-		try 
-		{
+		try {
 			InputStream _is = _context.openFileInput("profileInformation.json");
 			int _size = _is.available();
 			byte[] buffer = new byte[_size];
 			_is.read(buffer);
 			_is.close();
 			this._file = new String(buffer, "UTF-8");
-			
+
 			_is = _context.openFileInput("configuration.json");
 			_size = _is.available();
 			buffer = new byte[_size];
@@ -189,25 +165,35 @@ public class SimpleActivityTask extends AsyncTask<String, String, String>
 			JSONObject _obj = new JSONObject(_file2);
 			JSONObject infoCasa = _obj.getJSONArray("houses").getJSONObject(0);
 			_house = infoCasa.getString("name");
-		} 
-		catch (IOException _ex) 
-		{
+		} catch (IOException _ex) {
 			_ex.printStackTrace();
-		} 
-		catch (Exception _ex) 
-		{
+		} catch (Exception _ex) {
 			_ex.printStackTrace();
 		}
 	}
 
-	public void sendAction(String _r, String _s, String _a, String _d) 
-	{
+	public void sendAction(String _r, String _s, String _a, String _d) {
 		_servicename = _s;
 		_currentRoom = _r;
-		_action=_a;
-		_data=_d;
+		_action = _a;
+		_data = _d;
 		parser();
-		_post = new Post();		
+		_post = new Post();
 		execute();
 	}
+
+	public void sendEvent(String house, String room, String service,
+			String actionName, String data, String start, String name) {
+		_house=house;
+		_currentRoom = room;
+		_servicename = service;
+		_action = actionName;
+		_data = data;
+		_start = start;
+		_eventName = name;
+	}
+
 }
+
+
+
