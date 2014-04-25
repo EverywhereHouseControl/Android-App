@@ -6,6 +6,7 @@ import java.util.Calendar;
 import org.json.JSONException;
 
 import framework.JSON;
+import framework.SimpleActivityTask;
 import framework.SpinnerEventContainer;
 import android.app.Activity;
 import android.app.DatePickerDialog;
@@ -45,6 +46,9 @@ public class CreateNewEventActivity extends Activity {
 
 	private TextView dateSelected;
 	private TextView timeSelected;
+	private EditText et;
+
+	private Spinner itemList;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +68,7 @@ public class CreateNewEventActivity extends Activity {
 		/**
 		 * Spinner info : services
 		 */
-		final Spinner itemList = (Spinner) findViewById(R.id.sp_item);
+		itemList = (Spinner) findViewById(R.id.sp_item);
 		try {
 			servicesList = JSON.getInstance(this).getItemsWithLocation();
 			ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(
@@ -85,11 +89,19 @@ public class CreateNewEventActivity extends Activity {
 				if (position != 0) {
 					serviceSelected = true;
 					final Spinner actionList = (Spinner) findViewById(R.id.sp_action);
-					ArrayList<String> actions = JSON.getInstance(
-							getApplicationContext()).getServices(
-							servicesList.getHouse(position-1),
-							servicesList.getRoom(position-1),
-							servicesList.getService(position-1));
+					// ArrayList<String> actions = JSON.getInstance(
+					// getApplicationContext()).getServices(
+					// servicesList.getHouse(position - 1),
+					// servicesList.getRoom(position - 1),
+					// servicesList.getService(position - 1));
+					int service2 = parent.getItemAtPosition(position)
+							.toString().indexOf("-");
+					int service1 = parent.getItemAtPosition(position)
+							.toString().length();
+					String service = parent.getItemAtPosition(position)
+							.toString().substring(service2 + 2, service1);
+					ArrayList<String> actions = setActionList(service);
+
 					ArrayAdapter<String> spinnerActionAdapter = new ArrayAdapter<String>(
 							getApplicationContext(),
 							R.layout.spinner_simple_data, actions);
@@ -129,7 +141,7 @@ public class CreateNewEventActivity extends Activity {
 		 * Spinner info : actions
 		 */
 
-		EditText et = (EditText) findViewById(R.id.event_name);
+		et = (EditText) findViewById(R.id.event_name);
 		et.addTextChangedListener(new TextWatcher() {
 
 			@Override
@@ -206,9 +218,34 @@ public class CreateNewEventActivity extends Activity {
 				else if (time.equals((String) "No time selected"))
 					Toast.makeText(getApplicationContext(), "Select a time",
 							Toast.LENGTH_LONG).show();
+				else {
+					String[] selectedService = parseService(itemList
+							.getSelectedItem().toString());
+					new SimpleActivityTask(getApplicationContext()).sendEvent(
+							selectedService[0],
+							selectedService[1],
+							selectedService[2],
+							"SEND",
+							"a",
+							dateSelected.getText() + " "
+									+ timeSelected.getText(), et.getText()
+									.toString());
+				}
+
 			}
 		});
 
+	}
+
+	private String[] parseService(String serv) {
+		String[] str = null;
+		int service1 = serv.indexOf(":");
+		int service2 = serv.indexOf("-");
+		int service3 = serv.length();
+		str[0] = serv.substring(0,service1-1);
+		str[1] = serv.substring(service1+1,service2-1);
+		str[2] = serv.substring(service2+1,service3);
+		return str;
 	}
 
 	@Override
@@ -248,5 +285,39 @@ public class CreateNewEventActivity extends Activity {
 			minuteSelected = minute;
 		}
 	};
+
+	private ArrayList<String> setActionList(String service) {
+		ArrayList<String> actions = new ArrayList<String>();
+		if (service.equals("LIGHTS")) {
+			actions.add("On");
+			actions.add("Off");
+		} else if (service.equals("TV")) {
+			actions.add("Turn off");
+			actions.add("Turn on");
+			actions.add("Volume +");
+			actions.add("Volume -");
+			actions.add("Up");
+			actions.add("Down");
+			actions.add("Left");
+			actions.add("Rigth");
+			actions.add("Star");
+			actions.add("One");
+			actions.add("Two");
+			actions.add("Three");
+			actions.add("Four");
+			actions.add("Five");
+			actions.add("Six");
+			actions.add("Seven");
+			actions.add("Eight");
+			actions.add("Nine");
+			actions.add("Zero");
+		} else if (service.equals("BLINDS")) {
+			actions.add("Up");
+			actions.add("Medium");
+			actions.add("Down");
+		}
+
+		return actions;
+	}
 
 }
