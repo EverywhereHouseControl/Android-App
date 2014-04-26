@@ -31,6 +31,8 @@ import android.net.Uri;
 import android.opengl.Visibility;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.StrictMode;
+import android.os.StrictMode.ThreadPolicy;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.util.Pair;
@@ -237,6 +239,8 @@ public class Profile extends Activity implements ImageChooserListener
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		ThreadPolicy tp = ThreadPolicy.LAX; 
+		StrictMode.setThreadPolicy(tp);
 	}
 	
 	

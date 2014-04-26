@@ -5,6 +5,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.RunnableFuture;
+import java.util.concurrent.RunnableScheduledFuture;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,6 +31,8 @@ import android.net.Uri;
 import android.opengl.Visibility;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.StrictMode;
+import android.os.StrictMode.ThreadPolicy;
 import android.util.Log;
 import android.util.Pair;
 import android.view.View;
@@ -129,10 +136,12 @@ public class HousesMenu extends Activity implements ImageChooserListener
 					_post = new Post();						
 					uploadImageConnection _connection = new uploadImageConnection(_chosenImage.getFilePathOriginal());
 			    	_connection.execute();
+					
 				}
 			}
 		});
-		
+		ThreadPolicy tp = ThreadPolicy.LAX; 
+		StrictMode.setThreadPolicy(tp);
     }
 	
 	/**
@@ -363,7 +372,7 @@ public class HousesMenu extends Activity implements ImageChooserListener
 			_parametros.add("subir");
 			_data = _post.connectionPostUpload(_parametros, "http://5.231.69.226/EHControlConnect/index.php", _imagePath);			
 			
-			runOnUiThread(new Runnable() 
+			runOnUiThread(new Runnable()
 			{
 				@Override
 				public void run() 
