@@ -307,10 +307,11 @@ public class CreateNewEventActivity extends Activity {
 		@Override
 		public void onDateSet(DatePicker view, int year, int monthOfYear,
 				int dayOfMonth) {
+			monthOfYear++;
 			dateSelected.setText("Selected date: " + dayOfMonth + "-"
 					+ monthOfYear + "-" + year);
 			yearSelected = year;
-			monthSelected = monthOfYear;
+			monthSelected = monthOfYear+1;
 			daySelected = dayOfMonth;
 
 		}

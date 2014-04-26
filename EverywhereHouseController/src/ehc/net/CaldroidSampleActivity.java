@@ -58,13 +58,16 @@ public class CaldroidSampleActivity extends FragmentActivity {
 			boolean dateWithEvents = false;
 			Event e = entry.getValue();
 			date = entry.getValue().getDate();
+			Date updateDate = new Date();
+			ArrayList<Event> eventlist = new ArrayList<Event>();
 			for (Date d : eventDays) {
 				if (d.equals(date)) {
 					dateWithEvents = true;
 					for (Entry<Date, ArrayList<Event>> entry2 : eventsPerDate
 							.entrySet()) {
 						if (entry2.getKey().equals(date)) {
-							ArrayList<Event> eventlist = entry2.getValue();
+							updateDate = date;
+							eventlist = entry2.getValue();
 							eventlist.add(new Event(e.getName(), e.getItem(), e
 									.getCreator(), date, e.getHour(), e
 									.getMinute()));
@@ -74,11 +77,15 @@ public class CaldroidSampleActivity extends FragmentActivity {
 			}
 			if (!dateWithEvents) {
 				eventDays.add(date);
-				ArrayList<Event> eventList = new ArrayList<Event>();
-				eventList.add(new Event(e.getName(), e.getItem(), e
+				eventlist = new ArrayList<Event>();
+				eventlist.add(new Event(e.getName(), e.getItem(), e
 						.getCreator(), date, e.getHour(), e.getMinute()));
-				eventsPerDate.put(date, eventList);
+				eventsPerDate.put(date, eventlist);
+			} else {
+				eventsPerDate.remove(updateDate);
+				eventsPerDate.put(updateDate, eventlist);
 			}
+				
 		}
 
 		for (Date d : eventDays) {
