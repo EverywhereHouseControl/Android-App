@@ -245,8 +245,15 @@ public class RemoteController extends Activity
 	protected void onStop()
     {
     	super.onStop();
-    	onBackPressed();
     }
+	
+	@Override
+	public void onBackPressed() 
+	{
+		// TODO Auto-generated method stub
+		super.onBackPressed();
+		finish();
+	}
 	
 	
 }

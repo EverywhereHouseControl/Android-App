@@ -105,7 +105,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter
 //				_servicename = _servicename.toUpperCase();
 			}			
 		}
-		else 
+		else if (_itemName.equals("boolean")) 
 		{
 			int _itemType = getChildXML(_itemName);
 			convertView = _inflater.inflate(_itemType, parent, false);
@@ -119,7 +119,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter
 
 	private void setListeners(final View convertView, int itemType, final int groupPosition, final int childPosition) 
 	{
-		final TextView _tv = (TextView) convertView.findViewById(R.id.childname);	
+		final TextView _tv = (TextView) convertView.findViewById(R.id.childname);
 		if (itemType == R.layout.float_item) 
 		{
 			SeekBar _sb = (SeekBar) convertView.findViewById(R.id.float_value);
@@ -155,6 +155,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter
 				@Override
 				public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) 
 				{
+					_servicename = (String) getGroup(groupPosition);
 					// TODO Auto-generated method stub
 					if (isChecked) 
 					{
@@ -200,6 +201,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter
 //					intent.putExtra("Service",(String) getGroup(groupPosition));
 //					_context.startActivity(intent);
 					String _laptopName = (String) getGroup(groupPosition);
+					_servicename = (String) getGroup(groupPosition);
 					
 					if(_laptopName.equals("BLINDS"))
 					{
