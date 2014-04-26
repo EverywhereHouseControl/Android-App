@@ -109,7 +109,7 @@ public class HousesMenu extends Activity implements ImageChooserListener
 				
 			
 		_selectMode = false;     
-		_activity = this;
+		_activity = HousesMenu.this;
 		_currentImage = new ImageView(_activity);
 		_textViewFile = new TextView(_activity);
 		parser();
@@ -557,7 +557,6 @@ public class HousesMenu extends Activity implements ImageChooserListener
 	protected void onStop() 
 	{
 		super.onStop();
-		finish();
 		log("Stoped");
 	}
 }
