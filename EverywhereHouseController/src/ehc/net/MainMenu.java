@@ -223,6 +223,7 @@ public class MainMenu extends SherlockActivity
 				_parametros.add("country");
 				_parametros.add(_place.second.toUpperCase());
 			 			
+				Log.d("PARAMETROS",_parametros.toString());
 				//Variable 'Data' saves the query response
 				_data = _post.getServerData(_parametros,"http://5.231.69.226/EHControlConnect/index.php");//"http://192.168.2.147/EHControlConnect/index.php");
 				log(_data.toString());

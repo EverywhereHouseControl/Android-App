@@ -21,7 +21,11 @@ import framework.Post;
 import framework.SlidingMenuAdapter;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.net.Uri;
 import android.opengl.Visibility;
@@ -30,6 +34,7 @@ import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.util.Pair;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -51,7 +56,8 @@ public class Profile extends Activity implements ImageChooserListener
 	private Button _buttonSave;
 	private Button _buttonExit;
 	private EditText _user;
-	private ImageView _image;
+	private ImageButton _image;
+	private ImageView _imageDialog;
 	private EditText _email;
 	private EditText _password;
 	private String _file;
@@ -68,6 +74,7 @@ public class Profile extends Activity implements ImageChooserListener
 	//-------------------------------
 	private boolean _selectMode;
 	private int _currentOption;
+	private ChosenImage _selectedImage = new ChosenImage();
 		
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
@@ -108,33 +115,87 @@ public class Profile extends Activity implements ImageChooserListener
 		_buttonSave = ( Button ) findViewById( R.id.profileSave );
 		_buttonExit = (Button) findViewById(R.id.profileExit);
 		
-		_checkBox = (CheckBox) findViewById(R.id.checkBoxProfileImage);
-		_checkBox.setVisibility(View.GONE);
-
-		_checkBox.setOnCheckedChangeListener(new OnCheckedChangeListener() 
-		{	
+		_image = (ImageButton) findViewById(R.id.UserImage);		
+		_image.setOnClickListener(new View.OnClickListener() 
+		{
+			
 			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) 
+			public void onClick(View v) 
 			{
 				// TODO Auto-generated method stub
-				if(isChecked)
+				// custom dialog
+				_selectMode = false;
+				final Dialog dialog = new Dialog(Profile.this);
+				dialog.setTitle("Image");
+				dialog.setContentView(R.layout.image_dialog);
+				
+				_imageDialog = (ImageView) dialog.findViewById(R.id.userImageDialog);
+				_imgLoader.DisplayImage(_url, R.drawable.base_picture, _imageDialog, 1);
+				
+				ImageButton _takePicture = (ImageButton)dialog.findViewById(R.id.takePicture);
+				_takePicture.setOnClickListener(new View.OnClickListener() 
 				{
-					switch( _currentOption )
+					
+					@Override
+					public void onClick(View v) 
 					{
-						case 1:
-							takePicture();
-							break;
-						case 2:
-							chooseImage();
-							break;
-						default:
-							break;
+						// TODO Auto-generated method stub
+						takePicture();
 					}
-				}
+				});
+				
+				ImageButton _choosePicture = (ImageButton)dialog.findViewById(R.id.choosePicture);
+				_choosePicture.setOnClickListener(new View.OnClickListener() 
+				{
+					
+					@Override
+					public void onClick(View v) 
+					{
+						// TODO Auto-generated method stub
+						chooseImage();
+					}
+				});
+				
+				dialog.onBackPressed();
+				dialog.setOnCancelListener(new OnCancelListener() 
+				{
+					
+					@Override
+					public void onCancel(DialogInterface dialog) 
+					{
+						// TODO Auto-generated method stub
+						
+						if(_selectMode)
+						{
+						
+							new AlertDialog.Builder(Profile.this)
+					        .setTitle("Image")
+					        .setMessage("Save changes?")
+					        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() 
+					        {
+					            public void onClick(DialogInterface dialog, int which) 
+					            { 
+					                // do nothing
+					            }
+					         })
+					         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() 
+					        {
+					            public void onClick(DialogInterface dialog, int which) 
+					            { 
+									_post = new Post();						
+									uploadImageConnection _connection = new uploadImageConnection(_selectedImage.getFilePathOriginal());
+							    	_connection.execute();
+					            }
+					         })
+					        .setIcon(android.R.drawable.ic_dialog_alert)
+					         .show();
+						}
+					}
+				});
+				
+				dialog.show();
 			}
 		});
-		
-		_image = (ImageView) findViewById(R.id.UserImage);
 						
 		_buttonSave.setOnClickListener( new View.OnClickListener() 
 		{	
@@ -159,18 +220,6 @@ public class Profile extends Activity implements ImageChooserListener
 			}
 		});
 		
-		ImageButton _imageButton = (ImageButton) findViewById(R.id.imageOverflow);
-		_imageButton.setOnClickListener(new View.OnClickListener() 
-		{
-			
-			@Override
-			public void onClick(View v) 
-			{
-				// TODO Auto-generated method stub
-				openOptionsMenu();
-			}
-		});
-		
 		parser();
 
 		try 
@@ -179,7 +228,7 @@ public class Profile extends Activity implements ImageChooserListener
 			_url = _obj.getString("URL");
 			if(_url!=null)
 			{
-				_imgLoader.DisplayImage(_url, R.drawable.base_picture, _image);
+				_imgLoader.DisplayImage(_url, R.drawable.base_picture, _image, 0);
 			}
 			else _image.setImageResource(R.drawable.base_picture);
 		} 
@@ -238,46 +287,6 @@ public class Profile extends Activity implements ImageChooserListener
 			_checkBox.setVisibility(View.GONE);
 		_selectMode = false;
 	}
-	
-	@Override
-	public boolean onMenuOpened(int featureId, Menu menu) 
-	{
-		// TODO Auto-generated method stub
-		_checkBox.setVisibility(View.VISIBLE);
-		_checkBox.setBackgroundColor(getResources().getColor(R.color.White));
-		return super.onMenuOpened(featureId, menu);
-	}
-	
-	@Override
-    public boolean onCreateOptionsMenu(Menu menu) 
-	{
-        getMenuInflater().inflate(R.menu.options_menu, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
- 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) 
-    {
-        super.onOptionsItemSelected(item);
-        
-        switch(item.getItemId())
-        {
-	        case R.id.TakePicture:
-	        	_selectMode = true;
-	        	_currentOption = 1;
-	        	_checkBox.setVisibility(View.VISIBLE);
-	        	break;    
-	        case R.id.Picture:
-	        	_selectMode = true;
-	        	_currentOption = 2;
-	        	_checkBox.setVisibility(View.VISIBLE);
-                break;
-//            case R.id.NewPicture:
-//                break;
-            
-        }
-        return true;
-    }
 	
 	// Background process
     private class uploadImageConnection extends AsyncTask<String, String, String>
@@ -689,8 +698,6 @@ public class Profile extends Activity implements ImageChooserListener
      */
     private void takePicture() 
     {
-    	_checkBox.setVisibility(View.GONE);
-    	_checkBox.setChecked(false);
 		chooserType = ChooserType.REQUEST_CAPTURE_PICTURE;
 		imageChooserManager = new ImageChooserManager(this,
 				ChooserType.REQUEST_CAPTURE_PICTURE, "myfolder", true);
@@ -713,8 +720,6 @@ public class Profile extends Activity implements ImageChooserListener
      */
     private void chooseImage() 
     {
-    	_checkBox.setVisibility(View.GONE);
-    	_checkBox.setChecked(false);
 		chooserType = ChooserType.REQUEST_PICK_PICTURE;
 		imageChooserManager = new ImageChooserManager(this,
 				ChooserType.REQUEST_PICK_PICTURE, "myfolder", true);
@@ -743,13 +748,9 @@ public class Profile extends Activity implements ImageChooserListener
 				if (image != null) 
 				{	
 
-					_image.setImageURI(Uri.parse(new File(image.getFileThumbnail()).toString()));
-					_checkBox.setVisibility(View.GONE);
-					
-					_post = new Post();						
-					uploadImageConnection _connection = new uploadImageConnection(image.getFilePathOriginal());
-			    	_connection.execute();
-			    	
+					_imageDialog.setImageURI(Uri.parse(new File(image.getFileThumbnail()).toString()));
+					_selectMode = true;
+					_selectedImage = image;			    	
 					try 
 					{
 						finalize();

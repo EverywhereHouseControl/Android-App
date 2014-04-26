@@ -44,6 +44,7 @@ public class ImageLoader
     private Map<ImageView, String> imageViews=Collections.synchronizedMap(new WeakHashMap<ImageView, String>());
     ExecutorService executorService;
     private ImageView _image;
+    private int _fullMode;
   //handler to display images in UI thread
     private Handler handler = new Handler();
     
@@ -56,11 +57,12 @@ public class ImageLoader
     }
   
     int stub_id = R.drawable.ic_launcher;
-    public void DisplayImage(String url, int loader, ImageView imageView)
+    public void DisplayImage(String url, int loader, ImageView imageView, int fullMode)
     {
     	_image = imageView;
         stub_id = loader;
         imageViews.put(imageView, url);
+        _fullMode = fullMode;
         Bitmap bitmap=memoryCache.get(url);
         if(bitmap!=null)
             imageView.setImageBitmap(bitmap);
@@ -175,14 +177,16 @@ public class ImageLoader
 	        
 	        Log.d("TAMAÑOS",f.getName()+": "+"Height: "+Integer.toString(_options.outHeight)+" "+"Width: "+Integer.toString(_options.outWidth));
 	        
-            if(_options.outHeight >1000 || _options.outWidth>1000)
-            {
-            	_options2.inSampleSize = 14;
-            }
-            else
-            {
-            	_options2.inSampleSize = 2;
-            }
+	        if(_fullMode==1)_options2.inSampleSize = 1;
+	        else
+	            if(_options.outHeight >1000 || _options.outWidth>1000)
+	            {
+	            	_options2.inSampleSize = 14;
+	            }
+	            else
+	            {
+	            	_options2.inSampleSize = 2;
+	            }
             
             
             _options2.inJustDecodeBounds = false;

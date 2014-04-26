@@ -4,11 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
-
-import loadUrlImageFramework.ImageLoader;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,14 +23,16 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.opengl.Visibility;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Pair;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -52,15 +50,15 @@ public class HousesMenu extends Activity implements ImageChooserListener
 	private TextView _textViewFile;
 	private HouseListAdapter _ListAdapter;
 	private ArrayList<String> _housesList;
-	private int _currentOption;
-	private boolean _selectMode;
+	public static boolean _selectMode;
 	private static Activity _activity;
-	private Post _post;
+	public static Post _post;
 	JSONObject _data = new JSONObject();
 	//------------------------------------------
 	private String _file;
 	public static String _currentHouse;
-       
+	private static ChosenImage _chosenImage = new ChosenImage();
+	public static CheckBox _check;       
 	@Override
     protected void onCreate( Bundle savedInstanceState ) 
     {
@@ -105,29 +103,36 @@ public class HousesMenu extends Activity implements ImageChooserListener
 			e.printStackTrace();
 		}
         
-        _ListAdapter = new HouseListAdapter(getApplicationContext(),_housesList,_urls,_accessHousesList,R.layout.house_item);
+        _ListAdapter = new HouseListAdapter(HousesMenu.this,_housesList,_urls,_accessHousesList,R.layout.house_item);
 		_ListView.setAdapter(_ListAdapter);
 		_ListAdapter.notifyDataSetChanged ();
-		
-		ImageButton _imageButton = (ImageButton) findViewById(R.id.imageOverflow);
-		_imageButton.setOnClickListener(new View.OnClickListener() 
-		{
-			
-			@Override
-			public void onClick(View v) 
-			{
-				// TODO Auto-generated method stub
-				openOptionsMenu();
-			}
-		});
 				
 			
-		_selectMode = false;
-		_currentOption = 0;       
+		_selectMode = false;     
 		_activity = this;
 		_currentImage = new ImageView(_activity);
 		_textViewFile = new TextView(_activity);
 		parser();
+		
+		_check = (CheckBox)findViewById(R.id.HouseCheckBox);
+		_check.setVisibility(View.GONE);
+		_check.setChecked(false);
+		_check.setOnCheckedChangeListener(new OnCheckedChangeListener() 
+		{
+			
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) 
+			{
+				// TODO Auto-generated method stub
+				if(isChecked)
+				{
+					_post = new Post();						
+					uploadImageConnection _connection = new uploadImageConnection(_chosenImage.getFilePathOriginal());
+			    	_connection.execute();
+				}
+			}
+		});
+		
     }
 	
 	/**
@@ -151,58 +156,6 @@ public class HousesMenu extends Activity implements ImageChooserListener
 			e.printStackTrace();
 		}
 	}
-
-	@Override
-	public void onOptionsMenuClosed(Menu menu) 
-	{
-		// TODO Auto-generated method stub
-		//super.onOptionsMenuClosed(menu);
-		if(!_selectMode)
-			setCheckBoxOFF();
-		_selectMode = false;
-	}
-	
-	@Override
-	public boolean onMenuOpened(int featureId, Menu menu) 
-	{
-		// TODO Auto-generated method stub
-		setCheckBoxON();
-		return super.onMenuOpened(featureId, menu);
-	}
-	
-	@Override
-    public boolean onCreateOptionsMenu(Menu menu) 
-	{
-        getMenuInflater().inflate(R.menu.options_menu, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
- 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) 
-    {
-        super.onOptionsItemSelected(item);
-        
-        switch(item.getItemId())
-        {
-	        case R.id.TakePicture:
-	        	_selectMode = true;
-	        	_currentOption = 1;
-	        	_ListAdapter.setChosenOption(_currentOption);
-	        	setCheckBoxON();
-	        	break;    
-	        case R.id.Picture:
-	        	_selectMode = true;
-	        	_currentOption = 2;
-	        	_ListAdapter.setChosenOption(_currentOption);
-	        	setCheckBoxON();
-                break;
-//            case R.id.NewPicture:
-//                break;
-            
-        }
-        return true;
-    }
-	
     
     /**
 	 * 
@@ -229,22 +182,6 @@ public class HousesMenu extends Activity implements ImageChooserListener
     	}
 	}
 	
-    /**
-     * 
-     */
-    private void setCheckBoxON()
-    {
-    	_ListAdapter.setCheckON();    	
-    }
-    
-    /**
-     * 
-     */
-    private void setCheckBoxOFF()
-    {
-    	_ListAdapter.setCheckOFF();
-    }
-    
     /**
      * 
      */
@@ -302,13 +239,13 @@ public class HousesMenu extends Activity implements ImageChooserListener
 					_textViewFile.setText(image.getFilePathOriginal());
 					_currentImage.setImageURI(Uri.parse(new File(image.getFileThumbnail()).toString()));
 					_ListAdapter.setChosenImage(image);
-					_ListAdapter.setStateChosenImage(true);
 					_ListAdapter.setPathImage(_textViewFile.getText().toString());
-					_ListAdapter.setCheckOFF();
+					_selectMode = true;
+					_chosenImage = image;
 					
-					_post = new Post();						
-					uploadImageConnection _connection = new uploadImageConnection(_textViewFile.getText().toString());
-			    	_connection.execute();
+//					_post = new Post();						
+//					uploadImageConnection _connection = new uploadImageConnection(_textViewFile.getText().toString());
+//			    	_connection.execute();
 			    	
 					try 
 					{
@@ -354,193 +291,7 @@ public class HousesMenu extends Activity implements ImageChooserListener
 		imageChooserManager.reinitialize(filePath);
 	}
 	
-	// Background process
-    private class uploadImageConnection extends AsyncTask<String, String, String>
-    {
-
-    	private ProgressDialog _pDialog;
-    	private String _message = "";
-    	private String _imagePath;
-    	private boolean _correct = false;
-    	
-    	
-    	public uploadImageConnection(String path)
-    	{
-    		_imagePath = path;
-    	}
-    	
-    	/**
-    	 * Message "Loading"
-    	 */
-    	protected void onPreExecute() 
-    	{  
-    		super.onPreExecute();
-            _pDialog = new ProgressDialog(_activity);
-            _pDialog.setMessage("Loading. Please wait...");
-            _pDialog.setIndeterminate(false);
-            _pDialog.setCancelable(false);
-            _pDialog.show();          
-        }
-    	
-		@Override
-		protected String doInBackground(String... params) 
-		{
-			// TODO Auto-generated method stub
-			//Query
-			ArrayList<String> _parametros = new ArrayList<String>();
-			_parametros.add("command");
-			_parametros.add("subir");
-			_data = _post.connectionPostUpload(_parametros, "http://5.231.69.226/EHControlConnect/index.php", _imagePath);			
-			
-			runOnUiThread(new Runnable() 
-			{
-				@Override
-				public void run() 
-				{
-					// TODO Auto-generated method stub
-//					try 
-//					{
-//						JSONObject _json_data = _data.getJSONObject("error");
-//						_message = _json_data.getString("ENGLISH");
-//					} 
-//					catch (Exception e) 
-//					{
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//						_message = "internal error.";
-//					}
-					try 
-					{
-						JSONObject _json_data = _data.getJSONObject("error");
-						switch(_json_data.getInt("ERROR"))
-						{
-							case 0:
-							{
-								_message = _json_data.getString("ENGLISH");
-								_correct = true;
-								break;
-							}
-							default:
-							{
-								_message = _json_data.getString("ENGLISH");
-								_correct = false;
-								break;
-							}
-						}
-					
-					} 
-					catch (Exception e) 
-					{
-						e.printStackTrace();
-						_message = "internal error.";
-					}
-					Toast.makeText(_activity, _message, Toast.LENGTH_SHORT).show();
-					JSONObject obj = null;
-					if(_correct)
-					{
-						try 
-						{
-
-							obj = new JSONObject(_file);
-							Pair<String,String> _place = _JSONFile.getPlace(_currentHouse);
-							
-							log(_imagePath);
-							File file = new File(_imagePath);
-							log(file.getName());
-							
-							ArrayList<String> _parametros = new ArrayList<String>();
-							_parametros.add("command");
-							_parametros.add("modifyhouse");
-							_parametros.add("username");
-							_parametros.add(obj.getString("USERNAME"));
-							_parametros.add("housename");
-							_parametros.add(_currentHouse);
-							_parametros.add("n_housename");
-							_parametros.add(_currentHouse);
-							_parametros.add("city");
-							_parametros.add(_place.first);
-							_parametros.add("country");
-							_parametros.add(_place.second);
-							_parametros.add("image");
-							_parametros.add("images/"+file.getName());
-							
-							_data = _post.getServerData(_parametros, "http://5.231.69.226/EHControlConnect/index.php");
-						
-							JSONObject _json_data = _data.getJSONObject("error");
-							switch(_json_data.getInt("ERROR"))
-							{
-								case 0:
-								{
-									_message = _json_data.getString("ENGLISH");
-									_correct = true;
-									break;
-								}
-								default:
-								{
-									_message = _json_data.getString("ENGLISH");
-									_correct = false;
-									break;
-								}
-							}
-						} 
-						catch (Exception e) 
-						{
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-						
-						Toast.makeText(_activity, _message, Toast.LENGTH_SHORT).show();
-						if(_correct)
-						{
-							try 
-							{
-								ArrayList<String> _parametros = new ArrayList<String>();
-								_parametros.add("command");
-								_parametros.add("login2");
-								_parametros.add("username");
-								_parametros.add(obj.getString("USERNAME"));
-								_parametros.add("password");
-								_parametros.add(obj.getString("PASSWORD"));
-								
-								//Variable 'Data' saves the query response
-								JSONObject _data = _post.getServerData(_parametros,"http://5.231.69.226/EHControlConnect/index.php");//"http://192.168.2.147/EHControlConnect/index.php");
-								JSONObject _json_data = _data.getJSONObject("result");
-								
-								//Save the profile's information.
-								saveProfileInfo(_json_data);
-								//Save the house's configuration
-								saveConfig(_json_data.get("JSON"));
-								//
-								onCreate(null);
-							} 
-							catch (Exception e) 
-							{
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-						}
-						
-					}
-				}
-			});
-			
-			
-			
-			
-			return null;
-		}
-		
-		protected void onPostExecute(String file_url) 
-		{
-            // dismiss the dialog after getting all products
-			super.onPostExecute(file_url);
-            _pDialog.dismiss();
-		}
-    	
-    }
-    
-    
-    /**
+	/**
 	 * Saves from the server query the profile information in the file 'profile.json'.
 	 */
 	private void saveProfileInfo(JSONObject JSON)
@@ -573,6 +324,178 @@ public class HousesMenu extends Activity implements ImageChooserListener
 			e.printStackTrace();
 		}		
 	}
+	
+	// Background process
+    private class uploadImageConnection extends AsyncTask<String, String, String>
+    {
+
+    	private ProgressDialog _pDialog;
+    	private String _message = "";
+    	private String _imagePath;
+    	private boolean _correct = false;
+    	
+    	
+    	public uploadImageConnection(String path)
+    	{
+    		_imagePath = path;
+    	}
+    	
+    	/**
+    	 * Message "Loading"
+    	 */
+    	protected void onPreExecute() 
+    	{  
+    		super.onPreExecute();
+            _pDialog = new ProgressDialog(HousesMenu.this);
+            _pDialog.setMessage("Loading. Please wait...");
+            _pDialog.setIndeterminate(false);
+            _pDialog.setCancelable(false);
+            _pDialog.show();          
+        }
+    	
+		@Override
+		protected String doInBackground(String... params) 
+		{
+			// TODO Auto-generated method stub
+			//Query
+			ArrayList<String> _parametros = new ArrayList<String>();
+			_parametros.add("command");
+			_parametros.add("subir");
+			_data = _post.connectionPostUpload(_parametros, "http://5.231.69.226/EHControlConnect/index.php", _imagePath);			
+			
+			runOnUiThread(new Runnable() 
+			{
+				@Override
+				public void run() 
+				{
+					// TODO Auto-generated method stub
+					try 
+					{
+						JSONObject _json_data = _data.getJSONObject("error");
+						switch(_json_data.getInt("ERROR"))
+						{
+							case 0:
+							{
+								_message = _json_data.getString("ENGLISH");
+								_correct = true;
+								break;
+							}
+							default:
+							{
+								_message = _json_data.getString("ENGLISH");
+								_correct = false;
+								break;
+							}
+						}
+					
+					} 
+					catch (Exception e) 
+					{
+						e.printStackTrace();
+						_message = "internal error.";
+					}
+					Toast.makeText(HousesMenu.this, _message, Toast.LENGTH_SHORT).show();
+					JSONObject obj = null;
+					if(_correct)
+					{
+						try 
+						{							
+							obj = new JSONObject(_file);
+							JSON _JSONFile = JSON.getInstance(HousesMenu.this);
+							Pair<String,String> _place = _JSONFile.getPlace(_currentHouse);
+							
+							File file = new File(_imagePath);
+							
+							ArrayList<String> _parametros = new ArrayList<String>();
+							_parametros.add("command");
+							_parametros.add("modifyhouse");
+							_parametros.add("username");
+							_parametros.add(obj.getString("USERNAME"));
+							_parametros.add("housename");
+							_parametros.add(_currentHouse);
+							_parametros.add("n_housename");
+							_parametros.add(_currentHouse);
+							_parametros.add("city");
+							_parametros.add(_place.first);
+							_parametros.add("country");
+							_parametros.add(_place.second);
+							_parametros.add("image");
+							_parametros.add("images/"+file.getName());
+							
+							Log.d("PARAMETROS",_parametros.toString());
+							
+							_data = _post.getServerData(_parametros, "http://5.231.69.226/EHControlConnect/index.php");
+							
+							Log.d("DATA",_data.toString());
+							
+							JSONObject _json_data = _data.getJSONObject("error");
+							switch(_json_data.getInt("ERROR"))
+							{
+								case 0:
+								{
+									_message = _json_data.getString("ENGLISH");
+									_correct = true;
+									break;
+								}
+								default:
+								{
+									_message = _json_data.getString("ENGLISH");
+									_correct = false;
+									break;
+								}
+							}
+						} 
+						catch (Exception e) 
+						{
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						
+						Toast.makeText(HousesMenu.this, _message, Toast.LENGTH_SHORT).show();
+						if(_correct)
+						{
+							try 
+							{
+								ArrayList<String> _parametros = new ArrayList<String>();
+								_parametros.add("command");
+								_parametros.add("login2");
+								_parametros.add("username");
+								_parametros.add(obj.getString("USERNAME"));
+								_parametros.add("password");
+								_parametros.add(obj.getString("PASSWORD"));
+								
+								//Variable 'Data' saves the query response
+								JSONObject _data = _post.getServerData(_parametros,"http://5.231.69.226/EHControlConnect/index.php");//"http://192.168.2.147/EHControlConnect/index.php");
+								JSONObject _json_data = _data.getJSONObject("result");
+								
+								//Save the profile's information.
+								saveProfileInfo(_json_data);
+								//Save the house's configuration
+								saveConfig(_json_data.get("JSON"));
+								
+								onCreate(null);
+							} 
+							catch (Exception e) 
+							{
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+						
+					}
+				}
+			});
+			return null;
+		}
+		
+		protected void onPostExecute(String file_url) 
+		{
+            // dismiss the dialog after getting all products
+			super.onPostExecute(file_url);
+            _pDialog.dismiss();
+		}
+    	
+    }
     @Override
     public void onBackPressed() 
     {
@@ -628,14 +551,13 @@ public class HousesMenu extends Activity implements ImageChooserListener
 	protected void onPause() 
 	{
 		super.onPause();
-		_ListAdapter.setCheckOFF();
 		log("Paused");
 	}
 
 	protected void onStop() 
 	{
 		super.onStop();
-		_ListAdapter.setCheckOFF();
+		finish();
 		log("Stoped");
 	}
 }

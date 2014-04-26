@@ -124,14 +124,11 @@ public class SlidingMenuAdapter extends BaseAdapter
 				_button.setBackgroundResource(R.drawable.abs__ab_bottom_solid_light_holo);
 			}
 			
-			CheckBox _check = (CheckBox) _view.findViewById(R.id.HouseCheckBox);
-			_check.setVisibility(View.GONE);
-			
 			final ImageButton _image = (ImageButton) _view.findViewById(R.id.HouseImageList);
 			
 			if(!_urls.get(position-1).equals("null"))
 			{
-				 _imgLoader.DisplayImage(_urls.get(position-1), R.drawable.base_picture, _image);
+				 _imgLoader.DisplayImage(_urls.get(position-1), R.drawable.base_picture, _image, 0);
 			}
 			else _image.setImageResource(R.drawable.base_picture);
 			

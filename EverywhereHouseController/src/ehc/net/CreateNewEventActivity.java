@@ -51,6 +51,7 @@ public class CreateNewEventActivity extends Activity {
 	static final int TIME_DIALOG = 500;
 	static final int DATE_DIALOG = 999;
 
+	private String servicename;
 	private TextView dateSelected;
 	private TextView timeSelected;
 	private EditText et;
@@ -78,6 +79,7 @@ public class CreateNewEventActivity extends Activity {
 		dateSelected = (TextView) findViewById(R.id.tv_date);
 		timeSelected = (TextView) findViewById(R.id.tv_time);
 
+		
 		/**
 		 * Spinner info : services
 		 */
@@ -182,8 +184,10 @@ public class CreateNewEventActivity extends Activity {
 			@Override
 			public void afterTextChanged(Editable s) {
 				// TODO Auto-generated method stub
-				if (s.toString().length() > 0)
+				if (s.toString().length() > 0){
 					textChanged = true;
+					servicename = s.toString();
+				}				
 				else
 					textChanged = false;
 
@@ -252,6 +256,7 @@ public class CreateNewEventActivity extends Activity {
 //							dateSelected.getText() + " "
 //									+ timeSelected.getText(), et.getText()
 //									.toString());
+					Log.d("NEW EVENT",selectedService.toString());
 					Log.d("SEND EVENT","CRASH");
 					parser();
 					_post = new Post();
@@ -274,7 +279,7 @@ public class CreateNewEventActivity extends Activity {
 		Log.d("SERVICE",Integer.toString(service2));
 		int service3 = serv.length();
 		Log.d("SERVICE",Integer.toString(service3));
-		str.add(0, serv.substring(service0+1,service1-1));
+		str.add(0, serv.substring(0,service1-1));
 		Log.d("SERVICE",str.get(0)+"_");
 		str.add(1, serv.substring(service1+2,service2-1));
 		Log.d("SERVICE",str.get(1)+"_");
@@ -430,10 +435,11 @@ public class CreateNewEventActivity extends Activity {
 				_parametros.add(dateSelected.getText().toString().subSequence(dateSelected.getText().toString().indexOf(':')+1, dateSelected.getText().toString().length()).toString() 
 								+
 								timeSelected.getText().toString().subSequence(dateSelected.getText().toString().indexOf(':')+1, timeSelected.getText().toString().length()).toString());
-				
+				_parametros.add("programname");
+				_parametros.add(servicename);
 				Log.d("PARAMETROS",_parametros.toString());
-			
-				JSONObject _data = _post.getServerData(_parametros,"http://5.231.69.226/EHControlConnect/index.php");//"http://192.168.2.147/EHControlConnect/index.php");
+			String prrr = _parametros.toString();
+				JSONObject _data = _post.getServerData(_parametros,"http://5.231.69.226/EHControlConnect/index.php");//"http://192.168.2.147/EHControlConnect/index.php");//"");
 				Log.d("DATA",_data.toString());
 				
 				try 

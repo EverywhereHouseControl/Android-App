@@ -1,49 +1,50 @@
 package framework;
 
+import java.io.File;
 import java.util.ArrayList;
+
+import org.json.JSONObject;
 
 import loadUrlImageFramework.ImageLoader;
 import com.kbeanie.imagechooser.api.ChosenImage;
 import ehc.net.HousesMenu;
 import ehc.net.R;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnCancelListener;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 
 public class HouseListAdapter extends BaseAdapter
 {
-
 	private String _name;
 	private Context _context;
 	private ArrayList<String> _objectList;
-	private ViewGroup _parent;
-	private boolean _check;
 	private int _convertView;
-	private boolean _stateChosenImage;
-	private int _currentOption;
-	private ChosenImage _currentImage;
 	private ImageButton _image;
 	private String _path;
 	private ArrayList<String> _urls = new ArrayList<String>();
 	private ArrayList<String> _access = new ArrayList<String>();
 	public static ImageLoader _imgLoader;
+	public static Post _post;
+	JSONObject _data = new JSONObject();
+	public static String _currentHouse;
+	private ImageView _imageDialog;
 	
 	public HouseListAdapter(Context context, ArrayList<String> ObjectList,ArrayList<String> urls,ArrayList<String> access, int convertView)
 	{
 		_context = context;
 		_objectList = ObjectList;
-		_check = false;
-		_currentOption = 0;
-		_stateChosenImage = false;
 		_path = null; 
 		_convertView = convertView;
 		_urls = urls;
@@ -76,7 +77,6 @@ public class HouseListAdapter extends BaseAdapter
 	{
 		// TODO Auto-generated method stub
 		
-		_parent = parent;
 		View _view = convertView;
 		if(_view == null)
 		{
@@ -101,16 +101,8 @@ public class HouseListAdapter extends BaseAdapter
 			}
 		});
 		
+		
 		_image = (ImageButton) _view.findViewById(R.id.HouseImageList);
-		
-		if(!_urls.get(position).equals("null"))
-		{
-			_path = _urls.get(position);
-			_imgLoader.DisplayImage(_path, R.drawable.base_picture, _image);
-			
-	    } 
-		else _image.setImageResource(R.drawable.base_picture);
-		
 		_image.setOnClickListener(new View.OnClickListener() 
 		{
 			
@@ -118,54 +110,88 @@ public class HouseListAdapter extends BaseAdapter
 			public void onClick(View v) 
 			{
 				// TODO Auto-generated method stub
-				if(_access.get(position).equals("3"))
+				// custom dialog
+				_currentHouse = _objectList.get(position);
+				HousesMenu._selectMode = false;
+				final Dialog dialog = new Dialog(_context);
+				dialog.setTitle("Image");
+				dialog.setContentView(R.layout.image_dialog);
+				
+				_imageDialog = (ImageView) dialog.findViewById(R.id.userImageDialog);
+				_imgLoader.DisplayImage(_urls.get(position), R.drawable.base_picture, _imageDialog, 1);
+				
+				ImageButton _takePicture = (ImageButton)dialog.findViewById(R.id.takePicture);
+				_takePicture.setOnClickListener(new View.OnClickListener() 
 				{
-					Toast.makeText(_context, "Required access", Toast.LENGTH_SHORT).show();
-				}
-				else 
-					HousesMenu.createdMainMenuIntent(_button.getText().toString());
-			}
-		});
-		
-
-		CheckBox _check = (CheckBox) _view.findViewById(R.id.HouseCheckBox);
-		if(this._check)
-		{
-			_check.setChecked(false);
-			_check.setVisibility(View.VISIBLE);
-			_check.setBackgroundColor(_context.getResources().getColor(R.color.White));
-			
-			if(_access.get(position).equals("3"))
-			{
-				_check.setVisibility(View.GONE);
-			}
-		}
-		else _check.setVisibility(View.GONE);
-		
-		_check.setOnCheckedChangeListener(new OnCheckedChangeListener() 
-		{	
-			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) 
-			{
-				// TODO Auto-generated method stub
-				if(isChecked)
-				{
-					switch( _currentOption )
+					
+					@Override
+					public void onClick(View v) 
 					{
-						case 1:
-							HousesMenu._currentHouse = _button.getText().toString();
-							HousesMenu.takePicture();
-							break;
-						case 2:
-							HousesMenu._currentHouse = _button.getText().toString();
-							HousesMenu.chooseImage();
-							break;
-						default:
-							break;
+						// TODO Auto-generated method stub
+						HousesMenu.takePicture();
 					}
-				}
+				});
+				
+				ImageButton _choosePicture = (ImageButton)dialog.findViewById(R.id.choosePicture);
+				_choosePicture.setOnClickListener(new View.OnClickListener() 
+				{
+					
+					@Override
+					public void onClick(View v) 
+					{
+						// TODO Auto-generated method stub
+						HousesMenu.chooseImage();
+					}
+				});
+				
+				dialog.onBackPressed();
+				dialog.setOnCancelListener(new OnCancelListener() 
+				{
+					
+					@Override
+					public void onCancel(DialogInterface dialog) 
+					{
+						// TODO Auto-generated method stub
+						
+						if(HousesMenu._selectMode)
+						{
+						
+							new AlertDialog.Builder(_context)
+					        .setTitle("Image")
+					        .setMessage("Save changes?")
+					        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() 
+					        {
+					            public void onClick(DialogInterface dialog, int which) 
+					            { 
+					                // do nothing
+					            }
+					         })
+					         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() 
+					        {
+					            public void onClick(DialogInterface dialog, int which) 
+					            { 
+//							    	_check.setVisibility(View.GONE);
+							    	HousesMenu._check.setChecked(true);
+							    	HousesMenu._currentHouse = _currentHouse;
+					            }
+					         })
+					        .setIcon(android.R.drawable.ic_dialog_alert)
+					         .show();
+						}
+					}
+				});
+				
+				dialog.show();
 			}
 		});
+		
+		if(!_urls.get(position).equals("null"))
+		{
+			_path = _urls.get(position);
+			_imgLoader.DisplayImage(_path, R.drawable.base_picture, _image, 0);
+			
+	    } 
+		else _image.setImageResource(R.drawable.base_picture);
 		
 		return _view;
 	}
@@ -173,44 +199,9 @@ public class HouseListAdapter extends BaseAdapter
 	/**
 	 * 
 	 */
-	public void setCheckON()
-	{
-		_check = true;
-		notifyDataSetChanged();
-	}
-
-	/**
-	 * 
-	 */
-	public void setCheckOFF()
-	{
-		_check = false;
-		notifyDataSetChanged();
-	}
-	
-	/**
-	 * 
-	 */
-	public void setChosenOption(int option)
-	{
-		_currentOption = option;
-	}
-	
-	/**
-	 * 
-	 */
 	public void setChosenImage(ChosenImage image)
 	{
-		_currentImage = image;
-	}
-	
-	/**
-	 * 
-	 * @param state
-	 */
-	public void setStateChosenImage(boolean state)
-	{
-		_stateChosenImage = state;
+		_imageDialog.setImageURI(Uri.parse(new File(image.getFileThumbnail()).toString()));
 	}
 	
 	/**
@@ -221,4 +212,6 @@ public class HouseListAdapter extends BaseAdapter
 	{
 		_path = path;
 	}
+	
+    
 }
