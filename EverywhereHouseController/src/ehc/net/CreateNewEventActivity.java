@@ -8,9 +8,10 @@ import java.util.Calendar;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import framework.JSON;
-import framework.Post;
-import framework.SimpleActivityTask;
+import parserJSON.JSON;
+import serverConnection.Post;
+import serverConnection.SimpleActivityTask;
+
 import framework.SpinnerEventContainer;
 import android.app.Activity;
 import android.app.DatePickerDialog;

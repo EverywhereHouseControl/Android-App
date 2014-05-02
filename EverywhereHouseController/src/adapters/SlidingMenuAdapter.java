@@ -1,10 +1,12 @@
-package framework;
+package adapters;
 
 import java.util.ArrayList;
 
-import loadUrlImageFramework.ImageLoader;
+import loadUrlImage.ImageLoader;
 
 import org.json.JSONException;
+
+import parserJSON.JSON;
 
 import ehc.net.HousesMenu;
 import ehc.net.LogIn;

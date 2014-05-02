@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import framework.Post;
+import serverConnection.Post;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -13,7 +13,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.WindowManager;
@@ -91,7 +90,6 @@ public class CreateUser extends Activity
 				ArrayList<String> _parametros = new ArrayList<String>();
 				
 				_parametros.add("command");
-//				_parametros.add("createuser");
 				_parametros.add("createuser2");
 				_parametros.add("username");
 				_parametros.add(_user.getText().toString());
@@ -221,10 +219,7 @@ public class CreateUser extends Activity
 		{
 			// TODO Auto-generated method stub
 			//Variable 'Data' saves the query response
-			log("query");
-			log(_parametros.toString());
 			JSONObject _data = _post.getServerData(_parametros,"http://5.231.69.226/EHControlConnect/index.php");//"http://192.168.2.147/EHControlConnect/index.php");
-			log(_data.toString());
 			try 
 			{
 				JSONObject _json_data = _data.getJSONObject("error");
@@ -260,13 +255,4 @@ public class CreateUser extends Activity
             Toast.makeText(getBaseContext(), _message, Toast.LENGTH_SHORT).show();
 		}
 	}
-	
-	 /**
-     * Method for debug
-     * @param _text
-     */
-    private void log( String _text )
-    {
-    	Log.d( "Action :", _text );
-    }
 }

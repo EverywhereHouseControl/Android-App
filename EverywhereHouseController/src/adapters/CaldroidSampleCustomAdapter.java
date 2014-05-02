@@ -1,4 +1,4 @@
-package framework;
+package adapters;
 
 import hirondelle.date4j.DateTime;
 

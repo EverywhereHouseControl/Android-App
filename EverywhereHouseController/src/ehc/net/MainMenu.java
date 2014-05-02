@@ -5,12 +5,13 @@ import java.util.ArrayList;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import parserJSON.JSON;
+import serverConnection.Post;
+
 import com.actionbarsherlock.app.SherlockActivity;
 
-import framework.JSON;
-import framework.Post;
-import framework.SlidingMenuAdapter;
 
+import adapters.SlidingMenuAdapter;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -39,7 +40,6 @@ public class MainMenu extends SherlockActivity
 	private ImageView _logo;
 	private Post _post;
 	private Double _temp = 0.0;
-
 	// -------------------------------
 
 	@Override
@@ -124,13 +124,17 @@ public class MainMenu extends SherlockActivity
 	 * Method that executes Management's activity
 	 */
 
-	private void createdManagementIntent() {
-		try {
+	private void createdManagementIntent() 
+	{
+		try 
+		{
 			Class<?> _clazz = Class.forName("ehc.net.ManagementMenu");
 			Intent _intent = new Intent(this, _clazz);
 			_intent.putExtra("House",getIntent().getExtras().getString("House"));
 			startActivity(_intent);
-		} catch (ClassNotFoundException e) {
+		} 
+		catch (ClassNotFoundException e) 
+		{
 			e.printStackTrace();
 		}
 	}
@@ -139,13 +143,17 @@ public class MainMenu extends SherlockActivity
 	 * Method that executes Profile's activity
 	 */
 
-	private void createdProfileIntent() {
-		try {
+	private void createdProfileIntent() 
+	{
+		try 
+		{
 			Class<?> _clazz = Class.forName("ehc.net.Profile");
 			Intent _intent = new Intent(this, _clazz);
 			_intent.putExtra("House",getIntent().getExtras().getString("House"));
 			startActivity(_intent);
-		} catch (ClassNotFoundException e) {
+		} 
+		catch (ClassNotFoundException e) 
+		{
 			e.printStackTrace();
 		}
 	}
@@ -178,7 +186,9 @@ public class MainMenu extends SherlockActivity
 			Class<?> _clazz = Class.forName("ehc.net.HousesMenu");
 			Intent _intent = new Intent(this, _clazz);
 			startActivity(_intent);
-		} catch (ClassNotFoundException e) {
+		} 
+		catch (ClassNotFoundException e) 
+		{
 			e.printStackTrace();
 		}
 	}
@@ -227,55 +237,6 @@ public class MainMenu extends SherlockActivity
 				//Variable 'Data' saves the query response
 				_data = _post.getServerData(_parametros,"http://5.231.69.226/EHControlConnect/index.php");//"http://192.168.2.147/EHControlConnect/index.php");
 				log(_data.toString());
-				
-				
-//				ImageView  _weather = (ImageView) findViewById(R.id.WeatherImage); 
-//				Animation anim = AnimationUtils.loadAnimation(MainMenu.this, R.anim.rotate_indefinitely);
-//		        //Start animating the image
-//		         _weather.startAnimation(anim); 
-				
-//				String _clima = _data.getString("main");
-//				if(_clima.equals("Clouds"))
-//				{
-//					_weather.setImageResource(R.drawable.clouds);
-//				}
-//				else if (_clima.equals("Rain"))
-//				{
-//					_weather.setImageResource(R.drawable.clouds);
-//				}
-//				else if (_clima.equals("Clear"))
-//				{
-//					_weather.setImageResource(R.drawable.clouds);
-//				}
-				
-				
-				
-				
-				
-				
-//				try 
-//				{
-//					JSONObject _json_data = _data.getJSONObject("error");
-//					switch(_json_data.getInt("ERROR"))
-//					{
-//						case 0:
-//						{
-//							_message = _json_data.getString("ENGLISH");					
-//							break;
-//						}
-//						default:
-//						{
-//							_internalError = _json_data.getInt("ERROR");
-//							_message = _json_data.getString("ENGLISH");
-//							break;
-//						}
-//					}
-//				
-//				} 
-//				catch (JSONException e) 
-//				{
-//					e.printStackTrace();
-//				}
 					 
 			 }
 			catch (Exception _e) 
@@ -295,11 +256,13 @@ public class MainMenu extends SherlockActivity
             try 
             {
 				_temp = (Double) _data.get("temperature");
-			} catch (JSONException e) 
+			} 
+            catch (JSONException e) 
 			{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+            
 			_temp = _temp - 273.15;
             TextView _temperature = (TextView) MainMenu.this.findViewById(R.id.temperature);
     		_temperature.setText(Integer.toString(_temp.intValue()) + "ºC");
@@ -310,7 +273,8 @@ public class MainMenu extends SherlockActivity
     		ImageView  _weather3 = (ImageView)  MainMenu.this.findViewById(R.id.WeatherImage3);
     		ImageView  _weather4 = (ImageView)  MainMenu.this.findViewById(R.id.WeatherImage4);
     		ImageView  _weather5 = (ImageView)  MainMenu.this.findViewById(R.id.WeatherImage5);
-	         String _clima = null;
+	        
+    		String _clima = null;
 			try 
 			{
 				_clima = _data.getString("main");
@@ -350,8 +314,7 @@ public class MainMenu extends SherlockActivity
 					_weather3.setImageResource(R.drawable.sun);
 					Animation anim = AnimationUtils.loadAnimation(MainMenu.this, R.anim.rotate_indefinitely);
 					//Start animating the image
-			         _weather3.startAnimation(anim);
-			         
+			         _weather3.startAnimation(anim);			         
 				}
 		}
     }

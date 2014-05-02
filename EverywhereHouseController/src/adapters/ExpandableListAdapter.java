@@ -1,7 +1,9 @@
-package framework;
+package adapters;
 
 import java.util.List;
 import java.util.Map;
+
+import serverConnection.SimpleActivityTask;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

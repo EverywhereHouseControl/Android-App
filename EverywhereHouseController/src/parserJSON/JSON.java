@@ -1,4 +1,4 @@
-package framework;
+package parserJSON;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,6 +15,7 @@ import org.json.JSONObject;
 import com.roomorama.caldroid.CalendarHelper;
 
 import ehc.net.Event;
+import framework.SpinnerEventContainer;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;

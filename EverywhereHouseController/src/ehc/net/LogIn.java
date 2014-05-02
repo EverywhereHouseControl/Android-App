@@ -7,7 +7,8 @@ import java.util.ArrayList;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import framework.Post;
+import serverConnection.Post;
+
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -39,6 +40,7 @@ public class LogIn extends Activity
 		private Post _post;
 		private TextView _createUser;
 		private TextView _forgotPassword;
+		private boolean _isLogIn;
 	//***********************************
 		
 	@Override
@@ -63,8 +65,6 @@ public class LogIn extends Activity
         Animation _anim = AnimationUtils.loadAnimation(this.getBaseContext(), R.anim.rotate_indefinitely);
         //Start animating the image
          _logo.startAnimation(_anim);
-      
-//        final logInConnection connection = new logInConnection();
         
         _buttonLog.setOnClickListener( new View.OnClickListener() 
         {	
@@ -77,8 +77,21 @@ public class LogIn extends Activity
 			      
 			    if (_networkInfo != null && _networkInfo.isConnected()) 			        
 			    {			            			        			            
-			    	_post = new Post();						
-			    	logInConnection _connection = new logInConnection();
+			    	_isLogIn = true;
+			    	_post = new Post();
+					ArrayList<String> _parametros = new ArrayList<String>();
+					
+					_parametros.add("command");
+					_parametros.add("login2");
+					_parametros.add("username");
+					_parametros.add(_user.getText().toString());
+//					_parametros.add("demo");
+//					_parametros.add("bertoldo");
+					_parametros.add("password");
+					_parametros.add(_post.md5(_password.getText().toString()));
+//					_parametros.add(_post.md5("demo"));
+//					_parametros.add(_post.md5("bertoldo"))
+			    	logInConnection _connection = new logInConnection(_parametros);
 			    	_connection.execute();			    	
 			    } 
 			    else 			        
@@ -174,9 +187,17 @@ public class LogIn extends Activity
 			{
 				if(!_userName.getText().toString().isEmpty() && !_userEmail.getText().toString().isEmpty())
 				{
-					_post = new Post();						
-			    	forgotPasswordConnection _connection = new forgotPasswordConnection(_userName.getText().toString());
-			    	_connection.execute();
+					_isLogIn = false;
+					_post = new Post();
+					ArrayList<String> _parametros = new ArrayList<String>();
+	
+					_parametros.add("command");
+					_parametros.add("lostpass");
+					_parametros.add("username");
+					_parametros.add(_userName.getText().toString());
+					
+					logInConnection _connection = new logInConnection(_parametros);
+			    	_connection.execute();	
 				}
 				else 
 				{
@@ -216,6 +237,14 @@ public class LogIn extends Activity
     	private ProgressDialog _pDialog;
     	private String _message = "";
     	private int _internalError = 0;
+    	private ArrayList<String> _parametros = new ArrayList<String>();
+    	
+    	public logInConnection(ArrayList<String> parametros) 
+    	{
+			// TODO Auto-generated constructor stub
+    		_parametros = parametros;
+		}
+    	  	
     	/**
     	 * Message "Loading"
     	 */
@@ -223,7 +252,6 @@ public class LogIn extends Activity
     	{  
     		super.onPreExecute();
             _pDialog = new ProgressDialog(LogIn.this);
-            //pDialog.setView(getLayoutInflater().inflate(R.layout.loading_icon_view,null));
             _pDialog.setMessage("Loading. Please wait...");
             _pDialog.setIndeterminate(false);
             _pDialog.setCancelable(false);
@@ -236,19 +264,6 @@ public class LogIn extends Activity
 			try 
 			{		             
 				//Query
-				ArrayList<String> _parametros = new ArrayList<String>();
-				
-				_parametros.add("command");
-				_parametros.add("login2");
-				//_parametros.add("login");
-				_parametros.add("username");
-				_parametros.add(_user.getText().toString());
-//				_parametros.add("demo");
-//				_parametros.add("bertoldo");
-				_parametros.add("password");
-				_parametros.add(_post.md5(_password.getText().toString()));
-//				_parametros.add(_post.md5("demo"));
-//				_parametros.add(_post.md5("bertoldo"));
 				//Variable 'Data' saves the query response
 				JSONObject _data = _post.getServerData(_parametros,"http://5.231.69.226/EHControlConnect/index.php");//"http://192.168.2.147/EHControlConnect/index.php");
 				log(_data.toString());
@@ -276,31 +291,31 @@ public class LogIn extends Activity
 				{
 					e.printStackTrace();
 				}
-				
-				if (_data != null && _data.length() > 0) 
-				{				
-					JSONObject _json_data = _data.getJSONObject("result");
-					//log(json_data.toString());
-					
-					if (_json_data.getInt("IDUSER")==0) 
-					{ 
-						log("Incorrect user. ");
+				if(_isLogIn)
+					if (_data != null && _data.length() > 0) 
+					{				
+						JSONObject _json_data = _data.getJSONObject("result");
+						//log(json_data.toString());
+						
+						if (_json_data.getInt("IDUSER")==0) 
+						{ 
+							log("Incorrect user. ");
+						}
+						else
+						{ 	
+							//Save the profile's information.
+							saveProfileInfo(_json_data);
+							//Save the house's configuration
+							saveConfig(_json_data.get("JSON"));
+							//Activate the next Activity("MainMenu")
+							createdIntent();
+						}				
 					}
-					else
-					{ 	
-						//Save the profile's information.
-						saveProfileInfo(_json_data);
-						//Save the house's configuration
-						saveConfig(_json_data.get("JSON"));
-						//Activate the next Activity("MainMenu")
-						createdIntent();
-					}				
-				}
-				else 
-				{
-					log("JSON, ERROR ");
-					log(_data.toString());
-				}			 
+					else 
+					{
+						log("JSON, ERROR ");
+						log(_data.toString());
+					}			 
 			 }
 			catch (Exception _e) 
 			 {
@@ -318,84 +333,6 @@ public class LogIn extends Activity
 		}
     }
     
- // Background process
-    private class forgotPasswordConnection extends AsyncTask<String, String, String>
-    {    	
-    	private ProgressDialog _pDialog;
-    	private String _message = "";
-    	private int _internalError = 0;
-    	private String _userName = "";
-    	
-    	public forgotPasswordConnection(String userName)
-    	{
-    		_userName = userName;
-    	}
-    	
-    	/**
-    	 * Message "Loading"
-    	 */
-    	protected void onPreExecute() 
-    	{  
-    		super.onPreExecute();
-            _pDialog = new ProgressDialog(LogIn.this);
-            //pDialog.setView(getLayoutInflater().inflate(R.layout.loading_icon_view,null));
-            _pDialog.setMessage("Loading. Please wait...");
-            _pDialog.setIndeterminate(false);
-            _pDialog.setCancelable(false);
-            _pDialog.show();          
-        }
-    	
-    	@Override
-		protected String doInBackground(String... arg0) 
-		{
-			try 
-			{		             
-				//Query
-				ArrayList<String> _parametros = new ArrayList<String>();
-				
-				_parametros.add("command");
-				_parametros.add("lostpass");
-				_parametros.add("username");
-				_parametros.add(_userName);
-			 			
-				//Variable 'Data' saves the query response
-				JSONObject _data = _post.getServerData(_parametros,"http://5.231.69.226/EHControlConnect/index.php");//"http://192.168.2.147/EHControlConnect/index.php");
-				log(_data.toString());
-				
-
-				JSONObject _json_data = _data.getJSONObject("error");
-				switch(_json_data.getInt("ERROR"))
-				{
-					case 0:
-					{
-						_message = _json_data.getString("ENGLISH");
-						break;
-					}
-					default:
-					{
-						_internalError = _json_data.getInt("ERROR");
-						_message = _json_data.getString("ENGLISH");
-						break;
-					}
-				}
-			 
-			 }
-			catch (Exception _e) 
-			 {
-			 	_e.printStackTrace();
-			 }
-			 // End call to PHP server
-			return null;
-		}
-    	
-		protected void onPostExecute(String file_url) 
-		{
-            // dismiss the dialog
-            _pDialog.dismiss();
-            Toast.makeText(getBaseContext(), _message, Toast.LENGTH_SHORT).show();
-		}
-    }
-    	
 	/**
 	 * Saves from the server query the profile information in the file 'profile.json'.
 	 */
@@ -458,8 +395,8 @@ public class LogIn extends Activity
     	super.onResume();
     	log( "Resumed" );
     	//Reset the boxes
-        _user.setHint("User");//setText("");
-        _password.setHint("Password");//setText("");
+        _user.setHint("User");
+        _password.setHint("Password");
     }
     
     protected void onPause()

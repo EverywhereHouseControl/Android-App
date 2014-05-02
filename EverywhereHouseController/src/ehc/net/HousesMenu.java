@@ -5,30 +5,24 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.RunnableFuture;
-import java.util.concurrent.RunnableScheduledFuture;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
-
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import parserJSON.JSON;
+import serverConnection.Post;
 
 import com.kbeanie.imagechooser.api.ChooserType;
 import com.kbeanie.imagechooser.api.ChosenImage;
 import com.kbeanie.imagechooser.api.ImageChooserListener;
 import com.kbeanie.imagechooser.api.ImageChooserManager;
 
-import framework.JSON;
-import framework.HouseListAdapter;
-import framework.Post;
+import adapters.HouseListAdapter;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
-import android.opengl.Visibility;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -40,7 +34,6 @@ import android.view.WindowManager;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -61,30 +54,19 @@ public class HousesMenu extends Activity implements ImageChooserListener
 	private static Activity _activity;
 	public static Post _post;
 	JSONObject _data = new JSONObject();
-	//------------------------------------------
 	private String _file;
 	public static String _currentHouse;
 	private static ChosenImage _chosenImage = new ChosenImage();
 	public static CheckBox _check;       
+	//-------------------------------------------------------------
+	
 	@Override
     protected void onCreate( Bundle savedInstanceState ) 
     {
 		super.onCreate( savedInstanceState );
 		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
-		/*
-		Button button = new Button(this);
-        button.setText(R.string.choose_file);
-        button.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Display the file chooser dialog
-                showChooser();
-            }
-        });
-
-        setContentView(button);*/
-		setContentView( R.layout.houses_menu_view);
 		
+		setContentView( R.layout.houses_menu_view);
 		
 		/**
          * ------------------------------------
@@ -140,8 +122,10 @@ public class HousesMenu extends Activity implements ImageChooserListener
 				}
 			}
 		});
+		//-------------------------------------------
 		ThreadPolicy tp = ThreadPolicy.LAX; 
 		StrictMode.setThreadPolicy(tp);
+		//-------------------------------------------
     }
 	
 	/**

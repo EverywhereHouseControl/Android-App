@@ -1,4 +1,4 @@
-package loadUrlImageFramework;
+package loadUrlImage;
 
 import java.io.File;
 

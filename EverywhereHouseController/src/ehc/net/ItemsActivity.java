@@ -6,6 +6,9 @@ import java.util.List;
 
 import org.json.JSONException;
 
+import parserJSON.JSON;
+
+import adapters.ExpandableListAdapter;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -16,8 +19,6 @@ import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnGroupCollapseListener;
 import android.widget.TextView;
-import framework.ExpandableListAdapter;
-import framework.JSON;
 
 	@SuppressLint("ValidFragment")
 	public class ItemsActivity extends Fragment//Activity

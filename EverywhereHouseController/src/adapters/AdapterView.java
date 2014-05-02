@@ -1,4 +1,4 @@
-package framework;
+package adapters;
 
 import java.util.HashMap;
 import ehc.net.ItemsActivity;

@@ -1,10 +1,12 @@
-package framework;
+package adapters;
 
 import java.util.ArrayList;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import parserJSON.JSON;
 
 import ehc.net.R;
 

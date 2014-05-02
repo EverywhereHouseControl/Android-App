@@ -1,4 +1,4 @@
-package framework;
+package serverConnection;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 
 import android.content.Context;
 import android.os.AsyncTask;

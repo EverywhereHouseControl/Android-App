@@ -1,5 +1,7 @@
 package framework;
 
+import adapters.CaldroidSampleCustomAdapter;
+
 import com.roomorama.caldroid.CaldroidFragment;
 import com.roomorama.caldroid.CaldroidGridAdapter;
 

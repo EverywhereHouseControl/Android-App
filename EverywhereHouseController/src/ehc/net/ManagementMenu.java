@@ -4,6 +4,10 @@ import java.util.ArrayList;
 
 import org.json.JSONException;
 
+import parserJSON.JSON;
+
+import adapters.ListAdapter;
+import adapters.SlidingMenuAdapter;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -16,11 +20,9 @@ import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 
 import com.actionbarsherlock.app.SherlockActivity;
-import framework.JSON;
-import framework.ListAdapter;
-import framework.SlidingMenuAdapter;
 
-public class ManagementMenu extends SherlockActivity{//Activity{
+public class ManagementMenu extends SherlockActivity
+{
 	//-----------Variables-----------
 	private ArrayList<String> _roomsList = new ArrayList<String>();
 	private JSON _JSONFile;
@@ -92,50 +94,6 @@ public class ManagementMenu extends SherlockActivity{//Activity{
 		}
     }
 	
-	//////////////////////////////////////////////////////////////////////////////
-//	@Override
-//    public boolean onCreateOptionsMenu(com.actionbarsherlock.view.Menu menu) 
-//	{
-//        getSupportMenuInflater().inflate(R.menu.action_bar, menu);
-//        return super.onCreateOptionsMenu(menu);
-//    }
-// 
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) 
-//    {
-//        super.onOptionsItemSelected(item);
-// 
-//        switch(item.getItemId())
-//        {
-//            case R.id.Profile:
-//			try 
-//			{
-//				Class<?> _clazz;
-//				_clazz = Class.forName( "ehc.net.Profile");
-//				Intent _intent = new Intent( this,_clazz );
-//    			startActivity( _intent );
-//			} 
-//			catch (ClassNotFoundException e) 
-//			{
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//                break;
-//            case R.id.ChangeProfile:
-//            	Intent exitIntent = new Intent(this,LogIn.class);
-//            	exitIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP|Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//            	startActivity(exitIntent);  	
-//                break;
-//            case R.id.Exit:
-//            	Intent intent = new Intent(Intent.ACTION_MAIN);
-//            	intent.addCategory(Intent.CATEGORY_HOME);
-//            	intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//            	startActivity(intent);  	
-//                break;
-//        }
-//        return true;
-//    }
-    //////////////////////////////////////////////////////////////////////////////
 	/**
 	 * Method which executes the next activity
 	 * @param room 

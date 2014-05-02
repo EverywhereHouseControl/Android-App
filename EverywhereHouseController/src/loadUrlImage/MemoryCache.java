@@ -1,4 +1,4 @@
-package loadUrlImageFramework;
+package loadUrlImage;
 
 import java.lang.ref.SoftReference;
 import java.util.Collections;
