@@ -8,15 +8,15 @@
         android:minSdkVersion="10"
         android:targetSdkVersion="19" />
 
-    <!--
-          <supports-screens
+    
+     <supports-screens
         android:anyDensity="true"
         android:largeScreens="true"
         android:normalScreens="true"
         android:resizeable="true"
         android:smallScreens="true"
         android:xlargeScreens="true" />
-    -->
+    
 
 
     <!-- Permiso de acceso a todas las APIs de internet -->
@@ -34,7 +34,6 @@
     <uses-feature
         android:name="android.hardware.touchscreen.multitouch"
         android:required="true" />
-"
 
     <!-- application : Componentes de la app. -->
     <application

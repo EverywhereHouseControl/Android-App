@@ -1,23 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:fillViewport="true" >
-
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/GreenApp" >
+        xmlns:android="http://schemas.android.com/apk/res/android"
+    	android:layout_width="fill_parent"
+    	android:layout_height="fill_parent"
+        android:background="@color/GreenApp"
+        android:orientation="vertical" >
 
-        <RelativeLayout
-            android:id="@+id/RelativeLayout1"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_weight="3.69"
-            android:background="@color/Black"
-            android:orientation="vertical" >
+         <RelativeLayout
+             android:layout_width="wrap_content"
+             android:layout_height="100dp"
+             android:layout_alignParentLeft="true"
+             android:layout_alignParentRight="true"
+             android:background="@color/Black" >
 
             <TextView
                 android:id="@+id/textView1"
@@ -27,20 +21,10 @@
                 android:layout_centerVertical="true"
                 android:text="New user"
                 android:textColor="@color/White"
-                android:textSize="30sp" />
-        </RelativeLayout>
+                android:textSize="40sp" />
 
-        <RelativeLayout
-            android:id="@+id/RelativeLayout01"
-            android:layout_width="match_parent"
-            android:layout_height="110dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_weight="3.69"
-            android:background="@color/Black"
-            android:orientation="vertical" >
         </RelativeLayout>
-
+        
         <LinearLayout
             android:id="@+id/linearLayout1"
             android:layout_width="wrap_content"
@@ -48,7 +32,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:background="@color/White"
+            android:background="@color/GreenApp"
             android:orientation="vertical" >
 
             <EditText
@@ -59,7 +43,6 @@
                 android:hint="User"
                 android:singleLine="true"
                 android:textColor="@color/Black"
-                android:textColorHint="@color/DarkGray"
                 android:textSize="40sp" >
 
                 <requestFocus />
@@ -73,7 +56,6 @@
                 android:hint="Email"
                 android:singleLine="true"
                 android:textColor="@color/Black"
-                android:textColorHint="@color/DarkGray"
                 android:textSize="40sp" />
 
             <EditText
@@ -86,7 +68,6 @@
                 android:password="true"
                 android:singleLine="true"
                 android:textColor="@color/Black"
-                android:textColorHint="@color/DarkGray"
                 android:textSize="40sp" />
 
             <EditText
@@ -99,18 +80,17 @@
                 android:password="true"
                 android:singleLine="true"
                 android:textColor="@color/Black"
-                android:textColorHint="@color/DarkGray"
                 android:textSize="40sp" />
         </LinearLayout>
 
         <Button
             android:id="@+id/newUserCancel"
-            android:layout_width="150dp"
+            android:layout_width="200dp"
             android:layout_height="60dp"
             android:layout_alignBaseline="@+id/newUserConfirm"
             android:layout_alignBottom="@+id/newUserConfirm"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="52dp"
+            android:layout_marginRight="20dp"
             android:background="@drawable/button_config"
             android:text="Exit"
             android:textColor="@drawable/button_text_color2"
@@ -118,17 +98,14 @@
 
         <Button
             android:id="@+id/newUserConfirm"
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="60dp"
-            android:layout_above="@+id/RelativeLayout01"
-            android:layout_alignParentLeft="true"
-            android:layout_marginBottom="35dp"
-            android:layout_marginLeft="51dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="20dp"
             android:background="@drawable/button_config"
             android:text="Confirm"
             android:textColor="@drawable/button_text_color2"
             android:textSize="40sp" />
 
     </RelativeLayout>
-
-</ScrollView>

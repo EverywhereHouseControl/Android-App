@@ -38,7 +38,6 @@ import android.widget.Toast;
 public class MainMenu extends SherlockActivity 
 {
 	// ---------Variables----------------
-	private Button _buttonProfile;
 	private Button _buttonManagement;
 	private Button _buttonEvent;
 	// private Button _buttonConfig;
@@ -94,7 +93,6 @@ public class MainMenu extends SherlockActivity
          * Liked:  variable <- XML component 
          *-------------------------------------
          */
-        _buttonProfile = ( Button ) findViewById( R.id.buttonProfile );
         _buttonManagement = ( Button ) findViewById( R.id.buttonManagement);
         _buttonEvent = ( Button ) findViewById( R.id.buttonEvents );
        // _buttonConfig = ( Button ) findViewById( R.id.buttonConfig );
@@ -111,17 +109,6 @@ public class MainMenu extends SherlockActivity
 			{
 				log( "Button 'Management'pressed" );
 				createdManagementIntent();
-			}
-		});
-        
-        _buttonProfile.setOnClickListener( new View.OnClickListener() 
-        {
-			@Override
-			public void onClick(View v) 
-			{
-				// TODO Auto-generated method stub
-				log( "Button 'Profile'pressed" );
-				createdProfileIntent();
 			}
 		});
         
