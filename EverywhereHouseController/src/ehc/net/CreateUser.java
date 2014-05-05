@@ -17,7 +17,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -29,6 +28,13 @@ public class CreateUser extends Activity
 	private Button _buttonCancel;
 	private Button _buttonConfirm;
 	//--------------------------------------------
+	
+	@Override
+	public void onWindowFocusChanged(boolean hasFocus) 
+	{
+		// TODO Auto-generated method stub
+		super.onWindowFocusChanged(hasFocus);
+	}
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 

@@ -8,7 +8,6 @@ import org.json.JSONObject;
 import parserJSON.JSON;
 import serverConnection.Post;
 
-import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 
@@ -23,13 +22,10 @@ import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.util.Pair;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -43,7 +39,7 @@ public class MainMenu extends SherlockActivity
 	// private Button _buttonConfig;
 	private ImageView _logo;
 	private Post _post;
-	private Double _temp = 0.0;
+	private Double _temp;
 	// -------------------------------
 	private ActionBarDrawerToggle _actbardrawertoggle;
 	private DrawerLayout _dl;
@@ -302,7 +298,7 @@ public class MainMenu extends SherlockActivity
             
             try 
             {
-				_temp = (Double) _data.get("temperature");
+				_temp = _data.getDouble("temperature");
 			} 
             catch (JSONException e) 
 			{
