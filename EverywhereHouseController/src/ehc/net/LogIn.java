@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import ehc.net.R;
+
 import serverConnection.Post;
 
 import android.net.ConnectivityManager;
@@ -48,7 +50,6 @@ public class LogIn extends Activity
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.log_in_view);
-		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		
 		/**
          * ------------------------------------

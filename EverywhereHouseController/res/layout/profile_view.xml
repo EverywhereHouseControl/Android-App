@@ -13,15 +13,6 @@
     android:background="@color/GreenApp"
     android:orientation="vertical" >
 
-    <ImageButton
-        android:id="@+id/lateralMenu"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:background="@color/GreenApp"
-        android:src="@drawable/ic_drawer" />
-
     <RelativeLayout
         android:id="@+id/RelativeLayout1"
         android:layout_width="wrap_content"

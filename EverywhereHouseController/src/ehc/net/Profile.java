@@ -13,10 +13,14 @@ import org.json.JSONObject;
 
 import serverConnection.Post;
 
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
 import com.kbeanie.imagechooser.api.ChooserType;
 import com.kbeanie.imagechooser.api.ChosenImage;
 import com.kbeanie.imagechooser.api.ImageChooserListener;
 import com.kbeanie.imagechooser.api.ImageChooserManager;
+
+import ehc.net.R;
 
 
 import adapters.HouseListAdapter;
@@ -27,12 +31,14 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
+import android.content.res.Configuration;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.os.StrictMode.ThreadPolicy;
+import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.View;
@@ -44,7 +50,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class Profile extends Activity implements ImageChooserListener
+public class Profile extends SherlockActivity implements ImageChooserListener
 {
 	//---------Variables-------------------------------
 	private Button _buttonSave;
@@ -65,33 +71,48 @@ public class Profile extends Activity implements ImageChooserListener
 	private boolean _selectImage,isModifyMode;
 	private ChosenImage _selectedImage = new ChosenImage();
 	//-------------------------------------------------
+	private ActionBarDrawerToggle _actbardrawertoggle;
+	private DrawerLayout _dl;
+	private ListView _drawer;
+	// -------------------------------
 		
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.profile_view);
-		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		_currentHouse = getIntent().getExtras().getString("House");
 		/////////////////////////////////////////////////////////////////////////////////////////
-		final ListView _drawer = (ListView) findViewById(R.id.ListViewSlidingMenu);		
+		_drawer = (ListView) findViewById(R.id.ListViewSlidingMenu);		
 		final SlidingMenuAdapter _adapter = new 
 		SlidingMenuAdapter(this.getBaseContext(),_currentHouse);
 		_drawer.setAdapter(_adapter);
 		_adapter.notifyDataSetChanged();
 		
-		ImageButton _iv = (ImageButton) findViewById(R.id.lateralMenu);
-		_iv.setOnClickListener(new View.OnClickListener() 
-		{
-			
-			@Override
-			public void onClick(View v) 
+		getSupportActionBar().setHomeButtonEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayUseLogoEnabled(false);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        
+		
+		_dl = (DrawerLayout) findViewById(R.id.drawer_layout);
+		
+		_actbardrawertoggle= new ActionBarDrawerToggle(this, _dl, R.drawable.ic_drawer,R.string.drawer_open,R.string.drawer_close)
+        {
+			public void onDrawerClosed(View view) 
 			{
-				// TODO Auto-generated method stub
-				DrawerLayout _dl = (DrawerLayout) findViewById(R.id.drawer_layout);
-				_dl.openDrawer(_drawer);
+				super.onDrawerClosed(view);
 			}
-		});	
+
+			public void onDrawerOpened(View drawerView) 
+			{
+				super.onDrawerOpened(drawerView);
+			
+			}    	 
+        };
+        
+        _dl.setDrawerListener(_actbardrawertoggle);	
 		/////////////////////////////////////////////////////////////////////////////////////////
 		/**
          * ------------------------------------
@@ -234,6 +255,43 @@ public class Profile extends Activity implements ImageChooserListener
 		//--------------------------------------------
 	}
 	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) 
+	{
+		// TODO Auto-generated method stub
+		return super.onCreateOptionsMenu(menu);
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem item) 
+	{
+		// TODO Auto-generated method stub
+		if(item.getItemId()==android.R.id.home)
+		 {
+			 if(_dl.isDrawerOpen(_drawer))
+			 {
+				 _dl.closeDrawer(_drawer);
+			 }
+			 else {
+				_dl.openDrawer(_drawer);
+			}
+		 }
+		return super.onOptionsItemSelected(item);
+	}
+	
+	@Override
+	protected void onPostCreate(Bundle savedInstanceState) 
+	{
+		super.onPostCreate(savedInstanceState);
+		_actbardrawertoggle.syncState();
+	}
+	
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) 
+	{
+		super.onConfigurationChanged(newConfig);
+		_actbardrawertoggle.onConfigurationChanged(newConfig);
+	}
 	
 	/**
 	 * 

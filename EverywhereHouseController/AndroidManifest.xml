@@ -67,7 +67,7 @@
             android:name="ehc.net.MainMenu"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.Sherlock.NoActionBar" >
+            android:theme="@style/Theme.Sherlock" >
             <intent-filter>
                 <action android:name="ehc.net.MainMenu" />
 
@@ -78,7 +78,7 @@
             android:name="ehc.net.ManagementMenu"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.Sherlock.NoActionBar" >
+            android:theme="@style/Theme.Sherlock" >
             <intent-filter>
                 <action android:name="ehc.net.ManagementMenu" />
 
@@ -97,12 +97,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="framework.ContainerFragments"
+            android:name="ehc.net.ContainerFragments"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Sherlock" >
             <intent-filter>
-                <action android:name="framework.ContainerFragments" />
+                <action android:name="ehc.net.ContainerFragments" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -111,7 +111,7 @@
             android:name="ehc.net.Profile"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.Sherlock.NoActionBar" >
+            android:theme="@style/Theme.Sherlock" >
             <intent-filter>
                 <action android:name="ehc.net.Profile" />
 

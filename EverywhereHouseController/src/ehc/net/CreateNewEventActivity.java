@@ -12,6 +12,7 @@ import parserJSON.JSON;
 import serverConnection.Post;
 import serverConnection.SimpleActivityTask;
 
+import ehc.net.R;
 import framework.SpinnerEventContainer;
 import android.app.Activity;
 import android.app.DatePickerDialog;

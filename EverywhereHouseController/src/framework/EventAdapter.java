@@ -1,6 +1,10 @@
-package ehc.net;
+package framework;
 
 import java.util.ArrayList;
+
+import ehc.net.R;
+import ehc.net.R.id;
+import ehc.net.R.layout;
 
 import android.content.Context;
 import android.graphics.Typeface;

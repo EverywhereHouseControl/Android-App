@@ -14,7 +14,7 @@ import org.json.JSONObject;
 
 import com.roomorama.caldroid.CalendarHelper;
 
-import ehc.net.Event;
+import framework.Event;
 import framework.SpinnerEventContainer;
 import android.annotation.SuppressLint;
 import android.content.Context;

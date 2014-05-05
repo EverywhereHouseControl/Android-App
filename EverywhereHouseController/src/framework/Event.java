@@ -1,4 +1,4 @@
-package ehc.net;
+package framework;
 
 import java.util.Date;
 

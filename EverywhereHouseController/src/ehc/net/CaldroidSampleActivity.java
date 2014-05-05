@@ -30,6 +30,10 @@ import android.view.View.OnClickListener;
 import com.roomorama.caldroid.CaldroidFragment;
 import com.roomorama.caldroid.CaldroidListener;
 
+import ehc.net.R;
+import framework.Event;
+import framework.EventAdapter;
+
 
 @SuppressLint("SimpleDateFormat")
 public class CaldroidSampleActivity extends FragmentActivity {

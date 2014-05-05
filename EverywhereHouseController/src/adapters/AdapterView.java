@@ -1,7 +1,9 @@
 package adapters;
 
 import java.util.HashMap;
+
 import ehc.net.ItemsActivity;
+
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;

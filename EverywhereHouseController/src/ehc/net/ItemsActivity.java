@@ -6,6 +6,8 @@ import java.util.List;
 
 import org.json.JSONException;
 
+import ehc.net.R;
+
 import parserJSON.JSON;
 
 import adapters.ExpandableListAdapter;

@@ -16,6 +16,8 @@ import com.kbeanie.imagechooser.api.ChosenImage;
 import com.kbeanie.imagechooser.api.ImageChooserListener;
 import com.kbeanie.imagechooser.api.ImageChooserManager;
 
+import ehc.net.R;
+
 import adapters.HouseListAdapter;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -64,7 +66,6 @@ public class HousesMenu extends Activity implements ImageChooserListener
     protected void onCreate( Bundle savedInstanceState ) 
     {
 		super.onCreate( savedInstanceState );
-		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		
 		setContentView( R.layout.houses_menu_view);
 		

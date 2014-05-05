@@ -1,4 +1,4 @@
-package ehc.net;
+package framework;
 
 import org.json.JSONException;
 
@@ -19,7 +19,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
-import framework.SpinnerEventContainer;
+import ehc.net.R;
+import ehc.net.R.id;
+import ehc.net.R.layout;
 
 public class CreateUserFragmentDialog extends DialogFragment {
 

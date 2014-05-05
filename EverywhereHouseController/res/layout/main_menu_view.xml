@@ -145,15 +145,6 @@
 	        </RelativeLayout>
 	    </LinearLayout>
 
-	    <ImageButton
-	        android:id="@+id/lateralMenu"
-	        android:layout_width="50dp"
-	        android:layout_height="50dp"
-	        android:layout_alignParentLeft="true"
-	        android:layout_alignParentTop="true"
-	        android:background="@color/White"
-	        android:src="@drawable/ic_drawer" />
-
 	</RelativeLayout>
 
 	<ListView

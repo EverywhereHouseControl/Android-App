@@ -27,17 +27,6 @@
                 android:textSize="30sp"
                  />
 
-              <ImageButton
-	        android:id="@+id/lateralMenu"
-	        android:layout_width="50dp"
-	        android:layout_height="50dp"
-	        android:layout_alignParentLeft="true"
-	        android:layout_alignParentTop="true"
-	        android:layout_marginLeft="15dp"
-            android:layout_marginTop="15dp"
-	        android:background="@color/White"
-	        android:src="@drawable/ic_drawer" />
-
         </RelativeLayout>
 
         <ListView

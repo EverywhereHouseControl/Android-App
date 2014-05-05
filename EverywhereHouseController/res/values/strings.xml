@@ -9,5 +9,7 @@
     <string name="exit">Salir</string>
     <string name="daily">Daily Appointments</string>
     <string name="event_name">Event name</string>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
     
 </resources>
