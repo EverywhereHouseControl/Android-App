@@ -10,7 +10,7 @@ EHC Android Repository
 
 ## Purpose
 
-The purpose is to give for user an EHC system interface, with which the user, if have internet connection in him device, will be able to manipulate and take control of the system.
+The purpose is to give for user an EHC system interface, with which the user, if have internet connection in him device will be able to manipulate and take control of the system.
 
 ## App
 
