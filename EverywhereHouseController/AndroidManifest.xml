@@ -23,6 +23,15 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.SET_DEBUG_APP" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    
+	<!-- Permiso de acceso a todas las APIs de Google Services -->
+	<uses-permission android:name="android.permission.WAKE_LOCK" />
+	<uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+	 
+	<permission android:name="ehc.net.permission.C2D_MESSAGE"
+	     android:protectionLevel="signature" />
+	<uses-permission android:name="ehc.net.permission.C2D_MESSAGE" />
 
     <!-- Permiso de almacenamiento externo -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -40,6 +49,21 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="EHC" >
+        
+        <meta-data android:name="com.google.android.gms.version"
+           android:value="@integer/google_play_services_version" />
+        
+        <receiver
+         android:name=".GCMBroadcastReceiver"
+         android:permission="com.google.android.c2dm.permission.SEND" >
+         <intent-filter>
+              <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+              <category android:name="ehc.net" />
+         </intent-filter>
+     	</receiver>
+ 
+     	<service android:name=".GCMIntentService" />
+        
         <activity
             android:name="ehc.net.LogIn"
             android:configChanges="keyboard|keyboardHidden|orientation"

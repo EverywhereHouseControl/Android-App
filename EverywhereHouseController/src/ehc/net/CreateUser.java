@@ -1,9 +1,13 @@
 package ehc.net;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import ehc.net.R;
 
@@ -15,6 +19,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -27,6 +32,8 @@ public class CreateUser extends Activity
 	private Post _post;
 	private Button _buttonCancel;
 	private Button _buttonConfirm;
+	private GoogleCloudMessaging _gcm;
+	private EditText _user;
 	//--------------------------------------------
 	
 	@Override
@@ -88,7 +95,7 @@ public class CreateUser extends Activity
 				 * Linked:  variable <- component XML
 				 *-------------------------------------
 				 **/
-				EditText _user = (EditText) findViewById(R.id.newUser);
+				_user = (EditText) findViewById(R.id.newUser);
 				EditText _email = (EditText) findViewById(R.id.newEmail);
 				EditText _password = (EditText) findViewById(R.id.newPassword);
 				EditText _repeatPassword = (EditText) findViewById(R.id.newRepeatPassword);
@@ -234,7 +241,11 @@ public class CreateUser extends Activity
 				{
 					case 0:
 					{
-						_message = _json_data.getString("ENGLISH");					
+						_message = _json_data.getString("ENGLISH");
+						//GCM register
+						TareaRegistroGCM tarea = new TareaRegistroGCM();
+	                    tarea.execute(_user.getText().toString());
+						
 						break;
 					}
 					default:
@@ -262,4 +273,51 @@ public class CreateUser extends Activity
             Toast.makeText(getBaseContext(), _message, Toast.LENGTH_SHORT).show();
 		}
 	}
+	
+	
+	private class TareaRegistroGCM extends AsyncTask<String,Integer,String>
+	{
+		//Project Number: 701857172243 
+		String SENDER_ID = "701857172243";
+		
+	    @Override
+	        protected String doInBackground(String... params)
+	    {
+	            String msg = "";
+	 
+	            try
+	            {
+	                if (_gcm == null)
+	                {
+	                    _gcm = GoogleCloudMessaging.getInstance(CreateUser.this);
+	                }
+	 
+	                //Nos registramos en los servidores de GCM
+	                String _regid = _gcm.register(SENDER_ID);
+	 
+	                Log.d("GCM", "Registrado en GCM: registration_id=" + _regid);
+	                
+	            		try 
+	            		{
+	            			FileOutputStream _outputStream = openFileOutput("GCMregister.json", MODE_PRIVATE);
+	            			_outputStream.write(_regid.getBytes());
+	            			_outputStream.close();	
+	            		} 
+	            		catch (IOException e) 
+	            		{
+	            			// TODO Auto-generated catch block
+	            			e.printStackTrace();
+	            		}
+	                
+	            }
+	            catch (IOException ex)
+	            {
+	                Log.d("GCM", "Error registro en GCM:" + ex.getMessage());
+	            }
+	 
+	            return msg;
+	        }
+	}
+	
+	
 }

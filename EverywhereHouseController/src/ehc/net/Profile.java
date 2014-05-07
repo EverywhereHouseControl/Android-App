@@ -25,7 +25,6 @@ import ehc.net.R;
 
 import adapters.HouseListAdapter;
 import adapters.SlidingMenuAdapter;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -42,7 +41,6 @@ import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -75,10 +73,15 @@ public class Profile extends SherlockActivity implements ImageChooserListener
 	private DrawerLayout _dl;
 	private ListView _drawer;
 	// -------------------------------
-		
+//	static
+//	{
+//		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+//		StrictMode.setThreadPolicy(policy);
+//	}
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
-	{
+	{		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.profile_view);
 		_currentHouse = getIntent().getExtras().getString("House");
@@ -217,7 +220,7 @@ public class Profile extends SherlockActivity implements ImageChooserListener
 				_post = new Post();		
 				isModifyMode = true;
 				profileConnection _connection = new profileConnection(_url);
-		    	_connection.execute();	  
+		    	_connection.execute();
 			}
 		});
 		
@@ -232,8 +235,20 @@ public class Profile extends SherlockActivity implements ImageChooserListener
 			}
 		});
 		
+		//_file = JSON.getInstance(Profile.this).loadUserInformation(Profile.this);
 		parser();
-
+		//_file = new JSON().loadUserInformation(this.getApplicationContext());
+//		
+//		try 
+//		{
+//			loadProfileInfo();
+//		} 
+//		catch (JSONException e1) 
+//		{
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
+		
 		try 
 		{
 			JSONObject _obj = new JSONObject(_file);
@@ -249,9 +264,12 @@ public class Profile extends SherlockActivity implements ImageChooserListener
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		//-----------------------------------------
-		ThreadPolicy tp = ThreadPolicy.LAX; 
-		StrictMode.setThreadPolicy(tp);
+//		ThreadPolicy tp = ThreadPolicy.LAX; 
+//		StrictMode.setThreadPolicy(tp);
+		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+		StrictMode.setThreadPolicy(policy);		
 		//--------------------------------------------
 	}
 	
@@ -415,7 +433,6 @@ public class Profile extends SherlockActivity implements ImageChooserListener
 						try 
 						{
 							obj = new JSONObject(_file);
-							int _internalError = 0;
 							log(_imagePath);
 							File file = new File(_imagePath);
 							log(file.getName());
@@ -433,7 +450,7 @@ public class Profile extends SherlockActivity implements ImageChooserListener
 							if(_password.getText().toString().equals("*/*^^*/*^^*/*^^*/*") || _post.md5(_password.getText().toString()).equals(obj.getString("PASSWORD")))
 							{
 								_parametros.add(obj.getString("PASSWORD"));
-								Log.d("PASSWORD",obj.getString("PASSWORD"));
+								_internalError=-7;
 							}
 							else _parametros.add(_post.md5(_password.getText().toString()));
 							
@@ -452,6 +469,7 @@ public class Profile extends SherlockActivity implements ImageChooserListener
 							else if(_user.getText().toString().equals(obj.getString("USERNAME"))&&
 									_email.getText().toString().equals(obj.getString("EMAIL")) &&
 									_internalError==-7)_internalError=-6;
+							
 						} 
 						catch (Exception e) 
 						{

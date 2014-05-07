@@ -44,7 +44,7 @@ public class JSON {
 	private String _urlImage = null;
 
 	@SuppressWarnings("unused")
-	private JSON() {
+	public JSON() {
 	}
 
 	public static synchronized JSON getInstance(Context c) {

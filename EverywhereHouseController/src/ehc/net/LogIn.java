@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+
 import ehc.net.R;
 
 import serverConnection.Post;
@@ -43,6 +46,9 @@ public class LogIn extends Activity
 		private TextView _createUser;
 		private TextView _forgotPassword;
 		private boolean _isLogIn;
+		
+		private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+
 	//***********************************
 		
 	@Override
@@ -382,6 +388,26 @@ public class LogIn extends Activity
     }
     
     /**
+     * Check the device to make sure it has the Google Play Services APK. If
+     * it doesn't, display a dialog that allows users to download the APK from
+     * the Google Play Store or enable it in the device's system settings.
+     */
+    private boolean checkPlayServices() {
+        int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
+        if (resultCode != ConnectionResult.SUCCESS) {
+            if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
+                GooglePlayServicesUtil.getErrorDialog(resultCode, this,
+                        PLAY_SERVICES_RESOLUTION_REQUEST).show();
+            } else {
+                Log.i("GCM", "This device is not supported.");
+                finish();
+            }
+            return false;
+        }
+        return true;
+    }
+    
+    /**
      * Method for debug
      * @param _text
      */
@@ -395,6 +421,7 @@ public class LogIn extends Activity
     {
     	super.onResume();
     	log( "Resumed" );
+    	checkPlayServices();
     	//Reset the boxes
         _user.setHint("User");
         _password.setHint("Password");
