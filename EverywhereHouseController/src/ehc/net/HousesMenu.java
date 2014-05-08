@@ -355,6 +355,11 @@ public class HousesMenu extends Activity implements ImageChooserListener
 			ArrayList<String> _parametros = new ArrayList<String>();
 			_parametros.add("command");
 			_parametros.add("subir");
+			
+			File _imageFile = new File(_chosenImage.getFileThumbnail());
+			_imageFile.getAbsolutePath();
+			_imagePath = _imageFile.getAbsolutePath();
+			
 			_data = _post.connectionPostUpload(_parametros, "http://5.231.69.226/EHControlConnect/index.php", _imagePath);			
 			
 			runOnUiThread(new Runnable()

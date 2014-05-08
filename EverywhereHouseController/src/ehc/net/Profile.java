@@ -62,11 +62,11 @@ public class Profile extends SherlockActivity implements ImageChooserListener
 	private String _message = "";
 	private String _currentHouse;
 	private ImageLoader _imgLoader = HouseListAdapter._imgLoader;
-	private static ImageChooserManager imageChooserManager;
-	private static int chooserType;
-	private static String filePath;
+	private ImageChooserManager imageChooserManager;
+	private int chooserType;
+	private String filePath;
 	private String _url;
-	private boolean _selectImage,isModifyMode;
+	private boolean _selectImage,isImageMode;
 	private ChosenImage _selectedImage = new ChosenImage();
 	//-------------------------------------------------
 	private ActionBarDrawerToggle _actbardrawertoggle;
@@ -129,7 +129,7 @@ public class Profile extends SherlockActivity implements ImageChooserListener
 		_buttonSave = ( Button ) findViewById( R.id.profileSave );
 		_buttonExit = (Button) findViewById(R.id.profileExit);
 		
-		ImageButton _image = (ImageButton) findViewById(R.id.UserImage);		
+		final ImageButton _image = (ImageButton) findViewById(R.id.UserImage);		
 		_image.setOnClickListener(new View.OnClickListener() 
 		{
 			
@@ -196,10 +196,11 @@ public class Profile extends SherlockActivity implements ImageChooserListener
 					        {
 					            public void onClick(DialogInterface dialog, int which) 
 					            { 
-									_post = new Post();	
-									isModifyMode = false;
-									profileConnection _connection = new profileConnection(_selectedImage.getFilePathOriginal());
-							    	_connection.execute();
+					            	_image.setImageURI(Uri.parse(new File(_selectedImage.getFileThumbnail()).toString()));
+//									_post = new Post();	
+					            	isImageMode = true;
+//									profileConnection _connection = new profileConnection(_selectedImage.getFilePathOriginal());
+//							    	_connection.execute();
 					            }
 					         })
 					        .setIcon(android.R.drawable.ic_dialog_alert)
@@ -217,10 +218,16 @@ public class Profile extends SherlockActivity implements ImageChooserListener
 			@Override
 			public void onClick(View v) 
 			{
-				_post = new Post();		
-				isModifyMode = true;
-				profileConnection _connection = new profileConnection(_url);
-		    	_connection.execute();
+//				runOnUiThread(new Runnable() 
+//				{
+//					public void run() 
+//					{
+						_post = new Post();		
+						profileConnection _connection = new profileConnection();
+				    	_connection.execute();
+//					}
+//				});
+				
 			}
 		});
 		
@@ -266,11 +273,12 @@ public class Profile extends SherlockActivity implements ImageChooserListener
 		}
 		
 		//-----------------------------------------
-//		ThreadPolicy tp = ThreadPolicy.LAX; 
-//		StrictMode.setThreadPolicy(tp);
-		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-		StrictMode.setThreadPolicy(policy);		
+		ThreadPolicy tp = ThreadPolicy.LAX; 
+		StrictMode.setThreadPolicy(tp);
+//		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+//		StrictMode.setThreadPolicy(policy);		
 		//--------------------------------------------
+		isImageMode = false;
 	}
 	
 	@Override
@@ -359,11 +367,6 @@ public class Profile extends SherlockActivity implements ImageChooserListener
     	ArrayList<String> _parametros;
     	int _internalError = 0;
     	
-    	public profileConnection(String path)
-    	{
-    		_imagePath = path;
-    	}
-    	
     	/**
     	 * Message "Loading"
     	 */
@@ -371,7 +374,7 @@ public class Profile extends SherlockActivity implements ImageChooserListener
     	{  
     		super.onPreExecute();
             _pDialog = new ProgressDialog(Profile.this);
-            _pDialog.setMessage("Loading. Please wait...");
+            _pDialog.setMessage("Uploading. Please wait...");
             _pDialog.setIndeterminate(false);
             _pDialog.setCancelable(false);
             _pDialog.show();          
@@ -381,55 +384,63 @@ public class Profile extends SherlockActivity implements ImageChooserListener
 		protected String doInBackground(String... params) 
 		{
 			// TODO Auto-generated method stub
-			//Query			
-			if(!isModifyMode)
+			//Query	
+
+			_correct = false;
+			
+			if(isImageMode)
 			{
+				File _imageFile = new File(_selectedImage.getFileThumbnail());
+				_imageFile.getAbsolutePath();
+				_imagePath = _imageFile.getAbsolutePath();
+				
 				_parametros = new ArrayList<String>();
 				_parametros.add("command");
 				_parametros.add("subir");
+				
+				Log.d("PATH",_imagePath);
+				
 				_data = _post.connectionPostUpload(_parametros, "http://5.231.69.226/EHControlConnect/index.php", _imagePath);			
-			}
-			
-			runOnUiThread(new Runnable() 
-			{
-				@Override
-				public void run() 
+				
+				try 
 				{
-					// TODO Auto-generated method stub
-					if(!isModifyMode)
+					JSONObject _json_data = _data.getJSONObject("error");
+					switch(_json_data.getInt("ERROR"))
 					{
-						try 
+						case 0:
 						{
-							JSONObject _json_data = _data.getJSONObject("error");
-							switch(_json_data.getInt("ERROR"))
-							{
-								case 0:
-								{
-									_message = _json_data.getString("ENGLISH");
-									_correct = true;
-									break;
-								}
-								default:
-								{
-									_message = _json_data.getString("ENGLISH");
-									_correct = false;
-									break;
-								}
-							}
-						
-						} 
-						catch (Exception e) 
-						{
-							e.printStackTrace();
-							_message = "internal error.";
+							_message = _json_data.getString("ENGLISH");
+							_correct = true;
+							break;
 						}
-						Toast.makeText(Profile.this, _message, Toast.LENGTH_SHORT).show();	
+						default:
+						{
+							_message = _json_data.getString("ENGLISH");
+							_correct = false;
+							break;
+						}
 					}
-					
-					JSONObject obj = null;
-					
-					if(_correct || isModifyMode)
+				
+				} 
+				catch (Exception e) 
+				{
+					e.printStackTrace();
+					_message = "internal error.";
+				}
+			}
+			else
+			{
+				_imagePath = _url;
+			}
+
+
+//			runOnUiThread(new Runnable() 
+//			{
+//				public void run() 
+//				{	
+					if(_correct || !isImageMode)
 					{
+						JSONObject obj = null;
 						try 
 						{
 							obj = new JSONObject(_file);
@@ -479,6 +490,36 @@ public class Profile extends SherlockActivity implements ImageChooserListener
 						
 						if(errorControl(_parametros,_internalError))
 						{
+							Log.d("PARAMETRES",_parametros.toString());
+							JSONObject _data = _post.getServerData(_parametros,"http://5.231.69.226/EHControlConnect/index.php");//"http://192.168.2.147/EHControlConnect/index.php");
+							try 
+							{
+								JSONObject _json_data = _data.getJSONObject("error");
+								switch(_json_data.getInt("ERROR"))
+								{
+									case 0:
+									{
+										_message = _json_data.getString("ENGLISH");	
+										_correct = true;
+								    	break;
+									}
+									default:
+									{
+										_correct = false;
+										_message = _json_data.getString("ENGLISH");
+										break;
+									}
+								}
+							} 
+							catch (JSONException e) 
+							{
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}			
+						}
+									
+						if(_correct)
+						{
 							try 
 							{
 								ArrayList<String> _parametros = new ArrayList<String>();
@@ -495,8 +536,9 @@ public class Profile extends SherlockActivity implements ImageChooserListener
 								
 								//Save the profile's information.
 								saveProfileInfo(_json_data);
-								//Reload the view
-								onCreate(null);
+//								//Reload the view
+//								onCreate(null);
+								isImageMode = false;
 							} 
 							catch (Exception e) 
 							{
@@ -505,10 +547,9 @@ public class Profile extends SherlockActivity implements ImageChooserListener
 							}
 						}
 						
-						Toast.makeText(Profile.this, _message, Toast.LENGTH_SHORT).show();	
+//						Toast.makeText(Profile.this, _message, Toast.LENGTH_SHORT).show();	
 					}
-				}
-			});			
+//			});			
 			return null;
 		}
 		
@@ -517,6 +558,7 @@ public class Profile extends SherlockActivity implements ImageChooserListener
             // dismiss the dialog after getting all products
 			super.onPostExecute(file_url);
             _pDialog.dismiss();
+            Toast.makeText(Profile.this, _message, Toast.LENGTH_SHORT).show();
 		}
     	
     }	
@@ -555,37 +597,15 @@ public class Profile extends SherlockActivity implements ImageChooserListener
 			}
 			case -6:
 			{
+				if(isImageMode)return true;
 				_message = "No change";
 				break;
 			}
 			default:
 			{
-				JSONObject _data = _post.getServerData(parametros,"http://5.231.69.226/EHControlConnect/index.php");//"http://192.168.2.147/EHControlConnect/index.php");
-				try 
-				{
-					JSONObject _json_data = _data.getJSONObject("error");
-					switch(_json_data.getInt("ERROR"))
-					{
-						case 0:
-						{
-							_message = _json_data.getString("ENGLISH");							
-					    	return true;
-						}
-						default:
-						{
-							_message = _json_data.getString("ENGLISH");
-							break;
-						}
-					}
-				} 
-				catch (JSONException e) 
-				{
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}	
-				break;
+				return true;
 			}
-		}
+		}	
 		return false;
 	}
 	
@@ -693,6 +713,7 @@ public class Profile extends SherlockActivity implements ImageChooserListener
 					try 
 					{
 						finalize();
+						
 					} 
 					catch (Throwable e) 
 					{
