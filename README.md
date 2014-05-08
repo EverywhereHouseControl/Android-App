@@ -1,6 +1,7 @@
-<div align="Center">
+[<div align="Center">
 <img src="http://ehcontrol.net/EHControlConnect/images/android-logo-small.gif">
-</div>
+</div>](http://www.android.com/)
+[Android Forum](http://www.android.net/)
 
 EHC Android Repository
 ===================================
