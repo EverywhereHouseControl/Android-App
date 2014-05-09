@@ -1,18 +1,24 @@
-package ehc.net;
+package gcmService;
 
 import java.util.List;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
+import ehc.net.LogIn;
+import ehc.net.R;
+import ehc.net.R.drawable;
+
 
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningTaskInfo;
 import android.app.IntentService;
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
@@ -45,19 +51,24 @@ public class GCMIntentService extends IntentService
 	
 	private void mostrarNotification(String msg)
 	{
-		NotificationManager mNotificationManager =
-		(NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-		
+
 		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
 		.setSmallIcon(R.drawable.ic_launcher)
 		.setContentTitle("EHC notification.")
-		.setContentText(msg);
+		.setLargeIcon((((BitmapDrawable)getResources()
+	            .getDrawable(R.drawable.ic_launcher)).getBitmap()))
+		.setContentText(msg)
+		.setContentInfo("4")
+		.setTicker(msg);
 		
 		Intent notIntent = new Intent(this, LogIn.class);
+		notIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 		PendingIntent contIntent = PendingIntent.getActivity(this, 0, notIntent, 0);
 		
 		mBuilder.setContentIntent(contIntent);
 		
+		NotificationManager mNotificationManager =
+				(NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 		mNotificationManager.notify(R.drawable.ic_launcher, mBuilder.build());
 	}
 	

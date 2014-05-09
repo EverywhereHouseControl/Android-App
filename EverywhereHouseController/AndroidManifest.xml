@@ -54,15 +54,15 @@
            android:value="@integer/google_play_services_version" />
         
         <receiver
-         android:name=".GCMBroadcastReceiver"
+         android:name="gcmService.GCMBroadcastReceiver"
          android:permission="com.google.android.c2dm.permission.SEND" >
          <intent-filter>
               <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-              <category android:name="ehc.net" />
+              <category android:name="gcmService" />
          </intent-filter>
      	</receiver>
  
-     	<service android:name=".GCMIntentService" />
+     	<service android:name="gcmService.GCMIntentService" />
         
         <activity
             android:name="ehc.net.LogIn"
@@ -109,23 +109,23 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="ehc.net.ItemsActivity"
+            android:name="framework.ItemsFragment"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Sherlock.NoActionBar" >
             <intent-filter>
-                <action android:name="ehc.net.ItemsActivity" />
+                <action android:name="framework.ItemsFragment" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
-            android:name="ehc.net.ContainerFragments"
+            android:name="ehc.net.ItemsFragmentsContainer"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Sherlock" >
             <intent-filter>
-                <action android:name="ehc.net.ContainerFragments" />
+                <action android:name="ehc.net.ItemsFragmentsContainer" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>

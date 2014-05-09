@@ -1,5 +1,6 @@
 package parserJSON;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.ParseException;
@@ -7,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
-import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -21,16 +21,17 @@ import android.content.Context;
 import android.util.Log;
 import android.util.Pair;
 
-public class JSON {
+public class JSON 
+{
 	private static JSON _instance;
-	public ArrayList<String> _houses = new ArrayList<String>();
+	public static ArrayList<String> _houses = new ArrayList<String>();
 	public ArrayList<String> _rooms = new ArrayList<String>();
 	public ArrayList<String> _items = new ArrayList<String>();
-	public ArrayList<String> _access = new ArrayList<String>();
-	public HashMap<String, Pair<String, String>> _places = new HashMap<String, Pair<String, String>>();
-	public HashMap<String, String> _urls = new HashMap<String, String>();
+	public static ArrayList<String> _access = new ArrayList<String>();
+	public static HashMap<String, Pair<String, String>> _places = new HashMap<String, Pair<String, String>>();
+	public static HashMap<String, String> _urls = new HashMap<String, String>();
 	public HashMap<String, Event> _events;
-	public HashMap<String, JSONArray> _roomsHouses = new HashMap<String, JSONArray>();
+	public static HashMap<String, JSONArray> _roomsHouses = new HashMap<String, JSONArray>();
 
 	private static final String _TAG_NAME = "name";
 	// private static final String _TAG_USER = "User";
@@ -38,64 +39,116 @@ public class JSON {
 	private static final String _TAG_ROOMS = "rooms";
 	private static final String _TAG_SERVICES = "services";
 	private static final String _TAG_ACTIONS = "actions";
-	private String _fileConfig = null;
-	private String _fileInfo = null;
+	private static String _fileConfig = null;
+	private static String _fileInfo = null;
 	private String _eventFile = null;
-	private String _urlImage = null;
+	private static String _urlImage = null;
 
-	@SuppressWarnings("unused")
-	public JSON() {
-	}
+	public JSON() {}
 
-	public static synchronized JSON getInstance(Context c) {
+	public static synchronized JSON getInstance(Context c) 
+	{
 		_instance = new JSON(c);
 		return _instance;
 	}
 
-	public JSON(Context c) {
+	public JSON(Context c) 
+	{
 		loadUserInformation(c);
 		loadUserEnvironment(c);
-		try {
+		try 
+		{
 			loadJSONEvent();
-		} catch (JSONException e) {
+		} catch (JSONException e) 
+		{
 			e.printStackTrace();
 		}
 	}
 
-	private void loadUserEnvironment(Context c) {
-		try {
+	/**
+	 * Saves from the server query the profile information in the file 'profile.json'.
+	 */
+	public static void saveProfileInfo(JSONObject JSON,Context context)
+	{
+		try 
+		{
+			FileOutputStream _outputStream = context.openFileOutput("profileInformation.json", Context.MODE_PRIVATE);
+			_outputStream.write(JSON.toString().getBytes());
+			_outputStream.close();	
+		} 
+		catch (IOException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	
+	/**
+	 * Saves from the server query the house configuration in the file 'configuration.json'.
+	 */
+	public static void saveConfig(Object JSON,Context context)
+	{	
+		try 
+		{
+			FileOutputStream _outputStream = context.openFileOutput("configuration.json", Context.MODE_PRIVATE);
+			_outputStream.write(JSON.toString().getBytes());
+			_outputStream.close();
+		} catch (IOException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+	}
+	
+	public static String loadUserEnvironment(Context c) 
+	{
+		try 
+		{
 			InputStream _is = c.openFileInput("configuration.json");
 			int _size = _is.available();
 			byte[] buffer = new byte[_size];
 			_is.read(buffer);
 			_is.close();
-			this._fileConfig = new String(buffer, "UTF-8");
-			try {
+			_fileConfig = new String(buffer, "UTF-8");
+			try 
+			{
 				loadJSONconfig();
-			} catch (JSONException e) {
+			} catch (JSONException e) 
+			{
 				e.printStackTrace();
 			}
-		} catch (IOException ex) {
+		} 
+		catch (IOException ex) 
+		{
 			ex.printStackTrace();
 		}
+		return _fileConfig;
 	}
 
-	private void loadUserInformation(Context c) {
-		try {
+	public static String loadUserInformation(Context c) 
+	{
+		try 
+		{
 			InputStream _is = c.openFileInput("profileInformation.json");
 			int _size = _is.available();
 			byte[] buffer = new byte[_size];
 			_is.read(buffer);
 			_is.close();
-			this._fileInfo = new String(buffer, "UTF-8");
-			try {
+			_fileInfo = new String(buffer, "UTF-8");
+			try 
+			{
 				loadJSONinfo();
-			} catch (JSONException e) {
+			} catch (JSONException e) 
+			{
 				e.printStackTrace();
 			}
-		} catch (IOException ex) {
+		} 
+		catch (IOException ex) 
+		{
 			ex.printStackTrace();
 		}
+		return _fileInfo;
 	}
 
 	private void loadJSONEvent() throws JSONException {
@@ -139,20 +192,21 @@ public class JSON {
 	 * 
 	 * @throws JSONException
 	 */
-	private void loadJSONconfig() throws JSONException {
+	private static void loadJSONconfig() throws JSONException 
+	{
 		Log.d("JSON ", _fileConfig.toString());
 
 		JSONObject _obj = new JSONObject(_fileConfig);
 		try {
-			this._houses = new ArrayList<String>();
+			_houses = new ArrayList<String>();
 
-			JSONArray _houses = _obj.getJSONArray(_TAG_HOUSES);
+			JSONArray _housesArray = _obj.getJSONArray(_TAG_HOUSES);
 
-			for (int i = 0; i < _houses.length(); i++) {
+			for (int i = 0; i < _housesArray.length(); i++) {
 
-				JSONObject _house = _houses.getJSONObject(i);
+				JSONObject _house = _housesArray.getJSONObject(i);
 
-				this._houses.add(_house.getString("name"));
+				_houses.add(_house.getString("name"));
 
 				_access.add(_house.getString("access"));
 
@@ -210,7 +264,8 @@ public class JSON {
 		}
 	}
 
-	private void loadJSONinfo() throws JSONException {
+	private static void loadJSONinfo() throws JSONException 
+	{
 		Log.d("JSON ", _fileInfo.toString());
 
 		JSONObject _obj = new JSONObject(_fileInfo);
@@ -255,12 +310,14 @@ public class JSON {
 	 * 
 	 * @return
 	 */
-	public ArrayList<String> getUrlsImage() {
-		ArrayList<String> _urls = new ArrayList<String>();
-		for (int i = 0; i < _houses.size(); i++) {
-			_urls.add(this._urls.get(_houses.get(i)));
+	public ArrayList<String> getUrlsImage() 
+	{
+		ArrayList<String> _urlsArray = new ArrayList<String>();
+		for (int i = 0; i < _houses.size(); i++) 
+		{
+			_urlsArray.add(_urls.get(_houses.get(i)));
 		}
-		return _urls;
+		return _urlsArray;
 	}
 
 	/**
@@ -268,7 +325,8 @@ public class JSON {
 	 * @param house
 	 * @return
 	 */
-	public Pair<String, String> getPlace(String house) {
+	public Pair<String, String> getPlace(String house) 
+	{
 		return _places.get(house);
 	}
 

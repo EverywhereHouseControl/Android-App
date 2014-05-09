@@ -1,11 +1,11 @@
 package ehc.net;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import parserJSON.JSON;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -26,7 +26,6 @@ import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -311,9 +310,9 @@ public class LogIn extends Activity
 						else
 						{ 	
 							//Save the profile's information.
-							saveProfileInfo(_json_data);
+							JSON.saveProfileInfo(_json_data,LogIn.this);
 							//Save the house's configuration
-							saveConfig(_json_data.get("JSON"));
+							JSON.saveConfig(_json_data.get("JSON"),LogIn.this);
 							//Activate the next Activity("MainMenu")
 							createdIntent();
 						}				
@@ -340,42 +339,6 @@ public class LogIn extends Activity
 		}
     }
     
-	/**
-	 * Saves from the server query the profile information in the file 'profile.json'.
-	 */
-	private void saveProfileInfo(JSONObject JSON)
-	{
-		try 
-		{
-			FileOutputStream _outputStream = openFileOutput("profileInformation.json", MODE_PRIVATE);
-			_outputStream.write(JSON.toString().getBytes());
-			_outputStream.close();	
-		} 
-		catch (IOException e) 
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
-	
-	/**
-	 * Saves from the server query the house configuration in the file 'configuration.json'.
-	 */
-	private void saveConfig(Object JSON)
-	{	
-		try 
-		{
-			FileOutputStream _outputStream = openFileOutput("configuration.json", MODE_PRIVATE);
-			_outputStream.write(JSON.toString().getBytes());
-			_outputStream.close();
-		} catch (IOException e) 
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}		
-	}
-    
     @Override
     public void onBackPressed() 
     {
@@ -392,13 +355,18 @@ public class LogIn extends Activity
      * it doesn't, display a dialog that allows users to download the APK from
      * the Google Play Store or enable it in the device's system settings.
      */
-    private boolean checkPlayServices() {
+    private boolean checkPlayServices() 
+    {
         int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
-        if (resultCode != ConnectionResult.SUCCESS) {
-            if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
+        if (resultCode != ConnectionResult.SUCCESS) 
+        {
+            if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) 
+            {
                 GooglePlayServicesUtil.getErrorDialog(resultCode, this,
                         PLAY_SERVICES_RESOLUTION_REQUEST).show();
-            } else {
+            } 
+            else 
+            {
                 Log.i("GCM", "This device is not supported.");
                 finish();
             }

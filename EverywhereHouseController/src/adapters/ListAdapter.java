@@ -77,8 +77,8 @@ public class ListAdapter extends BaseAdapter
 		ImageView _imageView = (ImageView) _view.findViewById(R.id.HouseImageList);
 		
 		
-		 JSON _JSONFile = JSON.getInstance(_context);
-		 JSONArray _rooms = _JSONFile._roomsHouses.get(_house);
+		 JSON.getInstance(_context);
+		 JSONArray _rooms = JSON._roomsHouses.get(_house);
 		 JSONObject _room;
 		 try 
 		 {
@@ -134,19 +134,6 @@ public class ListAdapter extends BaseAdapter
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-//		if(_textView.getText().toString().contains("cocina"))
-//		{
-//			_imageView.setBackgroundResource(R.drawable.cooker);
-//		}
-//		else if(_textView.getText().toString().contains("terraza"))
-//		{
-//			_imageView.setBackgroundResource(R.drawable.terrace);
-//		}
-//		else
-//		{
-//			_imageView.setBackgroundResource(R.drawable.interrogation);
-//		}
 		
 		
 		return _view;

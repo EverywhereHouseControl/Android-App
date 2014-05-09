@@ -1,4 +1,4 @@
-	package ehc.net;
+	package framework;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -7,7 +7,6 @@ import java.util.List;
 import org.json.JSONException;
 
 import ehc.net.R;
-
 import parserJSON.JSON;
 
 import adapters.ExpandableListAdapter;
@@ -23,9 +22,9 @@ import android.widget.ExpandableListView.OnGroupCollapseListener;
 import android.widget.TextView;
 
 	@SuppressLint("ValidFragment")
-	public class ItemsActivity extends Fragment//Activity
+	public class ItemsFragment extends Fragment
 	{
-
+		//------------Variables-----------------------
 		private JSON _JSONFile;
 		private String _button;
 		private String _house;
@@ -34,79 +33,13 @@ import android.widget.TextView;
 		ExpandableListView _expListView;
 		List<String> _groupList;
 		HashMap<String, List<String>> _listDataChild;
-
+		//--------------------------------------------
 		
-//		@Override
-//	    protected void onCreate( Bundle savedInstanceState ) 
-//	    {
-//			super.onCreate( savedInstanceState );
-//			setContentView( R.layout.items_view );
-//			
-//			LinearLayout ll = (LinearLayout)findViewById(R.id.llid);
-//			JSONFile = JSON.getInstance(getApplicationContext());
-//
-//			try {
-//				String value = getIntent().getExtras().getString("Room");
-//				ArrayList<String> items= JSONFile.getItems(value);
-//				setItemViews(ll, items);
-//			} catch (JSONException e) {
-//				e.printStackTrace();
-//			}
-//		}
-		
-		/**
-		 * Mapping objects from a list of items.		
-		 * @param ll
-		 * @param itemList
-		 */
-//		public void setItemViews(LinearLayout ll, ArrayList<String> itemList){
-//			for (int i=0; i <= itemList.size()-1; i++){			
-//				if (itemList.get(i).equals("DVD")){
-//					DVD dvd = new DVD();
-//					dvd.setView(getApplicationContext(), ll);
-//				}
-//				if (itemList.get(i).equals("Lights")){
-//					Light light = new Light();
-//					light.setView(getApplicationContext(), ll);
-//				}
-//					
-//			}
-//		}
-		
-
-//		/**
-//		 * Method which executes the next activity
-//		 */
-		
-		public ItemsActivity(String button, String houseName)
+		public ItemsFragment(String button, String houseName)
 		{
 			_button = button;
 			_house = houseName;
 		}
-			    
-	    /**
-		 * Mapping objects from a list of items.		
-		 * @param ll
-		 * @param itemList
-		 *//*
-		public void setItemViews( LinearLayout ll, ArrayList<String> itemList )
-		{
-			for ( int i=0; i < itemList.size(); i++ )
-			{			
-				if (itemList.get(i).equals("DVD"))
-				{
-					DVD dvd = new DVD();
-					Log.e("Activity: ",getActivity().getApplicationContext().toString());	
-					dvd.setView(getActivity().getApplicationContext(), ll);
-				}
-				if (itemList.get(i).equals("Lights"))
-				{
-					Light light = new Light(_button);
-					light.setView(getActivity().getApplicationContext(), ll);
-				}
-					
-			}
-		}*/
 	    
 	    @Override
 	    public void onCreate( Bundle savedInstanceState )
@@ -121,7 +54,8 @@ import android.widget.TextView;
 	        super.onActivityCreated( savedInstanceState );
 	    }
 	 
-	    private HashMap<String, List<String>> createHashMapItems(List<String> items){
+	    private HashMap<String, List<String>> createHashMapItems(List<String> items)
+	    {
 	    	for (int i=0; i<=items.size()-1; i++)
 	    	{
 	    		if (items.get(i).equals("DOOR"))
@@ -163,8 +97,7 @@ import android.widget.TextView;
     				other.add("boolean");
 	    			_listDataChild.put(items.get(i),other);
     			}
-	    	}
-	    	
+	    	}	    	
 	    	return _listDataChild;
 	    }
 	    

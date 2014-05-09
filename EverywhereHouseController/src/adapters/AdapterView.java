@@ -2,7 +2,7 @@ package adapters;
 
 import java.util.HashMap;
 
-import ehc.net.ItemsActivity;
+import framework.ItemsFragment;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -157,7 +157,7 @@ public class AdapterView extends FragmentPagerAdapter
     @Override
     public Fragment getItem( int _position ) 
     {
-        return new ItemsActivity(_tableButtons.get(String.valueOf(_position)),_houseName);
+        return new ItemsFragment(_tableButtons.get(String.valueOf(_position)),_houseName);
     }
     
     public int getPosition()

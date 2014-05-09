@@ -181,25 +181,6 @@ public class MainMenu extends SherlockActivity
 			e.printStackTrace();
 		}
 	}
-
-	/**
-	 * Method that executes Profile's activity
-	 */
-
-	private void createdProfileIntent() 
-	{
-		try 
-		{
-			Class<?> _clazz = Class.forName("ehc.net.Profile");
-			Intent _intent = new Intent(this, _clazz);
-			_intent.putExtra("House",getIntent().getExtras().getString("House"));
-			startActivity(_intent);
-		} 
-		catch (ClassNotFoundException e) 
-		{
-			e.printStackTrace();
-		}
-	}
 	
 	/**
 	 * Method that executes Profile's activity
@@ -241,8 +222,6 @@ public class MainMenu extends SherlockActivity
     private class getWeather extends AsyncTask<String, String, String>
     {    	
     	private ProgressDialog _pDialog;
-    	private String _message = "";
-    	private int _internalError = 0;
     	private JSONObject _data;
     	/**
     	 * Message "Loading"
@@ -279,7 +258,7 @@ public class MainMenu extends SherlockActivity
 				Log.d("PARAMETROS",_parametros.toString());
 				//Variable 'Data' saves the query response
 				_data = _post.getServerData(_parametros,"http://5.231.69.226/EHControlConnect/index.php");//"http://192.168.2.147/EHControlConnect/index.php");
-				log(_data.toString());
+				//log(_data.toString());
 					 
 			 }
 			catch (Exception _e) 
@@ -294,6 +273,7 @@ public class MainMenu extends SherlockActivity
 		{
             // dismiss the dialog
             _pDialog.dismiss();
+            /*
             if(_internalError!=0)Toast.makeText(getBaseContext(), _message, Toast.LENGTH_SHORT).show();
             
             try 
@@ -358,7 +338,7 @@ public class MainMenu extends SherlockActivity
 					Animation anim = AnimationUtils.loadAnimation(MainMenu.this, R.anim.rotate_indefinitely);
 					//Start animating the image
 			         _weather3.startAnimation(anim);			         
-				}
+				}*/
 		}
     }
 	/**

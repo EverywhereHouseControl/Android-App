@@ -1,15 +1,14 @@
 package ehc.net;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 
 import loadUrlImage.ImageLoader;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import parserJSON.JSON;
 
 import serverConnection.Post;
 
@@ -197,10 +196,7 @@ public class Profile extends SherlockActivity implements ImageChooserListener
 					            public void onClick(DialogInterface dialog, int which) 
 					            { 
 					            	_image.setImageURI(Uri.parse(new File(_selectedImage.getFileThumbnail()).toString()));
-//									_post = new Post();	
 					            	isImageMode = true;
-//									profileConnection _connection = new profileConnection(_selectedImage.getFilePathOriginal());
-//							    	_connection.execute();
 					            }
 					         })
 					        .setIcon(android.R.drawable.ic_dialog_alert)
@@ -218,16 +214,9 @@ public class Profile extends SherlockActivity implements ImageChooserListener
 			@Override
 			public void onClick(View v) 
 			{
-//				runOnUiThread(new Runnable() 
-//				{
-//					public void run() 
-//					{
-						_post = new Post();		
-						profileConnection _connection = new profileConnection();
-				    	_connection.execute();
-//					}
-//				});
-				
+				_post = new Post();		
+				profileConnection _connection = new profileConnection();
+		    	_connection.execute();				
 			}
 		});
 		
@@ -242,22 +231,13 @@ public class Profile extends SherlockActivity implements ImageChooserListener
 			}
 		});
 		
-		//_file = JSON.getInstance(Profile.this).loadUserInformation(Profile.this);
-		parser();
-		//_file = new JSON().loadUserInformation(this.getApplicationContext());
-//		
-//		try 
-//		{
-//			loadProfileInfo();
-//		} 
-//		catch (JSONException e1) 
-//		{
-//			// TODO Auto-generated catch block
-//			e1.printStackTrace();
-//		}
-		
+		//It's load the profile's information.
+		_file = JSON.loadUserInformation(Profile.this);
+		//It's load the profile's information in the view.
 		try 
 		{
+			loadProfileInfo();
+			
 			JSONObject _obj = new JSONObject(_file);
 			_url = _obj.getString("URL");
 			if(_url!=null)
@@ -266,10 +246,10 @@ public class Profile extends SherlockActivity implements ImageChooserListener
 			}
 			else _image.setImageResource(R.drawable.base_picture);
 		} 
-		catch (JSONException e) 
+		catch (JSONException e1) 
 		{
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			e1.printStackTrace();
 		}
 		
 		//-----------------------------------------
@@ -317,32 +297,6 @@ public class Profile extends SherlockActivity implements ImageChooserListener
 	{
 		super.onConfigurationChanged(newConfig);
 		_actbardrawertoggle.onConfigurationChanged(newConfig);
-	}
-	
-	/**
-	 * 
-	 */
-	private void parser()
-	{
-		try 
-		{
-			InputStream _is = openFileInput("profileInformation.json");
-			int _size = _is.available();
-	        byte[] buffer = new byte[_size];
-	        _is.read(buffer);
-	        _is.close();
-	        this._file =null;
-	        this._file = new String(buffer, "UTF-8");
-	        loadProfileInfo();
-		} 
-    	catch (IOException ex) 
-    	{
-    		ex.printStackTrace();
-    	}
-		catch (Exception ex) 
-    	{
-    		ex.printStackTrace();
-    	}
 	}
 
 	/**
@@ -433,123 +387,116 @@ public class Profile extends SherlockActivity implements ImageChooserListener
 				_imagePath = _url;
 			}
 
-
-//			runOnUiThread(new Runnable() 
-//			{
-//				public void run() 
-//				{	
-					if(_correct || !isImageMode)
+			if(_correct || !isImageMode)
+			{
+				JSONObject obj = null;
+				try 
+				{
+					obj = new JSONObject(_file);
+					log(_imagePath);
+					File file = new File(_imagePath);
+					log(file.getName());
+					
+					_parametros = new ArrayList<String>();
+					_parametros.add("command");
+					_parametros.add("modifyuser2");
+					_parametros.add("username");
+					_parametros.add(obj.getString("USERNAME"));
+					_parametros.add("password");
+					_parametros.add(obj.getString("PASSWORD"));
+					_parametros.add("n_username");
+					_parametros.add(_user.getText().toString());
+					_parametros.add("n_password");
+					if(_password.getText().toString().equals("*/*^^*/*^^*/*^^*/*") || _post.md5(_password.getText().toString()).equals(obj.getString("PASSWORD")))
 					{
-						JSONObject obj = null;
-						try 
-						{
-							obj = new JSONObject(_file);
-							log(_imagePath);
-							File file = new File(_imagePath);
-							log(file.getName());
-							
-							_parametros = new ArrayList<String>();
-							_parametros.add("command");
-							_parametros.add("modifyuser2");
-							_parametros.add("username");
-							_parametros.add(obj.getString("USERNAME"));
-							_parametros.add("password");
-							_parametros.add(obj.getString("PASSWORD"));
-							_parametros.add("n_username");
-							_parametros.add(_user.getText().toString());
-							_parametros.add("n_password");
-							if(_password.getText().toString().equals("*/*^^*/*^^*/*^^*/*") || _post.md5(_password.getText().toString()).equals(obj.getString("PASSWORD")))
-							{
-								_parametros.add(obj.getString("PASSWORD"));
-								_internalError=-7;
-							}
-							else _parametros.add(_post.md5(_password.getText().toString()));
-							
-							_parametros.add("n_email");
-							_parametros.add(_email.getText().toString());
-							_parametros.add("n_hint");
-							_parametros.add(" ");
-							_parametros.add("image");
-							_parametros.add("images/"+file.getName());
-							
-							if(_user.getText().toString().isEmpty())_internalError=-1;
-							else if(_password.getText().toString().isEmpty())_internalError=-2;
-							else if(_password.getText().toString().length()<2)_internalError=-3;
-							else if(_email.getText().toString().isEmpty())_internalError=-4;
-							else if(!_email.getText().toString().contains("@"))_internalError=-5;
-							else if(_user.getText().toString().equals(obj.getString("USERNAME"))&&
-									_email.getText().toString().equals(obj.getString("EMAIL")) &&
-									_internalError==-7)_internalError=-6;
-							
-						} 
-						catch (Exception e) 
-						{
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-						
-						if(errorControl(_parametros,_internalError))
-						{
-							Log.d("PARAMETRES",_parametros.toString());
-							JSONObject _data = _post.getServerData(_parametros,"http://5.231.69.226/EHControlConnect/index.php");//"http://192.168.2.147/EHControlConnect/index.php");
-							try 
-							{
-								JSONObject _json_data = _data.getJSONObject("error");
-								switch(_json_data.getInt("ERROR"))
-								{
-									case 0:
-									{
-										_message = _json_data.getString("ENGLISH");	
-										_correct = true;
-								    	break;
-									}
-									default:
-									{
-										_correct = false;
-										_message = _json_data.getString("ENGLISH");
-										break;
-									}
-								}
-							} 
-							catch (JSONException e) 
-							{
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}			
-						}
-									
-						if(_correct)
-						{
-							try 
-							{
-								ArrayList<String> _parametros = new ArrayList<String>();
-								_parametros.add("command");
-								_parametros.add("login2");
-								_parametros.add("username");
-								_parametros.add(obj.getString("USERNAME"));
-								_parametros.add("password");
-								_parametros.add(obj.getString("PASSWORD"));
-								
-								//Variable 'Data' saves the query response
-								JSONObject _data = _post.getServerData(_parametros,"http://5.231.69.226/EHControlConnect/index.php");//"http://192.168.2.147/EHControlConnect/index.php");
-								JSONObject _json_data = _data.getJSONObject("result");
-								
-								//Save the profile's information.
-								saveProfileInfo(_json_data);
-//								//Reload the view
-//								onCreate(null);
-								isImageMode = false;
-							} 
-							catch (Exception e) 
-							{
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-						}
-						
-//						Toast.makeText(Profile.this, _message, Toast.LENGTH_SHORT).show();	
+						_parametros.add(obj.getString("PASSWORD"));
+						_internalError=-7;
 					}
-//			});			
+					else _parametros.add(_post.md5(_password.getText().toString()));
+					
+					_parametros.add("n_email");
+					_parametros.add(_email.getText().toString());
+					_parametros.add("n_hint");
+					_parametros.add(" ");
+					_parametros.add("image");
+					_parametros.add("images/"+file.getName());
+					
+					if(_user.getText().toString().isEmpty())_internalError=-1;
+					else if(_password.getText().toString().isEmpty())_internalError=-2;
+					else if(_password.getText().toString().length()<2)_internalError=-3;
+					else if(_email.getText().toString().isEmpty())_internalError=-4;
+					else if(!_email.getText().toString().contains("@"))_internalError=-5;
+					else if(_user.getText().toString().equals(obj.getString("USERNAME"))&&
+							_email.getText().toString().equals(obj.getString("EMAIL")) &&
+							_internalError==-7)_internalError=-6;
+					
+				} 
+				catch (Exception e) 
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				if(errorControl(_parametros,_internalError))
+				{
+					Log.d("PARAMETRES",_parametros.toString());
+					JSONObject _data = _post.getServerData(_parametros,"http://5.231.69.226/EHControlConnect/index.php");//"http://192.168.2.147/EHControlConnect/index.php");
+					try 
+					{
+						JSONObject _json_data = _data.getJSONObject("error");
+						switch(_json_data.getInt("ERROR"))
+						{
+							case 0:
+							{
+								_message = _json_data.getString("ENGLISH");	
+								_correct = true;
+						    	break;
+							}
+							default:
+							{
+								_correct = false;
+								_message = _json_data.getString("ENGLISH");
+								break;
+							}
+						}
+					} 
+					catch (JSONException e) 
+					{
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}			
+				}
+							
+				if(_correct)
+				{
+					try 
+					{
+						ArrayList<String> _parametros = new ArrayList<String>();
+						_parametros.add("command");
+						_parametros.add("login2");
+						_parametros.add("username");
+						_parametros.add(obj.getString("USERNAME"));
+						_parametros.add("password");
+						_parametros.add(obj.getString("PASSWORD"));
+						
+						//Variable 'Data' saves the query response
+						JSONObject _data = _post.getServerData(_parametros,"http://5.231.69.226/EHControlConnect/index.php");//"http://192.168.2.147/EHControlConnect/index.php");
+						JSONObject _json_data = _data.getJSONObject("result");
+						
+						//Save the profile's information.
+						JSON.saveProfileInfo(_json_data,Profile.this);
+
+						isImageMode = false;
+					} 
+					catch (Exception e) 
+					{
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				
+//						Toast.makeText(Profile.this, _message, Toast.LENGTH_SHORT).show();	
+			}		
 			return null;
 		}
 		
@@ -559,8 +506,7 @@ public class Profile extends SherlockActivity implements ImageChooserListener
 			super.onPostExecute(file_url);
             _pDialog.dismiss();
             Toast.makeText(Profile.this, _message, Toast.LENGTH_SHORT).show();
-		}
-    	
+		}    	
     }	
 	
 	/**
@@ -607,21 +553,6 @@ public class Profile extends SherlockActivity implements ImageChooserListener
 			}
 		}	
 		return false;
-	}
-	
-	private void saveProfileInfo(JSONObject JSON)
-	{
-		try 
-		{
-			FileOutputStream _outputStream = openFileOutput("profileInformation.json", MODE_PRIVATE);
-			_outputStream.write(JSON.toString().getBytes());
-			_outputStream.close();	
-		} 
-		catch (IOException e) 
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 	
 	/**

@@ -1,7 +1,5 @@
 package ehc.net;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -10,8 +8,6 @@ import org.json.JSONObject;
 
 import parserJSON.JSON;
 import serverConnection.Post;
-import serverConnection.SimpleActivityTask;
-
 import ehc.net.R;
 import framework.SpinnerEventContainer;
 import android.app.Activity;
@@ -19,7 +15,6 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
-import android.opengl.Visibility;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
@@ -38,7 +33,8 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemSelectedListener;
 
-public class CreateNewEventActivity extends Activity {
+public class CreateNewEventActivity extends Activity 
+{
 
 	private SpinnerEventContainer servicesList;
 	private boolean serviceSelected = false;
@@ -260,7 +256,23 @@ public class CreateNewEventActivity extends Activity {
 //									.toString());
 					Log.d("NEW EVENT",selectedService.toString());
 					Log.d("SEND EVENT","CRASH");
-					parser();
+					
+					//It's load the profile's information.
+					_file = JSON.loadUserInformation(CreateNewEventActivity.this);
+					String _file2 = JSON.loadUserEnvironment(CreateNewEventActivity.this);
+					
+					try 
+					{
+						JSONObject _obj = new JSONObject(_file2);
+						JSONObject infoCasa = _obj.getJSONArray("houses").getJSONObject(0);
+						_house = infoCasa.getString("name");
+					} 
+					catch (JSONException e) 
+					{
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}				
+				
 					_post = new Post();
 					sendEventConnection _connection = new sendEventConnection();
 			    	_connection.execute();	
@@ -362,33 +374,6 @@ public class CreateNewEventActivity extends Activity {
 		}
 
 		return actions;
-	}
-	
-	
-	private void parser() {
-		String _file2;
-		try {
-			InputStream _is = openFileInput("profileInformation.json");
-			int _size = _is.available();
-			byte[] buffer = new byte[_size];
-			_is.read(buffer);
-			_is.close();
-			this._file = new String(buffer, "UTF-8");
-
-			_is = openFileInput("configuration.json");
-			_size = _is.available();
-			buffer = new byte[_size];
-			_is.read(buffer);
-			_is.close();
-			_file2 = new String(buffer, "UTF-8");
-			JSONObject _obj = new JSONObject(_file2);
-			JSONObject infoCasa = _obj.getJSONArray("houses").getJSONObject(0);
-			_house = infoCasa.getString("name");
-		} catch (IOException _ex) {
-			_ex.printStackTrace();
-		} catch (Exception _ex) {
-			_ex.printStackTrace();
-		}
 	}
 	
 	// Background process

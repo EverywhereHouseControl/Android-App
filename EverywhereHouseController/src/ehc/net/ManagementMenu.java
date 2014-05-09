@@ -15,9 +15,7 @@ import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 
@@ -93,7 +91,6 @@ public class ManagementMenu extends SherlockActivity
 		
 		if(_roomsList.size()!=0)
 		{
-		
 			ListView _ListView = (ListView) findViewById(R.id.roomsListView);
 			
 			final ListAdapter _ListAdapter = new 
@@ -159,7 +156,7 @@ public class ManagementMenu extends SherlockActivity
 	{
 		try 
 		{			
-			Class<?> _class = Class.forName("ehc.net.ContainerFragments");
+			Class<?> _class = Class.forName("ehc.net.ItemsFragmentsContainer");
 			Intent _intent = new Intent( getApplicationContext(),_class );
 			
 			//Current house

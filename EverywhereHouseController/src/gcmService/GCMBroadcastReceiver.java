@@ -1,4 +1,4 @@
-package ehc.net;
+package gcmService;
 
 import android.app.Activity;
 import android.content.ComponentName;

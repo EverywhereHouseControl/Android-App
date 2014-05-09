@@ -1,4 +1,4 @@
-package ehc.net;
+package gcmService;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,6 +10,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.google.android.gms.common.*;
+
+import ehc.net.CreateUser;
 
 
 import android.app.Activity;

@@ -1,9 +1,6 @@
 package ehc.net;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,7 +29,6 @@ import android.os.StrictMode.ThreadPolicy;
 import android.util.Log;
 import android.util.Pair;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
@@ -102,7 +98,9 @@ public class HousesMenu extends Activity implements ImageChooserListener
 		_activity = HousesMenu.this;
 		_currentImage = new ImageView(_activity);
 		_textViewFile = new TextView(_activity);
-		parser();
+		
+		//It's load the profile's information.
+		_file = JSON.loadUserInformation(HousesMenu.this);
 		
 		_check = (CheckBox)findViewById(R.id.HouseCheckBox);
 		_check.setVisibility(View.GONE);
@@ -151,31 +149,6 @@ public class HousesMenu extends Activity implements ImageChooserListener
 		}
 	}
     
-    /**
-	 * 
-	 */
-	private void parser()
-	{
-		try 
-		{
-			InputStream _is = openFileInput("profileInformation.json");
-			int _size = _is.available();
-	        byte[] buffer = new byte[_size];
-	        _is.read(buffer);
-	        _is.close();
-	        this._file =null;
-	        this._file = new String(buffer, "UTF-8");
-		} 
-    	catch (IOException ex) 
-    	{
-    		ex.printStackTrace();
-    	}
-		catch (Exception ex) 
-    	{
-    		ex.printStackTrace();
-    	}
-	}
-	
     /**
      * 
      */
@@ -237,10 +210,6 @@ public class HousesMenu extends Activity implements ImageChooserListener
 					_selectMode = true;
 					_chosenImage = image;
 					
-//					_post = new Post();						
-//					uploadImageConnection _connection = new uploadImageConnection(_textViewFile.getText().toString());
-//			    	_connection.execute();
-			    	
 					try 
 					{
 						finalize();
@@ -283,40 +252,6 @@ public class HousesMenu extends Activity implements ImageChooserListener
 				"myfolder", true);
 		imageChooserManager.setImageChooserListener(this);
 		imageChooserManager.reinitialize(filePath);
-	}
-	
-	/**
-	 * Saves from the server query the profile information in the file 'profile.json'.
-	 */
-	private void saveProfileInfo(JSONObject JSON)
-	{
-		try 
-		{
-			FileOutputStream _outputStream = openFileOutput("profileInformation.json", MODE_PRIVATE);
-			_outputStream.write(JSON.toString().getBytes());
-			_outputStream.close();	
-		} 
-		catch (IOException e) 
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-    /**
-	 * Saves from the server query the house configuration in the file 'configuration.json'.
-	 */
-	private void saveConfig(Object JSON)
-	{	
-		try 
-		{
-			FileOutputStream _outputStream = openFileOutput("configuration.json", MODE_PRIVATE);
-			_outputStream.write(JSON.toString().getBytes());
-			_outputStream.close();
-		} catch (IOException e) 
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}		
 	}
 	
 	// Background process
@@ -468,10 +403,10 @@ public class HousesMenu extends Activity implements ImageChooserListener
 								JSONObject _json_data = _data.getJSONObject("result");
 								
 								//Save the profile's information.
-								saveProfileInfo(_json_data);
+								JSON.saveProfileInfo(_json_data,HousesMenu.this);
 								//Save the house's configuration
-								saveConfig(_json_data.get("JSON"));
-								
+								JSON.saveConfig(_json_data.get("JSON"),HousesMenu.this);
+								//Reload the view.
 								onCreate(null);
 							} 
 							catch (Exception e) 

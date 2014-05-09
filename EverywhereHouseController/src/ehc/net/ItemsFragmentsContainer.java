@@ -9,6 +9,7 @@ import com.actionbarsherlock.app.ActionBar.Tab;
 import com.actionbarsherlock.view.Menu;
 
 import ehc.net.R;
+import framework.ItemsFragment;
 import adapters.SlidingMenuAdapter;
 import android.content.Context;
 import android.content.res.Configuration;
@@ -20,13 +21,10 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.WindowManager;
-import android.widget.ImageButton;
 import android.widget.ListView;
 
-public class ContainerFragments extends SherlockFragmentActivity//FragmentActivity
+public class ItemsFragmentsContainer extends SherlockFragmentActivity
 {
 	//----------Variables------------
 //	private AdapterView _mAdapter;
@@ -206,7 +204,7 @@ public class ContainerFragments extends SherlockFragmentActivity//FragmentActivi
 		@Override
 		public Fragment getItem(int position)
 		{
-			 return new ItemsActivity(_tableButtons.get(String.valueOf(position)),_houseName);			
+			 return new ItemsFragment(_tableButtons.get(String.valueOf(position)),_houseName);			
 		}
 	
 		public void onPageScrolled(int position, float positionOffset,

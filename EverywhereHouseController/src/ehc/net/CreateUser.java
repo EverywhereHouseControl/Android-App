@@ -242,9 +242,9 @@ public class CreateUser extends Activity
 					case 0:
 					{
 						_message = _json_data.getString("ENGLISH");
-						//GCM register
-						TareaRegistroGCM tarea = new TareaRegistroGCM();
-	                    tarea.execute(_user.getText().toString());
+						//GCM registration.
+						TaskRegisterGCM _task = new TaskRegisterGCM();
+						_task.execute(_user.getText().toString());
 						
 						break;
 					}
@@ -274,8 +274,12 @@ public class CreateUser extends Activity
 		}
 	}
 	
-	
-	private class TareaRegistroGCM extends AsyncTask<String,Integer,String>
+	/**
+	 * GCM registration for new user.
+	 * @author Miguel
+	 *
+	 */
+	private class TaskRegisterGCM extends AsyncTask<String,Integer,String>
 	{
 		//Project Number: 701857172243 
 		String SENDER_ID = "701857172243";
@@ -284,7 +288,6 @@ public class CreateUser extends Activity
 	        protected String doInBackground(String... params)
 	    {
 	            String msg = "";
-	 
 	            try
 	            {
 	                if (_gcm == null)
@@ -292,7 +295,7 @@ public class CreateUser extends Activity
 	                    _gcm = GoogleCloudMessaging.getInstance(CreateUser.this);
 	                }
 	 
-	                //Nos registramos en los servidores de GCM
+	                //Registration into servers GCM
 	                String _regid = _gcm.register(SENDER_ID);
 	 
 	                Log.d("GCM", "Registrado en GCM: registration_id=" + _regid);
@@ -308,7 +311,6 @@ public class CreateUser extends Activity
 	            			// TODO Auto-generated catch block
 	            			e.printStackTrace();
 	            		}
-	                
 	            }
 	            catch (IOException ex)
 	            {
