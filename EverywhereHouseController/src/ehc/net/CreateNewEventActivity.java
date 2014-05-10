@@ -61,6 +61,7 @@ public class CreateNewEventActivity extends Activity
 	private String _file;
 	private ArrayList<String> selectedService = new ArrayList<String>();
 	private String _data;
+	private ArrayList<String> actions = null; 
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -113,7 +114,7 @@ public class CreateNewEventActivity extends Activity
 							.toString().length();
 					String service = parent.getItemAtPosition(position)
 							.toString().substring(service2 + 2, service1);
-					final ArrayList<String> actions = setActionList(service);
+					actions = setActionList(service);
 
 					ArrayAdapter<String> spinnerActionAdapter = new ArrayAdapter<String>(
 							getApplicationContext(),
@@ -242,7 +243,11 @@ public class CreateNewEventActivity extends Activity
 				else if (time.equals((String) "No time selected"))
 					Toast.makeText(getApplicationContext(), "Select a time",
 							Toast.LENGTH_LONG).show();
+				else if (actions.get(0).toString().equals("No actions for this service"))
+					Toast.makeText(getApplicationContext(), "No valid service to save an event",
+							Toast.LENGTH_LONG).show();
 				else {
+					String asdiasd = actions.get(0).toString();
 					selectedService = parseService(itemList
 							.getSelectedItem().toString());
 //					new SimpleActivityTask(getApplicationContext()).sendEvent(
@@ -286,7 +291,6 @@ public class CreateNewEventActivity extends Activity
 	private ArrayList<String> parseService(String serv) {
 		ArrayList<String> str = new ArrayList<String>();
 		Log.d("SERVICE",serv);
-		int service0 = serv.indexOf(' ');
 		int service1 = serv.indexOf(':');
 		Log.d("SERVICE",Integer.toString(service1));
 		int service2 = serv.indexOf('-');
@@ -307,8 +311,8 @@ public class CreateNewEventActivity extends Activity
 		switch (id) {
 		case TIME_DIALOG:
 			return new TimePickerDialog(this, timerPickerListener,
-					hourSelected, minuteSelected, true);
-		case DATE_DIALOG:
+					hourSelected, minuteSelected, false);
+		case DATE_DIALOG:			
 			return new DatePickerDialog(this, datePickerListener, yearSelected,
 					monthSelected, daySelected);
 		}
@@ -321,6 +325,7 @@ public class CreateNewEventActivity extends Activity
 		@Override
 		public void onDateSet(DatePicker view, int year, int monthOfYear,
 				int dayOfMonth) {
+			
 			monthOfYear++;
 			dateSelected.setText("Selected date: " + dayOfMonth + "-"
 					+ monthOfYear + "-" + year);
@@ -335,7 +340,16 @@ public class CreateNewEventActivity extends Activity
 
 		@Override
 		public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-			timeSelected.setText("Selected time: " + hourOfDay + ":" + minute);
+			String hourOfDayStr = null; String minuteStr = null; 
+			if (hourOfDay < 10)
+				hourOfDayStr = "0" + hourOfDay;
+			else 
+				hourOfDayStr = Integer.toString(hourOfDay);
+			if (minute < 10)
+				minuteStr = "0" + minute;
+			else
+				minuteStr = Integer.toString(minute);
+			timeSelected.setText("Selected time: " + hourOfDayStr + ":" + minuteStr);
 			hourSelected = hourOfDay;
 			minuteSelected = minute;
 		}
@@ -344,10 +358,10 @@ public class CreateNewEventActivity extends Activity
 
 	private ArrayList<String> setActionList(String service) {
 		ArrayList<String> actions = new ArrayList<String>();
-		if (service.equals("LIGHTS")) {
+		if (service.equals("LIGHTS") || service.equals("PLUG")) {
 			actions.add("On");
 			actions.add("Off");
-		} else if (service.equals("TV")) {
+		} else if (service.equals("TV") || service.equals("DVD")) {
 			actions.add("Turn off");
 			actions.add("Turn on");
 			actions.add("Volume +");
@@ -371,7 +385,16 @@ public class CreateNewEventActivity extends Activity
 			actions.add("Up");
 			actions.add("Medium");
 			actions.add("Down");
-		}
+		} else if (service.equals("AIRCONDITIONING")){
+			actions.add("Up");
+			actions.add("Down");
+			actions.add("On");
+			actions.add("Off");
+		} else if (service.equals("DOOR")){
+			actions.add("Open");
+			actions.add("Close");
+		} else
+			actions.add("No actions for this service");
 
 		return actions;
 	}
@@ -426,7 +449,8 @@ public class CreateNewEventActivity extends Activity
 				_parametros.add("programname");
 				_parametros.add(servicename);
 				Log.d("PARAMETROS",_parametros.toString());
-			String prrr = _parametros.toString();
+				
+				String prrr = _parametros.toString();
 				JSONObject _data = _post.getServerData(_parametros,"http://5.231.69.226/EHControlConnect/index.php");//"http://192.168.2.147/EHControlConnect/index.php");//"");
 				Log.d("DATA",_data.toString());
 				
