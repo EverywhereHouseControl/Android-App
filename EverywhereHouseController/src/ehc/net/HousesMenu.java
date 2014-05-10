@@ -17,9 +17,7 @@ import ehc.net.R;
 
 import adapters.HouseListAdapter;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -434,36 +432,10 @@ public class HousesMenu extends Activity implements ImageChooserListener
     public void onBackPressed() 
     {
     	// TODO Auto-generated method stub
-    	//super.onBackPressed();
-    	
-    	new AlertDialog.Builder(this)
-        .setTitle("Log out")
-        .setMessage("Are you sure you want to log out?")
-        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() 
-        {
-            public void onClick(DialogInterface dialog, int which) 
-            { 
-            	try 
-        		{
-        			Class<?> _clazz = Class.forName("ehc.net.LogIn");
-        			Intent _intent = new Intent(HousesMenu.this, _clazz);
-        			startActivity(_intent);
-        		} 
-            	catch (ClassNotFoundException e) 
-        		{
-        			e.printStackTrace();
-        		}
-            }
-         })
-        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() 
-        {
-            public void onClick(DialogInterface dialog, int which) 
-            { 
-                // do nothing
-            }
-         })
-        .setIcon(android.R.drawable.ic_dialog_alert)
-         .show();
+    	Intent _intent = new Intent(Intent.ACTION_MAIN);
+    	_intent.addCategory(Intent.CATEGORY_HOME);
+    	_intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    	this.startActivity(_intent);
     }
     
 	/**

@@ -23,6 +23,8 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -53,7 +55,7 @@ public class LogIn extends Activity
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
 	{
-		super.onCreate(savedInstanceState);
+		super.onCreate(savedInstanceState);	
 		setContentView(R.layout.log_in_view);
 		
 		/**
@@ -81,11 +83,29 @@ public class LogIn extends Activity
 				ConnectivityManager _connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 			    NetworkInfo _networkInfo = _connMgr.getActiveNetworkInfo();
 			      
-			    if (_networkInfo != null && _networkInfo.isConnected()) 			        
+			    if(_user.getText().toString().isEmpty())
+			    {
+			    	Toast.makeText(getBaseContext(), "User box is empty.", Toast.LENGTH_SHORT).show();
+			    }
+			    else if(_password.getText().toString().isEmpty())
+			    {
+			    	Toast.makeText(getBaseContext(), "Password box is empty.", Toast.LENGTH_SHORT).show();
+			    }
+			    else if (_networkInfo != null && _networkInfo.isConnected()) 			        
 			    {			            			        			            
 			    	_isLogIn = true;
 			    	_post = new Post();
 					ArrayList<String> _parametros = new ArrayList<String>();
+					
+					
+					//////////////////////////////////////////////
+					SharedPreferences _pref = getSharedPreferences("LOG",Context.MODE_PRIVATE);
+			        Editor _editor=_pref.edit();
+			        _editor.putString("USER", _user.getText().toString());
+			        _editor.putString("PASSWORD", _post.md5(_password.getText().toString()));
+			        _editor.commit();
+			        //////////////////////////////////////////////
+					
 					
 					_parametros.add("command");
 					_parametros.add("login2");
@@ -309,6 +329,13 @@ public class LogIn extends Activity
 						}
 						else
 						{ 	
+							//////////////////////////////////////////////
+							SharedPreferences _pref = getSharedPreferences("LOG",Context.MODE_PRIVATE);
+					        Editor _editor=_pref.edit();
+					        _editor.putString("LOGIN", "TRUE");
+					        _editor.commit();
+					        //////////////////////////////////////////////
+					        
 							//Save the profile's information.
 							JSON.saveProfileInfo(_json_data,LogIn.this);
 							//Save the house's configuration

@@ -65,7 +65,7 @@
      	<service android:name="gcmService.GCMIntentService" />
         
         <activity
-            android:name="ehc.net.LogIn"
+            android:name="ehc.net.Main"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Sherlock.NoActionBar" >
@@ -73,6 +73,17 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="ehc.net.LogIn"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Sherlock.NoActionBar" >
+            <intent-filter>
+                <action android:name="ehc.net.LogIn" />
+
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity

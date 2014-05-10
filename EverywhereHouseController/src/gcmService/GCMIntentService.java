@@ -55,20 +55,17 @@ public class GCMIntentService extends IntentService
 		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
 		.setSmallIcon(R.drawable.ic_launcher)
 		.setContentTitle("EHC notification.")
-		.setLargeIcon((((BitmapDrawable)getResources()
-	            .getDrawable(R.drawable.ic_launcher)).getBitmap()))
+		//.setLargeIcon((((BitmapDrawable)getResources().getDrawable(R.drawable.ic_launcher)).getBitmap()))
 		.setContentText(msg)
-		.setContentInfo("4")
 		.setTicker(msg);
 		
 		Intent notIntent = new Intent(this, LogIn.class);
-		notIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 		PendingIntent contIntent = PendingIntent.getActivity(this, 0, notIntent, 0);
 		
 		mBuilder.setContentIntent(contIntent);
 		
 		NotificationManager mNotificationManager =
-				(NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+				(NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
 		mNotificationManager.notify(R.drawable.ic_launcher, mBuilder.build());
 	}
 	

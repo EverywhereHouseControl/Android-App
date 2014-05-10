@@ -11,8 +11,12 @@ import parserJSON.JSON;
 import ehc.net.HousesMenu;
 import ehc.net.LogIn;
 import ehc.net.R;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -185,7 +189,41 @@ public class SlidingMenuAdapter extends BaseAdapter
 					}
 					else if(_button.getText().equals("Log out"))
 					{
-						Log.d("OPTION","CHANGE");
+						//////////////////////////////////////////////
+						SharedPreferences _pref = _context.getSharedPreferences("LOG",Context.MODE_PRIVATE);
+				        Editor _editor=_pref.edit();
+				        _editor.putString("LOGIN", "FALSE");
+				        _editor.commit();
+				        //////////////////////////////////////////////
+						
+//				    	new AlertDialog.Builder(_context)
+//				        .setTitle("Log out")
+//				        .setMessage("Are you sure you want to log out?")
+//				        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() 
+//				        {
+//				            public void onClick(DialogInterface dialog, int which) 
+//				            { 
+//				            	try 
+//				        		{
+//				        			Class<?> _clazz = Class.forName("ehc.net.LogIn");
+//				        			Intent _intent = new Intent(_context, _clazz);
+//				        			_context.startActivity(_intent);
+//				        		} 
+//				            	catch (ClassNotFoundException e) 
+//				        		{
+//				        			e.printStackTrace();
+//				        		}
+//				            }
+//				         })
+//				        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() 
+//				        {
+//				            public void onClick(DialogInterface dialog, int which) 
+//				            { 
+//				                // do nothing
+//				            }
+//				         })
+//				        .setIcon(android.R.drawable.ic_dialog_alert)
+//				         .show();	        
 						Intent _intent = new Intent(_context,LogIn.class);
 						_intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		            	_context.startActivity(_intent); 
