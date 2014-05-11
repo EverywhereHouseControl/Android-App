@@ -4,6 +4,15 @@
     android:layout_height="match_parent"
     android:background="@color/GreenApp" >
 
+    <ImageButton 
+        android:id="@+id/removeEvent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:background="@color/GreenApp"
+        android:src="@drawable/ic_action_remove"
+        />
+    
     <TextView
         android:id="@+id/forgotPassword"
         android:layout_width="wrap_content"

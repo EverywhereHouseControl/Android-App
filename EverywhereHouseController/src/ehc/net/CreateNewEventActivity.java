@@ -247,7 +247,6 @@ public class CreateNewEventActivity extends Activity
 					Toast.makeText(getApplicationContext(), "No valid service to save an event",
 							Toast.LENGTH_LONG).show();
 				else {
-					String asdiasd = actions.get(0).toString();
 					selectedService = parseService(itemList
 							.getSelectedItem().toString());
 //					new SimpleActivityTask(getApplicationContext()).sendEvent(
