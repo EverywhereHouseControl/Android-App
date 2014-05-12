@@ -7,6 +7,7 @@ import org.json.JSONObject;
 
 import parserJSON.JSON;
 import serverConnection.Post;
+import serverConnection.Post.logOutConnection;
 
 import com.kbeanie.imagechooser.api.ChooserType;
 import com.kbeanie.imagechooser.api.ChosenImage;
@@ -17,7 +18,10 @@ import ehc.net.R;
 
 import adapters.HouseListAdapter;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -30,6 +34,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -48,12 +53,12 @@ public class HousesMenu extends Activity implements ImageChooserListener
 	private ArrayList<String> _housesList;
 	public static boolean _selectMode;
 	private static Activity _activity;
-	public static Post _post;
 	JSONObject _data = new JSONObject();
 	private String _file;
 	public static String _currentHouse;
 	private static ChosenImage _chosenImage = new ChosenImage();
-	public static CheckBox _check;       
+	public static CheckBox _check;
+	private Context _context;   
 	//-------------------------------------------------------------
 	
 	@Override
@@ -72,6 +77,45 @@ public class HousesMenu extends Activity implements ImageChooserListener
         //-----------------It Reads config.json-----------------
         _JSONFile = JSON.getInstance(getApplicationContext());
         _housesList = new ArrayList<String>();
+        
+        if(_housesList.isEmpty())
+        {
+        	_context = this.getBaseContext();
+        	ImageButton _button = (ImageButton) findViewById(R.id.HouseImageButton);
+        	_button.setOnClickListener(new View.OnClickListener() 
+        	{				
+				@Override
+				public void onClick(View v) 
+				{
+					// TODO Auto-generated method stub
+					new AlertDialog.Builder(HousesMenu.this)
+					.setTitle("Log out")
+					.setMessage("Do you want to log out?")
+					.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener()
+					{
+						public void onClick(DialogInterface dialog, int which)
+						{
+						// do nothing
+						}
+					})
+					.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener()
+					{
+						public void onClick(DialogInterface dialog, int which)
+						{					
+					        logOutConnection _connection = new logOutConnection(HousesMenu.this);
+					    	_connection.execute();
+					    	
+					    	Intent _intent = new Intent(_context,LogIn.class);
+							_intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			            	startActivity(_intent);
+						}
+					})
+					.setIcon(android.R.drawable.ic_dialog_alert)
+					.show();						
+				}
+			});
+        }
+        
         ArrayList<String> _accessHousesList = new ArrayList<String>();
         
         ArrayList<String> _urls = _JSONFile.getUrlsImage();
@@ -111,8 +155,7 @@ public class HousesMenu extends Activity implements ImageChooserListener
 			{
 				// TODO Auto-generated method stub
 				if(isChecked)
-				{
-					_post = new Post();						
+				{					
 					uploadImageConnection _connection = new uploadImageConnection(_chosenImage.getFilePathOriginal());
 			    	_connection.execute();
 					
@@ -293,7 +336,7 @@ public class HousesMenu extends Activity implements ImageChooserListener
 			_imageFile.getAbsolutePath();
 			_imagePath = _imageFile.getAbsolutePath();
 			
-			_data = _post.connectionPostUpload(_parametros, "http://5.231.69.226/EHControlConnect/index.php", _imagePath);			
+			_data = Post.connectionPostUpload(_parametros, "http://5.231.69.226/EHControlConnect/index.php", _imagePath);			
 			
 			runOnUiThread(new Runnable()
 			{
@@ -356,7 +399,7 @@ public class HousesMenu extends Activity implements ImageChooserListener
 							
 							Log.d("PARAMETROS",_parametros.toString());
 							
-							_data = _post.getServerData(_parametros, "http://5.231.69.226/EHControlConnect/index.php");
+							_data = Post.getServerData(_parametros, "http://5.231.69.226/EHControlConnect/index.php");
 							
 							Log.d("DATA",_data.toString());
 							
@@ -397,7 +440,7 @@ public class HousesMenu extends Activity implements ImageChooserListener
 								_parametros.add(obj.getString("PASSWORD"));
 								
 								//Variable 'Data' saves the query response
-								JSONObject _data = _post.getServerData(_parametros,"http://5.231.69.226/EHControlConnect/index.php");//"http://192.168.2.147/EHControlConnect/index.php");
+								JSONObject _data = Post.getServerData(_parametros,"http://5.231.69.226/EHControlConnect/index.php");//"http://192.168.2.147/EHControlConnect/index.php");
 								JSONObject _json_data = _data.getJSONObject("result");
 								
 								//Save the profile's information.

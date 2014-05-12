@@ -7,13 +7,9 @@ import loadUrlImage.ImageLoader;
 import org.json.JSONException;
 
 import parserJSON.JSON;
-
-import ehc.net.HousesMenu;
-import ehc.net.LogIn;
-import ehc.net.R;
-import android.app.AlertDialog;
+import serverConnection.Post;
+import serverConnection.Post.logOutConnection;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -26,9 +22,13 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+import ehc.net.HousesMenu;
+import ehc.net.LogIn;
+import ehc.net.R;
 
 public class SlidingMenuAdapter extends BaseAdapter
 {
+	// ---------Variables----------------
 	private Context _context;
 	private String _currentHouse;
 	private JSON _JSONFile;
@@ -38,6 +38,8 @@ public class SlidingMenuAdapter extends BaseAdapter
 	private ArrayList<String> _optionList = new ArrayList<String>();
 	private ImageLoader _imgLoader = HouseListAdapter._imgLoader;
 	private int _count = 5;
+	private Post _post;
+	// -------------------------------
 	
 	
 	public SlidingMenuAdapter(Context context, String currentHouse)
@@ -194,36 +196,11 @@ public class SlidingMenuAdapter extends BaseAdapter
 				        Editor _editor=_pref.edit();
 				        _editor.putString("LOGIN", "FALSE");
 				        _editor.commit();
-				        //////////////////////////////////////////////
-						
-//				    	new AlertDialog.Builder(_context)
-//				        .setTitle("Log out")
-//				        .setMessage("Are you sure you want to log out?")
-//				        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() 
-//				        {
-//				            public void onClick(DialogInterface dialog, int which) 
-//				            { 
-//				            	try 
-//				        		{
-//				        			Class<?> _clazz = Class.forName("ehc.net.LogIn");
-//				        			Intent _intent = new Intent(_context, _clazz);
-//				        			_context.startActivity(_intent);
-//				        		} 
-//				            	catch (ClassNotFoundException e) 
-//				        		{
-//				        			e.printStackTrace();
-//				        		}
-//				            }
-//				         })
-//				        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() 
-//				        {
-//				            public void onClick(DialogInterface dialog, int which) 
-//				            { 
-//				                // do nothing
-//				            }
-//				         })
-//				        .setIcon(android.R.drawable.ic_dialog_alert)
-//				         .show();	        
+				        
+				        _post = new Post(); 						
+				        logOutConnection _connection = new logOutConnection(_context);
+				    	_connection.execute();	
+				        //////////////////////////////////////////////	        
 						Intent _intent = new Intent(_context,LogIn.class);
 						_intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		            	_context.startActivity(_intent); 

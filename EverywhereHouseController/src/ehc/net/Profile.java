@@ -57,7 +57,6 @@ public class Profile extends SherlockActivity implements ImageChooserListener
 	private EditText _email;
 	private EditText _password;
 	private String _file;
-	private Post _post;
 	private String _message = "";
 	private String _currentHouse;
 	private ImageLoader _imgLoader = HouseListAdapter._imgLoader;
@@ -214,7 +213,6 @@ public class Profile extends SherlockActivity implements ImageChooserListener
 			@Override
 			public void onClick(View v) 
 			{
-				_post = new Post();		
 				profileConnection _connection = new profileConnection();
 		    	_connection.execute();				
 			}
@@ -354,7 +352,7 @@ public class Profile extends SherlockActivity implements ImageChooserListener
 				
 				Log.d("PATH",_imagePath);
 				
-				_data = _post.connectionPostUpload(_parametros, "http://5.231.69.226/EHControlConnect/index.php", _imagePath);			
+				_data = Post.connectionPostUpload(_parametros, "http://5.231.69.226/EHControlConnect/index.php", _imagePath);			
 				
 				try 
 				{
@@ -407,12 +405,12 @@ public class Profile extends SherlockActivity implements ImageChooserListener
 					_parametros.add("n_username");
 					_parametros.add(_user.getText().toString());
 					_parametros.add("n_password");
-					if(_password.getText().toString().equals("*/*^^*/*^^*/*^^*/*") || _post.md5(_password.getText().toString()).equals(obj.getString("PASSWORD")))
+					if(_password.getText().toString().equals("*/*^^*/*^^*/*^^*/*") || Post.md5(_password.getText().toString()).equals(obj.getString("PASSWORD")))
 					{
 						_parametros.add(obj.getString("PASSWORD"));
 						_internalError=-7;
 					}
-					else _parametros.add(_post.md5(_password.getText().toString()));
+					else _parametros.add(Post.md5(_password.getText().toString()));
 					
 					_parametros.add("n_email");
 					_parametros.add(_email.getText().toString());
@@ -440,7 +438,7 @@ public class Profile extends SherlockActivity implements ImageChooserListener
 				if(errorControl(_parametros,_internalError))
 				{
 					Log.d("PARAMETRES",_parametros.toString());
-					JSONObject _data = _post.getServerData(_parametros,"http://5.231.69.226/EHControlConnect/index.php");//"http://192.168.2.147/EHControlConnect/index.php");
+					JSONObject _data = Post.getServerData(_parametros,"http://5.231.69.226/EHControlConnect/index.php");//"http://192.168.2.147/EHControlConnect/index.php");
 					try 
 					{
 						JSONObject _json_data = _data.getJSONObject("error");
@@ -480,7 +478,7 @@ public class Profile extends SherlockActivity implements ImageChooserListener
 						_parametros.add(obj.getString("PASSWORD"));
 						
 						//Variable 'Data' saves the query response
-						JSONObject _data = _post.getServerData(_parametros,"http://5.231.69.226/EHControlConnect/index.php");//"http://192.168.2.147/EHControlConnect/index.php");
+						JSONObject _data = Post.getServerData(_parametros,"http://5.231.69.226/EHControlConnect/index.php");//"http://192.168.2.147/EHControlConnect/index.php");
 						JSONObject _json_data = _data.getJSONObject("result");
 						
 						//Save the profile's information.

@@ -1,15 +1,12 @@
 package ehc.net;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.google.android.gms.gcm.GoogleCloudMessaging;
-
 import ehc.net.R;
+import gcmService.GCM.TaskRegisterGCM;
 
 import serverConnection.Post;
 import android.app.Activity;
@@ -19,7 +16,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -29,10 +25,8 @@ import android.widget.Toast;
 public class CreateUser extends Activity
 {
 	//------------Variables-----------------------
-	private Post _post;
 	private Button _buttonCancel;
 	private Button _buttonConfirm;
-	private GoogleCloudMessaging _gcm;
 	private EditText _user;
 	//--------------------------------------------
 	
@@ -81,14 +75,10 @@ public class CreateUser extends Activity
 				ConnectivityManager _connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 				NetworkInfo _networkInfo = _connMgr.getActiveNetworkInfo();
 			      
-				if (_networkInfo != null && _networkInfo.isConnected()) 			        
+				if (_networkInfo == null || !_networkInfo.isConnected()) 			        
 				{			            			        			            
-					_post = new Post();    		
-				} 
-				else 			        
-				{
-					_internalError=-1;
-				}		
+					_internalError=-1;  		
+				}
 			
 				/**
 				 * ------------------------------------
@@ -108,7 +98,7 @@ public class CreateUser extends Activity
 				_parametros.add("username");
 				_parametros.add(_user.getText().toString());
 				_parametros.add("password");
-				_parametros.add(_post.md5(_password.getText().toString()));
+				_parametros.add(Post.md5(_password.getText().toString()));
 				_parametros.add("email");
 				_parametros.add(_email.getText().toString());
 				_parametros.add("hint");
@@ -148,8 +138,7 @@ public class CreateUser extends Activity
 		switch(internalError)
 		{
 			case 0:
-			{
-				_post = new Post();						
+			{					
 		    	createUserConnection _createUser = new createUserConnection(parametros);
 		    	_createUser.execute();	    	
 				break;
@@ -233,7 +222,7 @@ public class CreateUser extends Activity
 		{
 			// TODO Auto-generated method stub
 			//Variable 'Data' saves the query response
-			JSONObject _data = _post.getServerData(_parametros,"http://5.231.69.226/EHControlConnect/index.php");//"http://192.168.2.147/EHControlConnect/index.php");
+			JSONObject _data = Post.getServerData(_parametros,"http://5.231.69.226/EHControlConnect/index.php");//"http://192.168.2.147/EHControlConnect/index.php");
 			try 
 			{
 				JSONObject _json_data = _data.getJSONObject("error");
@@ -243,7 +232,7 @@ public class CreateUser extends Activity
 					{
 						_message = _json_data.getString("ENGLISH");
 						//GCM registration.
-						TaskRegisterGCM _task = new TaskRegisterGCM();
+						TaskRegisterGCM _task = new TaskRegisterGCM(CreateUser.this);
 						_task.execute(_user.getText().toString());
 						
 						break;
@@ -272,53 +261,6 @@ public class CreateUser extends Activity
             _pDialog.dismiss();
             Toast.makeText(getBaseContext(), _message, Toast.LENGTH_SHORT).show();
 		}
-	}
-	
-	/**
-	 * GCM registration for new user.
-	 * @author Miguel
-	 *
-	 */
-	private class TaskRegisterGCM extends AsyncTask<String,Integer,String>
-	{
-		//Project Number: 701857172243 
-		String SENDER_ID = "701857172243";
-		
-	    @Override
-	        protected String doInBackground(String... params)
-	    {
-	            String msg = "";
-	            try
-	            {
-	                if (_gcm == null)
-	                {
-	                    _gcm = GoogleCloudMessaging.getInstance(CreateUser.this);
-	                }
-	 
-	                //Registration into servers GCM
-	                String _regid = _gcm.register(SENDER_ID);
-	 
-	                Log.d("GCM", "Registrado en GCM: registration_id=" + _regid);
-	                
-	            		try 
-	            		{
-	            			FileOutputStream _outputStream = openFileOutput("GCMregister.json", MODE_PRIVATE);
-	            			_outputStream.write(_regid.getBytes());
-	            			_outputStream.close();	
-	            		} 
-	            		catch (IOException e) 
-	            		{
-	            			// TODO Auto-generated catch block
-	            			e.printStackTrace();
-	            		}
-	            }
-	            catch (IOException ex)
-	            {
-	                Log.d("GCM", "Error registro en GCM:" + ex.getMessage());
-	            }
-	 
-	            return msg;
-	        }
 	}
 	
 	

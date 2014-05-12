@@ -5,8 +5,6 @@ import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URI;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
 import org.apache.http.HttpEntity;
@@ -24,13 +22,16 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
-import android.content.Intent;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+import android.os.AsyncTask;
 import android.util.Log;
 
 public class Post 
 {	                        
-	private InputStream _is = null;		                         
-	private String _response = "";
+	private static InputStream _is = null;		                         
+	private static String _response = "";
 
 	public Post(){}
 	
@@ -41,7 +42,7 @@ public class Post
 	 * @return
 	 */
 //	public JSONArray getServerData(ArrayList<String> parameters, String URL)
-	public JSONObject getServerData(ArrayList<String> parameters, String URL)
+	public static JSONObject getServerData(ArrayList<String> parameters, String URL)
 	{				 					 
 		connectionPost( parameters, URL );
 		
@@ -76,7 +77,7 @@ public class Post
 	 * @param _parametros
 	 * @param _URL
 	 */
-	private void connectionPost(ArrayList<String> parametros, String URL) 
+	private static void connectionPost(ArrayList<String> parametros, String URL) 
 	{				                         
 		ArrayList<BasicNameValuePair> _nameValuePairs;	                         
 		try 
@@ -111,7 +112,7 @@ public class Post
 	/**
 	 * Parsea la respuesta a la consulta y la mete en el string "respuesta"		 
 	 */
-	private void getResponsePost() 
+	private static void getResponsePost() 
 	{				 
 		try 
 		{				 
@@ -161,7 +162,7 @@ public class Post
 	 * @param s
 	 * @return
 	 */
-	public String md5(String s) 
+	public static String md5(String s) 
 	{
 		StringBuffer sb = new StringBuffer();
         try 
@@ -180,7 +181,7 @@ public class Post
         return sb.toString();
 	}
 	
-	public JSONObject connectionPostUpload(ArrayList<String> parametros, String URL, String imagePath)
+	public static JSONObject connectionPostUpload(ArrayList<String> parametros, String URL, String imagePath)
 	{	
 		try
 		{
@@ -244,5 +245,41 @@ public class Post
 			return null;				                                                                        
 		}		
 	}
+	
+	// Background process
+    public  static class logOutConnection extends AsyncTask<String, String, String>
+    {   
+    	private Context _context;
+    	
+    	public logOutConnection(Context context)
+    	{
+    		_context = context;
+    	}
+    	
+    	@Override
+		protected String doInBackground(String... params) 
+		{
+			// TODO Auto-generated method stub			
+			//Variable 'Data' saves the query response
+    		SharedPreferences _pref = _context.getSharedPreferences("LOG",Context.MODE_PRIVATE);
+    		
+    		ArrayList<String> _parametros = new ArrayList<String>();
+    		
+			_parametros.add("command");
+			_parametros.add("logout");
+			_parametros.add("username");
+			_parametros.add(_pref.getString("USER", ""));
+			_parametros.add("regid");
+			_parametros.add(_pref.getString("ID", ""));
+			
+			 Editor _editor=_pref.edit();
+	        _editor.putString("ID", "");
+	        _editor.commit();
+			
+			getServerData(_parametros,"http://5.231.69.226/EHControlConnect/index.php");//"http://192.168.2.147/EHControlConnect/index.php");
+			
+			return null;
+		}  
+    }
 
 }

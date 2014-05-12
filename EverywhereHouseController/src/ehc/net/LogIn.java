@@ -7,10 +7,9 @@ import org.json.JSONObject;
 
 import parserJSON.JSON;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
-
 import ehc.net.R;
+import gcmService.GCM;
+import gcmService.GCM.TaskRegisterGCM;
 
 import serverConnection.Post;
 
@@ -43,13 +42,9 @@ public class LogIn extends Activity
 		private EditText _user;
 		private EditText _password;
 		private ImageView _logo;
-		private Post _post;
 		private TextView _createUser;
 		private TextView _forgotPassword;
 		private boolean _isLogIn;
-		
-		private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
-
 	//***********************************
 		
 	@Override
@@ -94,18 +89,15 @@ public class LogIn extends Activity
 			    else if (_networkInfo != null && _networkInfo.isConnected()) 			        
 			    {			            			        			            
 			    	_isLogIn = true;
-			    	_post = new Post();
 					ArrayList<String> _parametros = new ArrayList<String>();
-					
 					
 					//////////////////////////////////////////////
 					SharedPreferences _pref = getSharedPreferences("LOG",Context.MODE_PRIVATE);
 			        Editor _editor=_pref.edit();
 			        _editor.putString("USER", _user.getText().toString());
-			        _editor.putString("PASSWORD", _post.md5(_password.getText().toString()));
+			        _editor.putString("PASSWORD", Post.md5(_password.getText().toString()));
 			        _editor.commit();
-			        //////////////////////////////////////////////
-					
+			        //////////////////////////////////////////////					
 					
 					_parametros.add("command");
 					_parametros.add("login2");
@@ -114,7 +106,7 @@ public class LogIn extends Activity
 //					_parametros.add("demo");
 //					_parametros.add("bertoldo");
 					_parametros.add("password");
-					_parametros.add(_post.md5(_password.getText().toString()));
+					_parametros.add(Post.md5(_password.getText().toString()));
 //					_parametros.add(_post.md5("demo"));
 //					_parametros.add(_post.md5("bertoldo"))
 			    	logInConnection _connection = new logInConnection(_parametros);
@@ -190,63 +182,7 @@ public class LogIn extends Activity
 			e.printStackTrace();
 		}
     }
-    /**
-     * 
-     */
-	private void forgotPassword() 
-	{
-		// TODO Auto-generated method stub
-		// custom dialog
-		final Dialog dialog = new Dialog(this);
-		dialog.setContentView(R.layout.forgot_password_dialog);
-		dialog.setTitle("Forgot password?");
- 
-		final EditText _userName = (EditText) dialog.findViewById(R.id.UserEditText);
-		final EditText _userEmail = (EditText) dialog.findViewById(R.id.EmailEditText);
-		
-		Button _sendButton = (Button) dialog.findViewById(R.id.SendButton);
-		// if button is clicked, close the custom dialog
-		_sendButton.setOnClickListener(new View.OnClickListener() 
-		{
-			@Override
-			public void onClick(View v) 
-			{
-				if(!_userName.getText().toString().isEmpty() && !_userEmail.getText().toString().isEmpty())
-				{
-					_isLogIn = false;
-					_post = new Post();
-					ArrayList<String> _parametros = new ArrayList<String>();
-	
-					_parametros.add("command");
-					_parametros.add("lostpass");
-					_parametros.add("username");
-					_parametros.add(_userName.getText().toString());
-					
-					logInConnection _connection = new logInConnection(_parametros);
-			    	_connection.execute();	
-				}
-				else 
-				{
-					if(_userName.getText().toString().isEmpty())
-						Toast.makeText(getBaseContext(), "User box is empty.", Toast.LENGTH_SHORT).show();
-					else if(_userEmail.getText().toString().isEmpty())
-						Toast.makeText(getBaseContext(), "Email box is empty.", Toast.LENGTH_SHORT).show();
-				}
-			}
-		});
-		
-		Button _exitButton = (Button) dialog.findViewById(R.id.ExitButton);
-		// if button is clicked, close the custom dialog
-		_exitButton.setOnClickListener(new View.OnClickListener() 
-		{
-			@Override
-			public void onClick(View v) 
-			{
-				dialog.dismiss();
-			}
-		});
-		dialog.show();
-	}
+
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) 
@@ -291,7 +227,7 @@ public class LogIn extends Activity
 			{		             
 				//Query
 				//Variable 'Data' saves the query response
-				JSONObject _data = _post.getServerData(_parametros,"http://5.231.69.226/EHControlConnect/index.php");//"http://192.168.2.147/EHControlConnect/index.php");
+				JSONObject _data = Post.getServerData(_parametros,"http://5.231.69.226/EHControlConnect/index.php");//"http://192.168.2.147/EHControlConnect/index.php");
 				log(_data.toString());
 				
 				try 
@@ -329,17 +265,27 @@ public class LogIn extends Activity
 						}
 						else
 						{ 	
-							//////////////////////////////////////////////
-							SharedPreferences _pref = getSharedPreferences("LOG",Context.MODE_PRIVATE);
-					        Editor _editor=_pref.edit();
-					        _editor.putString("LOGIN", "TRUE");
-					        _editor.commit();
-					        //////////////////////////////////////////////
-					        
+							
 							//Save the profile's information.
 							JSON.saveProfileInfo(_json_data,LogIn.this);
 							//Save the house's configuration
 							JSON.saveConfig(_json_data.get("JSON"),LogIn.this);
+							
+							//////////////////////////////////////////////
+							SharedPreferences _pref = getSharedPreferences("LOG",Context.MODE_PRIVATE);
+					        Editor _editor=_pref.edit();
+					        _editor.putString("LOGIN", "TRUE");
+					        _editor.commit();					        
+					        
+					        String _id = GCM.getRegistrationId(LogIn.this);
+					        if(_id.equals(""))
+					        {
+					        	//GCM registration.
+								TaskRegisterGCM _task = new TaskRegisterGCM(LogIn.this);
+								_task.execute(_user.getText().toString());
+					        }				        							
+					        //////////////////////////////////////////////
+						
 							//Activate the next Activity("MainMenu")
 							createdIntent();
 						}				
@@ -366,6 +312,63 @@ public class LogIn extends Activity
 		}
     }
     
+    /**
+     * 
+     */
+	private void forgotPassword() 
+	{
+		// TODO Auto-generated method stub
+		// custom dialog
+		final Dialog dialog = new Dialog(this);
+		dialog.setContentView(R.layout.forgot_password_dialog);
+		dialog.setTitle("Forgot password?");
+ 
+		final EditText _userName = (EditText) dialog.findViewById(R.id.UserEditText);
+		final EditText _userEmail = (EditText) dialog.findViewById(R.id.EmailEditText);
+		
+		Button _sendButton = (Button) dialog.findViewById(R.id.SendButton);
+		// if button is clicked, close the custom dialog
+		_sendButton.setOnClickListener(new View.OnClickListener() 
+		{
+			@Override
+			public void onClick(View v) 
+			{
+				if(!_userName.getText().toString().isEmpty() && !_userEmail.getText().toString().isEmpty())
+				{
+					_isLogIn = false;
+					ArrayList<String> _parametros = new ArrayList<String>();
+	
+					_parametros.add("command");
+					_parametros.add("lostpass");
+					_parametros.add("username");
+					_parametros.add(_userName.getText().toString());
+					
+					logInConnection _connection = new logInConnection(_parametros);
+			    	_connection.execute();	
+				}
+				else 
+				{
+					if(_userName.getText().toString().isEmpty())
+						Toast.makeText(getBaseContext(), "User box is empty.", Toast.LENGTH_SHORT).show();
+					else if(_userEmail.getText().toString().isEmpty())
+						Toast.makeText(getBaseContext(), "Email box is empty.", Toast.LENGTH_SHORT).show();
+				}
+			}
+		});
+		
+		Button _exitButton = (Button) dialog.findViewById(R.id.ExitButton);
+		// if button is clicked, close the custom dialog
+		_exitButton.setOnClickListener(new View.OnClickListener() 
+		{
+			@Override
+			public void onClick(View v) 
+			{
+				dialog.dismiss();
+			}
+		});
+		dialog.show();
+	}
+    
     @Override
     public void onBackPressed() 
     {
@@ -376,32 +379,7 @@ public class LogIn extends Activity
     	_intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
     	startActivity(_intent); 
     }
-    
-    /**
-     * Check the device to make sure it has the Google Play Services APK. If
-     * it doesn't, display a dialog that allows users to download the APK from
-     * the Google Play Store or enable it in the device's system settings.
-     */
-    private boolean checkPlayServices() 
-    {
-        int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
-        if (resultCode != ConnectionResult.SUCCESS) 
-        {
-            if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) 
-            {
-                GooglePlayServicesUtil.getErrorDialog(resultCode, this,
-                        PLAY_SERVICES_RESOLUTION_REQUEST).show();
-            } 
-            else 
-            {
-                Log.i("GCM", "This device is not supported.");
-                finish();
-            }
-            return false;
-        }
-        return true;
-    }
-    
+      
     /**
      * Method for debug
      * @param _text
@@ -416,7 +394,7 @@ public class LogIn extends Activity
     {
     	super.onResume();
     	log( "Resumed" );
-    	checkPlayServices();
+    	GCM.checkPlayServices(LogIn.this);
     	//Reset the boxes
         _user.setHint("User");
         _password.setHint("Password");

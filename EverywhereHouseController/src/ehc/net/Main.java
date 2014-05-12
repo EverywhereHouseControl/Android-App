@@ -21,7 +21,6 @@ import android.widget.Toast;
 
 public class Main extends Activity
 {
-	private Post _post;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
@@ -32,7 +31,6 @@ public class Main extends Activity
 		SharedPreferences _pref = getSharedPreferences("LOG",Context.MODE_PRIVATE);
 		if(_pref.getString("LOGIN", "").equals("TRUE"))
 		{
-			_post = new Post();
 			ArrayList<String> _parametros = new ArrayList<String>();
 			_parametros.add("command");
 			_parametros.add("login2");
@@ -90,7 +88,7 @@ public class Main extends Activity
 			{		             
 				//Query
 				//Variable 'Data' saves the query response
-				JSONObject _data = _post.getServerData(_parametros,"http://5.231.69.226/EHControlConnect/index.php");//"http://192.168.2.147/EHControlConnect/index.php");
+				JSONObject _data = Post.getServerData(_parametros,"http://5.231.69.226/EHControlConnect/index.php");//"http://192.168.2.147/EHControlConnect/index.php");
 				log(_data.toString());
 				
 				try 

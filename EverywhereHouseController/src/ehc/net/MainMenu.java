@@ -2,7 +2,6 @@ package ehc.net;
 
 import java.util.ArrayList;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import parserJSON.JSON;
@@ -28,8 +27,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 public class MainMenu extends SherlockActivity 
 {
@@ -38,7 +35,6 @@ public class MainMenu extends SherlockActivity
 	private Button _buttonEvent;
 	// private Button _buttonConfig;
 	private ImageView _logo;
-	private Post _post;
 	private Double _temp;
 	// -------------------------------
 	private ActionBarDrawerToggle _actbardrawertoggle;
@@ -117,8 +113,7 @@ public class MainMenu extends SherlockActivity
 				createdEventIntent();				
 			}
 		});
-        
-        _post = new Post();						
+        					
     	getWeather _connection = new getWeather();
     	_connection.execute();
                  
@@ -257,7 +252,7 @@ public class MainMenu extends SherlockActivity
 			 			
 				Log.d("PARAMETROS",_parametros.toString());
 				//Variable 'Data' saves the query response
-				_data = _post.getServerData(_parametros,"http://5.231.69.226/EHControlConnect/index.php");//"http://192.168.2.147/EHControlConnect/index.php");
+				_data = Post.getServerData(_parametros,"http://5.231.69.226/EHControlConnect/index.php");//"http://192.168.2.147/EHControlConnect/index.php");
 				//log(_data.toString());
 					 
 			 }
