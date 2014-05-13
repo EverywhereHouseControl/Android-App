@@ -1,5 +1,7 @@
 package ehc.net;
 
+import gcmService.GCMIntentService;
+
 import java.util.ArrayList;
 
 import org.json.JSONException;
@@ -28,6 +30,8 @@ public class Main extends Activity
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		
+		GCMIntentService.closeNotifications();
+		
 		SharedPreferences _pref = getSharedPreferences("LOG",Context.MODE_PRIVATE);
 		if(_pref.getString("LOGIN", "").equals("TRUE"))
 		{
@@ -36,13 +40,8 @@ public class Main extends Activity
 			_parametros.add("login2");
 			_parametros.add("username");
 			_parametros.add(_pref.getString("USER", ""));
-			//_parametros.add("demo");
-			//_parametros.add("bertoldo");
 			_parametros.add("password");
 			_parametros.add(_pref.getString("PASSWORD", ""));
-			//_parametros.add(_post.md5("demo"));
-			//_parametros.add(_post.md5("bertoldo"))
-			Log.d("LOG",_parametros.toString());
 			logInConnection _connection = new logInConnection(_parametros);
 			_connection.execute();	
 		}

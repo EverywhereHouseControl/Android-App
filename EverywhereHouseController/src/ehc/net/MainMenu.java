@@ -2,6 +2,7 @@ package ehc.net;
 
 import java.util.ArrayList;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import parserJSON.JSON;
@@ -27,6 +28,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 public class MainMenu extends SherlockActivity 
 {
@@ -266,11 +268,6 @@ public class MainMenu extends SherlockActivity
     	
 		protected void onPostExecute(String file_url) 
 		{
-            // dismiss the dialog
-            _pDialog.dismiss();
-            /*
-            if(_internalError!=0)Toast.makeText(getBaseContext(), _message, Toast.LENGTH_SHORT).show();
-            
             try 
             {
 				_temp = _data.getDouble("temperature");
@@ -333,8 +330,11 @@ public class MainMenu extends SherlockActivity
 					Animation anim = AnimationUtils.loadAnimation(MainMenu.this, R.anim.rotate_indefinitely);
 					//Start animating the image
 			         _weather3.startAnimation(anim);			         
-				}*/
+				}
+			// dismiss the dialog
+            _pDialog.dismiss();
 		}
+
     }
 	/**
 	 * Method for debug

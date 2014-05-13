@@ -19,4 +19,5 @@ public class GCMBroadcastReceiver extends WakefulBroadcastReceiver
         
         setResultCode(Activity.RESULT_OK);
     }
+       
 }
