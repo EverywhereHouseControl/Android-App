@@ -142,7 +142,8 @@ public class Profile extends SherlockActivity implements ImageChooserListener
 				dialog.setContentView(R.layout.image_dialog);
 				
 				_imageDialog = (ImageView) dialog.findViewById(R.id.userImageDialog);
-				_imgLoader.DisplayImage(_url, R.drawable.base_picture, _imageDialog, 1);
+				
+				_imageDialog.setImageDrawable(_image.getDrawable());
 				
 				ImageButton _takePicture = (ImageButton)dialog.findViewById(R.id.takePicture);
 				_takePicture.setOnClickListener(new View.OnClickListener() 
@@ -182,7 +183,7 @@ public class Profile extends SherlockActivity implements ImageChooserListener
 						
 							new AlertDialog.Builder(Profile.this)
 					        .setTitle("Image")
-					        .setMessage("Save changes?")
+					        .setMessage("Select this image?")
 					        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() 
 					        {
 					            public void onClick(DialogInterface dialog, int which) 
@@ -635,8 +636,8 @@ public class Profile extends SherlockActivity implements ImageChooserListener
 			{
 				if (image != null) 
 				{	
-
 					_imageDialog.setImageURI(Uri.parse(new File(image.getFileThumbnail()).toString()));
+									
 					_selectImage = true;
 					_selectedImage = image;			    	
 					try 

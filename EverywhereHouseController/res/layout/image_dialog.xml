@@ -5,18 +5,12 @@
     android:background="@color/GreenApp"
     android:orientation="vertical" >
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="@color/Black" >
-
-    </RelativeLayout>
-
     <ImageView
         android:id="@+id/userImageDialog"
         android:layout_width="fill_parent"
-        android:layout_height="300dp"
+        android:layout_height="340dp"
         android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="5dp"
         android:src="@drawable/user_icon" />
 
     <RelativeLayout

@@ -1,35 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     android:background="@color/GreenApp"
     android:orientation="vertical" >
 
     <ImageView
         android:id="@+id/userImageDialog"
-        android:layout_width="match_parent"
-        android:layout_height="190dp"
+        android:layout_width="fill_parent"
+        android:layout_height="530dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="5dp"
         android:src="@drawable/user_icon" />
 
     <RelativeLayout
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content" >
 
         <ImageButton
             android:id="@+id/takePicture"
-            android:layout_width="160dp"
-            android:layout_height="40dp"
-            android:layout_alignBottom="@+id/choosePicture"
-            android:layout_alignParentLeft="true"
+            android:layout_width="400dp"
+            android:layout_height="78dp"
+            android:layout_alignParentTop="true"
             android:background="@drawable/button_config"
             android:src="@drawable/ic_action_camera" />
 
         <ImageButton
             android:id="@+id/choosePicture"
-            android:layout_width="160dp"
-            android:layout_height="40dp"
+            android:layout_width="400dp"
+            android:layout_height="78dp"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:background="@drawable/button_config"
@@ -39,8 +38,17 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/Black" >
+        android:layout_height="62dp"
+        android:background="@color/GreenApp" >
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:background="@color/Black" >
+        </RelativeLayout>
+
     </RelativeLayout>
 
 </LinearLayout>

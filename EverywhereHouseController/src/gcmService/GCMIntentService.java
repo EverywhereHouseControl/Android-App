@@ -50,20 +50,39 @@ public class GCMIntentService extends IntentService
 		Intent notIntent = new Intent(this, Main.class);
 		PendingIntent contIntent = PendingIntent.getActivity(this, 0, notIntent, 0);
 		
-		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
-		.setDefaults(NotificationCompat.PRIORITY_DEFAULT)
-		.setSmallIcon(R.drawable.ic_launcher)
-		.setContentTitle("EHC notification.")
-		.setLargeIcon((((BitmapDrawable)getResources().getDrawable(R.drawable.ic_launcher)).getBitmap()))
-		.setContentText(msg)
-		.setTicker(msg)
-		.setAutoCancel(true)
-		.setContentIntent(contIntent)
-		.setDefaults(Notification.DEFAULT_SOUND);
-				
 		
-		mNotificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
-		mNotificationManager.notify((int)id, mBuilder.build());			
+		int currentapiVersion = android.os.Build.VERSION.SDK_INT;
+		
+		if (currentapiVersion >= android.os.Build.VERSION_CODES.HONEYCOMB)
+		{
+		    // Do something for HONEYCOMB and above versions
+			NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
+			.setDefaults(NotificationCompat.PRIORITY_DEFAULT)
+			.setSmallIcon(R.drawable.ic_launcher)
+			.setContentTitle("EHC notification.")
+			.setLargeIcon((((BitmapDrawable)getResources().getDrawable(R.drawable.ic_launcher)).getBitmap()))
+			.setContentText(msg)
+			.setTicker(msg)
+			.setAutoCancel(true)
+			.setContentIntent(contIntent)
+			.setDefaults(Notification.DEFAULT_SOUND);			
+				
+			mNotificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
+			mNotificationManager.notify((int)id, mBuilder.build());	
+		} 
+		else
+		{
+		    // do something for phones running an SDK before HONEYCOMB
+		    // Do something for HONEYCOMB and above versions
+			Notification mBuilder = new Notification(R.drawable.ic_launcher,msg,id);
+			
+			mBuilder.setLatestEventInfo(this, "EHC notification.", msg, contIntent);
+			mBuilder.flags |= Notification.DEFAULT_SOUND | Notification.FLAG_AUTO_CANCEL;	
+				
+			mNotificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
+			mNotificationManager.notify((int)id, mBuilder);	
+			
+		}
 	}
 	
 	public static void closeNotifications()

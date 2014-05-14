@@ -15,17 +15,17 @@
 
     <ImageView
         android:id="@+id/HouseIconManagementMenu"
-        android:layout_width="278dp"
-        android:layout_height="99dp"
+        android:layout_width="280dp"
+        android:layout_height="160dp"
         android:layout_alignLeft="@+id/imageWordEHC"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="28dp"
         android:src="@drawable/world_ehc" />
 
     <ImageView
         android:id="@+id/imageWordEHC"
-        android:layout_width="278dp"
-        android:layout_height="99dp"
+        android:layout_width="280dp"
+        android:layout_height="160dp"
         android:layout_alignTop="@+id/HouseIconManagementMenu"
         android:layout_centerHorizontal="true"
         android:src="@drawable/word_ehc" />
@@ -33,43 +33,39 @@
     <RelativeLayout
         android:id="@+id/relativeLayout1"
         android:layout_width="wrap_content"
-        android:layout_height="99dp"
+        android:layout_height="180dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:background="@color/GreenApp" >
 
         <EditText
-            android:id="@+id/idText"
-            android:layout_width="wrap_content"
-            android:layout_height="24dp"
-            android:layout_alignLeft="@+id/passwordText"
-            android:layout_alignParentTop="true"
-            android:layout_alignRight="@+id/passwordText"
-            android:layout_marginTop="14dp"
-            android:background="@color/White"
-            android:ems="10"
-            android:hint="User"
-            android:lines="1"
-            android:singleLine="true"
-            android:textColor="@color/Black" >
-
-            <requestFocus />
-        </EditText>
-
-        <EditText
             android:id="@+id/passwordText"
-            android:layout_width="wrap_content"
-            android:layout_height="24dp"
+            android:layout_width="300dp"
+            android:layout_height="35dp"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="13dp"
+            android:layout_marginBottom="33dp"
             android:background="@color/White"
             android:ems="10"
             android:hint="Password"
             android:inputType="textPassword"
             android:lines="1"
             android:password="true"
+            android:singleLine="true"
+            android:textColor="@color/Black" />
+
+        <EditText
+            android:id="@+id/idText"
+            android:layout_width="300dp"
+            android:layout_height="30dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="33dp"
+            android:background="@color/White"
+            android:ems="10"
+            android:hint="User"
+            android:lines="1"
             android:singleLine="true"
             android:textColor="@color/Black" />
 
@@ -81,12 +77,23 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/createUser"
         android:layout_below="@+id/relativeLayout1"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="40dp"
         android:background="@drawable/button_config2"
         android:onClick="onClickButton"
         android:text="Login"
         android:textColor="@drawable/button_text_color3"
-        android:textSize="20sp" />
+        android:textSize="30sp" />
+
+    <TextView
+        android:id="@+id/createUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/forgotPassword"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="70dp"
+        android:text="Create user"
+        android:textColor="@color/Blue"
+        android:textColorHint="@color/Blue" />
 
     <TextView
         android:id="@+id/forgotPassword"
@@ -94,19 +101,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/buttonLogin"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="7dp"
+        android:layout_marginTop="27dp"
         android:text="Forgot password?"
         android:textColor="@color/Blue" />
-
-    <TextView
-        android:id="@+id/createUser"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="3dp"
-        android:text="Create user"
-        android:textColor="@color/Blue"
-        android:textColorHint="@color/Blue" />
 
 </RelativeLayout>

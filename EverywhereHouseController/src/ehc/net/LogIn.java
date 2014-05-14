@@ -324,7 +324,6 @@ public class LogIn extends Activity
 		dialog.setTitle("Forgot password?");
  
 		final EditText _userName = (EditText) dialog.findViewById(R.id.UserEditText);
-		final EditText _userEmail = (EditText) dialog.findViewById(R.id.EmailEditText);
 		
 		Button _sendButton = (Button) dialog.findViewById(R.id.SendButton);
 		// if button is clicked, close the custom dialog
@@ -333,7 +332,7 @@ public class LogIn extends Activity
 			@Override
 			public void onClick(View v) 
 			{
-				if(!_userName.getText().toString().isEmpty() && !_userEmail.getText().toString().isEmpty())
+				if(!_userName.getText().toString().isEmpty())
 				{
 					_isLogIn = false;
 					ArrayList<String> _parametros = new ArrayList<String>();
@@ -350,8 +349,6 @@ public class LogIn extends Activity
 				{
 					if(_userName.getText().toString().isEmpty())
 						Toast.makeText(getBaseContext(), "User box is empty.", Toast.LENGTH_SHORT).show();
-					else if(_userEmail.getText().toString().isEmpty())
-						Toast.makeText(getBaseContext(), "Email box is empty.", Toast.LENGTH_SHORT).show();
 				}
 			}
 		});

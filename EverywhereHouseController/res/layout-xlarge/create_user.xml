@@ -8,7 +8,7 @@
 	
          <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="70dp"
+            android:layout_height="200dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"
             android:background="@color/Black" >
@@ -21,7 +21,7 @@
                 android:layout_centerVertical="true"
                 android:text="New user"
                 android:textColor="@color/White"
-                android:textSize="30sp" />
+                android:textSize="60sp" />
 
         </RelativeLayout>
         
@@ -43,7 +43,7 @@
                 android:hint="User"
                 android:singleLine="true"
                 android:textColor="@color/Black"
-                android:textSize="20sp" >
+                android:textSize="50sp" >
 
                 <requestFocus />
             </EditText>
@@ -56,7 +56,7 @@
                 android:hint="Email"
                 android:singleLine="true"
                 android:textColor="@color/Black"
-                android:textSize="20sp" />
+                android:textSize="50sp" />
 
             <EditText
                 android:id="@+id/newPassword"
@@ -68,7 +68,7 @@
                 android:password="true"
                 android:singleLine="true"
                 android:textColor="@color/Black"
-                android:textSize="20sp" />
+                android:textSize="50sp" />
 
             <EditText
                 android:id="@+id/newRepeatPassword"
@@ -80,33 +80,33 @@
                 android:password="true"
                 android:singleLine="true"
                 android:textColor="@color/Black"
-                android:textSize="20sp" />
+                android:textSize="50sp" />
         </LinearLayout>
 
         <Button
             android:id="@+id/newUserCancel"
-            android:layout_width="155dp"
-            android:layout_height="wrap_content"
+            android:layout_width="380dp"
+            android:layout_height="70dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="6dp"
+            android:layout_marginBottom="25dp"
+            android:layout_marginLeft="16dp"
             android:background="@drawable/button_config"
             android:text="Exit"
             android:textColor="@drawable/button_text_color2"
-            android:textSize="20sp" />
+            android:textSize="40sp" />
 
         <Button
             android:id="@+id/newUserConfirm"
-            android:layout_width="155dp"
-            android:layout_height="wrap_content"
+            android:layout_width="380dp"
+            android:layout_height="70dp"
+            android:layout_alignBaseline="@+id/newUserCancel"
             android:layout_alignBottom="@+id/newUserCancel"
             android:layout_alignParentRight="true"
-            android:layout_alignTop="@+id/newUserCancel"
-            android:layout_marginRight="6dp"
+            android:layout_marginRight="16dp"
             android:background="@drawable/button_config"
             android:text="Confirm"
             android:textColor="@drawable/button_text_color2"
-            android:textSize="20sp" />
+            android:textSize="40sp" />
 
     </RelativeLayout>

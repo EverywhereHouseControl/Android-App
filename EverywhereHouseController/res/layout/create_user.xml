@@ -85,7 +85,7 @@
 
         <Button
             android:id="@+id/newUserCancel"
-            android:layout_width="140dp"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
@@ -98,7 +98,7 @@
 
         <Button
             android:id="@+id/newUserConfirm"
-            android:layout_width="140dp"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/newUserCancel"
             android:layout_alignBottom="@+id/newUserCancel"

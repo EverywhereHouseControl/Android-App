@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+    	android:layout_width="fill_parent"
+    	android:layout_height="fill_parent"
         android:background="@color/GreenApp"
-        android:orientation="vertical" >
-
+        android:orientation="vertical"  >
+	
          <RelativeLayout
-             android:layout_width="wrap_content"
-             android:layout_height="100dp"
-             android:layout_alignParentLeft="true"
-             android:layout_alignParentRight="true"
-             android:background="@color/Black" >
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:background="@color/Black" >
 
             <TextView
                 android:id="@+id/textView1"
@@ -20,7 +21,7 @@
                 android:layout_centerVertical="true"
                 android:text="New user"
                 android:textColor="@color/White"
-                android:textSize="40sp" />
+                android:textSize="45sp" />
 
         </RelativeLayout>
         
@@ -37,12 +38,12 @@
             <EditText
                 android:id="@+id/newUser"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="User"
                 android:singleLine="true"
                 android:textColor="@color/Black"
-                android:textSize="40sp" >
+                android:textSize="35sp" >
 
                 <requestFocus />
             </EditText>
@@ -50,61 +51,62 @@
             <EditText
                 android:id="@+id/newEmail"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="Email"
                 android:singleLine="true"
                 android:textColor="@color/Black"
-                android:textSize="40sp" />
+                android:textSize="35sp" />
 
             <EditText
                 android:id="@+id/newPassword"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="match_parent"
                 android:ems="10"
                 android:hint="Password"
                 android:inputType="textPassword"
                 android:password="true"
                 android:singleLine="true"
                 android:textColor="@color/Black"
-                android:textSize="40sp" />
+                android:textSize="35sp" />
 
             <EditText
                 android:id="@+id/newRepeatPassword"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="match_parent"
                 android:ems="10"
                 android:hint="Repeat password"
                 android:inputType="textPassword"
                 android:password="true"
                 android:singleLine="true"
                 android:textColor="@color/Black"
-                android:textSize="40sp" />
+                android:textSize="35sp" />
         </LinearLayout>
 
         <Button
             android:id="@+id/newUserCancel"
-            android:layout_width="200dp"
-            android:layout_height="60dp"
-            android:layout_alignBaseline="@+id/newUserConfirm"
-            android:layout_alignBottom="@+id/newUserConfirm"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="20dp"
+            android:layout_width="230dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginBottom="19dp"
+            android:layout_marginLeft="11dp"
             android:background="@drawable/button_config"
             android:text="Exit"
             android:textColor="@drawable/button_text_color2"
-            android:textSize="40sp" />
+            android:textSize="35sp" />
 
         <Button
             android:id="@+id/newUserConfirm"
-            android:layout_width="200dp"
-            android:layout_height="60dp"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="20dp"
-            android:layout_marginLeft="20dp"
+            android:layout_width="230dp"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/newUserCancel"
+            android:layout_alignBottom="@+id/newUserCancel"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="11dp"
             android:background="@drawable/button_config"
             android:text="Confirm"
             android:textColor="@drawable/button_text_color2"
-            android:textSize="40sp" />
+            android:textSize="35sp" />
 
     </RelativeLayout>

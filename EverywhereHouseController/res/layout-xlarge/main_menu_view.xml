@@ -25,100 +25,100 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="199dip" >
+            android:layout_height="95dip"
+            android:layout_weight="0.10" >
 
             <ImageView
                 android:id="@+id/world_loading_view"
-                android:layout_width="180dp"
-                android:layout_height="100dp"
+                android:layout_width="310dp"
+                android:layout_height="190dp"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="90dp"
                 android:src="@drawable/world_ehc" />
 
             <ImageView
                 android:id="@+id/word_ehc"
-                android:layout_width="180dp"
-                android:layout_height="100dp"
+                android:layout_width="310dp"
+                android:layout_height="190dp"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="90dp"
                 android:src="@drawable/word_ehc" />
 
             <TextView
                 android:id="@+id/temperature"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+                android:layout_width="150dp"
+                android:layout_height="109dp"
                 android:layout_below="@+id/word_ehc"
                 android:layout_centerHorizontal="true"
                 android:text="ºC"
                 android:textColor="@color/GreenApp"
-                android:textSize="30sp" />
-
-            <ImageView
-                android:id="@+id/WeatherImage3"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_alignParentBottom="true"
-                android:layout_toLeftOf="@+id/temperature" />
+                android:textSize="60sp" />
 
             <ImageView
                 android:id="@+id/WeatherImage4"
-                android:layout_width="90dp"
-                android:layout_height="90dp"
+                android:layout_width="150dp"
+                android:layout_height="141dp"
                 android:layout_alignTop="@+id/WeatherImage5"
                 android:layout_toRightOf="@+id/temperature" />
 
             <ImageView
                 android:id="@+id/WeatherImage2"
-                android:layout_width="90dp"
-                android:layout_height="90dp"
+                android:layout_width="150dp"
+                android:layout_height="141dp"
                 android:layout_alignBottom="@+id/word_ehc"
                 android:layout_alignLeft="@+id/WeatherImage4" />
 
             <ImageView
                 android:id="@+id/WeatherImage1"
-                android:layout_width="90dp"
-                android:layout_height="90dp"
+                android:layout_width="150dp"
+                android:layout_height="141dp"
                 android:layout_above="@+id/temperature"
                 android:layout_toLeftOf="@+id/temperature" />
 
             <ImageView
                 android:id="@+id/WeatherImage5"
-                android:layout_width="90dp"
-                android:layout_height="90dp"
+                android:layout_width="150dp"
+                android:layout_height="141dp"
                 android:layout_alignLeft="@+id/WeatherImage1"
-                android:layout_alignParentBottom="true"
-                android:layout_marginBottom="18dp" />
+                android:layout_below="@+id/world_loading_view" />
+
+            <ImageView
+                android:id="@+id/WeatherImage3"
+                android:layout_width="116dp"
+                android:layout_height="109dp"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/world_loading_view" />
 
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="500dp" >
 
             <TableLayout
                 android:id="@+id/TableLayout1"
                 android:layout_width="match_parent"
-                android:layout_height="138dp"
+                android:layout_height="400dp"
                 android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true" >
+                android:layout_alignParentTop="true" >
 
                 <Button
                     android:id="@+id/buttonManagement"
                     android:layout_width="wrap_content"
-                    android:layout_height="70dip"
+                    android:layout_height="130dip"
                     android:background="@drawable/button_config2"
                     android:text="Management"
                     android:textColor="@drawable/button_text_color3"
-                    android:textSize="20sp" />
+                    android:textSize="30sp" />
 
                 <Button
                     android:id="@+id/buttonEvents"
                     android:layout_width="120dip"
-                    android:layout_height="70dip"
+                    android:layout_height="130dip"
                     android:background="@drawable/button_config2"
                     android:text="Tasks"
                     android:textColor="@drawable/button_text_color3"
-                    android:textSize="20sp" />
+                    android:textSize="30sp" />
             </TableLayout>
 
         </RelativeLayout>
