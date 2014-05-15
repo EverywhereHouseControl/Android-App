@@ -11,6 +11,7 @@ import parserJSON.JSON;
 
 import adapters.ExpandableListAdapter;
 import android.annotation.SuppressLint;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -112,6 +113,7 @@ import android.widget.TextView;
 	    	    	
 	    	_textRoom = (TextView)rootView.findViewById(R.id.textRoom);
 	    	_textRoom.setText(_button.toUpperCase());
+	    	_textRoom.setVisibility(View.GONE);
 	    	
 	    	_JSONFile = JSON.getInstance(getActivity().getApplicationContext());
 	    	Log.d("_JSONFILE", "creado");

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/RelativeLayout2"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/GreenApp"
+    android:clickable="true"
+    android:orientation="vertical" >
+
+    <Button
+        android:id="@+id/HouseButton"
+        android:layout_width="wrap_content"
+        android:layout_height="160dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/button_config"
+        android:gravity="center_vertical|center_horizontal|left"
+        android:textColor="@drawable/button_text_color"
+        android:textSize="20sp" />
+
+    <ImageButton
+        android:id="@+id/HouseImageList"
+        android:layout_width="130dp"
+        android:layout_height="140dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/White" />
+
+</RelativeLayout>
