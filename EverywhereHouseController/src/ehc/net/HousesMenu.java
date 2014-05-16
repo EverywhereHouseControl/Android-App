@@ -58,7 +58,8 @@ public class HousesMenu extends Activity implements ImageChooserListener
 	public static String _currentHouse;
 	private static ChosenImage _chosenImage = new ChosenImage();
 	public static CheckBox _check;
-	private Context _context;   
+	private Context _context;
+	private final String _ip = Post._ip;
 	//-------------------------------------------------------------
 	
 	@Override
@@ -336,7 +337,7 @@ public class HousesMenu extends Activity implements ImageChooserListener
 			_imageFile.getAbsolutePath();
 			_imagePath = _imageFile.getAbsolutePath();
 			
-			_data = Post.connectionPostUpload(_parametros, "http://5.231.69.226/EHControlConnect/index.php", _imagePath);			
+			_data = Post.connectionPostUpload(_parametros,_ip, _imagePath);			
 			
 			runOnUiThread(new Runnable()
 			{
@@ -399,7 +400,7 @@ public class HousesMenu extends Activity implements ImageChooserListener
 							
 							Log.d("PARAMETROS",_parametros.toString());
 							
-							_data = Post.getServerData(_parametros, "http://5.231.69.226/EHControlConnect/index.php");
+							_data = Post.getServerData(_parametros,_ip);
 							
 							Log.d("DATA",_data.toString());
 							
@@ -440,7 +441,7 @@ public class HousesMenu extends Activity implements ImageChooserListener
 								_parametros.add(obj.getString("PASSWORD"));
 								
 								//Variable 'Data' saves the query response
-								JSONObject _data = Post.getServerData(_parametros,"http://5.231.69.226/EHControlConnect/index.php");//"http://192.168.2.147/EHControlConnect/index.php");
+								JSONObject _data = Post.getServerData(_parametros,_ip);
 								JSONObject _json_data = _data.getJSONObject("result");
 								
 								//Save the profile's information.

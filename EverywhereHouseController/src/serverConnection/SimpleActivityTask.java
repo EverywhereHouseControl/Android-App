@@ -26,6 +26,7 @@ public class SimpleActivityTask extends AsyncTask<String, String, String>
 	private String _start;
 	private String _eventName;
 	private Context _context;
+	private final String _ip = Post._ip;
 
 	private ArrayList<String> _parametros = new ArrayList<String>();
 
@@ -129,8 +130,7 @@ public class SimpleActivityTask extends AsyncTask<String, String, String>
 		{
 			case 0: 
 			{
-				JSONObject data = Post.getServerData(parametros,
-						"http://5.231.69.226/EHControlConnect/index.php");// "http://192.168.2.147/EHControlConnect/index.php");
+				JSONObject data = Post.getServerData(parametros,_ip);
 				try 
 				{
 					JSONObject json_data = data.getJSONObject("error");

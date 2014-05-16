@@ -42,6 +42,7 @@ public class MainMenu extends SherlockActivity
 	private ActionBarDrawerToggle _actbardrawertoggle;
 	private DrawerLayout _dl;
 	private ListView _drawer;
+	private final String _ip = Post._ip;
 	// -------------------------------
 
 	@Override
@@ -116,8 +117,8 @@ public class MainMenu extends SherlockActivity
 			}
 		});
         					
-    	getWeather _connection = new getWeather();
-    	_connection.execute();
+//    	getWeather _connection = new getWeather();
+//    	_connection.execute();
                  
     }
 	
@@ -254,7 +255,7 @@ public class MainMenu extends SherlockActivity
 			 			
 				Log.d("PARAMETROS",_parametros.toString());
 				//Variable 'Data' saves the query response
-				_data = Post.getServerData(_parametros,"http://5.231.69.226/EHControlConnect/index.php");//"http://192.168.2.147/EHControlConnect/index.php");
+				_data = Post.getServerData(_parametros,_ip);
 				//log(_data.toString());
 					 
 			 }

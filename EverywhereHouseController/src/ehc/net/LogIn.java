@@ -45,6 +45,7 @@ public class LogIn extends Activity
 		private TextView _createUser;
 		private TextView _forgotPassword;
 		private boolean _isLogIn;
+		private final String _ip = Post._ip;
 	//***********************************
 		
 	@Override
@@ -227,7 +228,7 @@ public class LogIn extends Activity
 			{		             
 				//Query
 				//Variable 'Data' saves the query response
-				JSONObject _data = Post.getServerData(_parametros,"http://5.231.69.226/EHControlConnect/index.php");//"http://192.168.2.147/EHControlConnect/index.php");
+				JSONObject _data = Post.getServerData(_parametros,_ip);
 				log(_data.toString());
 				
 				try 

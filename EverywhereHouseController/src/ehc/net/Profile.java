@@ -70,6 +70,7 @@ public class Profile extends SherlockActivity implements ImageChooserListener
 	private ActionBarDrawerToggle _actbardrawertoggle;
 	private DrawerLayout _dl;
 	private ListView _drawer;
+	private final String _ip = Post._ip;
 	// -------------------------------
 //	static
 //	{
@@ -353,7 +354,7 @@ public class Profile extends SherlockActivity implements ImageChooserListener
 				
 				Log.d("PATH",_imagePath);
 				
-				_data = Post.connectionPostUpload(_parametros, "http://5.231.69.226/EHControlConnect/index.php", _imagePath);			
+				_data = Post.connectionPostUpload(_parametros, _ip, _imagePath);			
 				
 				try 
 				{
@@ -439,7 +440,7 @@ public class Profile extends SherlockActivity implements ImageChooserListener
 				if(errorControl(_parametros,_internalError))
 				{
 					Log.d("PARAMETRES",_parametros.toString());
-					JSONObject _data = Post.getServerData(_parametros,"http://5.231.69.226/EHControlConnect/index.php");//"http://192.168.2.147/EHControlConnect/index.php");
+					JSONObject _data = Post.getServerData(_parametros,_ip);
 					try 
 					{
 						JSONObject _json_data = _data.getJSONObject("error");
@@ -479,7 +480,7 @@ public class Profile extends SherlockActivity implements ImageChooserListener
 						_parametros.add(obj.getString("PASSWORD"));
 						
 						//Variable 'Data' saves the query response
-						JSONObject _data = Post.getServerData(_parametros,"http://5.231.69.226/EHControlConnect/index.php");//"http://192.168.2.147/EHControlConnect/index.php");
+						JSONObject _data = Post.getServerData(_parametros,_ip);
 						JSONObject _json_data = _data.getJSONObject("result");
 						
 						//Save the profile's information.

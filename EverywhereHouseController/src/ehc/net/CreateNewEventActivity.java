@@ -56,12 +56,13 @@ public class CreateNewEventActivity extends Activity
 
 	private Spinner itemList;
 	
-	private Post _post;
 	private String _house;
 	private String _file;
 	private ArrayList<String> selectedService = new ArrayList<String>();
 	private String _data;
 	private ArrayList<String> actions = null; 
+	
+	private final String _ip = Post._ip;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -277,7 +278,6 @@ public class CreateNewEventActivity extends Activity
 						e.printStackTrace();
 					}				
 				
-					_post = new Post();
 					sendEventConnection _connection = new sendEventConnection();
 			    	_connection.execute();	
 				}
@@ -450,7 +450,7 @@ public class CreateNewEventActivity extends Activity
 				Log.d("PARAMETROS",_parametros.toString());
 				
 				String prrr = _parametros.toString();
-				JSONObject _data = _post.getServerData(_parametros,"http://5.231.69.226/EHControlConnect/index.php");//"http://192.168.2.147/EHControlConnect/index.php");//"");
+				JSONObject _data = Post.getServerData(_parametros,_ip);
 				Log.d("DATA",_data.toString());
 				
 				try 

@@ -28,6 +28,7 @@ public class CreateUser extends Activity
 	private Button _buttonCancel;
 	private Button _buttonConfirm;
 	private EditText _user;
+	private final String _ip =Post._ip;
 	//--------------------------------------------
 	
 	@Override
@@ -222,7 +223,7 @@ public class CreateUser extends Activity
 		{
 			// TODO Auto-generated method stub
 			//Variable 'Data' saves the query response
-			JSONObject _data = Post.getServerData(_parametros,"http://5.231.69.226/EHControlConnect/index.php");//"http://192.168.2.147/EHControlConnect/index.php");
+			JSONObject _data = Post.getServerData(_parametros,_ip);
 			try 
 			{
 				JSONObject _json_data = _data.getJSONObject("error");

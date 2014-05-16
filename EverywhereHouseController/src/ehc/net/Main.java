@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 public class Main extends Activity
 {
+	private final String _ip = Post._ip;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
@@ -31,8 +32,13 @@ public class Main extends Activity
 		super.onCreate(savedInstanceState);
 		
 		GCMIntentService.closeNotifications();
-		
+			
 		SharedPreferences _pref = getSharedPreferences("LOG",Context.MODE_PRIVATE);
+		
+		Log.d("LOGIN",_pref.getString("LOGIN", ""));
+		Log.d("USER",_pref.getString("USER", ""));
+		Log.d("PASSWORD",_pref.getString("PASSWORD", ""));
+		
 		if(_pref.getString("LOGIN", "").equals("TRUE"))
 		{
 			ArrayList<String> _parametros = new ArrayList<String>();
@@ -54,7 +60,7 @@ public class Main extends Activity
 	
 	
 	// Background process
-    public class logInConnection extends AsyncTask<String, String, String>
+    private class logInConnection extends AsyncTask<String, String, String>
     {    	
     	private ProgressDialog _pDialog;
     	private String _message = "";
@@ -87,7 +93,7 @@ public class Main extends Activity
 			{		             
 				//Query
 				//Variable 'Data' saves the query response
-				JSONObject _data = Post.getServerData(_parametros,"http://5.231.69.226/EHControlConnect/index.php");//"http://192.168.2.147/EHControlConnect/index.php");
+				JSONObject _data = Post.getServerData(_parametros,_ip);
 				log(_data.toString());
 				
 				try 

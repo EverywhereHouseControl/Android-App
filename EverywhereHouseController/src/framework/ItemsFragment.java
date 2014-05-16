@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import ehc.net.R;
 import parserJSON.JSON;
@@ -19,6 +20,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
 import android.widget.ExpandableListView.OnGroupCollapseListener;
 import android.widget.TextView;
 
@@ -55,50 +57,155 @@ import android.widget.TextView;
 	        super.onActivityCreated( savedInstanceState );
 	    }
 	 
-	    private HashMap<String, List<String>> createHashMapItems(List<String> items)
+	    private HashMap<String, List<String>> createHashMapItems(String room, List<String> items)
 	    {
+	    	
 	    	for (int i=0; i<=items.size()-1; i++)
 	    	{
-	    		if (items.get(i).equals("DOOR"))
-	    		{
-	    			List<String> door = new ArrayList<String>();
-	    			door.add("boolean");
-	    			_listDataChild.put(items.get(i),door);
-	    		} 
-	    		else if (items.get(i).equals("LIGHTS"))
-	    		{
-	    			List<String> lights = new ArrayList<String>();
-	    			lights.add("boolean");
-	    			_listDataChild.put(items.get(i),lights);
-    			}
-    			else if (items.get(i).equals("STEREO"))
-    			{
-	    			List<String> stereo = new ArrayList<String>();
-	    			stereo.add("float");
-	    			stereo.add("boolean");
-	    			_listDataChild.put(items.get(i),stereo);
-    			} 
-    			else if (items.get(i).equals("DVD") || items.get(i).equals("TV") || 
-    					items.get(i).equals("AIRCONDITIONING") || items.get(i).equals("HEATING"))
-    			{
-	    			List<String> controller = new ArrayList<String>();
-	    			controller.add("controller");
-	    			_listDataChild.put(items.get(i),controller);
-    			}
-    			else if (items.get(i).equals("BLINDS"))
-    			{
-	    			List<String> blinds = new ArrayList<String>();
-	    			blinds.add("integer");
-	    			blinds.add("integer");
-	    			_listDataChild.put(items.get(i),blinds);
-    			} 
-    			else
-    			{
-    				List<String> other = new ArrayList<String>();
-    				other.add("boolean");
-	    			_listDataChild.put(items.get(i),other);
-    			}
-	    	}	    	
+	    		String _laptopName = items.get(i);	    		
+	    		JSONObject _list = new JSONObject();
+				_list = JSON.getServices(_house,room.toLowerCase(),_laptopName.toUpperCase());   		
+	    		
+				try
+				{
+					switch(_list.getInt("interface"))
+					{
+//						case 0:
+//						{
+//							
+//						}
+						case 1:
+						{							
+							List<String> controller = new ArrayList<String>();
+			    			controller.add("controller");
+			    			_listDataChild.put(items.get(i),controller);			    			
+							break;
+						}
+						case 2:
+						{
+							List<String> lights = new ArrayList<String>();
+			    			lights.add("boolean");
+			    			_listDataChild.put(items.get(i),lights);
+							break;
+						}
+						case 3:
+						{
+							List<String> intercom = new ArrayList<String>();
+							intercom.add("boolean");
+			    			_listDataChild.put(items.get(i),intercom);
+							break;
+						}
+						case 4:
+						{
+							List<String> plug = new ArrayList<String>();
+							plug.add("boolean");
+			    			_listDataChild.put(items.get(i),plug);
+							break;
+						}
+						case 5:
+						{
+							List<String> controller = new ArrayList<String>();
+			    			controller.add("controller");
+			    			_listDataChild.put(items.get(i),controller);			    			
+							break;
+						}
+						case 6:
+						{
+							List<String> temp = new ArrayList<String>();
+							temp.add("real");
+			    			_listDataChild.put(items.get(i),temp);
+							break;
+						}
+						case 7:
+						{
+							List<String> blinds = new ArrayList<String>();
+			    			blinds.add("integer");
+			    			blinds.add("integer");
+			    			_listDataChild.put(items.get(i),blinds);
+							break;
+						}
+						case 8:
+						{
+							List<String> door = new ArrayList<String>();
+			    			door.add("boolean");
+			    			_listDataChild.put(items.get(i),door);
+							break;
+						}
+						case 9:
+						{
+							List<String> motion = new ArrayList<String>();
+			    			_listDataChild.put(items.get(i),motion);
+							break;
+						}
+						case 10:
+						{
+							List<String> rain = new ArrayList<String>();
+			    			_listDataChild.put(items.get(i),rain);
+							break;
+						}
+						case 11:
+						{
+							List<String> temp = new ArrayList<String>();
+							temp.add("real");
+			    			_listDataChild.put(items.get(i),temp);
+							break;
+						}
+						default:
+						{
+							List<String> in = new ArrayList<String>();
+			    			_listDataChild.put(items.get(i),in);
+							break;
+						}
+					}
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+				}
+				
+				
+	    		
+//	    		if (items.get(i).equals("DOOR"))
+//	    		{
+//	    			List<String> door = new ArrayList<String>();
+//	    			door.add("boolean");
+//	    			_listDataChild.put(items.get(i),door);
+//	    		} 
+//	    		else if (items.get(i).equals("LIGHTS"))
+//	    		{
+//	    			List<String> lights = new ArrayList<String>();
+//	    			lights.add("boolean");
+//	    			_listDataChild.put(items.get(i),lights);
+//    			}
+//    			else if (items.get(i).equals("STEREO"))
+//    			{
+//	    			List<String> stereo = new ArrayList<String>();
+//	    			stereo.add("float");
+//	    			stereo.add("boolean");
+//	    			_listDataChild.put(items.get(i),stereo);
+//    			} 
+//    			else if (items.get(i).equals("DVD") || items.get(i).equals("TV") || 
+//    					items.get(i).equals("AIRCONDITIONING") || items.get(i).equals("HEATING"))
+//    			{
+//	    			List<String> controller = new ArrayList<String>();
+//	    			controller.add("controller");
+//	    			_listDataChild.put(items.get(i),controller);
+//    			}
+//    			else if (items.get(i).equals("BLINDS"))
+//    			{
+//	    			List<String> blinds = new ArrayList<String>();
+//	    			blinds.add("integer");
+//	    			blinds.add("integer");
+//	    			_listDataChild.put(items.get(i),blinds);
+//    			} 
+//    			else
+//    			{
+//    				List<String> other = new ArrayList<String>();
+//    				other.add("boolean");
+//	    			_listDataChild.put(items.get(i),other);
+//    			}
+	    	}	
+	    	Log.d("SERVICE",_listDataChild.toString());
 	    	return _listDataChild;
 	    }
 	    
@@ -128,9 +235,9 @@ import android.widget.TextView;
 		        if(_groupList.size()!=0)
 		        {
 		    		final ExpandableListAdapter _expListAdapter = new 
-			        		ExpandableListAdapter(_button,
+			        		ExpandableListAdapter(_house,_button,
 			        				rootView.getContext().getApplicationContext(), 
-			        				_groupList, createHashMapItems(_groupList));
+			        				_groupList, createHashMapItems(_button,_groupList));
 			        _expListAdapter.notifyDataSetChanged();
 			        _expListView.setAdapter(_expListAdapter);
 			        

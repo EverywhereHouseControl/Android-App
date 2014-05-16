@@ -459,39 +459,53 @@ public class JSON
 		return info;
 	}
 
-	public ArrayList<String> getServices(String house, String room, String item) {
+	public static JSONObject getServices(String house, String room, String item) 
+	{
 		ArrayList<String> serviceList = new ArrayList<String>();
-		serviceList.add("Select an action: ");
-
-		try {
+		//serviceList.add("Select an action: ");
+		JSONObject _service = new JSONObject();
+		try 
+		{
 			JSONArray _rooms = new JSONArray();
 			_rooms = _roomsHouses.get(house);
 
-			for (int i = 0; i < _rooms.length(); i++) {
+			for (int i = 0; i < _rooms.length(); i++) 
+			{				
 				JSONObject _room = _rooms.getJSONObject(i);
 				Log.d("ROOM$", _room.toString());
-				if (_room.get(_TAG_NAME).equals(room)) {
-					try {
+				if (_room.get(_TAG_NAME).equals(room)) 
+				{
+					try 
+					{
 						JSONArray _services = _room.getJSONArray(_TAG_SERVICES);
 						Log.d("SERVICES", _services.toString());
-						for (int j = 0; j < _services.length(); j++) {
+						
+						for (int j = 0; j < _services.length(); j++) 
+						{
 							JSONObject _item = _services.getJSONObject(j);
-							if (_item.get(_TAG_NAME).equals(item)) {
-								JSONArray actions = _item
-										.getJSONArray(_TAG_ACTIONS);
-								for (int k = 0; k < actions.length(); k++)
-									serviceList.add(actions.get(k).toString());
+							
+							if (_item.get(_TAG_NAME).equals(item)) 
+							{
+								return _item;
+								
+//								JSONArray actions = _item.getJSONArray(_TAG_ACTIONS);
+//								for (int k = 0; k < actions.length(); k++)
+//									serviceList.add(actions.get(k).toString());
 							}
 						}
-					} catch (Exception e) {
+					} 
+					catch (Exception e) 
+					{
 						Log.d("ERROR", e.toString());
 					}
 				}
 			}
-		} catch (JSONException e) {
+		} 
+		catch (JSONException e) 
+		{
 			e.printStackTrace();
 		}
-		return serviceList;
-
+//		return serviceList;
+		return _service;
 	}
 }
