@@ -64,7 +64,7 @@ import android.widget.TextView;
 	    	{
 	    		String _laptopName = items.get(i);	    		
 	    		JSONObject _list = new JSONObject();
-				_list = JSON.getServices(_house,room.toLowerCase(),_laptopName.toUpperCase());   		
+				_list = JSON.getServices(_house,room,_laptopName);   		
 	    		
 				try
 				{

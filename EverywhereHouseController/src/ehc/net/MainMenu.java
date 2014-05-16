@@ -117,8 +117,8 @@ public class MainMenu extends SherlockActivity
 			}
 		});
         					
-//    	getWeather _connection = new getWeather();
-//    	_connection.execute();
+    	getWeather _connection = new getWeather();
+    	_connection.execute();
                  
     }
 	

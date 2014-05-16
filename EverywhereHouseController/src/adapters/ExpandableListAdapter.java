@@ -52,7 +52,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter
 		this._context = context;
 		this._laptops = laptops;
 		this._laptopCollections = laptopCollections;
-		this._currentRoom = room.toUpperCase();
+		this._currentRoom = room;
 		this._house = house;		
 	}
 	
@@ -77,7 +77,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter
 		
 		String _laptopName = (String) getGroup(groupPosition);			
 		JSONObject _list = new JSONObject();
-		_list = JSON.getServices(_house,_currentRoom.toLowerCase(),_laptopName);
+		_list = JSON.getServices(_house,_currentRoom,_laptopName);
 		
 		
 		if (_itemName.equals("controller")) 
@@ -255,7 +255,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter
 					// TODO Auto-generated method stub
 					String _laptopName = (String) getGroup(groupPosition);			
 					JSONObject _list = new JSONObject();
-					_list = JSON.getServices(_house,_currentRoom.toLowerCase(),_laptopName);
+					_list = JSON.getServices(_house,_currentRoom,_laptopName);
 					
 					try
 					{
@@ -420,11 +420,11 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter
 		///////////////////////////////////////
 		
 		Log.d("",_house);
-		Log.d("",_currentRoom.toLowerCase());
+		Log.d("",_currentRoom);
 		Log.d("",_laptopName);
 		
 		JSONObject _list = new JSONObject();
-		_list = JSON.getServices(_house,_currentRoom.toLowerCase(),_laptopName);
+		_list = JSON.getServices(_house,_currentRoom,_laptopName);
 		Log.d("SERVICES",_list.toString());
 		
 		try
