@@ -19,7 +19,8 @@
 		    android:background="@drawable/button_config"
 		    android:textColor="@drawable/button_text_color"
 		    android:textOff="Off!"
-		    android:textOn="On!" >
+		    android:textOn="On!"
+		    android:textSize="20sp" >
 
     </Button>
     

@@ -1,8 +1,15 @@
 package environment;
 
+import java.util.ArrayList;
+
+import org.json.JSONException;
+
+import parserJSON.JSON;
 import serverConnection.SimpleActivityTask;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -23,7 +30,7 @@ public class RemoteController extends Activity
 		setContentView(R.layout.remote_control_view);
 		_context = this.getBaseContext();
 		setListeners();
-		_servicename=this.getIntent().getStringExtra("Service");
+		_servicename=this.getIntent().getStringExtra("Service");		
 		_currentRoom = this.getIntent().getStringExtra("Room");
 	}
 	
@@ -251,7 +258,56 @@ public class RemoteController extends Activity
 	public void onBackPressed() 
 	{
 		// TODO Auto-generated method stub
-		super.onBackPressed();
+//		super.onBackPressed();
+		
+		SharedPreferences _pref = getSharedPreferences("LOG",Context.MODE_PRIVATE);
+		
+		Class<?> _clazz = null;
+		try 
+		{
+			_clazz = Class.forName("ehc.net.ItemsFragmentsContainer");
+		} 
+		catch (ClassNotFoundException e1) 
+		{
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		Intent _intent = new Intent(this, _clazz);
+							
+		_intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		
+		ArrayList<String> _roomsList = new ArrayList<String>();
+		try 
+		{
+			JSON.getInstance(this);
+			_roomsList = JSON.getRooms(_pref.getString("HOUSE", ""));
+		} 
+		catch (JSONException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		//Current house
+		_intent.putExtra("House", _pref.getString("HOUSE", ""));
+		
+		//Room name being clicked
+		_intent.putExtra("Room",_pref.getString("ROOM", ""));
+		//Room's number
+		_intent.putExtra("NumRooms", _roomsList.size());
+			
+		for(int i=0; i<_roomsList.size(); i++)
+		{		
+			// Key: position, Value button Name.
+			_intent.putExtra(Integer.toString(i) , _roomsList.get(i));	
+			// Key: button name, Value: position.
+			//Necessary to move the 'viewPager' to the desired view.
+			_intent.putExtra(_roomsList.get(i),Integer.toString(i));	
+		}	
+		
+		this.getApplication().startActivity(_intent);	
+		
 		finish();
 	}
 	

@@ -197,6 +197,10 @@ public class Profile extends SherlockActivity implements ImageChooserListener
 					            public void onClick(DialogInterface dialog, int which) 
 					            { 
 					            	_image.setImageURI(Uri.parse(new File(_selectedImage.getFileThumbnail()).toString()));
+					            						            	
+//					            	File _f = new File(_selectedImage.getFileThumbnail());				            	
+//					            	_imgLoader.DisplayImage(_f.getAbsolutePath(), R.drawable.base_picture, _image, 0);					            	
+					            	
 					            	isImageMode = true;
 					            }
 					         })
@@ -240,6 +244,7 @@ public class Profile extends SherlockActivity implements ImageChooserListener
 			
 			JSONObject _obj = new JSONObject(_file);
 			_url = _obj.getString("URL");
+			
 			if(_url!=null)
 			{
 				_imgLoader.DisplayImage(_url, R.drawable.base_picture, _image, 0);

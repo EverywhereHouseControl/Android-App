@@ -53,16 +53,19 @@ public class GCMIntentService extends IntentService
         {
             if (GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE.equals(messageType))
             {
-            	mostrarNotification(Calendar.getInstance().getTimeInMillis(),extras.getString("mensaje"));
+            	long _id = Calendar.getInstance().getTimeInMillis();
+            	mostrarNotification(_id,extras.getString("mensaje"));
             }
-        }
+        }   
         
-        if(!isApplicationBroughtToBackground())
-        {
+        GCMBroadcastReceiver.completeWakefulIntent(intent);
+        
+        SharedPreferences _pref = getSharedPreferences("LOG",Context.MODE_PRIVATE);
+        
+//        if(isApplicationBroughtToBackground())
+//        {
         	Log.d("NO BACKGROUND", "LOGIN HECHO");
-        	
-        	SharedPreferences _pref = getSharedPreferences("LOG",Context.MODE_PRIVATE);
-        	
+                	
         	ArrayList<String> _parametros = new ArrayList<String>();
 			_parametros.add("command");
 			_parametros.add("login2");
@@ -73,12 +76,27 @@ public class GCMIntentService extends IntentService
 			
 			logInConnection _connection = new logInConnection(_parametros);
 			_connection.execute();	
-        }else
-        {
-        	Log.d("SI BACKGROUND", "LOGIN NO HECHO");
-        }
-        
-        GCMBroadcastReceiver.completeWakefulIntent(intent);
+//        }else
+//        {
+//        	Log.d("SI BACKGROUND", "LOGIN NO HECHO");
+//			
+//        	if(_pref.getString("NEWACTIVITY", "").equals("EXIT"))
+//        	{        		
+//				try 
+//				{
+//					Class<?> _clazz = Class.forName( "ehc.net.Main" );
+//					Intent _intent = new Intent( GCMIntentService.this, _clazz );
+//					_intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//	    			GCMIntentService.this.getApplication().startActivity( _intent );
+//				} 
+//				catch ( ClassNotFoundException e ) 
+//				{
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//    			
+//        	}	
+//        }
     }
 	
 	private void mostrarNotification(long id,String msg)
@@ -86,39 +104,68 @@ public class GCMIntentService extends IntentService
 		Intent notIntent = new Intent(this, Main.class);
 		PendingIntent contIntent = PendingIntent.getActivity(this, 0, notIntent, 0);
 		
+		String _msg = msg.substring(msg.indexOf("*")+1);
 		
-		int currentapiVersion = android.os.Build.VERSION.SDK_INT;
+		Log.d("MSG",_msg);
 		
-		if (currentapiVersion >= android.os.Build.VERSION_CODES.HONEYCOMB)
-		{
+		SharedPreferences _pref = getSharedPreferences("LOG",Context.MODE_PRIVATE);
+		
+		
+		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
+		.setDefaults(NotificationCompat.PRIORITY_DEFAULT)
+		.setSmallIcon(R.drawable.ic_launcher)
+		.setContentTitle("EHC notification.")
+		.setLargeIcon((((BitmapDrawable)getResources().getDrawable(R.drawable.ic_launcher)).getBitmap()))
+		.setContentText(msg.substring(0, msg.indexOf("*")))
+		.setTicker(msg.substring(0, msg.indexOf("*")))
+		.setAutoCancel(true)
+		.setContentIntent(contIntent)
+		.setDefaults(Notification.DEFAULT_SOUND);	
+		
+		
+		
+//		int currentapiVersion = android.os.Build.VERSION.SDK_INT;
+		
+//		if (currentapiVersion >= android.os.Build.VERSION_CODES.HONEYCOMB)
+//		{
 		    // Do something for HONEYCOMB and above versions
-			NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
-			.setDefaults(NotificationCompat.PRIORITY_DEFAULT)
-			.setSmallIcon(R.drawable.ic_launcher)
-			.setContentTitle("EHC notification.")
-			.setLargeIcon((((BitmapDrawable)getResources().getDrawable(R.drawable.ic_launcher)).getBitmap()))
-			.setContentText(msg)
-			.setTicker(msg)
-			.setAutoCancel(true)
-			.setContentIntent(contIntent)
-			.setDefaults(Notification.DEFAULT_SOUND);			
+			
+					
 				
 			mNotificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
-			mNotificationManager.notify((int)id, mBuilder.build());	
-		} 
-		else
-		{
-		    // do something for phones running an SDK before HONEYCOMB
-		    // Do something for HONEYCOMB and above versions
-			Notification mBuilder = new Notification(R.drawable.ic_launcher,msg,id);
-			
-			mBuilder.setLatestEventInfo(this, "EHC notification.", msg, contIntent);
-			mBuilder.flags |= Notification.DEFAULT_SOUND | Notification.FLAG_AUTO_CANCEL;	
+			int _id = (int)id;
+			mNotificationManager.notify(_id, mBuilder.build());	
+//		} 
+//		else
+//		{
+//		    // do something for phones running an SDK before HONEYCOMB
+//		    // Do something for HONEYCOMB and above versions
+//			Notification mBuilder = new Notification(R.drawable.ic_launcher,msg,id);
+//			
+//			mBuilder.setLatestEventInfo(this, "EHC notification.", msg, contIntent);
+//			mBuilder.flags |= Notification.DEFAULT_SOUND | Notification.FLAG_AUTO_CANCEL;	
+//				
+//			mNotificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
+//			mNotificationManager.notify((int)id, mBuilder);	
+//			
+//		}
+			if(!isApplicationBroughtToBackground())
+			if(_pref.getString("ID", "").equals(_msg))
+			{
+				try 
+				{
+					Thread.sleep(2000);
+				} 
+				catch (InterruptedException e) 
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				
-			mNotificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
-			mNotificationManager.notify((int)id, mBuilder);	
-			
-		}
+			    NotificationManager notificationManager = (NotificationManager) this
+			            .getSystemService(Context.NOTIFICATION_SERVICE);
+			    notificationManager.cancel(_id);
+			}
 	}
 	
 	public static void closeNotifications()
@@ -203,6 +250,7 @@ public class GCMIntentService extends IntentService
 						JSON.saveProfileInfo(_json_data,GCMIntentService.this);
 						//Save the house's configuration
 						JSON.saveConfig(_json_data.get("JSON"),GCMIntentService.this);
+						JSON.getInstance(GCMIntentService.this);
 					}
 				}
 				else 
@@ -222,6 +270,67 @@ public class GCMIntentService extends IntentService
 		{
             // dismiss the dialog
 			super.onPostExecute(file_url);
+			SharedPreferences _pref = getSharedPreferences("LOG",Context.MODE_PRIVATE);		
+			if(!_pref.getString("NEWACTIVITY", "").equals("OTHER"))
+			{
+				try 
+				{
+					Class<?> _clazz; 
+					
+					
+					if(_pref.getString("NEWACTIVITY", "").equals("FALSE"))
+						_clazz = Class.forName("ehc.net.ItemsFragmentsContainer");
+					else _clazz = Class.forName("enviroment.RemoteController");
+					
+					Intent _intent = new Intent(GCMIntentService.this, _clazz);
+									
+					_intent.putExtra("Service", _pref.getString("SERVICE", ""));
+										
+					_intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+					
+					Log.d("ERROR", _pref.getString("HOUSE", ""));
+					Log.d("ERROR", _pref.getString("ROOM", ""));
+					
+	//				JSON._rooms.indexOf(_button.getBytes().toString())
+					
+					ArrayList<String> _roomsList = new ArrayList<String>();
+					try 
+					{
+						JSON.getInstance(GCMIntentService.this);
+						_roomsList = JSON.getRooms(_pref.getString("HOUSE", ""));
+						
+						Log.d("ERROR", _roomsList.toString());
+					} 
+					catch (JSONException e) 
+					{
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+					//Current house
+					_intent.putExtra("House", _pref.getString("HOUSE", ""));
+					
+					//Room name being clicked
+					_intent.putExtra("Room",_pref.getString("ROOM", ""));
+					//Room's number
+					_intent.putExtra("NumRooms", _roomsList.size());
+						
+					for(int i=0; i<_roomsList.size(); i++)
+					{		
+						// Key: position, Value button Name.
+						_intent.putExtra(Integer.toString(i) , _roomsList.get(i));	
+						// Key: button name, Value: position.
+						//Necessary to move the 'viewPager' to the desired view.
+						_intent.putExtra(_roomsList.get(i),Integer.toString(i));	
+					}	
+					
+					GCMIntentService.this.getApplication().startActivity(_intent);
+				}
+				catch (ClassNotFoundException e) 
+				{
+					e.printStackTrace();
+				}
+			} 		
 		}
     }
 }

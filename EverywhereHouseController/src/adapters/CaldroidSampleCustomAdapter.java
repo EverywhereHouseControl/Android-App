@@ -17,22 +17,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-public class CaldroidSampleCustomAdapter extends CaldroidGridAdapter {
+public class CaldroidSampleCustomAdapter extends CaldroidGridAdapter 
+{
 
 	public CaldroidSampleCustomAdapter(Context context, int month, int year,
 			HashMap<String, Object> caldroidData,
-			HashMap<String, Object> extraData) {
+			HashMap<String, Object> extraData) 
+	{
 		super(context, month, year, caldroidData, extraData);
 	}
 
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
-		LayoutInflater inflater = (LayoutInflater) context
-				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	public View getView(int position, View convertView, ViewGroup parent) 
+	{
+		LayoutInflater inflater = ( LayoutInflater ) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
 		View cellView = convertView;
 
 		// For reuse
-		if (convertView == null) {
+		if ( convertView == null ) 
+		{
 			cellView = inflater.inflate(R.layout.custom_cell, null);
 		}
 
@@ -41,19 +44,19 @@ public class CaldroidSampleCustomAdapter extends CaldroidGridAdapter {
 		int bottomPadding = cellView.getPaddingBottom();
 		int rightPadding = cellView.getPaddingRight();
 
-		TextView tv1 = (TextView) cellView.findViewById(R.id.tv1);
-		TextView tv2 = (TextView) cellView.findViewById(R.id.tv2);
+		TextView tv1 = ( TextView ) cellView.findViewById(R.id.tv1);
+		TextView tv2 = ( TextView ) cellView.findViewById(R.id.tv2);
 
-		tv1.setTextColor(Color.BLACK);
+		tv1.setTextColor( Color.BLACK );
 
 		// Get dateTime of this cell
 		DateTime dateTime = this.datetimeList.get(position);
 		Resources resources = context.getResources();
 
 		// Set color of the dates in previous / next month
-		if (dateTime.getMonth() != month) {
-			tv1.setTextColor(resources
-					.getColor(com.caldroid.R.color.caldroid_darker_gray));
+		if ( dateTime.getMonth() != month ) 
+		{
+			tv1.setTextColor(resources.getColor(com.caldroid.R.color.caldroid_darker_gray));
 		}
 
 		boolean shouldResetDiabledView = false;
@@ -65,41 +68,56 @@ public class CaldroidSampleCustomAdapter extends CaldroidGridAdapter {
 				|| (disableDates != null && disableDates.indexOf(dateTime) != -1)) {
 
 			tv1.setTextColor(CaldroidFragment.disabledTextColor);
-			if (CaldroidFragment.disabledBackgroundDrawable == -1) {
+			if (CaldroidFragment.disabledBackgroundDrawable == -1) 
+			{
 				cellView.setBackgroundResource(com.caldroid.R.drawable.disable_cell);
-			} else {
+			} 
+			else 
+			{
 				cellView.setBackgroundResource(CaldroidFragment.disabledBackgroundDrawable);
 			}
 
-			if (dateTime.equals(getToday())) {
+			if (dateTime.equals(getToday())) 
+			{
 				cellView.setBackgroundResource(com.caldroid.R.drawable.red_border_gray_bg);
 			}
 
-		} else {
+		} 
+		else 
+		{
 			shouldResetDiabledView = true;
 		}
 
 		// Customize for selected dates
-		if (selectedDates != null && selectedDates.indexOf(dateTime) != -1) {
-			if (CaldroidFragment.selectedBackgroundDrawable != -1) {
-				cellView.setBackgroundResource(CaldroidFragment.selectedBackgroundDrawable);
-			} else {
-				cellView.setBackgroundColor(resources
-						.getColor(com.caldroid.R.color.caldroid_sky_blue));
+		if ( selectedDates != null && selectedDates.indexOf( dateTime ) != -1 ) 
+		{
+			if (CaldroidFragment.selectedBackgroundDrawable != -1) 
+			{
+				cellView.setBackgroundResource( CaldroidFragment.selectedBackgroundDrawable );
+			} 
+			else 
+			{
+				cellView.setBackgroundColor( resources.getColor( com.caldroid.R.color.caldroid_sky_blue ) );
 			}
 
-			tv1.setTextColor(CaldroidFragment.selectedTextColor);
+			tv1.setTextColor( CaldroidFragment.selectedTextColor );
 
-		} else {
+		} 
+		else 
+		{
 			shouldResetSelectedView = true;
 		}
 
-		if (shouldResetDiabledView && shouldResetSelectedView) {
+		if ( shouldResetDiabledView && shouldResetSelectedView ) 
+		{
 			// Customize for today
-			if (dateTime.equals(getToday())) {
-				cellView.setBackgroundResource(com.caldroid.R.drawable.red_border);
-			} else {
-				cellView.setBackgroundResource(com.caldroid.R.drawable.cell_bg);
+			if ( dateTime.equals( getToday() ) ) 
+			{
+				cellView.setBackgroundResource( com.caldroid.R.drawable.red_border );
+			} 
+			else 
+			{
+				cellView.setBackgroundResource( com.caldroid.R.drawable.cell_bg );
 			}
 		}
 
@@ -108,11 +126,10 @@ public class CaldroidSampleCustomAdapter extends CaldroidGridAdapter {
 
 		// Somehow after setBackgroundResource, the padding collapse.
 		// This is to recover the padding
-		cellView.setPadding(leftPadding, topPadding, rightPadding,
-				bottomPadding);
+		cellView.setPadding( leftPadding, topPadding, rightPadding,bottomPadding );
 
 		// Set custom color if required
-		setCustomResources(dateTime, cellView, tv1);
+		setCustomResources( dateTime, cellView, tv1 );
 
 		return cellView;
 	}

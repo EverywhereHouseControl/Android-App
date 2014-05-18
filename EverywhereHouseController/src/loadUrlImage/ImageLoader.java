@@ -32,7 +32,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.os.Handler;
+import android.util.Base64;
 import android.util.Log;
 import android.widget.ImageView;
 
@@ -122,23 +124,6 @@ public class ImageLoader
             bitmap = decodeFile(f);
             Log.d("FILE","9");
             
-//            HttpUriRequest request = new HttpGet(url.toString());
-//            HttpClient httpClient = new DefaultHttpClient();
-//            HttpResponse response = httpClient.execute(request);
-//     
-//            StatusLine statusLine = response.getStatusLine();
-//            int statusCode = statusLine.getStatusCode();
-//            if (statusCode == 200) {
-//                HttpEntity entity = response.getEntity();
-//                byte[] bytes = EntityUtils.toByteArray(entity);
-//     
-//                bitmap = BitmapFactory.decodeByteArray(bytes, 0,
-//                        bytes.length);
-//                return bitmap;
-//            } else {
-//                throw new IOException("Download failed, HTTP response code "
-//                        + statusCode + " - " + statusLine.getReasonPhrase());
-//            }
             return bitmap;
         } catch (Exception ex){
            ex.printStackTrace();
@@ -152,48 +137,29 @@ public class ImageLoader
             //decode image size
         	// Assume documentId points to an image file. Build a thumbnail no
 	        // larger than twice the sizeHint
+        	 BitmapFactory.decodeFile(f.getAbsolutePath());
+        	
             BitmapFactory.Options _options = new BitmapFactory.Options();
 	        _options.inJustDecodeBounds = true;
 	        BitmapFactory.decodeFile(f.getAbsolutePath(), _options);
-//	        final int _targetHeight = _image.getHeight(); //175
-//	        final int _targetWidth = _image.getWidth();	//175
-//	        final int _height = _options.outHeight;
-//	        final int _width = _options.outWidth;
-//	        _options.inSampleSize = 1;
-//	        if (_height > _targetHeight ||	 _width > _targetWidth) 
-//	        {
-//	            final int _halfHeight = _height / 2;
-//	            final int _halfWidth = _width / 2;
-//	            // Calculate the largest inSampleSize value that is a power of 2 and
-//	            // keeps both
-//	            // height and width larger than the requested height and width.
-//	            while ((_halfHeight / _options.inSampleSize) > _targetHeight
-//	                    || (_halfWidth / _options.inSampleSize) > _targetWidth) 
-//	            {
-//	                _options.inSampleSize *= 2;
-//	            }
-//	        }
-	        BitmapFactory.Options _options2 = new BitmapFactory.Options();
 	        
-	        Log.d("TAMAÑOS",f.getName()+": "+"Height: "+Integer.toString(_options.outHeight)+" "+"Width: "+Integer.toString(_options.outWidth));
+	        int _width = _options.outWidth;
+	        int _height = _options.outHeight;
+	        float scaleWidth = ((float)  _image.getHeight()) / _width;
+	        float scaleHeight = ((float) _image.getWidth()) / _height;
+	        // create a matrix for the manipulation
+	        Matrix matrix = new Matrix();
+	        // resize the bit map
+	        matrix.postScale(scaleWidth, scaleHeight);
+	        // recreate the new Bitmap
+	        Bitmap resizedBitmap = Bitmap.createBitmap(BitmapFactory.decodeFile(f.getAbsolutePath()), 0, 0, _width, _height,matrix, false);
 	        
-	        if(_fullMode==1)_options2.inSampleSize = 1;
-	        else
-	            if(_options.outHeight >1000 || _options.outWidth>1000)
-	            {
-	            	_options2.inSampleSize = 14;
-	            }
-	            else
-	            {
-	            	_options2.inSampleSize = 2;
-	            }
-            
-            
-            _options2.inJustDecodeBounds = false;
-	        _options2.inScaled = true;
-        	     
-            return BitmapFactory.decodeStream(new FileInputStream(f), null, _options2);
-        } catch (FileNotFoundException e) {}
+	        return resizedBitmap;	        
+        } 
+        catch (Exception e) 
+        {
+        	e.printStackTrace();
+        }
         return null;
     }
   

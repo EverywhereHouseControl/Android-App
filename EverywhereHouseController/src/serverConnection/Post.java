@@ -18,6 +18,7 @@ import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -43,8 +44,7 @@ public class Post
 	 * @param _URL
 	 * @return
 	 */
-//	public JSONArray getServerData(ArrayList<String> parameters, String URL)
-	public static JSONObject getServerData(ArrayList<String> parameters, String URL)
+	public static JSONObject getServerData( ArrayList<String> parameters, String URL )
 	{				 					 
 		connectionPost( parameters, URL );
 		
@@ -53,9 +53,8 @@ public class Post
 			getResponsePost();
 		}
 		
-		if (_response != null /*&& response.trim() != ""*/) 
+		if ( _response != null ) 
 		{		
-//			return getJsonArray();
 			JSONObject _json = null;
 			try 
 			{
@@ -79,35 +78,35 @@ public class Post
 	 * @param _parametros
 	 * @param _URL
 	 */
-	private static void connectionPost(ArrayList<String> parametros, String URL) 
+	private static void connectionPost( ArrayList<String> parametros, String URL ) 
 	{				                         
 		ArrayList<BasicNameValuePair> _nameValuePairs;	                         
 		try 
 		{                                              
 			HttpClient _httpclient = new DefaultHttpClient();                                              
-			HttpPost _httppost = new HttpPost(URL);				                                                
+			HttpPost _httppost = new HttpPost( URL );				                                                
 			//------------------------
-			_httppost.setURI( new URI(URL) );
+			_httppost.setURI( new URI( URL ) );
 			//-------------------------
 			_nameValuePairs = new ArrayList<BasicNameValuePair>();			
 			                                                
-			if (parametros != null) 
+			if ( parametros != null ) 
 			{				                                                                        
 				for (int i = 0; i < parametros.size() - 1; i += 2) 
 				{			 
-					_nameValuePairs.add(new BasicNameValuePair( parametros.get(i), parametros.get(i + 1)));				                                                                        
+					_nameValuePairs.add( new BasicNameValuePair( parametros.get( i ), parametros.get( i + 1 ) ) );				                                                                        
 				}				 
-				_httppost.setEntity(new UrlEncodedFormEntity(_nameValuePairs));				                                                
+				_httppost.setEntity( new UrlEncodedFormEntity( _nameValuePairs ) );				                                                
 			}
 					
-			HttpResponse _response = _httpclient.execute(_httppost);
+			HttpResponse _response = _httpclient.execute( _httppost );
 			HttpEntity _entity = _response.getEntity();
 			_is = _entity.getContent();
 			
 		} 
 		catch (Exception e) 
 		{				                                                
-			Log.e("log_tag", "Error in http connection " + e.toString());				                         
+			Log.e("log_tag", "Error in http connection " + e.toString() );				                         
 		}			
 	}
 
@@ -118,23 +117,21 @@ public class Post
 	{				 
 		try 
 		{				 
-			BufferedReader _reader = new BufferedReader( new InputStreamReader(_is, "iso-8859-1"), 8 );				 
+			BufferedReader _reader = new BufferedReader( new InputStreamReader( _is, "iso-8859-1"), 8 );				 
 			StringBuilder _sb = new StringBuilder();				 
 			String _line = null;
 			 
-			while ((_line = _reader.readLine()) != null) 
+			while ( ( _line = _reader.readLine() ) != null ) 
 			{				                         
-				_sb.append(_line + "\n");	
-				Log.e("line",_line.toString());
+				_sb.append( _line + "\n" );	
+				Log.e( "line", _line.toString() );
 			}				 
 			_is.close();				 
-			_response = _sb.toString();				 
-			//Log.e("log_tag", "String JSon " + response.toString());
-			
+			_response = _sb.toString();			
 		} 
 		catch (Exception e) 
 		{				                         
-			Log.e("log_tag", "Error converting result " + e.toString());				                         
+			Log.e( "log_tag", "Error converting result " + e.toString() );				                         
 		}
 			 
 	}
@@ -143,99 +140,86 @@ public class Post
 	 * Convierte el string "respuesta" en un JSONArray
 	 * @return
 	 */
-//	private JSONArray getJsonArray() 
-//	{				                         
-//		JSONArray _jArray = null;
-//		try 
-//		{	
-//			JSONObject _json = new JSONObject( _response );
-//			_jArray = _json.getJSONArray( "result" );
-//			
-//		} catch ( Exception e ) 
-//		{
-//			System.out.print( "ERROR:" + e );
-//		} 
-//						                                                
-//		return _jArray;		                         		 
-//	}
+	@SuppressWarnings("unused")
+	private JSONArray getJsonArray() 
+	{				                         
+		JSONArray _jArray = null;
+		try 
+		{	
+			JSONObject _json = new JSONObject( _response );
+			_jArray = _json.getJSONArray( "result" );
+			
+		} catch ( Exception e ) 
+		{
+			System.out.print( "ERROR:" + e );
+		} 
+						                                                
+		return _jArray;		                         		 
+	}
 			 
 	/**
 	 * Method that encrypts the password
 	 * @param s
 	 * @return
 	 */
-	public static String md5(String s) 
+	public static String md5( String s ) 
 	{
 		StringBuffer sb = new StringBuffer();
         try 
         {
-            final java.security.MessageDigest md = java.security.MessageDigest.getInstance("MD5");
-            final byte[] array = md.digest(s.getBytes("UTF-8"));
-            for (int i = 0; i < array.length; ++i) {
-                sb.append(Integer.toHexString((array[i] & 0xFF) | 0x100).substring(1, 3));
+            final java.security.MessageDigest md = java.security.MessageDigest.getInstance( "MD5" );
+            final byte[] array = md.digest( s.getBytes( "UTF-8" ) );
+            for ( int i = 0; i < array.length; ++i ) 
+            {
+                sb.append( Integer.toHexString( ( array[ i ] & 0xFF) | 0x100 ).substring( 1, 3 ) );
             }
             return sb.toString();
         } 
-        catch (Exception e) 
+        catch ( Exception e ) 
         {
         	e.printStackTrace();
         }
         return sb.toString();
 	}
 	
-	public static JSONObject connectionPostUpload(ArrayList<String> parametros, String URL, String imagePath)
+	public static JSONObject connectionPostUpload( ArrayList<String> parametros, String URL, String imagePath )
 	{	
 		try
 		{
 			HttpClient _httpclient = new DefaultHttpClient();
-			HttpPost _httppost = new HttpPost(URL);	
-			//------------------------
-			_httppost.setURI( new URI(URL) );
-			//-------------------------
+			HttpPost _httppost = new HttpPost( URL );	
+			_httppost.setURI( new URI( URL ) );
 
-//			imagePath.replace(" ", "");
-			File file = new File(imagePath);
 			
-//        	Intent photoPickerIntent = new Intent(
-//                    Intent.ACTION_PICK,
-//                    android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-//            // photoPickerIntent.setType("image/*");
-//            photoPickerIntent.putExtra("crop", "true");
-//            photoPickerIntent.putExtra("outputX", 512);
-//            photoPickerIntent.putExtra("outputY", 512);
-//            photoPickerIntent.putExtra("aspectX", 1);
-//            photoPickerIntent.putExtra("aspectY", 1);
-//            photoPickerIntent.putExtra("scale", true);
-//            File file = new File(android.os.Environment
-//                    .getExternalStoragePublicDirectory(f.getParent()), f.getName());
-			
+			File file = new File( imagePath );
+						
 			MultipartEntity mpEntity = new MultipartEntity();
-			ContentBody cbFile = new FileBody(file, "image/jpeg");
-			mpEntity.addPart(parametros.get(0), new StringBody(parametros.get(1)));
-			mpEntity.addPart("imagen", cbFile);
+			ContentBody cbFile = new FileBody( file, "image/jpeg" );
+			mpEntity.addPart( parametros.get( 0 ), new StringBody( parametros.get( 1 ) ) );
+			mpEntity.addPart( "imagen", cbFile );
 
-			_httppost.setEntity(mpEntity);  
-			HttpResponse _response = _httpclient.execute(_httppost);
+			_httppost.setEntity( mpEntity );  
+			HttpResponse _response = _httpclient.execute( _httppost );
 			HttpEntity _entity = _response.getEntity();
 			_is = _entity.getContent();
 		}
-		catch (Exception e)
+		catch ( Exception e )
 		{	
-			Log.e("log_tag", "Error in http connection " + e.toString());	
+			Log.e( "log_tag", "Error in http connection " + e.toString() );	
 		}
 		
 		if (_is != null) 
 		{				                                                
 			getResponsePost();
 		}
-		if (_response != null ) 
+		if ( _response != null ) 
 		{		
 			JSONObject _json = null;
 			try 
 			{
 				_json = new JSONObject( _response );
 			} 
-			catch (JSONException e) 
+			catch ( JSONException e ) 
 			{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -253,32 +237,32 @@ public class Post
     {   
     	private Context _context;
     	
-    	public logOutConnection(Context context)
+    	public logOutConnection( Context context )
     	{
     		_context = context;
     	}
     	
     	@Override
-		protected String doInBackground(String... params) 
+		protected String doInBackground( String... params ) 
 		{
 			// TODO Auto-generated method stub			
 			//Variable 'Data' saves the query response
-    		SharedPreferences _pref = _context.getSharedPreferences("LOG",Context.MODE_PRIVATE);
+    		SharedPreferences _pref = _context.getSharedPreferences( "LOG",Context.MODE_PRIVATE );
     		
     		ArrayList<String> _parametros = new ArrayList<String>();
     		
-			_parametros.add("command");
-			_parametros.add("logout");
-			_parametros.add("username");
-			_parametros.add(_pref.getString("USER", ""));
-			_parametros.add("regid");
-			_parametros.add(_pref.getString("ID", ""));
+			_parametros.add( "command" );
+			_parametros.add( "logout" );
+			_parametros.add( "username" );
+			_parametros.add( _pref.getString( "USER", "" ) );
+			_parametros.add( "regid" );
+			_parametros.add( _pref.getString( "ID", "" ) );
 			
 			 Editor _editor=_pref.edit();
-	        _editor.putString("ID", "");
+	        _editor.putString( "ID", "" );
 	        _editor.commit();
 			
-			getServerData(_parametros,_ip);
+			getServerData( _parametros,_ip );
 			
 			return null;
 		}  

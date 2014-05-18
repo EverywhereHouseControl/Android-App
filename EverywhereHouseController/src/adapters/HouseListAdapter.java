@@ -3,10 +3,6 @@ package adapters;
 import java.io.File;
 import java.util.ArrayList;
 
-import org.json.JSONObject;
-
-import serverConnection.Post;
-
 import loadUrlImage.ImageLoader;
 
 import com.kbeanie.imagechooser.api.ChosenImage;
@@ -40,20 +36,18 @@ public class HouseListAdapter extends BaseAdapter
 	private ArrayList<String> _urls = new ArrayList<String>();
 	private ArrayList<String> _access = new ArrayList<String>();
 	public static ImageLoader _imgLoader;
-	public static Post _post;
-	JSONObject _data = new JSONObject();
-	public static String _currentHouse;
+	private static String _currentHouse;
 	private ImageView _imageDialog;
 	//-------------------------------------------------------------
 
-	public HouseListAdapter(Context context, ArrayList<String> ObjectList,ArrayList<String> urls,ArrayList<String> access, int convertView)
+	public HouseListAdapter( Context context, ArrayList<String> ObjectList,ArrayList<String> urls,ArrayList<String> access, int convertView )
 	{
 		_context = context;
 		_objectList = ObjectList;
 		_path = null;
 		_convertView = convertView;
 		_urls = urls;
-		_imgLoader = new ImageLoader(_context);
+		_imgLoader = new ImageLoader( _context );
 		_access = access;
 	}
 
@@ -65,84 +59,84 @@ public class HouseListAdapter extends BaseAdapter
 	}
 	
 	@Override
-	public Object getItem(int position)
+	public Object getItem( int position )
 	{	
 		return null;
 	}
 	
 	@Override
-	public long getItemId(int position)
+	public long getItemId( int position )
 	{
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public View getView(final int position, View convertView, ViewGroup parent)
+	public View getView( final int position, View convertView, ViewGroup parent )
 	{
 		// TODO Auto-generated method stub
 		
 		View _view = convertView;
-		if(_view == null)
+		if( _view == null )
 		{
-			LayoutInflater _inflater = (LayoutInflater) _context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			_view = _inflater.inflate(_convertView,null);	
+			LayoutInflater _inflater = ( LayoutInflater ) _context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
+			_view = _inflater.inflate( _convertView,null );	
 		}
 		
-		final Button _button = (Button) _view.findViewById(R.id.HouseButton);
-		_button.setText(_objectList.get(position));
-		_button.setOnClickListener(new View.OnClickListener()
+		final Button _button = ( Button ) _view.findViewById( R.id.HouseButton );
+		_button.setText( _objectList.get( position ) );
+		_button.setOnClickListener( new View.OnClickListener()
 		{
 			@Override
-			public void onClick(View v)
+			public void onClick( View v )
 			{
 				//TODO Auto-generated method stub
-				if(_access.get(position).equals("3"))
+				if( _access.get( position ).equals( "3" ) )
 				{
-					Toast.makeText(_context, "Required access", Toast.LENGTH_SHORT).show();
+					Toast.makeText( _context, "Required access", Toast.LENGTH_SHORT ).show();
 				}
 				else
-					HousesMenu.createdMainMenuIntent(_button.getText().toString());
+					HousesMenu.createdMainMenuIntent( _button.getText().toString() );
 			}
 		});
 	
 	
-		_image = (ImageButton) _view.findViewById(R.id.HouseImageList);
-		_image.setOnClickListener(new View.OnClickListener()
+		_image = ( ImageButton ) _view.findViewById( R.id.HouseImageList );
+		_image.setOnClickListener( new View.OnClickListener()
 		{
 		
 			@Override
-			public void onClick(View v)
+			public void onClick( View v )
 			{
 				// TODO Auto-generated method stub
 				// custom dialog
-				_currentHouse = _objectList.get(position);
+				_currentHouse = _objectList.get( position );
 				HousesMenu._selectMode = false;
-				final Dialog dialog = new Dialog(_context);
-				dialog.setTitle("Image");
-				dialog.setContentView(R.layout.image_dialog);
+				final Dialog dialog = new Dialog( _context );
+				dialog.setTitle( "Image" );
+				dialog.setContentView( R.layout.image_dialog );
 				
-				_imageDialog = (ImageView) dialog.findViewById(R.id.userImageDialog);
-				_imgLoader.DisplayImage(_urls.get(position), R.drawable.base_picture, _imageDialog, 1);
+				_imageDialog = ( ImageView ) dialog.findViewById( R.id.userImageDialog );
+				_imgLoader.DisplayImage( _urls.get( position ), R.drawable.base_picture, _imageDialog, 1 );
 				
-				ImageButton _takePicture = (ImageButton)dialog.findViewById(R.id.takePicture);
-				_takePicture.setOnClickListener(new View.OnClickListener()
+				ImageButton _takePicture = ( ImageButton )dialog.findViewById( R.id.takePicture );
+				_takePicture.setOnClickListener( new View.OnClickListener()
 				{
 				
 					@Override
-					public void onClick(View v)
+					public void onClick( View v )
 					{
 						// TODO Auto-generated method stub
 						HousesMenu.takePicture();
 					}
 				});
 				
-				ImageButton _choosePicture = (ImageButton)dialog.findViewById(R.id.choosePicture);
-				_choosePicture.setOnClickListener(new View.OnClickListener()
+				ImageButton _choosePicture = ( ImageButton )dialog.findViewById( R.id.choosePicture );
+				_choosePicture.setOnClickListener( new View.OnClickListener()
 				{
 				
 					@Override
-					public void onClick(View v)
+					public void onClick( View v )
 					{
 						// TODO Auto-generated method stub
 						HousesMenu.chooseImage();
@@ -150,36 +144,36 @@ public class HouseListAdapter extends BaseAdapter
 				});
 				
 				dialog.onBackPressed();
-				dialog.setOnCancelListener(new OnCancelListener()
+				dialog.setOnCancelListener( new OnCancelListener()
 				{
 				
 					@Override
-					public void onCancel(DialogInterface dialog)
+					public void onCancel (DialogInterface dialog )
 					{
 					// TODO Auto-generated method stub
 					
-						if(HousesMenu._selectMode)
+						if( HousesMenu._selectMode )
 						{
 						
-							new AlertDialog.Builder(_context)
-							.setTitle("Image")
-							.setMessage("Save changes?")
-							.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener()
+							new AlertDialog.Builder( _context )
+							.setTitle( "Image" )
+							.setMessage( "Save changes?" )
+							.setNegativeButton( android.R.string.no, new DialogInterface.OnClickListener()
 							{
-								public void onClick(DialogInterface dialog, int which)
+								public void onClick( DialogInterface dialog, int which )
 								{
 									// do nothing
 								}
 							})
-							.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener()
+							.setPositiveButton( android.R.string.yes, new DialogInterface.OnClickListener()
 							{
-								public void onClick(DialogInterface dialog, int which)
+								public void onClick( DialogInterface dialog, int which )
 								{
-									HousesMenu._check.setChecked(true);
+									HousesMenu._check.setChecked( true );
 									HousesMenu._currentHouse = _currentHouse;
 								}
 							})
-							.setIcon(android.R.drawable.ic_dialog_alert)
+							.setIcon( android.R.drawable.ic_dialog_alert )
 							.show();
 						}
 					}
@@ -189,30 +183,31 @@ public class HouseListAdapter extends BaseAdapter
 			}
 		});
 		
-		if(!_urls.get(position).equals("null"))
+		if( !_urls.get( position ).equals( "null" ) )
 		{
-			_path = _urls.get(position);
-			_imgLoader.DisplayImage(_path, R.drawable.base_picture, _image, 0);
+			_path = _urls.get( position );
+			_imgLoader.DisplayImage( _path, R.drawable.base_picture, _image, 0 );
 		
 		}
-		else _image.setImageResource(R.drawable.base_picture);
+		else _image.setImageResource( R.drawable.base_picture );
 		
 		return _view;
 	}
 
 	/**
-	*
-	*/
-	public void setChosenImage(ChosenImage image)
+	 * 
+	 * @param image
+	 */
+	public void setChosenImage( ChosenImage image )
 	{
-		_imageDialog.setImageURI(Uri.parse(new File(image.getFileThumbnail()).toString()));
+		_imageDialog.setImageURI( Uri.parse( new File( image.getFileThumbnail() ).toString() ) );
 	}
 
 	/**
 	*
 	* @param path
 	*/
-	public void setPathImage(String path)
+	public void setPathImage( String path )
 	{
 		_path = path;
 	}

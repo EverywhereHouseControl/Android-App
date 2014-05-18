@@ -3,6 +3,8 @@ package ehc.net;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import parserJSON.JSON;
+
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.app.ActionBar.Tab;
@@ -12,6 +14,9 @@ import ehc.net.R;
 import framework.ItemsFragment;
 import adapters.SlidingMenuAdapter;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -114,6 +119,22 @@ public class ItemsFragmentsContainer extends SherlockFragmentActivity
     		    	
         //Move the ViewPager to the desired view.
         _mPager.setCurrentItem(Integer.parseInt(buttonPosition));
+        
+        
+		//////////////////////////////////////////////
+//		SharedPreferences _pref = getSharedPreferences("LOG",Context.MODE_PRIVATE);
+//		int _pageTag = _pref.getInt("ROOM", -1);
+//		
+//		if(_pageTag!=-1)
+//		{
+//			_mTabsAdapter.onPageSelected(_pageTag);
+//		}
+//		
+//		Editor _editor=_pref.edit();
+//		_editor.putInt("ROOM",-1);	
+//		_editor.commit();
+		//////////////////////////////////////////////
+        
 	 }
 	 
 	 @Override
@@ -204,23 +225,27 @@ public class ItemsFragmentsContainer extends SherlockFragmentActivity
 		@Override
 		public Fragment getItem(int position)
 		{
-			 return new ItemsFragment(_tableButtons.get(String.valueOf(position)),_houseName);			
+			 return new ItemsFragment(ItemsFragmentsContainer.this,_tableButtons.get(String.valueOf(position)),_houseName);			
 		}
 	
+		@Override
 		public void onPageScrolled(int position, float positionOffset,
 				int positionOffsetPixels)
 		{
 		}
 	
+		@Override
 		public void onPageSelected(int position)
 		{
 			_mActionBar.setSelectedNavigationItem(position);
 		}
 	
+		@Override
 		public void onPageScrollStateChanged(int state)
 		{
 		}
-	
+		
+		@Override
 		public void onTabSelected(Tab tab, FragmentTransaction ft)
 		{
 			Object _tag = tab.getTag();
@@ -233,15 +258,16 @@ public class ItemsFragmentsContainer extends SherlockFragmentActivity
 			}
 		}
 	
+		@Override
 		public void onTabUnselected(Tab tab, FragmentTransaction ft)
 		{
 		}
 	
+		@Override
 		public void onTabReselected(Tab tab, FragmentTransaction ft)
 		{
 		}
-	}
-	 
+	}	 
 	 	/**
 	     * Method for debug.
 	     * @param _text
@@ -267,5 +293,30 @@ public class ItemsFragmentsContainer extends SherlockFragmentActivity
 	    {
 	    	super.onStop();
 	    	log( "Stoped" );
+	    }
+	    
+	    @Override
+	    public void onBackPressed() 
+	    {
+	    	// TODO Auto-generated method stub
+	    	//super.onBackPressed();
+	    	
+	    	SharedPreferences _pref = getSharedPreferences( "LOG",Context.MODE_PRIVATE );
+			Editor _editor=_pref.edit();
+			_editor.putString( "NEWACTIVITY", "OTHER" );
+			_editor.commit();
+	    	
+	    	Class<?> _class = null;
+			try 
+			{
+				_class = Class.forName("ehc.net.ManagementMenu");
+			} catch (ClassNotFoundException e) 
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			Intent _intent = new Intent( getApplicationContext(),_class );
+			_intent.putExtra("House",_houseName);
+			startActivity( _intent );
 	    }
 }

@@ -13,16 +13,6 @@
     android:background="@color/GreenApp"
     android:orientation="vertical" >
 
-    <ImageButton
-        android:id="@+id/UserImage"
-        android:layout_width="170dp"
-        android:layout_height="170dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:background="@color/GreenApp"
-        android:src="@drawable/user_icon" />
-
     <RelativeLayout
         android:id="@+id/RelativeLayout1"
         android:layout_width="wrap_content"
@@ -151,6 +141,16 @@
             </TableRow>
         </TableLayout>
     </RelativeLayout>
+
+    <ImageButton
+        android:id="@+id/UserImage"
+        android:layout_width="fill_parent"
+        android:layout_height="170dp"
+        android:layout_alignLeft="@+id/relativeLayout3"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/relativeLayout3"
+        android:background="@color/GreenApp"
+        android:src="@drawable/user_icon" />
 
 </RelativeLayout>
 

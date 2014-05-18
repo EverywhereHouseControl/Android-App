@@ -12,7 +12,7 @@ import parserJSON.JSON;
 
 import adapters.ExpandableListAdapter;
 import android.annotation.SuppressLint;
-import android.opengl.Visibility;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -20,7 +20,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
-import android.widget.ImageView;
 import android.widget.ExpandableListView.OnGroupCollapseListener;
 import android.widget.TextView;
 
@@ -31,17 +30,18 @@ import android.widget.TextView;
 		private JSON _JSONFile;
 		private String _button;
 		private String _house;
-		com.actionbarsherlock.view.Menu _menu;
-		TextView _textRoom;
-		ExpandableListView _expListView;
-		List<String> _groupList;
-		HashMap<String, List<String>> _listDataChild;
+		private TextView _textRoom;
+		private ExpandableListView _expListView;
+		private List<String> _groupList;
+		private HashMap<String, List<String>> _listDataChild;
+		private Context _context;
 		//--------------------------------------------
 		
-		public ItemsFragment(String button, String houseName)
+		public ItemsFragment(Context context,String button, String houseName)
 		{
 			_button = button;
 			_house = houseName;
+			_context = context;
 		}
 	    
 	    @Override
@@ -70,10 +70,6 @@ import android.widget.TextView;
 				{
 					switch(_list.getInt("interface"))
 					{
-//						case 0:
-//						{
-//							
-//						}
 						case 1:
 						{							
 							List<String> controller = new ArrayList<String>();
@@ -162,50 +158,8 @@ import android.widget.TextView;
 				{
 					e.printStackTrace();
 				}
-				
-				
-	    		
-//	    		if (items.get(i).equals("DOOR"))
-//	    		{
-//	    			List<String> door = new ArrayList<String>();
-//	    			door.add("boolean");
-//	    			_listDataChild.put(items.get(i),door);
-//	    		} 
-//	    		else if (items.get(i).equals("LIGHTS"))
-//	    		{
-//	    			List<String> lights = new ArrayList<String>();
-//	    			lights.add("boolean");
-//	    			_listDataChild.put(items.get(i),lights);
-//    			}
-//    			else if (items.get(i).equals("STEREO"))
-//    			{
-//	    			List<String> stereo = new ArrayList<String>();
-//	    			stereo.add("float");
-//	    			stereo.add("boolean");
-//	    			_listDataChild.put(items.get(i),stereo);
-//    			} 
-//    			else if (items.get(i).equals("DVD") || items.get(i).equals("TV") || 
-//    					items.get(i).equals("AIRCONDITIONING") || items.get(i).equals("HEATING"))
-//    			{
-//	    			List<String> controller = new ArrayList<String>();
-//	    			controller.add("controller");
-//	    			_listDataChild.put(items.get(i),controller);
-//    			}
-//    			else if (items.get(i).equals("BLINDS"))
-//    			{
-//	    			List<String> blinds = new ArrayList<String>();
-//	    			blinds.add("integer");
-//	    			blinds.add("integer");
-//	    			_listDataChild.put(items.get(i),blinds);
-//    			} 
-//    			else
-//    			{
-//    				List<String> other = new ArrayList<String>();
-//    				other.add("boolean");
-//	    			_listDataChild.put(items.get(i),other);
-//    			}
 	    	}	
-	    	Log.d("SERVICE",_listDataChild.toString());
+	    	
 	    	return _listDataChild;
 	    }
 	    
@@ -215,19 +169,18 @@ import android.widget.TextView;
 	    @Override
 	    public View onCreateView( LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState )
 	    {
+	    	_JSONFile = JSON.getInstance(getActivity().getApplicationContext());
+	    	    	
 	    	ViewGroup rootView = ( ViewGroup ) inflater.inflate( R.layout.items_view, container, false );
 	    	_expListView = (ExpandableListView) rootView.findViewById(R.id.itemlist);
 	    	    	
 	    	_textRoom = (TextView)rootView.findViewById(R.id.textRoom);
 	    	_textRoom.setText(_button.toUpperCase());
-	    	_textRoom.setVisibility(View.GONE);
+	    	_textRoom.setVisibility(View.GONE);	    	
 	    	
-	    	_JSONFile = JSON.getInstance(getActivity().getApplicationContext());
-	    	Log.d("_JSONFILE", "creado");
 	    	
 	    	_groupList = new ArrayList<String>();
 			_listDataChild = new HashMap<String, List<String>>();
-			Log.d("_JSONFILE", "creación estructuras");
 
 	    	try 
 	    	{

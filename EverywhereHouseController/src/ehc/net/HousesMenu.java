@@ -23,7 +23,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -35,7 +34,6 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,7 +45,7 @@ public class HousesMenu extends Activity implements ImageChooserListener
 	private static ImageChooserManager imageChooserManager;
 	private static int chooserType;
 	private static String filePath;
-	private ImageView _currentImage;
+//	private ImageView _currentImage;
 	private TextView _textViewFile;
 	private HouseListAdapter _ListAdapter;
 	private ArrayList<String> _housesList;
@@ -57,6 +55,7 @@ public class HousesMenu extends Activity implements ImageChooserListener
 	private String _file;
 	public static String _currentHouse;
 	private static ChosenImage _chosenImage = new ChosenImage();
+	private ImageButton _button;
 	public static CheckBox _check;
 	private Context _context;
 	private final String _ip = Post._ip;
@@ -82,7 +81,7 @@ public class HousesMenu extends Activity implements ImageChooserListener
         if(_housesList.isEmpty())
         {
         	_context = this.getBaseContext();
-        	ImageButton _button = (ImageButton) findViewById(R.id.HouseImageButton);
+        	_button = (ImageButton) findViewById(R.id.HouseImageButton);        	
         	_button.setOnClickListener(new View.OnClickListener() 
         	{				
 				@Override
@@ -139,7 +138,7 @@ public class HousesMenu extends Activity implements ImageChooserListener
 			
 		_selectMode = false;     
 		_activity = HousesMenu.this;
-		_currentImage = new ImageView(_activity);
+//		_currentImage = new ImageView(_activity);
 		_textViewFile = new TextView(_activity);
 		
 		//It's load the profile's information.
@@ -246,12 +245,15 @@ public class HousesMenu extends Activity implements ImageChooserListener
 				if (image != null) 
 				{
 					_textViewFile.setText(image.getFilePathOriginal());
-					_currentImage.setImageURI(Uri.parse(new File(image.getFileThumbnail()).toString()));
+//					_currentImage.setImageURI(Uri.parse(new File(image.getFileThumbnail()).toString()));
+//					
+//					_currentImage.setMaxHeight(_button.getScrollX());
+//					_currentImage.setMaxWidth(_button.getScrollY());
+					
 					_ListAdapter.setChosenImage(image);
 					_ListAdapter.setPathImage(_textViewFile.getText().toString());
 					_selectMode = true;
-					_chosenImage = image;
-					
+					_chosenImage = image;					
 					try 
 					{
 						finalize();

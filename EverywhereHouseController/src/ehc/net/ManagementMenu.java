@@ -33,6 +33,7 @@ public class ManagementMenu extends SherlockActivity
 	private ActionBarDrawerToggle _actbardrawertoggle;
 	private DrawerLayout _dl;
 	private ListView _drawer;
+	private String _house;
 	// -------------------------------
 
 	@Override
@@ -40,6 +41,7 @@ public class ManagementMenu extends SherlockActivity
     {   
 		super.onCreate( savedInstanceState );
 		setContentView( R.layout.management_menu_view );
+				
         /////////////////////////////////////////////////////////////////////////////////////////
        _drawer = (ListView) findViewById(R.id.ListViewSlidingMenu);		
 		final SlidingMenuAdapter _adapter = new 
@@ -73,7 +75,6 @@ public class ManagementMenu extends SherlockActivity
         _dl.setDrawerListener(_actbardrawertoggle);	
 		/////////////////////////////////////////////////////////////////////////////////////////
         //-----------------It Reads config.json-----------------
-		String _house = null;
         _JSONFile = JSON.getInstance(getApplicationContext());	
 		try 
 		{
@@ -210,9 +211,31 @@ public class ManagementMenu extends SherlockActivity
     	super.onStop();
     	log( "Stoped" );
     }
+    
     protected void onDestroy()
     {
     	super.onDestroy();
     	log( "Destroy" );
     }
+    
+    @Override
+    public void onBackPressed() 
+    {
+    	// TODO Auto-generated method stub
+//    	super.onBackPressed();
+    	onDestroy();
+    	try 
+    	{
+			Class<?> _clazz = Class.forName( "ehc.net.MainMenu" );
+			Intent _intent = new Intent( this,_clazz );
+			_intent.putExtra("House",_house);
+			startActivity( _intent );
+		} 
+		catch ( ClassNotFoundException e ) 
+		{
+			e.printStackTrace();
+		}
+    }
+    
+    
 }

@@ -7,29 +7,26 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import parserJSON.JSON;
-
-import ehc.net.R;
-
 import android.content.Context;
 import android.graphics.Typeface;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import ehc.net.R;
 
 public class ListAdapter extends BaseAdapter
 {
-
+	//------------Variables-----------------------
 	private Context _context;
 	private ArrayList<String> _list;
 	private int _itemView;
 	private String _house;
+	//-------------------------------------------
 	
-	
-	public ListAdapter(Context context, ArrayList<String> list, int contentView, String house)
+	public ListAdapter( Context context, ArrayList<String> list, int contentView, String house )
 	{
 		_context = context;
 		_list = new ArrayList<String>();
@@ -46,95 +43,94 @@ public class ListAdapter extends BaseAdapter
 	}
 
 	@Override
-	public Object getItem(int position) 
+	public Object getItem( int position ) 
 	{
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public long getItemId(int position) 
+	public long getItemId( int position ) 
 	{
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent) 
+	public View getView( int position, View convertView, ViewGroup parent ) 
 	{
 		// TODO Auto-generated method stub
 		View _view = convertView;
-		if(_view == null)
+		if( _view == null )
 		{
-			LayoutInflater _inflater = (LayoutInflater) _context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			_view = _inflater.inflate(_itemView,null);	
+			LayoutInflater _inflater = ( LayoutInflater ) _context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
+			_view = _inflater.inflate( _itemView,null );	
 		}
 		
-		TextView _textView = (TextView) _view.findViewById(R.id.RoomGroupName);
-		_textView.setTypeface(null, Typeface.BOLD);
-		_textView.setText(_list.get(position).toUpperCase());
+		TextView _textView = ( TextView ) _view.findViewById( R.id.RoomGroupName );
+		_textView.setTypeface( null, Typeface.BOLD );
+		_textView.setText( _list.get( position ) );
 		
-		ImageView _imageView = (ImageView) _view.findViewById(R.id.HouseImageList);
+		ImageView _imageView = ( ImageView ) _view.findViewById( R.id.HouseImageList );
 		
 		
-		 JSON.getInstance(_context);
-		 JSONArray _rooms = JSON._roomsHouses.get(_house);
+		 JSON.getInstance( _context );
+		 JSONArray _rooms = JSON._roomsHouses.get( _house );
 		 JSONObject _room;
+		 
 		 try 
 		 {
-			_room = _rooms.getJSONObject(position);
-			Log.d("ROOM",_room.toString());
+			_room = _rooms.getJSONObject( position );
 			
-			switch(_room.getInt("interface"))
+			switch( _room.getInt( "interface" ) )
 			{
 				case 0:
 				{
-					_imageView.setBackgroundResource(R.drawable.cooker);
+					_imageView.setBackgroundResource( R.drawable.cooker );
 					break;
 				}
 				case 1:
 				{
-					_imageView.setBackgroundResource(R.drawable.sofa);
+					_imageView.setBackgroundResource( R.drawable.sofa );
 					break;
 				}
 				case 2:
 				{
-					_imageView.setBackgroundResource(R.drawable.bed);
+					_imageView.setBackgroundResource( R.drawable.bed );
 					break;
 				}
 				case 3:
 				{
-					_imageView.setBackgroundResource(R.drawable.bathroom);
+					_imageView.setBackgroundResource( R.drawable.bathroom );
 					break;
 				}
 				case 4:
 				{
-					_imageView.setBackgroundResource(R.drawable.watering_can);
+					_imageView.setBackgroundResource( R.drawable.watering_can );
 					break;
 				}
 				case 5:
 				{
-					_imageView.setBackgroundResource(R.drawable.garage);
+					_imageView.setBackgroundResource( R.drawable.garage );
 					break;
 				}
 				case 6:
 				{
-					_imageView.setBackgroundResource(R.drawable.terrace);
+					_imageView.setBackgroundResource( R.drawable.terrace );
 					break;
 				}
 				default:
 				{
-					_imageView.setBackgroundResource(R.drawable.interrogation);
+					_imageView.setBackgroundResource( R.drawable.interrogation );
 				}
 			}
 			
 		} 
-		 catch (JSONException e) 
+		 catch ( JSONException e ) 
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		
+		}		
 		
 		return _view;
 	}

@@ -203,6 +203,7 @@ public class MainMenu extends SherlockActivity
 	public void onBackPressed() 
 	{
 		// TODO Auto-generated method stub
+		onDestroy();
 		try 
 		{
 			Class<?> _clazz = Class.forName("ehc.net.HousesMenu");
