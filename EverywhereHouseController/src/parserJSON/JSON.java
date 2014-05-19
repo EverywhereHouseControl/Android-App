@@ -23,6 +23,7 @@ import framework.SpinnerEventContainer;
 
 public class JSON 
 {
+	//------------Variables-----------------------
 	private static JSON _instance;
 	public static ArrayList<String> _houses = new ArrayList<String>();
 	public static ArrayList<String> _rooms = new ArrayList<String>();
@@ -38,11 +39,12 @@ public class JSON
 	private static final String _TAG_HOUSES = "houses";
 	private static final String _TAG_ROOMS = "rooms";
 	private static final String _TAG_SERVICES = "services";
-	private static final String _TAG_ACTIONS = "actions";
+//	private static final String _TAG_ACTIONS = "actions";
 	private static String _fileConfig = null;
 	private static String _fileInfo = null;
 	private String _eventFile = null;
-	private static String _urlImage = null;
+//	private static String _urlImage = null;
+	//----------------------------------------------
 
 	public JSON() {}
 
@@ -150,13 +152,13 @@ public class JSON
 			_is.read( buffer );
 			_is.close();
 			_fileInfo = new String( buffer, "UTF-8" );
-			try 
-			{
-				loadJSONinfo();
-			} catch ( JSONException e ) 
-			{
-				e.printStackTrace();
-			}
+//			try 
+//			{
+//				loadJSONinfo();
+//			} catch ( JSONException e ) 
+//			{
+//				e.printStackTrace();
+//			}
 		} 
 		catch ( IOException e ) 
 		{
@@ -266,6 +268,7 @@ public class JSON
 						
 						try 
 						{
+							@SuppressWarnings("unused")
 							JSONArray _services = _room.getJSONArray( _TAG_SERVICES );
 						} 
 						catch ( Exception e ) 
@@ -291,16 +294,6 @@ public class JSON
 		{
 			e.printStackTrace();
 		}
-	}
-
-	/**
-	 * 
-	 * @throws JSONException
-	 */
-	private static void loadJSONinfo() throws JSONException 
-	{
-		JSONObject _obj = new JSONObject(_fileInfo);
-		_urlImage = _obj.getString("URL");
 	}
 
 	/**
@@ -424,7 +417,8 @@ public class JSON
 					}
 				}
 			}
-		} catch ( JSONException e ) 
+		} 
+		catch ( JSONException e ) 
 		{
 			e.printStackTrace();
 		}
@@ -435,28 +429,38 @@ public class JSON
 	 * Returns service's name + room's name
 	 */
 	// At the moment, testing with bertoldo+mansion
+	/**
+	 * 
+	 * @return
+	 * @throws JSONException
+	 */
 	public SpinnerEventContainer getItemsWithLocation() throws JSONException 
 	{
 		SpinnerEventContainer info = new SpinnerEventContainer();
-		for (int k = 0; k < _houses.size(); k++) {
-			String house = _houses.get(k);
-			try {
+		for ( int k = 0; k < _houses.size(); k++ ) 
+		{
+			String house = _houses.get( k );
+			try 
+			{
 				JSONArray _rooms = new JSONArray();
-				_rooms = _roomsHouses.get(house);
+				_rooms = _roomsHouses.get( house );
 
-				for (int i = 0; i < _rooms.length(); i++) {
-					JSONObject _room = _rooms.getJSONObject(i);
-					String room = _room.getString(_TAG_NAME);
+				for ( int i = 0; i < _rooms.length(); i++ ) 
+				{
+					JSONObject _room = _rooms.getJSONObject( i );
+					String room = _room.getString( _TAG_NAME );
 
-					JSONArray _services = _room.getJSONArray(_TAG_SERVICES);
-					Log.d("SERVICES", _services.toString());
-					for (int j = 0; j < _services.length(); j++) {
-						String service = _services.getJSONObject(j).getString(
-								_TAG_NAME);
-						info.add(room, service, house);
+					JSONArray _services = _room.getJSONArray( _TAG_SERVICES );
+					
+					for ( int j = 0; j < _services.length(); j++ ) 
+					{
+						String service = _services.getJSONObject( j ).getString( _TAG_NAME );
+						info.add( room, service, house );
 					}
 				}
-			} catch (JSONException e) {
+			} 
+			catch ( JSONException e ) 
+			{
 				e.printStackTrace();
 			}
 		}

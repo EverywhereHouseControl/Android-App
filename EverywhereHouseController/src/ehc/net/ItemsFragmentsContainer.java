@@ -99,41 +99,20 @@ public class ItemsFragmentsContainer extends SherlockFragmentActivity
         _mPager = (ViewPager) findViewById(R.id.pager);
         // Create an adapter with the fragments that will show on the ViewPager.
        _houseName = getIntent().getExtras().getString("House");
-       
-//	        _mAdapter = new AdapterView(getSupportFragmentManager(),_tableButtons,_houseName); 
-        
+               
         _mTabsAdapter = new TabsAdapter(this, _mPager);
         
     	for(int i=0; i<_tableButtons.size(); i++)
     	{
     		_mTabsAdapter.addTab(_ab.newTab().setText(_tableButtons.get(Integer.toString(i))),null, null);
     	}
-        
-        
-        // Set the adapter.
-//	    	_mPager.setAdapter(_mAdapter);
-        
+                
         // The position of the button that was clicked is obtained.
     	String buttonClicked = getIntent().getExtras().getString("Room");
     	String buttonPosition = getIntent().getExtras().getString(buttonClicked);
     		    	
         //Move the ViewPager to the desired view.
         _mPager.setCurrentItem(Integer.parseInt(buttonPosition));
-        
-        
-		//////////////////////////////////////////////
-//		SharedPreferences _pref = getSharedPreferences("LOG",Context.MODE_PRIVATE);
-//		int _pageTag = _pref.getInt("ROOM", -1);
-//		
-//		if(_pageTag!=-1)
-//		{
-//			_mTabsAdapter.onPageSelected(_pageTag);
-//		}
-//		
-//		Editor _editor=_pref.edit();
-//		_editor.putInt("ROOM",-1);	
-//		_editor.commit();
-		//////////////////////////////////////////////
         
 	 }
 	 
@@ -154,7 +133,8 @@ public class ItemsFragmentsContainer extends SherlockFragmentActivity
 				 {
 					 _dl.closeDrawer(_drawer);
 				 }
-				 else {
+				 else 
+				 {
 					_dl.openDrawer(_drawer);
 				}
 			 }

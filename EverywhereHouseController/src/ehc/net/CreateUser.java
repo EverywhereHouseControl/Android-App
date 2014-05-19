@@ -146,42 +146,42 @@ public class CreateUser extends Activity
 			}
 			case -1:
 			{
-				_message = "Not network connection available";
+				_message = "Not network connection available.";
 				break;
 			}
 			case -2:
 			{
-				_message = "Box user is empty";				
+				_message = "User box  is empty.";				
 				break;
 			}
 			case -3:
 			{
-				_message = "Box e-mail is empty";
+				_message = "E-mail box is empty.";
 				break;
 			}
 			case -4:
 			{
-				_message = "Erroneous format in e-mail box";
+				_message = "Erroneous format in e-mail box.";
 				break;
 			}
 			case -5:
 			{
-				_message = "Box password is empty";				
+				_message = "Password box  is empty.";				
 				break;
 			}
 			case -6:
 			{
-				_message = "Password is too sort";
+				_message = "Password is too sort.";
 				break;
 			}
 			case -7:
 			{
-				_message = "Box repeat password is empty";
+				_message = "Box repeat password is empty.";
 				break;
 			}
 			case -8:
 			{
-				_message = "Passwords do not match";
+				_message = "Passwords do not match.";
 				break;
 			}				
 		}

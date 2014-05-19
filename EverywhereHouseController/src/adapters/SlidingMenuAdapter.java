@@ -1,8 +1,9 @@
 package adapters;
 
+import imageTools.ImageLoader;
+
 import java.util.ArrayList;
 
-import loadUrlImage.ImageLoader;
 
 import org.json.JSONException;
 

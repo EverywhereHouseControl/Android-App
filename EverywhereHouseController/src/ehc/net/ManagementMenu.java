@@ -75,12 +75,12 @@ public class ManagementMenu extends SherlockActivity
         _dl.setDrawerListener(_actbardrawertoggle);	
 		/////////////////////////////////////////////////////////////////////////////////////////
         //-----------------It Reads config.json-----------------
-        _JSONFile = JSON.getInstance(getApplicationContext());	
+        JSON.getInstance(getApplicationContext());	
 		try 
 		{
 			_house = getIntent().getExtras().getString("House");
 			log("_house");
-			_roomsList = _JSONFile.getRooms(_house);
+			_roomsList = JSON.getRooms(_house);
 			log("Después _roomList");
 			 
 		} 

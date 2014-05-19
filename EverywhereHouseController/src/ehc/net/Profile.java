@@ -1,9 +1,10 @@
 package ehc.net;
 
+import imageTools.ImageLoader;
+
 import java.io.File;
 import java.util.ArrayList;
 
-import loadUrlImage.ImageLoader;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -523,12 +524,12 @@ public class Profile extends SherlockActivity implements ImageChooserListener
 		{
 			case -1:
 			{
-				_message = "Box username is empty.";
+				_message = "Username box is empty.";
 				break;
 			}
 			case -2:
 			{
-				_message = "Box password is empty.";
+				_message = "Password box  is empty.";
 				break;
 			}
 			case -3:
@@ -538,12 +539,12 @@ public class Profile extends SherlockActivity implements ImageChooserListener
 			}
 			case -4:
 			{
-				_message = "Box e-mail is empty.";
+				_message = "E-mail box is empty.";
 				break;
 			}
 			case -5:
 			{
-				_message = "Erroneous format in e-mail box";
+				_message = "Erroneous format in e-mail box.";
 				break;
 			}
 			case -6:

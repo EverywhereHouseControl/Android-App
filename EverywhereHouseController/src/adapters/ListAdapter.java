@@ -69,7 +69,7 @@ public class ListAdapter extends BaseAdapter
 		
 		TextView _textView = ( TextView ) _view.findViewById( R.id.RoomGroupName );
 		_textView.setTypeface( null, Typeface.BOLD );
-		_textView.setText( _list.get( position ) );
+		_textView.setText( _list.get( position ).toUpperCase() );
 		
 		ImageView _imageView = ( ImageView ) _view.findViewById( R.id.HouseImageList );
 		

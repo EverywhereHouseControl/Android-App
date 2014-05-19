@@ -1,9 +1,10 @@
 package adapters;
 
+import imageTools.ImageLoader;
+
 import java.io.File;
 import java.util.ArrayList;
 
-import loadUrlImage.ImageLoader;
 
 import com.kbeanie.imagechooser.api.ChosenImage;
 
