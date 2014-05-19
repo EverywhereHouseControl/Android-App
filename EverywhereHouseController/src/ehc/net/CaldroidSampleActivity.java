@@ -15,8 +15,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
@@ -24,7 +22,6 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.view.View.OnClickListener;
 
 import com.roomorama.caldroid.CaldroidFragment;
@@ -36,139 +33,158 @@ import framework.EventAdapter;
 
 
 @SuppressLint("SimpleDateFormat")
-public class CaldroidSampleActivity extends FragmentActivity {
-	private CaldroidFragment caldroidFragment;
-	private CaldroidFragment dialogCaldroidFragment;
-	private ArrayList<Date> eventDays;
-	private HashMap<Date, ArrayList<Event>> eventsPerDate;
-	private EventAdapter adapter;
+public class CaldroidSampleActivity extends FragmentActivity 
+{
+	//------------Variables-----------------------
+	private CaldroidFragment _caldroidFragment;
+	private CaldroidFragment _dialogCaldroidFragment;
+	private ArrayList<Date> _eventDays;
+	private HashMap<Date, ArrayList<Event>> _eventsPerDate;
+	private EventAdapter _adapter;
+	//-----------------------------------
 
 	/**
 	 * Gets user events and then it will be stored in user's calendar
 	 * 
 	 * @throws ParseException
 	 */
-	private void setCustomResourceForDates() throws ParseException {
-		Calendar cal = Calendar.getInstance();
-		eventDays = new ArrayList<Date>();
-		eventsPerDate = new HashMap<Date, ArrayList<Event>>();
-		Date date = null;
+	private void setCustomResourceForDates() throws ParseException 
+	{
+		Calendar _cal = Calendar.getInstance();
+		_eventDays = new ArrayList<Date>();
+		_eventsPerDate = new HashMap<Date, ArrayList<Event>>();
+		Date _date = null;
 
 		JSON events = JSON.getInstance(getApplicationContext());
 		HashMap<String, Event> eventInfo = events.getEvents();
 
 		// Getting all the information about user. This information has been
 		// stored in loadJSONEvent (JSON Class)
-		for (Entry<String, Event> entry : eventInfo.entrySet()) {
+		for ( Entry<String, Event> _entry : eventInfo.entrySet() ) 
+		{
 			boolean dateWithEvents = false;
-			Event e = entry.getValue();
-			date = entry.getValue().getDate();
-			Date updateDate = new Date();
-			ArrayList<Event> eventlist = new ArrayList<Event>();
-			for (Date d : eventDays) {
-				if (d.equals(date)) {
+			Event _e = _entry.getValue();
+			_date = _entry.getValue().getDate();
+			Date _updateDate = new Date();
+			ArrayList<Event> _eventlist = new ArrayList<Event>();
+			for ( Date _d : _eventDays ) 
+			{
+				if ( _d.equals( _date ) ) 
+				{
 					dateWithEvents = true;
-					for (Entry<Date, ArrayList<Event>> entry2 : eventsPerDate
-							.entrySet()) {
-						if (entry2.getKey().equals(date)) {
-							updateDate = date;
-							eventlist = entry2.getValue();
-							eventlist.add(new Event(e.getName(), e.getItem(), e
-									.getCreator(), date, e.getHour(), e
-									.getMinute()));
+					for (Entry<Date, ArrayList<Event>> _entry2 : _eventsPerDate.entrySet()) 
+					{
+						if ( _entry2.getKey().equals( _date ) ) 
+						{
+							_updateDate = _date;
+							_eventlist = _entry2.getValue();
+							_eventlist.add (new Event( _e.getName(), _e.getItem(), _e.getCreator(), _date, _e.getHour(), _e.getMinute() ) );
 						}
 					}
 				}
 			}
-			if (!dateWithEvents) {
-				eventDays.add(date);
-				eventlist = new ArrayList<Event>();
-				eventlist.add(new Event(e.getName(), e.getItem(), e
-						.getCreator(), date, e.getHour(), e.getMinute()));
-				eventsPerDate.put(date, eventlist);
-			} else {
-				eventsPerDate.remove(updateDate);
-				eventsPerDate.put(updateDate, eventlist);
+			if ( !dateWithEvents ) 
+			{
+				_eventDays.add( _date );
+				_eventlist = new ArrayList<Event>();
+				_eventlist.add( new Event(_e.getName(), _e.getItem(), _e.getCreator(), _date, _e.getHour(), _e.getMinute() ) );
+				_eventsPerDate.put( _date, _eventlist );
+			} 
+			else 
+			{				
+				_eventsPerDate.remove( _updateDate );
+				_eventsPerDate.put (_updateDate, _eventlist );
 			}
 				
 		}
 
-		for (Date d : eventDays) {
-			if (caldroidFragment != null) {
-				caldroidFragment.setBackgroundResourceForDate(R.color.Blue,
-						(Date) d);
-				caldroidFragment.setTextColorForDate(R.color.White, (Date) d);
+		for (Date _d : _eventDays) 
+		{
+			if ( _caldroidFragment != null ) 
+			{
+				_caldroidFragment.setBackgroundResourceForDate( R.color.Blue, ( Date ) _d );
+				_caldroidFragment.setTextColorForDate( R.color.White, ( Date ) _d );
 			}
 		}
 	}
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+	protected void onCreate( Bundle savedInstanceState ) 
+	{
+		super.onCreate( savedInstanceState );
+		setContentView( R.layout.activity_main );
 
-		final SimpleDateFormat formatter = new SimpleDateFormat("dd MMM yyyy");
+		final SimpleDateFormat _formatter = new SimpleDateFormat( "dd MMM yyyy" );
 		// Setup caldroid fragment
 		// **** If you want normal CaldroidFragment, use below line ****
-		caldroidFragment = new CaldroidFragment();
+		_caldroidFragment = new CaldroidFragment();
 
 		// If Activity is created after rotation
-		if (savedInstanceState != null) {
-			caldroidFragment.restoreStatesFromKey(savedInstanceState,
-					"CALDROID_SAVED_STATE");
+		if ( savedInstanceState != null ) 
+		{
+			_caldroidFragment.restoreStatesFromKey( savedInstanceState, "CALDROID_SAVED_STATE" );
 		}
 		// If activity is created from fresh
-		else {
-			Bundle args = new Bundle();
-			Calendar cal = Calendar.getInstance();
-			args.putInt(CaldroidFragment.MONTH, cal.get(Calendar.MONTH) + 1);
-			args.putInt(CaldroidFragment.YEAR, cal.get(Calendar.YEAR));
-			args.putBoolean(CaldroidFragment.ENABLE_SWIPE, true);
-			args.putBoolean(CaldroidFragment.SIX_WEEKS_IN_CALENDAR, true);
+		else 
+		{
+			Bundle _args = new Bundle();
+			Calendar _cal = Calendar.getInstance();
+			_args.putInt( CaldroidFragment.MONTH, _cal.get( Calendar.MONTH ) + 1 );
+			_args.putInt( CaldroidFragment.YEAR, _cal.get( Calendar.YEAR ) );
+			_args.putBoolean( CaldroidFragment.ENABLE_SWIPE, true );
+			_args.putBoolean( CaldroidFragment.SIX_WEEKS_IN_CALENDAR, true );
 
 			// Uncomment this to customize startDayOfWeek
 			// args.putInt(CaldroidFragment.START_DAY_OF_WEEK,
 			// CaldroidFragment.TUESDAY); // Tuesday
-			caldroidFragment.setArguments(args);
+			_caldroidFragment.setArguments( _args );
 		}
 
-		try {
+		try 
+		{
 			setCustomResourceForDates();
-		} catch (ParseException e1) {
+		} catch (ParseException e) 
+		{
 			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			e.printStackTrace();
 		}
 
 		// Attach to the activity
-		FragmentTransaction t = getSupportFragmentManager().beginTransaction();
-		t.replace(R.id.calendar1, caldroidFragment);
-		t.commit();
+		FragmentTransaction _t = getSupportFragmentManager().beginTransaction();
+		_t.replace( R.id.calendar1, _caldroidFragment );
+		_t.commit();
 
 		// Setup listener
-		final CaldroidListener listener = new CaldroidListener() {
+		final CaldroidListener _listener = new CaldroidListener() 
+		{
 
 			@Override
-			public void onSelectDate(Date date, View view) {
+			public void onSelectDate( Date date, View view ) 
+			{
 				updateEventList(getApplicationContext(), date);
 			}
 
 			@Override
-			public void onChangeMonth(int month, int year) {
+			public void onChangeMonth( int month, int year ) 
+			{
 				String text = "month: " + month + " year: " + year;
 //				Toast.makeText(getApplicationContext(), text,
 //						Toast.LENGTH_SHORT).show();
 			}
 
 			@Override
-			public void onLongClickDate(Date date, View view) {
+			public void onLongClickDate( Date date, View view ) 
+			{
 //				Toast.makeText(getApplicationContext(),
 //						"Long click " + formatter.format(date),
 //						Toast.LENGTH_SHORT).show();
 			}
 
 			@Override
-			public void onCaldroidViewCreated() {
-				if (caldroidFragment.getLeftArrowButton() != null) {
+			public void onCaldroidViewCreated() 
+			{
+				if ( _caldroidFragment.getLeftArrowButton() != null ) 
+				{
 //					Toast.makeText(getApplicationContext(),
 //							"Caldroid view is created", Toast.LENGTH_SHORT)
 //							.show();
@@ -179,30 +195,29 @@ public class CaldroidSampleActivity extends FragmentActivity {
 		
 		/** Fragment Dialog creation **/
 		
-		LinearLayout ll = (LinearLayout) this.findViewById(R.id.ll_event);
+		LinearLayout _ll = ( LinearLayout ) this.findViewById( R.id.ll_event );
 		
-		TextView txt = (TextView) findViewById(R.id.event_list_title);
-		Typeface font = Typeface.createFromAsset(getAssets(), "imagine_earth.ttf");
-		txt.setTypeface(font);
+		TextView _txt = ( TextView ) findViewById( R.id.event_list_title );
+		Typeface _font = Typeface.createFromAsset( getAssets(), "imagine_earth.ttf" );
+		_txt.setTypeface( _font );
 		
-		ImageButton ib = (ImageButton) ll.findViewById(R.id.create_event_button);
-		ib.setOnClickListener(new OnClickListener() {
+		ImageButton _ib = ( ImageButton ) _ll.findViewById( R.id.create_event_button );
+		_ib.setOnClickListener( new OnClickListener() 
+		{
 			
 			@Override
-			public void onClick(View v) {
+			public void onClick( View v ) 
+			{
 //				FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 //				DialogFragment dialog = CreateUserFragmentDialog.newInstance();
 //				dialog.show(ft, "dialog"); 
 
-					startActivity(new Intent(getApplicationContext(), CreateNewEventActivity.class));
+				startActivity( new Intent(getApplicationContext(), CreateNewEventActivity.class ) );
 			}
 		});
-		
-		
-		
-
+	
 		// Setup Caldroid
-		caldroidFragment.setCaldroidListener(listener);
+		_caldroidFragment.setCaldroidListener(_listener);
 
 	}
 
@@ -210,40 +225,48 @@ public class CaldroidSampleActivity extends FragmentActivity {
 	 * Save current states of the Caldroid here
 	 */
 	@Override
-	protected void onSaveInstanceState(Bundle outState) {
+	protected void onSaveInstanceState( Bundle outState ) 
+	{		
 		// TODO Auto-generated method stub
-		super.onSaveInstanceState(outState);
+		super.onSaveInstanceState( outState );
 
-		if (caldroidFragment != null) {
-			caldroidFragment.saveStatesToKey(outState, "CALDROID_SAVED_STATE");
+		if ( _caldroidFragment != null ) 
+		{
+			_caldroidFragment.saveStatesToKey( outState, "CALDROID_SAVED_STATE" );
 		}
 
-		if (dialogCaldroidFragment != null) {
-			dialogCaldroidFragment.saveStatesToKey(outState,
-					"DIALOG_CALDROID_SAVED_STATE");
+		if (_dialogCaldroidFragment != null ) 
+		{
+			_dialogCaldroidFragment.saveStatesToKey( outState, "DIALOG_CALDROID_SAVED_STATE" );
 		}
 	}
 
-	private boolean hasEvent(Date date) {
-		for (Date d : eventDays)
-			if (d.equals(date))
+	private boolean hasEvent( Date date ) 
+	{
+		for ( Date _d : _eventDays )
+			if ( _d.equals( date ) )
 				return true;
 		return false;
 	}
 
-	private ArrayList<Event> getEvents(Date d) {
-		return eventsPerDate.get(d);
+	private ArrayList<Event> getEvents( Date d ) 
+	{
+		return _eventsPerDate.get( d );
 	}
 
-	private void updateEventList(Context c, Date date) {
-		if (hasEvent(date)) {
-			adapter = new EventAdapter(this, getEvents(date));
-			ListView list = (ListView) findViewById(R.id.eventList);
-			list.setAdapter(adapter);
-		} else {
-			adapter = new EventAdapter(this, new ArrayList<Event>());
-			ListView list = (ListView) findViewById(R.id.eventList);
-			list.setAdapter(adapter);
+	private void updateEventList( Context c, Date date ) 
+	{
+		if ( hasEvent( date ) ) 
+		{
+			_adapter = new EventAdapter( this, getEvents( date ) );
+			ListView _list = ( ListView ) findViewById( R.id.eventList );
+			_list.setAdapter(_adapter);
+		} 
+		else 
+		{
+			_adapter = new EventAdapter( this, new ArrayList<Event>() );
+			ListView _list = ( ListView ) findViewById( R.id.eventList );
+			_list.setAdapter( _adapter );
 		}
 			
 	}
