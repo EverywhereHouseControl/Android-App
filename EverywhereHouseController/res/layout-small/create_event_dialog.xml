@@ -29,6 +29,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="10dp"
         android:background="@color/White"
+                android:textColor="@color/Black"
         android:ems="10"
         android:hint="@string/event_name"
         android:singleLine="true"

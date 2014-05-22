@@ -6,8 +6,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import serverConnection.Post;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.view.LayoutInflater;
@@ -18,6 +20,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import ehc.net.CaldroidSampleActivity;
+import ehc.net.CreateNewEventActivity;
 import ehc.net.R;
 
 public class EventAdapter extends BaseAdapter 
@@ -100,7 +104,6 @@ public class EventAdapter extends BaseAdapter
 					_userName = _event.get( position ).getCreator();
 					_eventName = _event.get( position ).getName();
 					_event.remove( position );
-					notifyDataSetChanged();
 					
 					sendEventConnection _connection = new sendEventConnection(_context);
 			    	_connection.execute();	
@@ -213,7 +216,26 @@ public class EventAdapter extends BaseAdapter
 		{
             // dismiss the dialog
             _pDialog.dismiss();
-            if( _internalError != 0 )Toast.makeText( _context, _message, Toast.LENGTH_SHORT ).show();
+            if( _internalError != 0 ){
+            	Toast.makeText( _context, _message, Toast.LENGTH_SHORT ).show();
+            } else {
+
+				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(_context);
+				alertDialogBuilder.setTitle("You did it!");
+				alertDialogBuilder.setMessage(
+						"Needed re-login to see your changes")
+						.setPositiveButton("Ok",
+								new DialogInterface.OnClickListener() {
+
+									@Override
+									public void onClick(DialogInterface dialog,
+											int which) {
+									}
+								});
+				AlertDialog dialog = alertDialogBuilder.create();
+
+				dialog.show();            	
+            }
 		}
     }
     

@@ -30,6 +30,7 @@
     <EditText
         android:id="@+id/event_name"
         android:layout_width="wrap_content"
+                android:textColor="@color/Black"
         android:layout_height="60dp"
         android:layout_gravity="center_horizontal"
         android:ems="10"
