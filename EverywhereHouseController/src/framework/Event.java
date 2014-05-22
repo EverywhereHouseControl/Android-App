@@ -22,7 +22,7 @@ public class Event
 		_name = name;
 		_item = item;
 		_creator = creator;
-		setDate(_date);
+		setDate(date);
 		_hour = hour;
 		_minute = minute;
 	}

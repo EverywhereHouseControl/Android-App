@@ -183,7 +183,7 @@ public class JSON
 			for ( int j = 0; j <= house.length(); j++ ) 
 			{ 
 				JSONObject event = house.getJSONObject( "Event" + j );
-				String dateFormat = event.get(" Year" ) + "-" + event.get( "Month" ) + "-" + event.get( "Day" );
+				String dateFormat = event.get( "Year" ) + "-" + event.get( "Month" ) + "-" + event.get( "Day" );
 				Date date = null;
 
 				try 

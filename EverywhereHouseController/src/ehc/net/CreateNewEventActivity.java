@@ -357,7 +357,7 @@ public class CreateNewEventActivity extends Activity
 	private ArrayList<String> setActionList(String service) 
 	{
 		ArrayList<String> actions = new ArrayList<String>();
-		if ( service.equals( "LIGHTS ") || service.equals( "PLUG" ) ) 
+		if ( service.equals( "LIGHTS") || service.equals( "PLUG" ) ) 
 		{
 			actions.add("On");
 			actions.add("Off");
