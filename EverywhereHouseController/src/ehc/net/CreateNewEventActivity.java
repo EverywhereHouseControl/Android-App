@@ -350,7 +350,7 @@ public class CreateNewEventActivity extends Activity {
 
 	private ArrayList<String> setActionList(String service) {
 		ArrayList<String> actions = new ArrayList<String>();
-		if (service.equals("LIGHTS") || service.equals("PLUG")) {
+		if (service.equals("LIGHTS")) {
 			actions.add("On");
 			actions.add("Off");
 		} else if (service.equals("TV") || service.equals("DVD")) {
@@ -377,14 +377,11 @@ public class CreateNewEventActivity extends Activity {
 			actions.add("Up");
 			actions.add("Medium");
 			actions.add("Down");
-		} else if (service.equals("AIRCONDITIONING")) {
-			actions.add("Up");
-			actions.add("Down");
-			actions.add("On");
-			actions.add("Off");
 		} else if (service.equals("DOOR")) {
 			actions.add("Open");
 			actions.add("Close");
+		} else if (service.equals("INTERCOM")){
+			actions.add("On");
 		} else
 			actions.add("No actions for this service");
 
