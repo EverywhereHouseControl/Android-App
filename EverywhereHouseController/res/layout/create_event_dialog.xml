@@ -32,29 +32,41 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:background="@color/White"
         android:ems="10"
         android:hint="@string/event_name"
+        android:layout_marginBottom="10dp"
         android:singleLine="true" />
 
     <Spinner
         android:id="@+id/sp_item"
+        android:background="@color/White"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:popupBackground="@color/White"
+        android:hint="@string/service_name"
         android:layout_gravity="center_horizontal" />
 
     <Spinner
         android:id="@+id/sp_action"
+        android:background="@color/White"
+        android:popupBackground="@color/White"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:hint="@string/action_name"
+        android:layout_marginBottom="10dp"
         android:layout_gravity="center_horizontal" />
 
     <TextView
         android:id="@+id/tv_date"
+        android:textColor="@color/White"
+        android:background="@color/GreenApp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
         android:layout_gravity="center_horizontal"
         android:text="No date selected"
-        android:textColor="@color/White"
         android:textSize="20sp" />
 
     <Button
@@ -70,11 +82,13 @@
 
     <TextView
         android:id="@+id/tv_time"
+        android:textColor="@color/White"
+        android:background="@color/GreenApp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
         android:layout_gravity="center_horizontal"
         android:text="No time selected"
-        android:textColor="@color/White"
         android:textSize="20sp" />
 
     <Button
