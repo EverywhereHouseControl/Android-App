@@ -5,6 +5,7 @@ import imageTools.ImageLoader;
 import java.util.ArrayList;
 
 
+
 import org.json.JSONException;
 
 import parserJSON.JSON;
@@ -24,6 +25,7 @@ import android.widget.Toast;
 import ehc.net.HousesMenu;
 import ehc.net.LogIn;
 import ehc.net.R;
+import environment.CameraActivity;
 
 public class SlidingMenuAdapter extends BaseAdapter
 {
@@ -36,7 +38,7 @@ public class SlidingMenuAdapter extends BaseAdapter
 	private ArrayList<String> _access = new ArrayList<String>();
 	private ArrayList<String> _optionList = new ArrayList<String>();
 	private ImageLoader _imgLoader = HouseListAdapter._imgLoader;
-	private int _count = 5;
+	private int _count = 6;
 	// -------------------------------
 	
 	
@@ -45,6 +47,7 @@ public class SlidingMenuAdapter extends BaseAdapter
 		_context = context;
 		_currentHouse = currentHouse;
 		_optionList.add( "Profile" );
+		_optionList.add( "Camera" );
 		_optionList.add( "Log out" );
 		_optionList.add( "Exit" );
 		
@@ -206,6 +209,13 @@ public class SlidingMenuAdapter extends BaseAdapter
 				    	Intent _intent = new Intent( _context, LogIn.class );
 						_intent.setFlags( Intent.FLAG_ACTIVITY_NEW_TASK );
 		            	_context.startActivity( _intent ); 
+					}
+					else if (_button.getText().equals( "Camera" ) )
+					{
+				    	Intent _intent = new Intent( _context, CameraActivity.class );
+						_intent.setFlags( Intent.FLAG_ACTIVITY_NEW_TASK );
+		            	_context.startActivity( _intent ); 
+						
 					}
 					else
 					{						
