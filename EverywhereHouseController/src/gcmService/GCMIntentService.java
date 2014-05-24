@@ -48,21 +48,20 @@ public class GCMIntentService extends IntentService
         GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance( this );
         
         String messageType = gcm.getMessageType( intent );
-        Bundle extras = intent.getExtras();
-
+        Bundle extras = intent.getExtras();       
+        
         if ( !extras.isEmpty() )
-        {
-            if ( GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE.equals( messageType ) )
+        {        	
+    		if ( GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE.equals( messageType ) )
             {
             	long _id = Calendar.getInstance().getTimeInMillis();
             	showNotification( _id, extras.getString("mensaje") );
-            }
+            }         
         }   
         
-        GCMBroadcastReceiver.completeWakefulIntent( intent );
-        
+        GCMBroadcastReceiver.completeWakefulIntent( intent );       
         SharedPreferences _pref = getSharedPreferences( "LOG",Context.MODE_PRIVATE );
-                        	
+        
     	ArrayList<String> _parametros = new ArrayList<String>();
 		_parametros.add( "command" );
 		_parametros.add( "login2" );
@@ -84,8 +83,7 @@ public class GCMIntentService extends IntentService
 		String _msg = msg.substring( msg.indexOf( "*" ) + 1 );
 		
 		SharedPreferences _pref = getSharedPreferences( "LOG",Context.MODE_PRIVATE );
-		
-		
+				
 		NotificationCompat.Builder _mBuilder = new NotificationCompat.Builder( this )
 		.setDefaults( NotificationCompat.PRIORITY_DEFAULT )
 		.setSmallIcon( R.drawable.ic_launcher )
@@ -96,7 +94,7 @@ public class GCMIntentService extends IntentService
 		.setAutoCancel( true )
 		.setContentIntent( _contIntent )
 		.setDefaults( Notification.DEFAULT_SOUND );	
-		
+    	
 		
 		
 //		int currentapiVersion = android.os.Build.VERSION.SDK_INT;

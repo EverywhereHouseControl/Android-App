@@ -2,6 +2,9 @@ package environment;
 
 import ehc.net.R;
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
@@ -16,6 +19,11 @@ public class CameraActivity extends Activity
 			super.onCreate(savedInstanceState);
 			setContentView(R.layout.camera);
 	 
+			SharedPreferences _pref = getSharedPreferences( "LOG",Context.MODE_PRIVATE );
+			Editor _editor=_pref.edit();
+			_editor.putString( "NEWACTIVITY", "OTHER" );
+			_editor.commit();
+			
 			webView = (WebView) findViewById(R.id.webView1);
 //			webView.getSettings().setJavaScriptEnabled(true);
 //			webView.getSettings().setPluginsEnabled(true);

@@ -39,7 +39,8 @@ public class Post
 	private static InputStream _is = null;		                         
 	private static String _response = "";
 	public final static String _ip = "http://5.231.69.226/EHControlConnect/index.php";
-	 //"http://192.168.2.207/EHControlConnect/index.php";
+	//"http://192.168.2.207/EHControlConnect/index.php";
+	//"http://192.168.1.43/EHControlConnect/index.php";
 
 	public Post(){}
 	

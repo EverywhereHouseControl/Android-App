@@ -46,7 +46,7 @@
 
             <TextView
                 android:id="@+id/temperature"
-                android:layout_width="150dp"
+                android:layout_width="190dp"
                 android:layout_height="109dp"
                 android:layout_below="@+id/word_ehc"
                 android:layout_centerHorizontal="true"

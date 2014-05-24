@@ -7,13 +7,19 @@ import org.json.JSONException;
 import parserJSON.JSON;
 import adapters.ListAdapter;
 import adapters.SlidingMenuAdapter;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.ToggleButton;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
@@ -34,8 +40,7 @@ public class ManagementMenu extends SherlockActivity
     protected void onCreate( Bundle savedInstanceState ) 
     {   
 		super.onCreate( savedInstanceState );
-		setContentView( R.layout.management_menu_view );
-				
+		setContentView( R.layout.management_menu_view );			
         /////////////////////////////////////////////////////////////////////////////////////////
        _drawer = (ListView) findViewById( R.id.ListViewSlidingMenu );		
 		final SlidingMenuAdapter _adapter = new 

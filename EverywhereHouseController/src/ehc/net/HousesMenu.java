@@ -16,10 +16,13 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.os.StrictMode.ThreadPolicy;
+import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 import android.widget.CheckBox;
@@ -29,6 +32,7 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.kbeanie.imagechooser.api.ChooserType;
 import com.kbeanie.imagechooser.api.ChosenImage;
@@ -102,6 +106,11 @@ public class HousesMenu extends Activity implements ImageChooserListener
 					        logOutConnection _connection = new logOutConnection( HousesMenu.this );
 					    	_connection.execute();
 					    	
+							SharedPreferences _pref = _context.getSharedPreferences( "LOG", Context.MODE_PRIVATE );
+					        Editor _editor=_pref.edit();
+					        _editor.putString( "LOGIN", "FALSE" );
+					        _editor.commit();
+					    	
 					    	Intent _intent = new Intent( _context, LogIn.class );
 							_intent.setFlags( Intent.FLAG_ACTIVITY_NEW_TASK );
 			            	startActivity( _intent );
@@ -158,7 +167,7 @@ public class HousesMenu extends Activity implements ImageChooserListener
 		//-------------------------------------------
 		ThreadPolicy tp = ThreadPolicy.LAX; 
 		StrictMode.setThreadPolicy(tp);
-		//-------------------------------------------
+		//-------------------------------------------	
     }
 	
 	/**

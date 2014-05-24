@@ -186,11 +186,6 @@ public class SlidingMenuAdapter extends BaseAdapter
 							e.printStackTrace();
 						}
 						
-						SharedPreferences _pref = _context.getSharedPreferences( "LOG",Context.MODE_PRIVATE );
-						Editor _editor=_pref.edit();
-						_editor.putString( "NEWACTIVITY", "OTHER" );
-						_editor.commit();
-						
 						Intent _intent = new Intent( _context,_clazz );
 						_intent.setFlags( Intent.FLAG_ACTIVITY_NEW_TASK );
 						_intent.putExtra( "House",_currentHouse );
@@ -214,8 +209,7 @@ public class SlidingMenuAdapter extends BaseAdapter
 					{
 				    	Intent _intent = new Intent( _context, CameraActivity.class );
 						_intent.setFlags( Intent.FLAG_ACTIVITY_NEW_TASK );
-		            	_context.startActivity( _intent ); 
-						
+		            	_context.startActivity( _intent ); 						
 					}
 					else
 					{						
