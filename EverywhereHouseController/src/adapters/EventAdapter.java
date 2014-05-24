@@ -1,15 +1,17 @@
-package framework;
+package adapters;
 
 import java.util.ArrayList;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import parserJSON.JSON;
+
 import serverConnection.Post;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.view.LayoutInflater;
@@ -19,10 +21,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-import ehc.net.CaldroidSampleActivity;
-import ehc.net.CreateNewEventActivity;
 import ehc.net.R;
+import framework.Event;
 
 public class EventAdapter extends BaseAdapter 
 {
@@ -31,12 +31,15 @@ public class EventAdapter extends BaseAdapter
 	private ArrayList<Event> _event;
 	private String _eventName;
 	private String _userName;
+	private String _currentHouse;
+	
 	//-----------------------------------
 
-	public EventAdapter( Context c, ArrayList<Event> e ) 
+	public EventAdapter( Context c, ArrayList<Event> e, String currentHouse ) 
 	{
 		_event = e;
 		_context = c;
+		_currentHouse = currentHouse;
 	}
 
 	@Override
@@ -165,6 +168,7 @@ public class EventAdapter extends BaseAdapter
 			try 
 			{		      
 				//Query
+				SharedPreferences _pref = _context.getSharedPreferences( "LOG", Context.MODE_PRIVATE );								
 				ArrayList<String> _parametros = new ArrayList<String>();
 
 				_parametros.add( "command" );
@@ -177,7 +181,7 @@ public class EventAdapter extends BaseAdapter
 				_parametros.add( "SEND" );
 				
 				
-				JSONObject _data = Post.getServerData(_parametros,"http://5.231.69.226/EHControlConnect/index.php");//"http://192.168.2.147/EHControlConnect/index.php");//"");
+				JSONObject _data = Post.getServerData(_parametros,Post._ip);
 				
 				try 
 				{
@@ -186,7 +190,42 @@ public class EventAdapter extends BaseAdapter
 					{
 						case 0:
 						{
-							_message = _json_data.getString( "ENGLISH" );					
+							_message = _json_data.getString( "ENGLISH" );
+							_parametros = new ArrayList<String>();
+							_parametros.add( "command" );
+							_parametros.add( "login2" );
+							_parametros.add( "username" );
+							_parametros.add( _userName.toUpperCase() );
+							_parametros.add( "password" );
+							_parametros.add( _pref.getString( "PASSWORD", "" ) );
+							
+							_data = Post.getServerData( _parametros,Post._ip);
+							
+							if ( _data != null && _data.length() > 0 ) 
+							{				
+								try 
+								{
+									_json_data = _data.getJSONObject( "result" );
+								} catch (JSONException e) 
+								{
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+								//log(json_data.toString());
+								
+								try {
+									if ( _json_data.getInt( "IDUSER" ) != 0 ) 
+									{ 			        
+										//Save the profile's information.
+										JSON.saveProfileInfo( _json_data, _context );
+										//Save the house's configuration
+										JSON.saveConfig( _json_data.get( "JSON" ), _context );
+									}
+								} catch (JSONException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+							} 
 							break;
 						}
 						default:
@@ -214,30 +253,19 @@ public class EventAdapter extends BaseAdapter
     	
 		protected void onPostExecute (String file_url) 
 		{
-            // dismiss the dialog
-            _pDialog.dismiss();
-            if( _internalError != 0 ){
-            	Toast.makeText( _context, _message, Toast.LENGTH_SHORT ).show();
-            } else {
-
-				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(_context);
-				alertDialogBuilder.setTitle("You did it!");
-				alertDialogBuilder.setMessage(
-						"Needed re-login to see your changes")
-						.setPositiveButton("Ok",
-								new DialogInterface.OnClickListener() {
-
-									@Override
-									public void onClick(DialogInterface dialog,
-											int which) {
-									}
-								});
-				AlertDialog dialog = alertDialogBuilder.create();
-
-				dialog.show();            	
-            }
+            // dismiss the dialog		
+            _pDialog.dismiss();            
+            Class<?> _clazz = null;			
+			try{
+				_clazz = Class.forName( "ehc.net.CaldroidSampleActivity" );
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			Intent _intent = new Intent( _context, _clazz );
+			_intent.putExtra( "House", _currentHouse );
+			_intent.addFlags( Intent.FLAG_ACTIVITY_NEW_TASK );			
+			_context.startActivity( _intent );            
 		}
     }
-    
-
 }

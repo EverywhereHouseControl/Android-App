@@ -10,6 +10,7 @@ import java.util.Map.Entry;
 
 import parserJSON.JSON;
 
+import adapters.EventAdapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -18,18 +19,20 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.view.View.OnClickListener;
+import android.view.View.OnCreateContextMenuListener;
 
 import com.roomorama.caldroid.CaldroidFragment;
 import com.roomorama.caldroid.CaldroidListener;
 
 import ehc.net.R;
 import framework.Event;
-import framework.EventAdapter;
+import gcmService.GCMIntentService;
 
 
 @SuppressLint("SimpleDateFormat")
@@ -41,8 +44,8 @@ public class CaldroidSampleActivity extends FragmentActivity
 	private ArrayList<Date> _eventDays;
 	private HashMap<Date, ArrayList<Event>> _eventsPerDate;
 	private EventAdapter _adapter;
-	//-----------------------------------
-
+	private String _currentHouse;
+	//-----------------------------------	
 	/**
 	 * Gets user events and then it will be stored in user's calendar
 	 * 
@@ -50,6 +53,8 @@ public class CaldroidSampleActivity extends FragmentActivity
 	 */
 	private void setCustomResourceForDates() throws ParseException 
 	{
+		_currentHouse = getIntent().getExtras().getString( "House" );
+		
 		Calendar _cal = Calendar.getInstance();
 		_eventDays = new ArrayList<Date>();
 		_eventsPerDate = new HashMap<Date, ArrayList<Event>>();
@@ -211,8 +216,17 @@ public class CaldroidSampleActivity extends FragmentActivity
 //				FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 //				DialogFragment dialog = CreateUserFragmentDialog.newInstance();
 //				dialog.show(ft, "dialog"); 
-
-				startActivity( new Intent(getApplicationContext(), CreateNewEventActivity.class ) );
+				
+				Class<?> _clazz = null;
+				try {
+					_clazz = Class.forName( "ehc.net.CreateNewEventActivity" );
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				Intent _intent = new Intent( CaldroidSampleActivity.this, _clazz );
+				_intent.putExtra( "House", _currentHouse );
+				startActivity( _intent );
 			}
 		});
 	
@@ -258,17 +272,32 @@ public class CaldroidSampleActivity extends FragmentActivity
 	{
 		if ( hasEvent( date ) ) 
 		{
-			_adapter = new EventAdapter( this, getEvents( date ) );
+			_adapter = new EventAdapter( this, getEvents( date ), _currentHouse );
 			ListView _list = ( ListView ) findViewById( R.id.eventList );
 			_list.setAdapter(_adapter);
 		} 
 		else 
 		{
-			_adapter = new EventAdapter( this, new ArrayList<Event>() );
+			_adapter = new EventAdapter( this, new ArrayList<Event>(), _currentHouse );
 			ListView _list = ( ListView ) findViewById( R.id.eventList );
 			_list.setAdapter( _adapter );
-		}
-			
+		}			
 	}
-
+	
+	@Override
+	public void onBackPressed() 
+	{
+		// TODO Auto-generated method stub
+		try 
+		{
+			Class<?> _clazz = Class.forName( "ehc.net.MainMenu" );
+			Intent _intent = new Intent( this, _clazz );
+			_intent.putExtra( "House", _currentHouse );
+			startActivity( _intent );
+		} 
+		catch ( ClassNotFoundException e ) 
+		{
+			e.printStackTrace();
+		}
+	}
 }

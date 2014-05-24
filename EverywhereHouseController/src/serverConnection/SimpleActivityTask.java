@@ -106,7 +106,7 @@ public class SimpleActivityTask extends AsyncTask<String, String, String>
 		 */
 	protected void onPostExecute( String file_url ) 
 	{
-		Toast.makeText( _context, "Sent.", Toast.LENGTH_SHORT ).show();
+//		Toast.makeText( _context, "Sent.", Toast.LENGTH_SHORT ).show();
 	}
 
 	/**

@@ -18,6 +18,9 @@ import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
@@ -63,6 +66,7 @@ public class CreateNewEventActivity extends Activity {
 	private ArrayList<String> _selectedService = new ArrayList<String>();
 	private String _data;
 	private ArrayList<String> _actions = null;
+	private String _currentHouse;
 
 	private final String _ip = Post._ip;
 
@@ -71,6 +75,8 @@ public class CreateNewEventActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		_currentHouse = getIntent().getExtras().getString( "House" );
+		
 		setContentView(R.layout.create_event_dialog);
 
 		Calendar _c = Calendar.getInstance();
@@ -455,20 +461,80 @@ public class CreateNewEventActivity extends Activity {
 				_parametros.add(_servicename);
 
 				JSONObject _data = Post.getServerData(_parametros, _ip);
+				SharedPreferences _pref = getSharedPreferences( "LOG", Context.MODE_PRIVATE );	
+				
 				try {
 					JSONObject _json_data = _data.getJSONObject("error");
 					switch (_json_data.getInt("ERROR")) {
-					case 0: {
-						_message = _json_data.getString("ENGLISH");
-						break;
+						case 0: {
+							_message = _json_data.getString("ENGLISH");							
+							try 
+							{
+								_json_data = _data.getJSONObject( "error" );
+								switch( _json_data.getInt( "ERROR" ) )
+								{
+									case 0:
+									{
+										_message = _json_data.getString( "ENGLISH" );
+										_parametros = new ArrayList<String>();
+										_parametros.add( "command" );
+										_parametros.add( "login2" );
+										_parametros.add( "username" );
+										_parametros.add( _pref.getString( "USER", "" ) );
+										_parametros.add( "password" );
+										_parametros.add( _pref.getString( "PASSWORD", "" ) );
+										
+										_data = Post.getServerData( _parametros,Post._ip);
+										
+										if ( _data != null && _data.length() > 0 ) 
+										{				
+											try 
+											{
+												_json_data = new JSONObject();
+												_json_data = _data.getJSONObject( "result" );
+											} catch (JSONException e) 
+											{
+												// TODO Auto-generated catch block
+												e.printStackTrace();
+											}
+											//log(json_data.toString());
+											
+											try {
+												if ( _json_data.getInt( "IDUSER" ) != 0 ) 
+												{ 			        
+													//Save the profile's information.
+													JSON.saveProfileInfo( _json_data, CreateNewEventActivity.this );
+													//Save the house's configuration
+													JSON.saveConfig( _json_data.get( "JSON" ), CreateNewEventActivity.this );
+												}
+											} catch (JSONException e) {
+												// TODO Auto-generated catch block
+												e.printStackTrace();
+											}
+										} 
+										break;
+									}
+									default:
+									{
+										_internalError = _json_data.getInt( "ERROR" );
+										_message = _json_data.getString( "ENGLISH" );
+										break;
+									}
+								}
+							
+							} 
+							catch ( JSONException e ) 
+							{
+								e.printStackTrace();
+							}
+							break;
+						}
+						default: {
+							_internalError = _json_data.getInt("ERROR");
+							_message = _json_data.getString("ENGLISH");
+							break;
+						}					
 					}
-					default: {
-						_internalError = _json_data.getInt("ERROR");
-						_message = _json_data.getString("ENGLISH");
-						break;
-					}
-					}
-
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
@@ -483,29 +549,26 @@ public class CreateNewEventActivity extends Activity {
 			// dismiss the dialog
 			_pDialog.dismiss();
 			if (_internalError != 0) {
-				Toast.makeText(getBaseContext(), _message, Toast.LENGTH_SHORT)
+				Toast.makeText(getBaseContext(), "Created.", Toast.LENGTH_SHORT)
 						.show();
-			} else {
-
-				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(CreateNewEventActivity.this);
-				alertDialogBuilder.setTitle("You did it!");
-				alertDialogBuilder.setMessage(
-						"Needed re-login to see your changes")
-						.setPositiveButton("Ok",
-								new DialogInterface.OnClickListener() {
-
-									@Override
-									public void onClick(DialogInterface dialog,
-											int which) {
-										CreateNewEventActivity.this.finish();
-									}
-								});
-				AlertDialog dialog = alertDialogBuilder.create();
-
-				dialog.show();
 			}
-
 		}
 	}
-
+	
+	@Override
+	public void onBackPressed() 
+	{
+		// TODO Auto-generated method stub
+        Class<?> _clazz = null;				
+		try{
+			_clazz = Class.forName( "ehc.net.CaldroidSampleActivity" );
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Intent _intent = new Intent( CreateNewEventActivity.this, _clazz );
+		_intent.putExtra( "House", _currentHouse );
+		_intent.addFlags( Intent.FLAG_ACTIVITY_NEW_TASK );				
+		startActivity( _intent );
+	}
 }

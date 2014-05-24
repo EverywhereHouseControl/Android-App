@@ -186,6 +186,7 @@ public class MainMenu extends SherlockActivity
 		{
 			Class<?> _clazz = Class.forName( "ehc.net.CaldroidSampleActivity" );
 			Intent _intent = new Intent( this, _clazz );
+			_intent.putExtra( "House", getIntent().getExtras().getString( "House" ) );
 			startActivity( _intent );
 		} 
 		catch ( ClassNotFoundException e ) 

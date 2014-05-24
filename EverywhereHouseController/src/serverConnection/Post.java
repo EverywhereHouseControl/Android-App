@@ -22,12 +22,17 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import parserJSON.JSON;
+import ehc.net.Main;
 
+
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 public class Post 
 {	                        
@@ -267,5 +272,4 @@ public class Post
 			return null;
 		}  
     }
-
 }

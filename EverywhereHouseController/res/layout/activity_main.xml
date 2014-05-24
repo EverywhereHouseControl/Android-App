@@ -32,13 +32,13 @@
 
         <TextView
             android:id="@+id/event_list_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left|center_vertical"
+            android:layout_width="256dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.51"
+            android:gravity="center_horizontal|center_vertical"
             android:text="@string/daily"
             android:textColor="@color/White"
             android:textSize="25sp" />
-
     </LinearLayout>
 
     <ListView
