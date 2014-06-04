@@ -24,7 +24,7 @@ import framework.SpinnerEventContainer;
 public class JSON 
 {
 	//------------Variables-----------------------
-	private static JSON _instance;
+	private static JSON _instance = null;
 	public static ArrayList<String> _houses = new ArrayList<String>();
 	public static ArrayList<String> _rooms = new ArrayList<String>();
 	public static ArrayList<String> _items = new ArrayList<String>();
@@ -50,7 +50,8 @@ public class JSON
 
 	public static synchronized JSON getInstance( Context c ) 
 	{
-		_instance = new JSON( c );
+		if (_instance == null)
+			_instance = new JSON( c );
 		return _instance;
 	}
 
