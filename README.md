@@ -1,13 +1,8 @@
-[<div align="Center">
-<img src="http://ehcontrol.net/EHControlConnect/images/android-logo-small.gif">
-</div>](http://www.android.com/)
-[Android Forum](http://www.android.net/)
-
 EHC Android Repository
 ===================================
-[<div align="Left">
-<img src="http://ehcontrol.net/images/logo.png">
-</div>](http://ehcontrol.net/)
+<div align="center">
+<img src="https://avatars.githubusercontent.com/u/5992872?s=200&v=4">
+</div>
 
 ## Purpose
 
